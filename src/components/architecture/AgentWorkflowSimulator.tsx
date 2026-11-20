@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Eye, BookOpen, BrainCircuit, Terminal, UserCheck, History, ShieldAlert, CheckCircle2, Lock, Play, RotateCcw } from 'lucide-react';
+import { Eye, BookOpen, BrainCircuit, Terminal, UserCheck, History, ShieldAlert, CheckCircle2, Lock, Play, RotateCcw, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface AgentStep {
@@ -129,18 +129,17 @@ export function AgentWorkflowSimulator() {
   };
 
   return (
-    <div id="agentic-operating-model" className="rounded-2xl bg-[#0f1115] border border-[#1f232b] p-6 sm:p-8">
+    <div id="agentic-operating-model" className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-8 shadow-sm">
       {/* Header & Mission */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 mb-6 border-b border-[#1b1f27]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 mb-6 border-b border-[var(--border-color)]">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 mb-2 uppercase tracking-wider">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          <div className="text-xs font-mono text-[var(--accent-orange-text)] mb-2 uppercase tracking-wider font-semibold">
             Architectural Operating Model
           </div>
-          <h3 className="text-2xl sm:text-3xl font-display font-semibold text-white tracking-tight">
+          <h3 className="text-2xl sm:text-3xl font-display font-semibold text-[var(--text-primary)] tracking-tight">
             AI that does the work, not just the talking.
           </h3>
-          <p className="text-sm text-[#9ca3af] max-w-2xl mt-1.5">
+          <p className="text-sm text-[var(--text-secondary)] max-w-2xl mt-1.5">
             NHTech’s agents live inside actual enterprise workflows rather than sitting beside them as detached chat widgets. Every step runs with explicit permissions and human oversight.
           </p>
         </div>
@@ -148,13 +147,14 @@ export function AgentWorkflowSimulator() {
         <div className="flex items-center gap-2">
           <button
             id="agent-sim-run-btn"
+            type="button"
             onClick={handleRunSimulation}
             disabled={isSimulating}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-xs font-semibold text-black transition-all cursor-pointer shadow-md"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] disabled:opacity-50 text-xs font-bold text-[#061421] transition-all cursor-pointer shadow-sm"
           >
             {isSimulating ? (
               <>
-                <span className="h-2 w-2 rounded-full bg-black animate-ping" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
                 Simulating Execution...
               </>
             ) : (
@@ -166,8 +166,12 @@ export function AgentWorkflowSimulator() {
           </button>
           <button
             id="agent-sim-reset-btn"
-            onClick={() => { setActiveStepIndex(0); setIsSimulating(false); }}
-            className="p-2 rounded-lg bg-[#14171e] hover:bg-[#1c212b] text-[#9ca3af] hover:text-white border border-[#232834] transition-all cursor-pointer"
+            type="button"
+            onClick={() => {
+              setActiveStepIndex(0);
+              setIsSimulating(false);
+            }}
+            className="p-2.5 rounded-xl bg-[var(--bg-surface-elevated)] hover:bg-[var(--bg-surface-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)] transition-all cursor-pointer"
             title="Reset to Step 1"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -175,8 +179,8 @@ export function AgentWorkflowSimulator() {
         </div>
       </div>
 
-      {/* Step Navigation Pills */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-6">
+      {/* Step Navigation */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-6">
         {workflowSteps.map((step, idx) => {
           const Icon = step.icon;
           const isActive = idx === activeStepIndex;
@@ -185,24 +189,31 @@ export function AgentWorkflowSimulator() {
           return (
             <button
               key={step.key}
+              type="button"
               id={`agent-step-tab-${step.key}`}
               onClick={() => handleStepClick(idx)}
-              className={`flex flex-col items-start p-3 rounded-xl border text-left transition-all ${
+              className={`flex flex-col items-start p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#181c24] border-emerald-500/60 shadow-lg shadow-emerald-950/20 ring-1 ring-emerald-500/20'
+                  ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F] shadow-sm'
                   : isPassed
-                  ? 'bg-[#12151b] border-[#29303d] text-[#e5e7eb]'
-                  : 'bg-[#0f1115] border-[#1b1f27] text-[#6b7280] hover:border-[#252b36]'
+                  ? 'bg-[var(--bg-surface-subtle)] border-[var(--border-hover)] text-[var(--text-primary)]'
+                  : 'bg-[var(--bg-surface-subtle)] border-[var(--border-color)] text-[var(--text-muted)] hover:border-[var(--border-hover)]'
               }`}
             >
               <div className="flex items-center justify-between w-full mb-1.5">
-                <div className={`p-1.5 rounded-md ${isActive ? 'bg-emerald-500/10 text-emerald-400' : 'bg-[#191d26] text-[#9ca3af]'}`}>
+                <div
+                  className={`p-1.5 rounded-md ${
+                    isActive
+                      ? 'bg-[#FF5A1F]/15 text-[var(--accent-orange-text)]'
+                      : 'bg-[var(--bg-surface)] text-[var(--accent-secondary)]'
+                  }`}
+                >
                   <Icon className="w-3.5 h-3.5" />
                 </div>
-                <span className="text-[10px] font-mono text-[#525a6a]">0{idx + 1}</span>
+                <span className="text-[10px] font-mono text-[var(--text-muted)] tabular-nums">0{idx + 1}</span>
               </div>
-              <div className="text-xs font-semibold text-white tracking-tight">{step.label}</div>
-              <div className="text-[10px] font-mono text-[#717b8c] truncate w-full mt-0.5">
+              <div className="text-xs font-semibold text-[var(--text-primary)] tracking-tight">{step.label}</div>
+              <div className="text-[10px] font-mono text-[var(--text-muted)] truncate w-full mt-0.5">
                 {step.checkpointState === 'HUMAN_REVIEW_REQUIRED' ? 'Gate: Human' : 'Auto Step'}
               </div>
             </button>
@@ -214,54 +225,55 @@ export function AgentWorkflowSimulator() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Left: Explanation & Boundaries */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="p-4 rounded-xl bg-[#13161c] border border-[#232834]">
-            <div className="flex items-center justify-between gap-2 mb-2">
-              <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                CURRENT STATE: {currentStep.label.toUpperCase()}
+          <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <div className="text-xs font-mono text-[var(--accent-orange-text)] font-semibold">
+                Current State: {currentStep.label.toUpperCase()}
               </div>
-              <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                currentStep.checkpointState === 'HUMAN_REVIEW_REQUIRED'
-                  ? 'bg-amber-950/40 text-amber-300 border-amber-800/50'
-                  : 'bg-[#1a1e27] text-[#9ca3af] border-[#29303d]'
-              }`}>
+              <span
+                className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                  currentStep.checkpointState === 'HUMAN_REVIEW_REQUIRED'
+                    ? 'bg-[#FF5A1F]/15 text-[var(--accent-orange-text)] border-[#FF5A1F]/40'
+                    : 'bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] border-[var(--border-color)]'
+                }`}
+              >
                 {currentStep.checkpointState === 'HUMAN_REVIEW_REQUIRED' ? 'HUMAN CHECKPOINT' : 'SYSTEM BOUNDED'}
               </span>
             </div>
-            <h4 className="text-base font-semibold text-white mb-1">
+            <h4 className="text-base font-semibold text-[var(--text-primary)] mb-1">
               {currentStep.action}
             </h4>
-            <p className="text-xs text-[#9ca3af] leading-relaxed">
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
               {currentStep.summary}
             </p>
           </div>
 
           {/* Access Boundaries Matrix */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div className="p-3.5 rounded-xl bg-[#11141a] border border-[#1f2430]">
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 mb-2">
+            <div className="p-3.5 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[var(--accent-secondary)] font-semibold mb-2">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 CAN ACCESS (EXPLICIT SCOPE)
               </div>
-              <ul className="space-y-1.5 text-[11px] text-[#cbd5e1]">
+              <ul className="space-y-1.5 text-[11px] text-[var(--text-secondary)]">
                 {currentStep.canAccess.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="text-emerald-500 font-bold">✓</span>
+                    <span className="text-[var(--accent-secondary)] font-bold">✓</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#11141a] border border-[#1f2430]">
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-rose-400 mb-2">
+            <div className="p-3.5 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#DC2626] dark:text-[#EF4444] font-semibold mb-2">
                 <Lock className="w-3.5 h-3.5" />
                 CANNOT ACCESS (HARD BOUNDARY)
               </div>
-              <ul className="space-y-1.5 text-[11px] text-[#9ca3af]">
+              <ul className="space-y-1.5 text-[11px] text-[var(--text-secondary)]">
                 {currentStep.cannotAccess.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="text-rose-500 font-bold">✕</span>
+                    <span className="text-[#DC2626] dark:text-[#EF4444] font-bold">✕</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -270,10 +282,10 @@ export function AgentWorkflowSimulator() {
           </div>
 
           {/* Core Principle Banner */}
-          <div className="p-3.5 rounded-xl bg-[#12161e] border border-emerald-900/30 text-xs text-[#9ca3af] flex items-start gap-2.5">
-            <ShieldAlert className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+          <div className="p-3.5 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] flex items-start gap-2.5">
+            <ShieldAlert className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-0.5" />
             <div>
-              <span className="text-white font-medium">Automation without invisible decision-making. </span>
+              <span className="text-[var(--text-primary)] font-medium">Automation without invisible decision-making. </span>
               Every meaningful action is designed around explicit permissions, human checkpoints, and traceable execution.
             </div>
           </div>
@@ -281,22 +293,22 @@ export function AgentWorkflowSimulator() {
 
         {/* Right: Technical Schema & Payload View */}
         <div className="lg:col-span-6 flex flex-col">
-          <div className="flex-1 rounded-xl bg-[#090a0d] border border-[#1e232e] p-4 flex flex-col font-mono text-xs">
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#1b1f27] text-[11px] text-[#6b7280]">
+          <div className="flex-1 rounded-xl bg-[#061421] border border-[#173D5B] p-4 flex flex-col font-mono text-xs">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#173D5B] text-[11px] text-[#75A4B5]">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                <span className="text-[#e5e7eb] font-semibold">{currentStep.samplePayload.title}</span>
+                <Terminal className="w-3.5 h-3.5 text-[#FF5A1F]" />
+                <span className="text-[#F5F8FA] font-semibold">{currentStep.samplePayload.title}</span>
               </div>
-              <span className="text-[10px] text-[#9ca3af]">IMMUTABLE SCHEMA VALIDATION</span>
+              <span className="text-[10px] text-[#A8B8C7]">IMMUTABLE SCHEMA VALIDATION</span>
             </div>
 
-            <pre className="flex-1 overflow-x-auto text-[11px] text-emerald-400/90 leading-relaxed p-2 bg-[#0c0d11] rounded-lg border border-[#161920]">
+            <pre className="flex-1 overflow-x-auto text-[11px] text-[#F5F8FA] leading-relaxed p-3 bg-[#0B2031] rounded-lg border border-[#173D5B]">
               <code>{currentStep.samplePayload.code}</code>
             </pre>
 
-            <div className="mt-3 pt-3 border-t border-[#1b1f27] flex items-center justify-between text-[10px] text-[#6b7280]">
+            <div className="mt-3 pt-3 border-t border-[#173D5B] flex items-center justify-between text-[10px] text-[#75A4B5]">
               <span>STATUS: REPLAYABLE_EVENT</span>
-              <span className="text-emerald-400">SIGNATURE: VERIFIED_ED25519</span>
+              <span className="text-[#FF7A45]">SIGNATURE: VERIFIED_ED25519</span>
             </div>
           </div>
         </div>

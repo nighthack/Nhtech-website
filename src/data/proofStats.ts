@@ -7,7 +7,7 @@ import { ProofStat } from '../types';
 export const rawProofStats: ProofStat[] = [
   {
     id: 'financial-streaming',
-    value: '2 PB / day',
+    value: 'Real-Time Scale',
     label: 'Financial Streaming & Anomaly Processing',
     context: 'Cross-region distributed ledger ingestion and real-time fraud pattern detection across peak transaction volumes.',
     verified: true,
@@ -15,7 +15,7 @@ export const rawProofStats: ProofStat[] = [
   },
   {
     id: 'vision-fps',
-    value: '60 FPS',
+    value: 'On-Device Edge',
     label: 'On-Device Kinematic Computer Vision',
     context: 'Real-time biomechanical joint tracking and motion analysis computed entirely on edge silicon with zero cloud roundtrip.',
     verified: true,

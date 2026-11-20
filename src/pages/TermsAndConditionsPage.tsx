@@ -56,79 +56,84 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
   };
 
   return (
-    <div id="terms-and-conditions-page" className="min-h-screen pt-28 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)] space-y-16">
+    <div id="terms-and-conditions-page" className="min-h-screen relative overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]">
       
       {/* 1. Header with Breadcrumb & Operational Badges */}
-      <SpatialPageHeader
-        tag="LEGAL, PAYMENT TERMS & GOVERNANCE"
-        title="Terms &"
-        titleAccent="Conditions."
-        subtitle={`Official terms of service, billing policies, online payment gateways, and refund framework for ${brand.displayName} (operated by ${brand.legalName}).`}
-        ctaText="Initiate Billing Inquiry"
-        ctaRoute="/contact"
-        secondaryCtaText="Explore Engineering Tracks"
-        secondaryCtaRoute="/fde"
-        onNavigate={onNavigate}
-        telemetryItems={[
-          { label: 'LEGAL ENTITY', value: brand.legalName.toUpperCase(), color: '#e0fb2e' },
-          { label: 'COMPLIANCE', value: 'PCI-DSS & 256-BIT ENCRYPTION', color: 'var(--text-primary)' },
-          { label: 'SETTLEMENT', value: 'DIRECT WIRE / RAZORPAY / ZOHO', color: '#38bdf8' },
-        ]}
-      />
+      <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
+        <SpatialPageHeader
+          tag="Legal, Payment Terms & Governance"
+          title="Terms &"
+          titleAccent="Conditions."
+          subtitle={`Official terms of service, billing policies, online payment gateways, and refund framework for ${brand.displayName} (operated by ${brand.legalName}).`}
+          ctaText="Initiate Billing Inquiry"
+          ctaRoute="/contact"
+          secondaryCtaText="Explore Engineering Tracks"
+          secondaryCtaRoute="/fde"
+          onNavigate={onNavigate}
+          telemetryItems={[
+            { label: 'LEGAL ENTITY', value: brand.legalName.toUpperCase(), color: 'var(--accent-orange-text)' },
+            { label: 'COMPLIANCE', value: 'PCI-DSS & 256-BIT ENCRYPTION', color: 'var(--text-primary)' },
+            { label: 'SETTLEMENT', value: 'DIRECT WIRE / RAZORPAY / ZOHO', color: 'var(--accent-secondary)' },
+          ]}
+        />
+      </section>
 
       {/* 2. Direct Payment Portals Quick Action Banner */}
-      <section className="relative z-10 max-w-7xl mx-auto">
-        <div className="rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-8 shadow-sm">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div className="space-y-1.5 text-left">
-              <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] uppercase font-bold">
-                <Receipt className="w-4 h-4" />
-                <span>Client Payment Gateways &amp; Invoice Portals</span>
+      <section className="py-12 border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)] relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-1.5 text-left">
+                <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] uppercase font-bold tracking-wider">
+                  <Receipt className="w-4 h-4" />
+                  <span>Client Payment Gateways &amp; Invoice Portals</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+                  Direct Settlement &amp; Invoice Payment
+                </h2>
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal max-w-2xl leading-relaxed">
+                  If you have received an active invoice or milestone authorization from {brand.displayName}, settle directly through our verified gateway links below or access your dedicated client portal.
+                </p>
               </div>
-              <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-                Direct Settlement &amp; Invoice Payment
-              </h2>
-              <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal max-w-2xl leading-relaxed">
-                If you have received an active invoice or milestone authorization from {brand.displayName}, settle directly through our verified gateway links below or access your dedicated client portal.
-              </p>
-            </div>
 
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
-              <a
-                href="https://pages.razorpay.com/nighthack-labs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#e0fb2e] text-black font-display font-bold text-xs tracking-tight hover:opacity-90 transition-all shadow-md cursor-pointer group"
-              >
-                <CreditCard className="w-4 h-4" />
-                <span>Pay Online</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+              <div className="flex flex-wrap items-center gap-3 shrink-0">
+                <a
+                  href="https://pages.razorpay.com/nighthack-labs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all shadow-md cursor-pointer group"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  <span>Pay Online</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
 
-              <a
-                href="https://invoice.zohosecure.in/portal/nighthacktechnologypvtltd/signin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-primary)] font-display font-bold text-xs tracking-tight transition-all shadow-sm cursor-pointer group"
-              >
-                <Building2 className="w-4 h-4 text-[var(--accent-secondary)]" />
-                <span>Pay from Invoice Portal</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[var(--text-muted)] group-hover:text-[var(--text-primary)]" />
-              </a>
+                <a
+                  href="https://invoice.zohosecure.in/portal/nighthacktechnologypvtltd/signin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-primary)] font-display font-bold text-xs tracking-tight transition-all shadow-sm cursor-pointer group"
+                >
+                  <Building2 className="w-4 h-4 text-[var(--accent-secondary)]" />
+                  <span>Pay from Invoice Portal</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[var(--text-muted)] group-hover:text-[var(--text-primary)]" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* 3. Main Content Layout: Sidebar Table of Contents + Comprehensive Sections */}
-      <section className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start text-left">
+      <section className="py-14 sm:py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start text-left">
         
         {/* Sticky Table of Contents Sidebar (Desktop) */}
-        <div className="lg:col-span-4 sticky top-28 hidden lg:block space-y-4">
-          <div className="p-6 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm">
+        <div className="lg:col-span-4 lg:sticky lg:top-28 hidden lg:block space-y-4">
+          <div className="p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm">
             <div className="text-xs font-mono font-bold uppercase text-[var(--text-muted)] tracking-wider flex items-center justify-between pb-3 border-b border-[var(--border-color)]">
               <span>Table of Contents</span>
-              <span className="text-[10px] text-[#e0fb2e]">12 SECTIONS</span>
+              <span className="text-[10px] text-[var(--accent-orange-text)]">12 SECTIONS</span>
             </div>
 
             <nav className="space-y-1 text-xs font-mono">
@@ -166,10 +171,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
         <div className="lg:col-span-8 space-y-12">
 
           {/* Section 1: Agreement & Entity */}
-          <div id="sec-1" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#e0fb2e] font-bold uppercase">
+          <div id="sec-1" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
               <Scale className="w-4 h-4" />
-              <span>Section 01 // Legal Structure</span>
+              <span>Section 01 · Legal Structure</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               1. Agreement to Terms &amp; Corporate Entity
@@ -192,10 +197,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 2: Scope & Engagements */}
-          <div id="sec-2" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#38bdf8] font-bold uppercase">
+          <div id="sec-2" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
               <FileText className="w-4 h-4" />
-              <span>Section 02 // Engagements</span>
+              <span>Section 02 · Engagements</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               2. Scope of Services &amp; SOW Structure
@@ -222,10 +227,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 3: Invoicing & Payment Terms */}
-          <div id="sec-3" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#e0fb2e] font-bold uppercase">
+          <div id="sec-3" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
               <Clock className="w-4 h-4" />
-              <span>Section 03 // Billing Schedule</span>
+              <span>Section 03 · Billing Schedule</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               3. Invoicing &amp; Payment Terms
@@ -255,10 +260,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 4: Supported Payment Methods */}
-          <div id="sec-4" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#38bdf8] font-bold uppercase">
+          <div id="sec-4" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
               <CreditCard className="w-4 h-4" />
-              <span>Section 04 // Payment Channels</span>
+              <span>Section 04 · Payment Channels</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               4. Supported Payment Methods
@@ -270,11 +275,11 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
               <div className="space-y-3">
                 <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] flex items-start gap-3.5">
-                  <Building2 className="w-5 h-5 text-[#e0fb2e] shrink-0 mt-0.5" />
+                  <Building2 className="w-5 h-5 text-[#FF5A1F] shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                    <div className="text-xs font-bold text-[var(--text-primary)] flex items-center gap-2">
+                    <div className="text-xs font-bold text-[var(--text-primary)] flex items-center gap-2 flex-wrap">
                       <span>1. Direct Bank Wire / Wire Transfer (Preferred)</span>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#e0fb2e]/10 text-[#e0fb2e] border border-[#e0fb2e]/20">0% Processing Fee</span>
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-[#FF5A1F]/10 text-[var(--accent-orange-text)] border border-[#FF5A1F]/25">0% Processing Fee</span>
                     </div>
                     <p className="text-xs text-[var(--text-secondary)]">
                       Domestic: NEFT, RTGS, IMPS. International: SWIFT wire transfers, SEPA payments, and automated ACH. Wire instructions are attached directly to each official invoice.
@@ -283,7 +288,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                 </div>
 
                 <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] flex items-start gap-3.5">
-                  <CreditCard className="w-5 h-5 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <CreditCard className="w-5 h-5 text-[var(--accent-secondary)] shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <div className="text-xs font-bold text-[var(--text-primary)]">
                       2. Online Credit &amp; Debit Cards
@@ -310,10 +315,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 5: Online Payment Gateways & External Links */}
-          <div id="sec-5" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#e0fb2e] font-bold uppercase">
+          <div id="sec-5" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
               <ExternalLink className="w-4 h-4" />
-              <span>Section 05 // Gateways</span>
+              <span>Section 05 · Gateways</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               5. Authorized Online Gateways &amp; Client Portals
@@ -329,8 +334,8 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                 <div className="p-5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] space-y-3 flex flex-col justify-between transition-all">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-[#e0fb2e]">GATEWAY LINK 01</span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Instant Checkout</span>
+                      <span className="text-xs font-mono font-bold text-[var(--accent-orange-text)]">GATEWAY LINK 01</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Instant Checkout</span>
                     </div>
                     <h3 className="text-base font-display font-bold text-[var(--text-primary)]">
                       Pay Online
@@ -345,7 +350,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                       href="https://pages.razorpay.com/nighthack-labs"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#e0fb2e] text-black font-display font-bold text-xs tracking-tight hover:opacity-90 transition-all cursor-pointer shadow-sm"
+                      className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
                     >
                       <span>Pay Online</span>
                       <ArrowUpRight className="w-4 h-4" />
@@ -357,8 +362,8 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                 <div className="p-5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] space-y-3 flex flex-col justify-between transition-all">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-[#38bdf8]">CLIENT PORTAL 02</span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Enterprise Invoices</span>
+                      <span className="text-xs font-mono font-bold text-[var(--accent-secondary)]">CLIENT PORTAL 02</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Enterprise Invoices</span>
                     </div>
                     <h3 className="text-base font-display font-bold text-[var(--text-primary)]">
                       Pay from Invoice Portal
@@ -384,23 +389,23 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
               </div>
 
               <div className="flex items-center gap-2 text-[11px] font-mono text-[var(--text-muted)] pt-1">
-                <Lock className="w-3.5 h-3.5 text-[#e0fb2e]" />
+                <Lock className="w-3.5 h-3.5 text-[#FF5A1F]" />
                 <span>All transactions use 256-bit TLS encryption. Financial credentials are never stored on NHTech servers.</span>
               </div>
             </div>
           </div>
 
           {/* Section 6: Refund & Cancellation Policy */}
-          <div id="sec-6" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#ff4b3e] font-bold uppercase">
+          <div id="sec-6" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
               <RotateCcw className="w-4 h-4" />
-              <span>Section 06 // Refund &amp; Cancellation Policy</span>
+              <span>Section 06 · Refund &amp; Cancellation Policy</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               6. Refund &amp; Cancellation Policy
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-4 leading-relaxed font-normal">
-              <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border-l-4 border-l-[#ff4b3e] border border-[var(--border-color)] space-y-2">
+              <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[#FF5A1F]/40 space-y-2">
                 <div className="font-bold text-[var(--text-primary)] text-xs uppercase font-mono tracking-wide">
                   Policy Summary: Non-Refundable Delivered Services
                 </div>
@@ -427,10 +432,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 7: Failed & Reversible Transactions */}
-          <div id="sec-7" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#e0fb2e] font-bold uppercase">
+          <div id="sec-7" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
               <AlertCircle className="w-4 h-4" />
-              <span>Section 07 // Failed Transactions</span>
+              <span>Section 07 · Failed Transactions</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               7. Failed, Interrupted &amp; Reversible Transactions
@@ -451,10 +456,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 8: Payment Disputes & Chargebacks */}
-          <div id="sec-8" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#38bdf8] font-bold uppercase">
+          <div id="sec-8" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
               <HelpCircle className="w-4 h-4" />
-              <span>Section 08 // Dispute Protocol</span>
+              <span>Section 08 · Dispute Protocol</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               8. Payment Disputes &amp; Chargeback Protocol
@@ -478,10 +483,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 9: Foreign Currency & Exchange Rates */}
-          <div id="sec-9" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#e0fb2e] font-bold uppercase">
+          <div id="sec-9" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
               <Globe className="w-4 h-4" />
-              <span>Section 09 // Currencies &amp; FX</span>
+              <span>Section 09 · Currencies &amp; FX</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               9. Foreign Currency, Exchange Rates &amp; International Wires
@@ -505,10 +510,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 10: Security & PCI-DSS Compliance */}
-          <div id="sec-10" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#38bdf8] font-bold uppercase">
+          <div id="sec-10" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
               <ShieldCheck className="w-4 h-4" />
-              <span>Section 10 // Security Standards</span>
+              <span>Section 10 · Security Standards</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               10. Data Protection, Security &amp; PCI-DSS Standards
@@ -532,10 +537,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 11: Governing Law & Jurisdiction */}
-          <div id="sec-11" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#e0fb2e] font-bold uppercase">
+          <div id="sec-11" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
               <Scale className="w-4 h-4" />
-              <span>Section 11 // Jurisdiction</span>
+              <span>Section 11 · Jurisdiction</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               11. Governing Law &amp; Jurisdiction
@@ -551,10 +556,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           </div>
 
           {/* Section 12: Contact & Billing Information */}
-          <div id="sec-12" className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-6 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#38bdf8] font-bold uppercase">
+          <div id="sec-12" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-6 shadow-sm scroll-mt-28">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
               <Mail className="w-4 h-4" />
-              <span>Section 12 // Contact Information</span>
+              <span>Section 12 · Contact Information</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               12. Billing Support &amp; Grievance Redressal
@@ -600,7 +605,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => onNavigate('/contact')}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--text-primary)] text-[var(--bg-base)] text-xs font-display font-bold hover:opacity-90 transition-all cursor-pointer shadow-md"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] text-xs font-display font-bold transition-all cursor-pointer shadow-md"
                 >
                   <span>Submit Inquiry via Contact Form</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -611,12 +616,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Effective Date Box */}
           <div className="p-5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
-            <span className="w-2 h-2 rounded-full bg-[#e0fb2e]" />
             <span>Effective Date &amp; Version: <strong className="text-[var(--text-primary)]">October 2024 / v2.4</strong></span>
           </div>
 
         </div>
 
+        </div>
       </section>
 
     </div>

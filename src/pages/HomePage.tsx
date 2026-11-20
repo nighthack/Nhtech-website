@@ -1,8 +1,11 @@
 import { RoutePath, CaseStudy } from '../types';
+import { ScrollProgressRail } from '../components/common/ScrollMotion';
 import { IntelligenceCore3D } from '../components/home/IntelligenceCore3D';
 import { HeroMediaStage } from '../components/home/HeroMediaStage';
-import { EditorialProofStrip } from '../components/home/EditorialProofStrip';
+import { WhoWeWorkWithStrip } from '../components/home/WhoWeWorkWithStrip';
+import { FeaturedCaseStudySection } from '../components/home/FeaturedCaseStudySection';
 import { HomeTracksOverview } from '../components/home/HomeTracksOverview';
+import { EditorialProofStrip } from '../components/home/EditorialProofStrip';
 import { SelectedWorkCompositions } from '../components/home/SelectedWorkCompositions';
 import { ClimaxCTA } from '../components/home/ClimaxCTA';
 
@@ -13,36 +16,48 @@ interface HomePageProps {
 
 export function HomePage({ onNavigate, onSelectCaseStudy }: HomePageProps) {
   return (
-    <div id="nhtech-homepage" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] relative selection:bg-[#e0fb2e] selection:text-black">
-      
-      {/* 0. Ambient Subtle Lighting */}
+    <div id="nhtech-homepage" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] relative selection:bg-[#FF5A1F] selection:text-[#061421]">
+      <ScrollProgressRail />
+      {/* 0. Ambient Subtle Ocean & Signal Light Field */}
       <IntelligenceCore3D />
 
-      {/* 1. HERO: NHTech turns complex business problems into production AI systems */}
+      {/* 1. HERO: We turn complex business operations into production-ready AI systems */}
       <div className="relative z-10">
         <HeroMediaStage onNavigate={onNavigate} />
       </div>
 
-      {/* 2. BRIEF TECHNICAL PRODUCTION PROOF: Verified Industry Milestones */}
+      {/* 2. WHO WE WORK WITH: Verified Industry & Company Strip */}
       <div className="relative z-10">
-        <EditorialProofStrip />
+        <WhoWeWorkWithStrip onNavigate={onNavigate} />
       </div>
 
-      {/* 3. THREE CORE TRACKS: 01 FDE, 02 Vision & Edge AI, 03 Complex Business Solutions */}
+      {/* 3. FEATURED REAL CASE STUDY NEAR TOP: Problem -> Solution -> Outcome */}
+      <div className="relative z-10">
+        <FeaturedCaseStudySection
+          onNavigate={onNavigate}
+          onSelectCaseStudy={onSelectCaseStudy}
+        />
+      </div>
+
+      {/* 4. THREE CORE OFFERINGS: Embedded Engineering Teams, Vision & Edge AI, Custom AI Platforms */}
       <div className="relative z-10">
         <HomeTracksOverview onNavigate={onNavigate} />
       </div>
 
-      {/* 4. SELECTED WORK / BRIEF PROOF: Production Case Studies Across Tracks */}
+      {/* 5. DEFENSIBLE PRODUCTION PROOF */}
+      <div className="relative z-10">
+        <EditorialProofStrip />
+      </div>
+
+      {/* 6. SELECTED WORK ACROSS ALL THREE TRACKS */}
       <div className="relative z-10">
         <SelectedWorkCompositions onNavigate={onNavigate} />
       </div>
 
-      {/* 5. CTA: Initiate an Architecture Session / Deploy an Engineering Pod */}
+      {/* 7. CTA: Discuss a business workflow */}
       <div className="relative z-10">
         <ClimaxCTA onNavigate={onNavigate} />
       </div>
-
     </div>
   );
 }

@@ -39,29 +39,29 @@ export function IntelligenceCore3D() {
     window.addEventListener('resize', handleResize, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // Subtle ambient color orbs (restrained palette: violet and subtle lime glow)
+    // Subtle ambient color orbs (restrained Deep Ocean and subtle Signal Orange glow)
     const isDark = theme === 'dark';
     const orbs = isDark
       ? [
-          { x: width * 0.3, y: height * 0.2, radius: 550, color: 'rgba(215, 189, 249, 0.06)', vx: 0.15, vy: 0.12, phase: 0 },
-          { x: width * 0.75, y: height * 0.4, radius: 600, color: 'rgba(224, 251, 46, 0.035)', vx: -0.12, vy: 0.15, phase: 2 },
-          { x: width * 0.45, y: height * 0.8, radius: 500, color: 'rgba(215, 189, 249, 0.04)', vx: 0.1, vy: -0.12, phase: 4 }
+          { x: width * 0.28, y: height * 0.2, radius: 580, color: 'rgba(23, 61, 91, 0.22)', vx: 0.14, vy: 0.1, phase: 0 },
+          { x: width * 0.78, y: height * 0.35, radius: 520, color: 'rgba(255, 90, 31, 0.045)', vx: -0.1, vy: 0.12, phase: 2 },
+          { x: width * 0.45, y: height * 0.82, radius: 540, color: 'rgba(50, 107, 134, 0.12)', vx: 0.09, vy: -0.1, phase: 4 }
         ]
       : [
-          { x: width * 0.3, y: height * 0.2, radius: 550, color: 'rgba(99, 54, 168, 0.035)', vx: 0.15, vy: 0.12, phase: 0 },
-          { x: width * 0.75, y: height * 0.4, radius: 600, color: 'rgba(120, 160, 20, 0.025)', vx: -0.12, vy: 0.15, phase: 2 },
-          { x: width * 0.45, y: height * 0.8, radius: 500, color: 'rgba(99, 54, 168, 0.025)', vx: 0.1, vy: -0.12, phase: 4 }
+          { x: width * 0.28, y: height * 0.2, radius: 580, color: 'rgba(36, 83, 111, 0.05)', vx: 0.14, vy: 0.1, phase: 0 },
+          { x: width * 0.78, y: height * 0.35, radius: 520, color: 'rgba(255, 90, 31, 0.03)', vx: -0.1, vy: 0.12, phase: 2 },
+          { x: width * 0.45, y: height * 0.82, radius: 540, color: 'rgba(71, 132, 155, 0.045)', vx: 0.09, vy: -0.1, phase: 4 }
         ];
 
     // Minimal floating filaments
-    const particleCount = Math.min(24, Math.floor(width / 50));
+    const particleCount = Math.min(20, Math.floor(width / 64));
     const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.2,
-      vy: (Math.random() - 0.5) * 0.2,
-      size: Math.random() * 1.5 + 0.5,
-      alpha: isDark ? Math.random() * 0.25 + 0.08 : Math.random() * 0.15 + 0.05
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+      size: Math.random() * 1.4 + 0.5,
+      alpha: isDark ? Math.random() * 0.22 + 0.06 : Math.random() * 0.14 + 0.04
     }));
 
     let time = 0;
@@ -95,16 +95,16 @@ export function IntelligenceCore3D() {
       }
 
       // 2. Subtle cursor reaction
-      const mouseGrad = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 350);
-      mouseGrad.addColorStop(0, isDark ? 'rgba(215, 189, 249, 0.035)' : 'rgba(99, 54, 168, 0.02)');
+      const mouseGrad = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 340);
+      mouseGrad.addColorStop(0, isDark ? 'rgba(71, 132, 155, 0.06)' : 'rgba(23, 61, 91, 0.03)');
       mouseGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = mouseGrad;
       ctx.beginPath();
-      ctx.arc(mouseX, mouseY, 350, 0, Math.PI * 2);
+      ctx.arc(mouseX, mouseY, 340, 0, Math.PI * 2);
       ctx.fill();
 
       // 3. Subtle particles
-      ctx.fillStyle = isDark ? '#d7bdf9' : '#6336a8';
+      ctx.fillStyle = isDark ? '#75A4B5' : '#24536F';
       for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -140,10 +140,10 @@ export function IntelligenceCore3D() {
     >
       <canvas
         ref={canvasRef}
-        className="w-full h-full block opacity-90"
+        className="w-full h-full block opacity-65"
       />
       {/* Subtle fine dot grid texture */}
-      <div className="absolute inset-0 bg-subtle-grid pointer-events-none opacity-40" />
+      <div className="absolute inset-0 bg-subtle-grid pointer-events-none opacity-35" />
     </div>
   );
 }

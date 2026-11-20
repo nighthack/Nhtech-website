@@ -95,9 +95,9 @@ export function SovereignTopologyStage({
             <button
               key={modeKey}
               onClick={() => handleModeSelect(modeKey)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+              className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                 isSelected
-                  ? 'bg-[var(--text-primary)] text-[var(--bg-base)] font-bold shadow-sm'
+                  ? 'bg-[#FF5A1F] text-[#061421] font-bold shadow-sm'
                   : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]'
               }`}
             >
@@ -115,13 +115,13 @@ export function SovereignTopologyStage({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -15 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="p-6 sm:p-10 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6"
+          className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6"
         >
           
           {/* Topology Overview Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div className="space-y-1 text-left">
-              <div className="text-[11px] font-mono text-[#e0fb2e] uppercase tracking-wider font-bold">
+              <div className="text-[11px] font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-bold">
                 {current.badge}
               </div>
               <div className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -129,7 +129,7 @@ export function SovereignTopologyStage({
               </div>
             </div>
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--text-primary)] px-3 py-1.5 rounded-lg bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]">
-              <Activity className="w-3.5 h-3.5 text-[#38bdf8]" />
+              <Activity className="w-3.5 h-3.5 text-[var(--accent-secondary)]" />
               <span>PRODUCTION-GRADE RUNTIME</span>
             </div>
           </div>
@@ -143,7 +143,7 @@ export function SovereignTopologyStage({
             <div className="text-[11px] font-mono text-[var(--text-muted)] uppercase">
               <span>DEPLOYMENT TOPOLOGY NODES</span>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {current.nodes.map((node) => (
                 <div
@@ -152,7 +152,6 @@ export function SovereignTopologyStage({
                 >
                   <div className="flex items-center justify-between text-xs font-mono">
                     <span className="font-bold text-[var(--text-primary)]">{node.title}</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
                   </div>
                   <p className="text-[11px] text-[var(--text-secondary)] font-normal leading-relaxed">
                     {node.desc}
@@ -173,7 +172,7 @@ export function SovereignTopologyStage({
                     className="p-3.5 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-1.5"
                   >
                     <div className="flex items-center gap-2 text-[11px] font-mono text-[var(--text-muted)]">
-                      <Icon className="w-3.5 h-3.5 text-[#e0fb2e]" />
+                      <Icon className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
                       <span>{spec.label}</span>
                     </div>
                     <div className="text-xs font-medium text-[var(--text-primary)]">

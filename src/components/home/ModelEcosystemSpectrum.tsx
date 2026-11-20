@@ -38,7 +38,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Complex multi-step decision chains, deep code synthesis, unstructured legal synthesis, and open-ended agent deliberation.',
       examples: 'GPT-4.5, Claude 3.7 Sonnet, Gemini 2.0 Pro, DeepSeek R1',
       bestFor: 'Multi-modal research, high-ambiguity planning, unstructured extraction',
-      accent: '#d7bdf9'
+      accent: '#75A4B5'
     },
     {
       id: 'slm',
@@ -47,7 +47,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Compact parameter architectures (1B-8B) optimized for sub-15ms classification, routing, and embedded execution with minimal memory footprint.',
       examples: 'Phi-4, Llama 3.2 3B, Qwen 2.5 7B, Gemma 2 2B',
       bestFor: 'Edge devices, high-frequency classification, interactive typing assistance',
-      accent: '#38bdf8'
+      accent: '#47849B'
     },
     {
       id: 'open-weight',
@@ -56,7 +56,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Models hosted directly on your VPC or on-premise GPU clusters. 100% data privacy with zero third-party API exposure.',
       examples: 'Llama 3.3 70B, Mistral Large, Qwen 2.5, DeepSeek V3',
       bestFor: 'Private cloud / on-prem infrastructure, strict regulatory boundaries, self-hosted workloads',
-      accent: '#e0fb2e'
+      accent: '#FF5A1F'
     },
     {
       id: 'fine-tuned',
@@ -65,40 +65,38 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Models distilled and quantized on your proprietary domain corpus. Achieves frontier accuracy on specific business tasks at 1/10th the inference cost.',
       examples: 'Custom LoRA / QLoRA checkpoints, quantized FP8 / INT4 engines',
       bestFor: 'Proprietary enterprise schemas, specialized terminology, cost reduction at scale',
-      accent: '#e0fb2e'
+      accent: '#FF5A1F'
     }
   ];
 
   return (
-    <section 
+    <section
       id="model-ecosystem-section"
-      className="py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative overflow-hidden"
+      className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative overflow-hidden z-10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 relative z-10">
-        
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <motion.div 
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 'some' }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest flex items-center gap-2"
+              className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
-              <span>MODEL-AGNOSTIC POSITIONING</span>
-            </motion.div>
-            
-            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.18]">
+              Model-Agnostic Positioning
+            </motion.p>
+
+            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.15]">
               Models are only useful when they work{' '}
-              <span className="font-bold text-[var(--accent-secondary)]">
+              <span className="text-[var(--accent-secondary)]">
                 inside the real operation.
               </span>
             </MaskedHeading>
           </div>
 
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left" delay={0.2}>
+          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left" delay={0.15}>
             We are strictly model-agnostic. We evaluate frontier models, SLMs, open-weights, and fine-tuning strategies based on your operational latency, accuracy, cost, and infrastructure control requirements.
           </ScrollText>
         </div>
@@ -107,9 +105,9 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
         <div className="space-y-4 text-left">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-              MODEL ECOSYSTEMS &amp; LABS WE ENGINEER WITH
+              Model Ecosystems &amp; Labs We Engineer With
             </span>
-            <span className="text-[11px] font-mono text-[#e0fb2e]">
+            <span className="text-[11px] font-mono text-[var(--accent-secondary)] font-semibold">
               Multi-Architecture Runtime
             </span>
           </div>
@@ -120,16 +118,18 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                 key={lab.name}
                 className={`p-3 rounded-xl border transition-all text-left space-y-1 ${
                   lab.isPartner
-                    ? 'bg-[var(--bg-surface-elevated)] border-[#e0fb2e]/50 shadow-sm'
+                    ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F]/45 shadow-sm'
                     : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
                 }`}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-1">
                   <div className="text-xs font-display font-bold text-[var(--text-primary)]">
                     {lab.name}
                   </div>
                   {lab.isPartner && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" title="Verified Select Partner" />
+                    <span className="text-[9px] font-mono font-bold text-[var(--accent-orange-text)]" title="Verified Select Partner">
+                      Select
+                    </span>
                   )}
                 </div>
                 <div className="text-[10px] text-[var(--text-muted)] font-mono truncate">
@@ -143,7 +143,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
         {/* The 4-Tier Spectrum Interactive Selector */}
         <div className="space-y-6 text-left">
           <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-            THE MODEL SPECTRUM: MATCHING ARCHITECTURE TO WORKLOAD
+            The Model Spectrum: Matching Architecture to Workload
           </div>
 
           {/* Stepper bar */}
@@ -153,15 +153,16 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
               return (
                 <button
                   key={tier.id}
+                  type="button"
                   onClick={() => setSelectedCategory(tier.id as any)}
                   className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden cursor-pointer space-y-2 ${
                     isSelected
-                      ? 'bg-[var(--bg-surface-elevated)] border-[var(--text-primary)] shadow-md'
+                      ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F] shadow-md'
                       : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
                   }`}
                 >
                   <div className="text-xs font-mono font-bold" style={{ color: tier.accent }}>
-                    SPECTRUM TIER
+                    Spectrum Tier
                   </div>
                   <div className="text-base font-display font-bold text-[var(--text-primary)]">
                     {tier.title}
@@ -171,10 +172,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   </div>
 
                   {isSelected && (
-                    <motion.div
-                      layoutId="active-spectrum-pill"
-                      className="absolute bottom-0 left-0 right-0 h-1 bg-[#e0fb2e]"
-                    />
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF5A1F]" />
                   )}
                 </button>
               );
@@ -183,19 +181,19 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
 
           {/* Detailed Selected Tier Card */}
           {(() => {
-            const current = spectrumTiers.find(t => t.id === selectedCategory)!;
+            const current = spectrumTiers.find((t) => t.id === selectedCategory)!;
             return (
               <motion.div
                 key={current.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="p-8 sm:p-10 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6"
+                className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
                   <div>
-                    <span className="text-xs font-mono text-[#e0fb2e] uppercase font-bold">
-                      TIER ARCHITECTURE
+                    <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+                      Tier Architecture
                     </span>
                     <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mt-1">
                       {current.title} — {current.sub}
@@ -211,9 +209,9 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   {current.desc}
                 </p>
 
-                <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] flex items-center justify-between">
+                <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] flex flex-wrap items-center justify-between gap-2">
                   <span className="text-[var(--text-muted)]">Representative Models:</span>
-                  <span className="font-bold text-[#e0fb2e]">{current.examples}</span>
+                  <span className="font-bold text-[var(--accent-secondary)]">{current.examples}</span>
                 </div>
               </motion.div>
             );
@@ -223,7 +221,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
         {/* 6 Selection Criteria Grid */}
         <div className="space-y-4 text-left">
           <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-            HOW WE CHOOSE: THE 6 ARCHITECTURAL DECISION CRITERIA
+            How We Choose: 6 Architectural Decision Criteria
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
@@ -234,7 +232,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   key={cIdx}
                   className="p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2 text-left"
                 >
-                  <Icon className="w-4 h-4 text-[#e0fb2e]" />
+                  <Icon className="w-4 h-4 text-[var(--accent-orange-text)]" />
                   <div className="text-xs font-display font-bold text-[var(--text-primary)]">
                     {crit.name}
                   </div>
@@ -250,18 +248,18 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
         {/* Action Link with High-Intent CTA */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[var(--border-color)] text-left">
           <button
+            type="button"
             onClick={onExploreWork}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[var(--text-primary)] text-[var(--bg-base)] font-display font-bold text-xs tracking-tight hover:opacity-90 transition-all cursor-pointer shadow-md"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
           >
-            <span>Discuss Your AI Architecture</span>
-            <ArrowRight className="w-4 h-4 text-current" />
+            <span>Explore Production Case Studies</span>
+            <ArrowRight className="w-4 h-4 text-[#061421]" />
           </button>
 
           <span className="text-xs font-mono text-[var(--text-muted)]">
-            OpenAI Select Partner • Model-Agnostic Routing • Custom Fine-Tuning
+            OpenAI Select Partner · Model-Agnostic Routing · Custom Fine-Tuning
           </span>
         </div>
-
       </div>
     </section>
   );

@@ -1,157 +1,194 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Terminal, Eye, Layers, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Users, Eye, Layers } from 'lucide-react';
 import { RoutePath } from '../../types';
 import { MaskedHeading, ScrollText } from '../common/ScrollMotion';
+import { OfferingTrackVisual } from '../visuals/WorkflowVisuals';
 
 interface HomeTracksOverviewProps {
   onNavigate: (path: RoutePath) => void;
 }
 
 export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
-  const tracks = [
+  const offerings = [
     {
-      id: 'fde',
+      id: 'embedded-teams',
+      visualMode: 'embedded' as const,
       number: '01',
-      badge: 'CORE OPERATING MODEL',
-      title: 'Forward Deployed Engineering',
+      badge: 'Forward Deployed Engineering',
+      title: 'Embedded Engineering Teams',
       route: '/fde' as RoutePath,
-      icon: Terminal,
-      accent: '#e0fb2e',
-      summary: 'AI transformation inside enterprise environments. Senior engineering pods embedded directly with your domain teams: business problem → architecture → prototype → production.',
+      icon: Users,
+      imageCaption: 'Workflow State Routing & Human Review Gates',
+      summary:
+        'Senior product and AI engineers deployed alongside your domain team to turn bottlenecks into production software—from workflow discovery through live enterprise integration.',
       highlights: [
-        'Embedded pods writing code directly inside your repository',
-        'Deterministic state machines & human approval gates',
-        'SLMs through frontier models tailored to cost and latency'
+        'Embedded engineering pods working directly inside your codebase and infrastructure',
+        'Deterministic state machines with mandatory human review gates and full audit logs',
+        'Small Language Models and frontier models matched cleanly to cost and latency targets'
       ],
-      cta: 'Explore FDE Methodology'
+      cta: 'Explore Embedded Engineering'
     },
     {
       id: 'vision-edge',
+      visualMode: 'vision-edge' as const,
       number: '02',
-      badge: 'PHYSICAL PERCEPTION & EDGE',
-      title: 'Vision & Edge AI',
+      badge: 'Physical Perception & Edge',
+      title: 'Vision & Edge AI Systems',
       route: '/computer-vision' as RoutePath,
       icon: Eye,
-      accent: '#38bdf8',
-      summary: 'Computer vision, on-device/edge inference, and industrial physical-world AI. Kinematic tracking, defect inspection, and low-latency execution across tablets, industrial cameras, and mobile devices.',
+      imageCaption: 'On-Device Edge Inference · Zero Cloud Latency',
+      summary:
+        'Computer vision, kinematic movement tracking, and industrial defect inspection running locally on commercial tablets, cameras, and edge hardware with zero cloud latency.',
       highlights: [
-        'Real-time kinematic tracking & surface defect inspection',
-        'Sub-20ms local inference on commercial tablets & edge nodes',
-        'TensorRT, ONNX runtimes & OpenVLA physical perception'
+        'Real-time biomechanical skeletal tracking & precision surface defect detection',
+        'On-device inference executing locally in real time with offline SQLite storage',
+        'Optimized TensorRT, ONNX Runtime, and Vision-Language-Action (OpenVLA) pipelines'
       ],
       cta: 'Explore Vision & Edge AI'
     },
     {
-      id: 'complex-business',
+      id: 'custom-platforms',
+      visualMode: 'custom-platforms' as const,
       number: '03',
-      badge: 'ENTERPRISE PRODUCT ENGINEERING',
-      title: 'Complex Business Solutions',
+      badge: 'Enterprise Systems & Workflows',
+      title: 'Custom AI Platforms & Workflow Systems',
       route: '/what-we-build' as RoutePath,
       icon: Layers,
-      accent: '#d7bdf9',
-      summary: 'AI-first enterprise applications and complex business platforms. Hardened CRM, workflow, productivity, and compliance systems—alongside loyalty, payments, ERP orchestration, and on-prem deployments.',
+      imageCaption: 'Private VPC, On-Premises & Custom Platforms',
+      summary:
+        'Bespoke enterprise applications, document intelligence, and high-throughput data platforms—integrating ERP, CRM, payments, loyalty, and compliance pipelines with full IP retention.',
       highlights: [
-        'ERP, payments, loyalty, CRM & compliance platforms',
-        'Document intelligence with spatial citation coordinates',
-        'Sovereign models & private deployment with client IP control'
+        'Enterprise Resource Planning, payments, loyalty, CRM, and compliance systems',
+        'Document intelligence with bounding-box spatial source citations inside every record',
+        'Cloud, private VPC, or on-premises deployments with 100% client IP ownership'
       ],
-      cta: 'Explore What We Build'
+      cta: 'Explore Custom Platforms'
     }
   ];
 
   return (
-    <section id="three-core-tracks-overview" className="py-24 sm:py-32 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        
+    <section
+      id="three-core-tracks-overview"
+      className="py-16 sm:py-24 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-mono text-[#e0fb2e]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
-              <span>CORE ENGINEERING CAPABILITIES</span>
-            </div>
+            <p className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold">
+              Core Engineering Offerings
+            </p>
             <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              Three pillars of applied execution.
+              Three ways we deliver production AI.
             </MaskedHeading>
             <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
-              We deconstruct complex business problems into production systems across three specialized engineering tracks.
+              Every engagement starts with your operational constraint—combining embedded engineering teams, edge perception, and custom enterprise architecture.
             </ScrollText>
           </div>
 
           <button
+            type="button"
             onClick={() => onNavigate('/what-we-build')}
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer self-start sm:self-end"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-orange-text)] hover:underline transition-colors cursor-pointer self-start sm:self-end shrink-0"
           >
-            <span>View all capabilities</span>
+            <span>Explore all capabilities</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* 3 Core Tracks Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {tracks.map((track, idx) => {
-            const Icon = track.icon;
+        {/* Alternating Asymmetric Editorial Chapters (Zero identical card walls) */}
+        <div className="space-y-16 sm:space-y-20">
+          {offerings.map((offering, idx) => {
+            const Icon = offering.icon;
+            const isEven = idx % 2 === 1;
+
             return (
-              <motion.div
-                key={track.id}
-                initial={{ opacity: 0, y: 24 }}
+              <motion.article
+                key={offering.id}
+                initial={{ opacity: 0, y: 26 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-all flex flex-col justify-between space-y-8 group shadow-sm text-left relative overflow-hidden"
+                viewport={{ once: true, amount: 'some' }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left"
               >
-                <div className="space-y-6">
-                  {/* Card Header */}
-                  <div className="flex items-center justify-between">
-                    <div className="p-3 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-[var(--text-primary)]">
-                      <Icon className="w-5 h-5" style={{ color: track.accent }} />
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[10px] font-mono uppercase font-bold tracking-wider" style={{ color: track.accent }}>
-                        TRACK {track.number}
-                      </span>
-                      <div className="text-[10px] font-mono text-[var(--text-muted)]">
-                        {track.badge}
-                      </div>
-                    </div>
+                {/* Purposeful Live Architecture Diagram (alternates left/right on desktop) */}
+                <div
+                  className={`lg:col-span-6 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}
+                >
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => onNavigate(offering.route)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onNavigate(offering.route);
+                      }
+                    }}
+                    className="group cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-[#FF5A1F] transition-transform duration-300 hover:-translate-y-0.5"
+                    aria-label={`${offering.title} — ${offering.cta}`}
+                  >
+                    <OfferingTrackVisual
+                      mode={offering.visualMode}
+                      indexNumber={offering.number}
+                      badge={offering.badge}
+                      caption={offering.imageCaption}
+                    />
+                  </div>
+                </div>
+
+                {/* Unboxed Editorial Copy & Deliverables */}
+                <div
+                  className={`lg:col-span-6 space-y-6 ${isEven ? 'lg:order-1 lg:pr-4' : 'lg:order-2 lg:pl-4'}`}
+                >
+                  <div className="flex items-center gap-3 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase tracking-wider">
+                    <Icon className="w-4 h-4" />
+                    <span>Offering {offering.number}</span>
+                    <span className="text-[var(--border-hover)]">/</span>
+                    <span className="text-[var(--accent-secondary)] font-normal">{offering.badge}</span>
                   </div>
 
-                  {/* Title & Summary */}
-                  <div className="space-y-2.5">
-                    <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--text-primary)] transition-colors">
-                      {track.title}
+                  <div className="space-y-3">
+                    <h3 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-tight">
+                      {offering.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-normal">
-                      {track.summary}
+                    <p className="text-base text-[var(--text-secondary)] leading-relaxed">
+                      {offering.summary}
                     </p>
                   </div>
 
-                  {/* Concrete Highlights */}
-                  <div className="space-y-2 pt-2 border-t border-[var(--border-color)]">
-                    {track.highlights.map((h, hIdx) => (
-                      <div key={hIdx} className="flex items-start gap-2.5 text-xs text-[var(--text-secondary)] font-mono">
-                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: track.accent }} />
-                        <span>{h}</span>
-                      </div>
+                  {/* Clean Hairline List instead of boxed checkmarks */}
+                  <ul className="divide-y divide-[var(--border-color)] border-t border-b border-[var(--border-color)]">
+                    {offering.highlights.map((item, hIdx) => (
+                      <li
+                        key={hIdx}
+                        className="py-3.5 flex items-start gap-3 text-sm text-[var(--text-secondary)]"
+                      >
+                        <span className="font-mono text-xs font-bold text-[var(--accent-orange-text)] tabular-nums mt-0.5">
+                          0{hIdx + 1}
+                        </span>
+                        <span className="leading-snug text-[var(--text-primary)]">{item}</span>
+                      </li>
                     ))}
+                  </ul>
+
+                  <div className="pt-1">
+                    <button
+                      type="button"
+                      onClick={() => onNavigate(offering.route)}
+                      className="inline-flex items-center gap-3 text-sm font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer group"
+                    >
+                      <span>{offering.cta}</span>
+                      <span className="w-8 h-8 rounded-full border border-[var(--border-hover)] group-hover:border-[#FF5A1F] group-hover:bg-[#FF5A1F] group-hover:text-[#061421] flex items-center justify-center transition-all">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </button>
                   </div>
                 </div>
-
-                {/* Card Action Link */}
-                <div className="pt-4 border-t border-[var(--border-color)]">
-                  <button
-                    onClick={() => onNavigate(track.route)}
-                    className="w-full inline-flex items-center justify-between px-4 py-3 rounded-xl bg-[var(--bg-surface-elevated)] hover:bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs font-mono font-bold text-[var(--text-primary)] transition-all cursor-pointer group-hover:border-[var(--border-hover)]"
-                  >
-                    <span>{track.cta}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-current group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </motion.div>
+              </motion.article>
             );
           })}
         </div>
-
       </div>
     </section>
   );

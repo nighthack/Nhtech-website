@@ -13,7 +13,7 @@ export const brand = {
   formerName: "NightHack Labs",
   
   // Core Positioning
-  heroHeadline: "Complex business problems. Production systems.",
+  heroHeadline: "We turn complex business operations into production-ready AI systems.",
   tagline: "Forward-deployed engineers building AI and product systems alongside your team.",
   subHeadline: "NHTech takes difficult business problems and converts them into production technology. We combine deep product engineering with AI implementation, with engineers working closely with your team from problem definition through deployment.",
   editorialKicker: "Forward Deployed Engineering. Deep Product Thinking. Production Systems.",
@@ -50,32 +50,34 @@ export const brand = {
   },
 
   // Prototype Promise
-  prototypeCommitment: "Focused prototypes can move from problem statement to working validation in short sprint cycles, with approximately 30-day prototype tracks available for suitable scopes.",
+  prototypeCommitment: "Focused prototypes move from problem statement to working validation in structured, milestone-driven sprint cycles tailored to your operational scope.",
 
-  // Visual Tokens & Theming
+  // Visual Tokens & Theming (Deep Ocean, Graphite, Signal Orange)
   tokens: {
     colors: {
-      background: "#0b0c0e",
-      surface: "#111317",
-      surfaceRaised: "#16191f",
-      surfaceHighlight: "#1c2027",
-      border: "#1f232b",
-      borderSubtle: "#171a20",
-      borderActive: "#343b47",
-      textPrimary: "#ededed",
-      textSecondary: "#9ca3af",
-      textMuted: "#6b7280",
-      accent: "#10b981", // Crisp architectural emerald
-      accentHover: "#059669",
-      accentMuted: "rgba(16, 185, 129, 0.12)",
-      accentBorder: "rgba(16, 185, 129, 0.3)",
-      warning: "#f59e0b",
-      info: "#38bdf8",
-      error: "#f43f5e"
+      background: "#061421",
+      surface: "#0B2030",
+      surfaceRaised: "#173D5B",
+      surfaceHighlight: "#24536F",
+      border: "rgba(166, 195, 206, 0.16)",
+      borderSubtle: "rgba(166, 195, 206, 0.08)",
+      borderActive: "rgba(117, 164, 181, 0.36)",
+      textPrimary: "#F5F8FA",
+      textSecondary: "#D1E0E6",
+      textMuted: "#A6C3CE",
+      accent: "#FF5A1F",
+      accentHover: "#FF7A45",
+      accentMuted: "rgba(255, 90, 31, 0.14)",
+      accentBorder: "rgba(255, 90, 31, 0.35)",
+      oceanAccent: "#47849B",
+      success: "#22A06B",
+      warning: "#D99A18",
+      info: "#2786C7",
+      error: "#D64545"
     },
     radius: {
-      card: "12px",
-      button: "8px",
+      card: "16px",
+      button: "12px",
       pill: "9999px"
     }
   }

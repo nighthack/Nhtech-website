@@ -90,7 +90,7 @@ export const industries: Industry[] = [
     summary: 'Rapid prototyping, AI-native product architecture, and specialist engineering pods for founders tackling deep technical barriers.',
     challenge: 'Early-stage and growth tech ventures need to validate difficult AI assumptions and build production-ready architecture quickly without burning runway on generic agency detours.',
     systems: [
-      '~30-Day rapid prototype sprints proving difficult core assumptions',
+      'Rapid prototype sprints proving difficult core assumptions',
       'AI-native full-stack application architecture (React, FastAPI, PyTorch)',
       'Self-hosted open-weight LLM fine-tuning and retrieval pipelines',
       'Scalable cloud infrastructure (Terraform, Kubernetes, GPU orchestration)'

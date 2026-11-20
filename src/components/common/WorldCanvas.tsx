@@ -75,7 +75,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         const radius = Math.min(width, height) * 0.32;
 
         // Outer security perimeter ring
-        ctx.strokeStyle = 'rgba(224, 251, 46, 0.25)';
+        ctx.strokeStyle = 'rgba(71, 132, 155, 0.30)';
         ctx.lineWidth = 1.5;
         ctx.setLineDash([8, 8]);
         ctx.beginPath();
@@ -85,7 +85,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
 
         // Hexagonal containment mesh
         const sides = 6;
-        ctx.strokeStyle = 'rgba(215, 189, 249, 0.15)';
+        ctx.strokeStyle = 'rgba(117, 164, 181, 0.22)';
         ctx.beginPath();
         for (let s = 0; s <= sides; s++) {
           const angle = (s / sides) * Math.PI * 2 + t * 0.2;
@@ -97,7 +97,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         ctx.stroke();
 
         // Inner secure core
-        ctx.fillStyle = 'rgba(224, 251, 46, 0.08)';
+        ctx.fillStyle = 'rgba(50, 107, 134, 0.12)';
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius * 0.45, 0, Math.PI * 2);
         ctx.fill();
@@ -116,14 +116,14 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
           p.x += p.vx;
           p.y += p.vy;
 
-          ctx.fillStyle = i % 2 === 0 ? 'rgba(224, 251, 46, 0.7)' : 'rgba(215, 189, 249, 0.7)';
+          ctx.fillStyle = i % 5 === 0 ? 'rgba(255, 90, 31, 0.65)' : 'rgba(117, 164, 181, 0.65)';
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
           ctx.fill();
         });
       } else if (mode === 'manufacturing') {
-        // Brutalist mechanical lattice, GigE laser scan lines & telemetry
-        ctx.strokeStyle = 'rgba(224, 251, 46, 0.12)';
+        // Architectural lattice & optical scan lines
+        ctx.strokeStyle = 'rgba(71, 132, 155, 0.14)';
         ctx.lineWidth = 1;
         const gridSpacing = 60;
         for (let x = 0; x < width; x += gridSpacing) {
@@ -142,14 +142,14 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         // Horizontal inspection beam sweeping down
         const scanY = ((t * 80) % height);
         const grad = ctx.createLinearGradient(0, scanY - 20, 0, scanY + 20);
-        grad.addColorStop(0, 'rgba(224, 251, 46, 0)');
-        grad.addColorStop(0.5, 'rgba(224, 251, 46, 0.45)');
-        grad.addColorStop(1, 'rgba(224, 251, 46, 0)');
+        grad.addColorStop(0, 'rgba(71, 132, 155, 0)');
+        grad.addColorStop(0.5, 'rgba(71, 132, 155, 0.32)');
+        grad.addColorStop(1, 'rgba(71, 132, 155, 0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, scanY - 20, width, 40);
 
         // Crosshair at mouse
-        ctx.strokeStyle = 'rgba(224, 251, 46, 0.5)';
+        ctx.strokeStyle = 'rgba(255, 90, 31, 0.45)';
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, 25, 0, Math.PI * 2);
         ctx.moveTo(mouse.x - 35, mouse.y);
@@ -158,7 +158,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         ctx.lineTo(mouse.x, mouse.y + 35);
         ctx.stroke();
       } else if (mode === 'fintech') {
-        // Luminous high-velocity stream vectors & anomaly ripples
+        // Luminous high-velocity stream vectors
         particles.forEach((p, idx) => {
           p.x += p.vx * 2;
           p.y += p.vy * 0.5 + Math.sin(t + p.phase) * 0.8;
@@ -172,7 +172,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
             const p2 = particles[j];
             const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
             if (dist < 100) {
-              ctx.strokeStyle = `rgba(37, 82, 245, ${0.35 * (1 - dist / 100)})`;
+              ctx.strokeStyle = `rgba(71, 132, 155, ${0.32 * (1 - dist / 100)})`;
               ctx.lineWidth = 1;
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
@@ -181,42 +181,40 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
             }
           }
 
-          ctx.fillStyle = idx % 5 === 0 ? 'rgba(224, 251, 46, 0.9)' : 'rgba(37, 82, 245, 0.8)';
+          ctx.fillStyle = idx % 6 === 0 ? 'rgba(255, 90, 31, 0.8)' : 'rgba(117, 164, 181, 0.75)';
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius * 1.3, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, p.radius * 1.2, 0, Math.PI * 2);
           ctx.fill();
         });
       } else if (mode === 'vision') {
         // Skeletal kinematic joint graph & tracking landmarks
         const joints = [
-          { x: width * 0.7, y: height * 0.25 }, // Head
-          { x: width * 0.7, y: height * 0.38 }, // Neck
-          { x: width * 0.65, y: height * 0.42 }, // Left Shoulder
-          { x: width * 0.75, y: height * 0.42 }, // Right Shoulder
-          { x: width * 0.62, y: height * 0.56 }, // Left Elbow
-          { x: width * 0.78, y: height * 0.56 }, // Right Elbow
-          { x: width * 0.60, y: height * 0.70 }, // Left Hand
-          { x: width * 0.80, y: height * 0.70 }, // Right Hand
-          { x: width * 0.67, y: height * 0.65 }, // Left Hip
-          { x: width * 0.73, y: height * 0.65 }, // Right Hip
-          { x: width * 0.66, y: height * 0.82 }, // Left Knee
-          { x: width * 0.74, y: height * 0.82 }, // Right Knee
+          { x: width * 0.7, y: height * 0.25 },
+          { x: width * 0.7, y: height * 0.38 },
+          { x: width * 0.65, y: height * 0.42 },
+          { x: width * 0.75, y: height * 0.42 },
+          { x: width * 0.62, y: height * 0.56 },
+          { x: width * 0.78, y: height * 0.56 },
+          { x: width * 0.60, y: height * 0.70 },
+          { x: width * 0.80, y: height * 0.70 },
+          { x: width * 0.67, y: height * 0.65 },
+          { x: width * 0.73, y: height * 0.65 },
+          { x: width * 0.66, y: height * 0.82 },
+          { x: width * 0.74, y: height * 0.82 },
         ];
 
-        // Animate kinematic joints with subtle sway
         const animatedJoints = joints.map((j, i) => ({
-          x: j.x + Math.sin(t * 2 + i) * 6,
-          y: j.y + Math.cos(t * 1.5 + i) * 4,
+          x: j.x + Math.sin(t * 2 + i) * 5,
+          y: j.y + Math.cos(t * 1.5 + i) * 3,
         }));
 
-        // Draw bone connections
         const bones = [
           [0, 1], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7],
           [1, 8], [1, 9], [8, 10], [9, 11]
         ];
 
-        ctx.strokeStyle = 'rgba(215, 189, 249, 0.45)';
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(117, 164, 181, 0.35)';
+        ctx.lineWidth = 1.25;
         bones.forEach(([a, b]) => {
           ctx.beginPath();
           ctx.moveTo(animatedJoints[a].x, animatedJoints[a].y);
@@ -224,11 +222,10 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
           ctx.stroke();
         });
 
-        // Draw joint landmarks
         animatedJoints.forEach((j, i) => {
-          ctx.fillStyle = i === 0 ? '#e0fb2e' : '#d7bdf9';
+          ctx.fillStyle = i === 0 ? '#FF5A1F' : '#75A4B5';
           ctx.beginPath();
-          ctx.arc(j.x, j.y, 4, 0, Math.PI * 2);
+          ctx.arc(j.x, j.y, 3.5, 0, Math.PI * 2);
           ctx.fill();
         });
       } else {
@@ -241,7 +238,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
           if (p.y > height) p.y = 0;
           if (p.y < 0) p.y = height;
 
-          ctx.fillStyle = idx % 3 === 0 ? 'rgba(224, 251, 46, 0.6)' : 'rgba(215, 189, 249, 0.5)';
+          ctx.fillStyle = idx % 5 === 0 ? 'rgba(255, 90, 31, 0.45)' : 'rgba(117, 164, 181, 0.45)';
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
           ctx.fill();

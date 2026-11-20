@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown, Server, Sun, Moon, Terminal, Eye } from 'lucide-react';
-import { brand } from '../../config/brand';
 import { RoutePath } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
+import { BrandLogo } from '../common/BrandLogo';
 
 interface NavbarProps {
   currentPath: string;
@@ -127,39 +127,27 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
   ];
 
   const isIndustryActive = currentPath.startsWith('/industries');
-  const isCompanyActive = currentPath === '/about' || currentPath === '/careers' || currentPath === '/contact';
+  const isCompanyActive = currentPath === '/about' || currentPath === '/careers' || currentPath === '/contact' || currentPath === '/terms-and-conditions';
 
   return (
     <header
       id="main-navigation-bar"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[var(--bg-base)]/90 backdrop-blur-xl border-b border-[var(--border-color)] py-3 shadow-md'
-          : 'bg-transparent border-b border-transparent py-5'
+          ? 'bg-[var(--bg-base)]/92 backdrop-blur-xl border-b border-[var(--border-color)] py-3 shadow-md'
+          : 'bg-[var(--bg-base)]/75 backdrop-blur-md border-b border-transparent py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
-        {/* Brand Monogram & Wordmark */}
+        {/* Official Brand Combination SVG Logo */}
         <button
           id="nav-brand-logo"
           onClick={() => handleNavClick('/')}
-          className="flex items-center gap-3 group text-left cursor-pointer focus:outline-none"
+          className="flex items-center group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5A1F] focus-visible:outline-offset-4 rounded-lg py-1 shrink-0"
+          aria-label="NHTech Home"
         >
-          <img 
-            src="/logo.jpg" 
-            alt="NHTech Logo" 
-            className="h-8 w-auto max-h-8 object-contain shrink-0 rounded-lg"
-          />
-
-          <div className="flex flex-col">
-            <span className="text-base font-display font-bold tracking-tight text-[var(--text-primary)]">
-              {brand.displayName}
-            </span>
-            <span className="text-[10px] font-mono text-[var(--text-muted)] tracking-wider uppercase hidden sm:block">
-              Applied AI Engineering
-            </span>
-          </div>
+          <BrandLogo variant="combination" heightClass="h-6" />
         </button>
 
         {/* Desktop Navigation */}
@@ -168,9 +156,9 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <button
             id="nav-link-what-we-build"
             onClick={() => handleNavClick('/what-we-build')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/what-we-build' || currentPath.startsWith('/agentic-ai') || currentPath.startsWith('/document-intelligence')
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]'
+                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
@@ -181,13 +169,13 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <button
             id="nav-link-fde"
             onClick={() => handleNavClick('/fde')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-colors cursor-pointer flex items-center gap-1.5 ${
-              currentPath === '/fde'
-                ? 'text-[#e0fb2e] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              currentPath === '/fde' || currentPath === '/forward-deployed-engineering'
+                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
-            <Terminal className="w-3.5 h-3.5 text-[#e0fb2e]" />
+            <Terminal className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
             <span>FDE</span>
           </button>
 
@@ -195,13 +183,13 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <button
             id="nav-link-vision-edge"
             onClick={() => handleNavClick('/computer-vision')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
               currentPath === '/computer-vision'
-                ? 'text-[#38bdf8] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
+                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
-            <Eye className="w-3.5 h-3.5 text-[#38bdf8]" />
+            <Eye className="w-3.5 h-3.5 text-[var(--accent-ocean)]" />
             <span>Vision &amp; Edge AI</span>
           </button>
 
@@ -209,13 +197,13 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <button
             id="nav-link-on-prem-ai"
             onClick={() => handleNavClick('/on-prem-ai')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
               currentPath === '/on-prem-ai' || currentPath === '/sovereign-models' || currentPath === '/sovereign-ai'
-                ? 'text-[#d7bdf9] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
+                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
-            <Server className="w-3.5 h-3.5 text-[#d7bdf9]" />
+            <Server className="w-3.5 h-3.5 text-[var(--accent-ocean)]" />
             <span>On-Prem AI</span>
           </button>
 
@@ -232,16 +220,16 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                 if (industriesTimerRef.current) clearTimeout(industriesTimerRef.current);
                 setIndustriesOpen(!industriesOpen);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 isIndustryActive || industriesOpen
-                  ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]'
+                  ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
               }`}
               aria-expanded={industriesOpen}
               aria-haspopup="true"
             >
               <span>Industries</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${industriesOpen ? 'rotate-180 text-[var(--accent-secondary)]' : 'text-[var(--text-muted)]'}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${industriesOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
             </button>
 
             {industriesOpen && (
@@ -251,13 +239,12 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                 onMouseEnter={handleIndustriesMouseEnter}
                 onMouseLeave={handleIndustriesMouseLeave}
               >
-                {/* Invisible hover bridge buffer between button and menu */}
                 <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-2 shadow-xl backdrop-blur-2xl">
                   <div className="px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--border-color)] mb-1 flex items-center justify-between">
                     <span>Operating Sectors</span>
                     <button 
                       onClick={() => handleNavClick('/industries')} 
-                      className="text-[#e0fb2e] hover:underline cursor-pointer"
+                      className="text-[var(--accent-orange-text)] hover:underline cursor-pointer"
                     >
                       View all →
                     </button>
@@ -269,10 +256,10 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                         onClick={() => handleNavClick(item.path)}
                         className="w-full text-left p-2.5 rounded-xl hover:bg-[var(--bg-surface-elevated)] transition-colors flex flex-col gap-0.5 group cursor-pointer"
                       >
-                        <span className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-secondary)] transition-colors">
+                        <span className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
                           {item.label}
                         </span>
-                        <span className="text-[11px] text-[var(--text-muted)] font-light leading-snug">
+                        <span className="text-[11px] text-[var(--text-muted)] font-normal leading-snug">
                           {item.desc}
                         </span>
                       </button>
@@ -287,9 +274,9 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <button
             id="nav-link-work"
             onClick={() => handleNavClick('/work')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/work'
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]'
+                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
@@ -300,9 +287,9 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <button
             id="nav-link-products"
             onClick={() => handleNavClick('/products')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               currentPath === '/products'
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]'
+                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
@@ -322,16 +309,16 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                 if (companyTimerRef.current) clearTimeout(companyTimerRef.current);
                 setCompanyOpen(!companyOpen);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 isCompanyActive || companyOpen
-                  ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]'
+                  ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
               }`}
               aria-expanded={companyOpen}
               aria-haspopup="true"
             >
               <span>Company</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${companyOpen ? 'rotate-180 text-[var(--accent-secondary)]' : 'text-[var(--text-muted)]'}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${companyOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
             </button>
 
             {companyOpen && (
@@ -341,7 +328,6 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                 onMouseEnter={handleCompanyMouseEnter}
                 onMouseLeave={handleCompanyMouseLeave}
               >
-                {/* Invisible hover bridge buffer between button and menu */}
                 <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-2 shadow-xl backdrop-blur-2xl">
                   <div className="space-y-0.5">
                     {companyLinks.map((item) => (
@@ -350,10 +336,10 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                         onClick={() => handleNavClick(item.path)}
                         className="w-full text-left p-2.5 rounded-xl hover:bg-[var(--bg-surface-elevated)] transition-colors group cursor-pointer"
                       >
-                        <div className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-secondary)] transition-colors">
+                        <div className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
                           {item.label}
                         </div>
-                        <div className="text-[11px] text-[var(--text-muted)] font-light leading-snug">
+                        <div className="text-[11px] text-[var(--text-muted)] font-normal leading-snug">
                           {item.desc}
                         </div>
                       </button>
@@ -366,27 +352,27 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
         </nav>
 
         {/* Right Action: Theme Switcher & Talk to us CTA */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 shrink-0">
           {/* Theme Toggle Button */}
           <button
             id="theme-toggle-button"
             onClick={toggleTheme}
-            className="p-2 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer"
+            className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer"
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-[#e0fb2e]" />
+              <Sun className="w-4 h-4 text-[#FF7A45]" />
             ) : (
-              <Moon className="w-4 h-4 text-[var(--accent-secondary)]" />
+              <Moon className="w-4 h-4 text-[#173D5B]" />
             )}
           </button>
 
-          {/* Primary CTA */}
+          {/* Primary CTA (Signal Orange 500 + Ocean 950 text for WCAG AA contrast) */}
           <button
             id="nav-talk-to-us-cta"
             onClick={() => handleNavClick('/contact')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[var(--text-primary)] text-[var(--bg-base)] text-xs font-display font-bold tracking-tight hover:opacity-90 transition-all cursor-pointer shadow-sm"
+            className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] active:bg-[#E95013] text-[#061421] text-xs font-display font-bold tracking-tight transition-all cursor-pointer shadow-sm whitespace-nowrap shrink-0"
           >
             <span>Talk to us</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-current" />
@@ -396,7 +382,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <button
             id="nav-mobile-menu-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-color)] transition-colors cursor-pointer"
+            className="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-color)] transition-colors cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -416,46 +402,46 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
               className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-surface)] flex items-center justify-between"
             >
               <span>What We Build</span>
-              <span className="text-xs text-[var(--text-muted)] font-mono">Tracks &amp; Capabilities</span>
+              <span className="text-xs text-[var(--text-muted)] font-mono">Capabilities</span>
             </button>
 
             <button
               onClick={() => handleNavClick('/fde')}
               className={`w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-between ${
-                currentPath === '/fde' ? 'bg-[var(--bg-surface-elevated)] text-[#e0fb2e] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
+                currentPath === '/fde' ? 'bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
               }`}
             >
               <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-[#e0fb2e]" />
-                <span className="font-bold">Forward Deployed Engineering (FDE)</span>
+                <Terminal className="w-4 h-4 text-[var(--accent-orange-text)]" />
+                <span className="font-bold">Forward Deployed Engineering</span>
               </div>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--bg-surface)] text-[#e0fb2e]">Core Model</span>
+              <span className="text-xs font-mono text-[var(--accent-orange-text)]">FDE</span>
             </button>
 
             <button
               onClick={() => handleNavClick('/computer-vision')}
               className={`w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-between ${
-                currentPath === '/computer-vision' ? 'bg-[var(--bg-surface-elevated)] text-[#38bdf8] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
+                currentPath === '/computer-vision' ? 'bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
               }`}
             >
               <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-[#38bdf8]" />
+                <Eye className="w-4 h-4 text-[var(--accent-ocean)]" />
                 <span>Vision &amp; Edge AI</span>
               </div>
-              <span className="text-[10px] font-mono text-[var(--text-muted)]">Track 02</span>
+              <span className="text-xs font-mono text-[var(--text-muted)]">Edge Systems</span>
             </button>
 
             <button
               onClick={() => handleNavClick('/on-prem-ai')}
               className={`w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-between ${
-                currentPath === '/on-prem-ai' || currentPath === '/sovereign-models' || currentPath === '/sovereign-ai' ? 'bg-[var(--bg-surface-elevated)] text-[#d7bdf9] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
+                currentPath === '/on-prem-ai' || currentPath === '/sovereign-models' || currentPath === '/sovereign-ai' ? 'bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
               }`}
             >
               <div className="flex items-center gap-2">
-                <Server className="w-4 h-4 text-[#d7bdf9]" />
+                <Server className="w-4 h-4 text-[var(--accent-ocean)]" />
                 <span>On-Prem AI</span>
               </div>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--bg-surface)] text-[#d7bdf9]">Model Eng</span>
+              <span className="text-xs font-mono text-[var(--text-muted)]">Model Eng</span>
             </button>
 
             <button
@@ -477,10 +463,10 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <div className="pt-2 border-t border-[var(--border-color)]">
             <button
               onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
-              className="w-full flex items-center justify-between px-3.5 py-2 text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+              className="w-full flex items-center justify-between px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               <span>Industries</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileIndustriesOpen ? 'rotate-180 text-[var(--accent-secondary)]' : ''}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileIndustriesOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : ''}`} />
             </button>
             {mobileIndustriesOpen && (
               <div className="grid grid-cols-1 gap-1 mt-1 pl-2">
@@ -491,7 +477,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                     className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] flex items-center justify-between"
                   >
                     <span>{ind.label}</span>
-                    <span className="text-[10px] text-[var(--text-muted)]">→</span>
+                    <span className="text-xs text-[var(--text-muted)]">→</span>
                   </button>
                 ))}
               </div>
@@ -502,10 +488,10 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <div className="pt-2 border-t border-[var(--border-color)]">
             <button
               onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
-              className="w-full flex items-center justify-between px-3.5 py-2 text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+              className="w-full flex items-center justify-between px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               <span>Company</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileCompanyOpen ? 'rotate-180 text-[var(--accent-secondary)]' : ''}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileCompanyOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : ''}`} />
             </button>
             {mobileCompanyOpen && (
               <div className="grid grid-cols-1 gap-1 mt-1 pl-2">
@@ -516,7 +502,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                     className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] flex items-center justify-between"
                   >
                     <span>{item.label}</span>
-                    <span className="text-[10px] text-[var(--text-muted)]">→</span>
+                    <span className="text-xs text-[var(--text-muted)]">→</span>
                   </button>
                 ))}
               </div>
@@ -526,7 +512,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <div className="pt-3 border-t border-[var(--border-color)]">
             <button
               onClick={() => handleNavClick('/contact')}
-              className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--text-primary)] text-[var(--bg-base)] text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer"
+              className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] text-sm font-bold transition-all cursor-pointer"
             >
               <span>Talk to us</span>
               <ArrowUpRight className="w-4 h-4 text-current" />

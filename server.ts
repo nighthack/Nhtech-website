@@ -1,58 +1,8 @@
+import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import path from 'path';
 import nodemailer from 'nodemailer';
 import { createServer as createViteServer } from 'vite';
-
-type ContactSubmissionPayload = {
-  name: string;
-  email: string;
-  company: string;
-  role: string;
-  problemStatement: string;
-  constraints: string;
-  projectStage: string;
-  schedulingDate: string;
-  schedulingTime: string;
-};
-
-async function invokeOttom8Agent(payload: ContactSubmissionPayload) {
-  const apiKey = "sk-DUAimQsir-R-99iRuOJ_Qo3yk1Qa7xhbX47wyIWpg-E"
-  const flowId = "f12d310d-2c3d-436f-ae25-d1c3b959d9a2"
-
-  if (!apiKey || !flowId) {
-    console.log('[Ottom8 Agent] Missing OTTOM8_API_KEY or OTTOM8_FLOW_ID. Agent invocation skipped.');
-    return { skipped: true };
-  }
-
-  try {
-    const response = await fetch(`https://ottom8.nhtech.link/api/v1/run/${encodeURIComponent(flowId)}?stream=false`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey
-      },
-      body: JSON.stringify({
-        output_type: 'chat',
-        input_type: 'chat',
-        input_value: JSON.stringify(payload),
-        session_id: crypto.randomUUID()
-      })
-    });
-
-    const result = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      console.error('[Ottom8 Agent] Request failed:', response.status, result);
-      return { skipped: false, ok: false, status: response.status };
-    }
-
-    console.log('[Ottom8 Agent] Invocation successful.');
-    return { skipped: false, ok: true, status: response.status, result };
-  } catch (error) {
-    console.error('[Ottom8 Agent] Invocation error:', error);
-    return { skipped: false, ok: false, error };
-  }
-}
 
 async function startServer() {
   const app = express();
@@ -96,17 +46,7 @@ async function startServer() {
         ipSubmissionMap.set(clientIp, { count: 1, firstTimestamp: now });
       }
 
-      const {
-        name,
-        email,
-        company,
-        role,
-        problemStatement,
-        constraints,
-        projectStage,
-        schedulingDate,
-        schedulingTime
-      } = req.body;
+      const { name, email, company, role, problemStatement, constraints, projectStage, schedulingDate, schedulingTime } = req.body;
 
       // Basic Validation
       if (!name || typeof name !== 'string' || name.trim().length === 0) {
@@ -125,39 +65,12 @@ async function startServer() {
         });
       }
 
-      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-      if (!schedulingDate || typeof schedulingDate !== 'string' || !dateRegex.test(schedulingDate.trim())) {
-        return res.status(400).json({
-          success: false,
-          error: 'Please provide a valid scheduling date in YYYY-MM-DD format.'
-        });
+      if (!schedulingDate || typeof schedulingDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(schedulingDate)) {
+        return res.status(400).json({ success: false, error: 'Please choose a valid scheduling date.' });
       }
 
-      const requestedDate = new Date(`${schedulingDate.trim()}T00:00:00`);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (Number.isNaN(requestedDate.getTime()) || requestedDate < today) {
-        return res.status(400).json({
-          success: false,
-          error: 'Scheduling date must be today or later.'
-        });
-      }
-
-      const timeRegex = /^([01]\d|2[0-2]):(00|15|30|45)$/;
-      if (!schedulingTime || typeof schedulingTime !== 'string' || !timeRegex.test(schedulingTime.trim())) {
-        return res.status(400).json({
-          success: false,
-          error: 'Please provide a valid scheduling time between 09:00 and 22:00.'
-        });
-      }
-
-      const [hours, minutes] = schedulingTime.trim().split(':').map(Number);
-      const totalMinutes = (hours * 60) + minutes;
-      if (totalMinutes < 9 * 60 || totalMinutes > 22 * 60) {
-        return res.status(400).json({
-          success: false,
-          error: 'Scheduling time must be between 09:00 and 22:00.'
-        });
+      if (!schedulingTime || typeof schedulingTime !== 'string' || !/^(09|1\d|20|21):(00|15|30|45)$/.test(schedulingTime)) {
+        return res.status(400).json({ success: false, error: 'Please choose a valid scheduling time.' });
       }
 
       const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || 'info@nighthack.in';
@@ -170,6 +83,74 @@ async function startServer() {
       const cleanProblem = problemStatement.trim();
       const cleanSchedulingDate = schedulingDate.trim();
       const cleanSchedulingTime = schedulingTime.trim();
+
+      // Send the same intake dossier to the Ottom8 technical-intake agent.
+      // The API key stays server-side and is supplied through environment variables.
+      let agentProcessed = false;
+      let agentResponse: unknown = null;
+      let agentError: string | null = null;
+
+      if (process.env.OTTOM8_API_KEY) {
+        try {
+          const agentController = new AbortController();
+          const agentTimeout = setTimeout(() => agentController.abort(), 15000);
+          // The Ottom8 graph expects input_value to be parseable JSON.
+          const agentPayload = JSON.stringify({
+            intake_type: 'technical_problem',
+            name: cleanName,
+            email: cleanEmail,
+            company: cleanCompany,
+            role: cleanRole,
+            engineering_track: cleanStage,
+            problem_statement: cleanProblem,
+            constraints: cleanConstraints,
+            schedulingDate: cleanSchedulingDate,
+            schedulingTime: cleanSchedulingTime
+          });
+
+          try {
+            const agentRes = await fetch(
+              process.env.OTTOM8_AGENT_URL || 'https://ottom8.nhtech.link/api/v1/run/f12d310d-2c3d-436f-ae25-d1c3b959d9a2?stream=false',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'x-api-key': process.env.OTTOM8_API_KEY
+                },
+                body: JSON.stringify({
+                  output_type: 'text',
+                  input_type: 'chat',
+                  input_value: agentPayload,
+                  session_id: crypto.randomUUID()
+                }),
+                signal: agentController.signal
+              }
+            );
+
+            const responseText = await agentRes.text();
+            try {
+              agentResponse = responseText ? JSON.parse(responseText) : null;
+            } catch {
+              agentResponse = responseText;
+            }
+
+            if (!agentRes.ok) {
+              throw new Error(`Ottom8 returned HTTP ${agentRes.status}`);
+            }
+
+            agentProcessed = true;
+            console.log('[Contact API] Intake sent to Ottom8 agent successfully');
+          } finally {
+            clearTimeout(agentTimeout);
+          }
+        } catch (err: any) {
+          agentError = err?.name === 'AbortError' ? 'Ottom8 request timed out' : 'Ottom8 request failed';
+          console.error('[Contact API] Ottom8 agent error:', err);
+        }
+      } else {
+        agentError = 'OTTOM8_API_KEY is not configured';
+        console.warn('[Contact API] Ottom8 agent skipped: OTTOM8_API_KEY is not configured');
+      }
 
       const emailSubject = `[NHTech Intake] New Technical Problem Dossier — ${cleanCompany} (${cleanName})`;
       
@@ -185,8 +166,6 @@ async function startServer() {
         `- Company: ${cleanCompany}`,
         `- Role: ${cleanRole}`,
         `- Project Stage / Inquiry Type: ${cleanStage}`,
-        `- Scheduling Date: ${cleanSchedulingDate}`,
-        `- Scheduling Time: ${cleanSchedulingTime}`,
         ``,
         `TECHNICAL PROBLEM STATEMENT:`,
         `--------------------------------------------------`,
@@ -234,8 +213,6 @@ async function startServer() {
                 <tr><td class="label">Company / Organization</td><td class="value">${escapeHtml(cleanCompany)}</td></tr>
                 <tr><td class="label">Role</td><td class="value">${escapeHtml(cleanRole)}</td></tr>
                 <tr><td class="label">Focus / Stage</td><td class="value">${escapeHtml(cleanStage)}</td></tr>
-                <tr><td class="label">Scheduling Date</td><td class="value">${escapeHtml(cleanSchedulingDate)}</td></tr>
-                <tr><td class="label">Scheduling Time</td><td class="value">${escapeHtml(cleanSchedulingTime)}</td></tr>
               </table>
 
               <div class="section-label">Problem Statement</div>
@@ -251,23 +228,6 @@ async function startServer() {
         </body>
         </html>
       `;
-
-      const submissionPayload: ContactSubmissionPayload = {
-        name: cleanName,
-        email: cleanEmail,
-        company: cleanCompany,
-        role: cleanRole,
-        problemStatement: cleanProblem,
-        constraints: cleanConstraints,
-        projectStage: cleanStage,
-        schedulingDate: cleanSchedulingDate,
-        schedulingTime: cleanSchedulingTime
-      };
-
-      const agentResult = await invokeOttom8Agent(submissionPayload);
-      if (!agentResult.skipped && !agentResult.ok) {
-        console.warn('[Contact API] Agent dispatch failed but contact submission still continued.');
-      }
 
       // Check if SMTP is configured
       let emailDispatched = false;
@@ -345,7 +305,10 @@ async function startServer() {
         success: true,
         message: 'Your technical intake has been successfully received and dispatched to our engineering leads at info@nighthack.in.',
         recipient: recipientEmail,
-        dispatchMethod: emailDispatched ? dispatchMethod : 'queued-for-dispatch'
+        dispatchMethod: emailDispatched ? dispatchMethod : 'queued-for-dispatch',
+        agentProcessed,
+        ...(agentResponse !== null ? { agentResponse } : {}),
+        ...(agentError ? { agentError } : {})
       });
 
     } catch (error: any) {

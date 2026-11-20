@@ -5,38 +5,43 @@ export const capabilities: Capability[] = [
     id: 'agentic-workflows',
     slug: 'agentic-ai',
     title: 'Agentic & Workflow Systems',
-    headline: 'AI that executes deterministic work, not just conversation.',
-    description: 'Autonomous execution engines and deterministic state machines operating tools, evaluating context, respecting permission boundaries, and escalating to human approval checkpoints.',
+    headline: 'Eliminate manual handoffs across emails, approvals, and enterprise databases.',
+    description:
+      'When teams spend hours triaging incoming requests, re-keying records, or chasing approvals, we build deterministic state machines that execute multi-step workflows, respect role-based permissions, and pause for human sign-off whenever thresholds require review.',
     coreConcepts: [
       {
         title: 'Contextual State Construction',
-        description: 'Agents build dynamic situational graphs from enterprise events, databases, and incoming communications before formulating plans.'
+        description:
+          'Systems assemble live operational context from incoming communications, Enterprise Resource Planning (ERP) logs, and internal databases before proposing an action.'
       },
       {
         title: 'Explicit Tool Permissions',
-        description: 'Every tool invocation and API mutation is governed by strict role-based scopes rather than unrestricted autonomy.'
+        description:
+          'Every Application Programming Interface (API) mutation and tool call runs under strict role-based scopes rather than unrestricted autonomy.'
       },
       {
         title: 'Human Checkpoint Gates',
-        description: 'High-consequence decisions, threshold breaches, and high-entropy states automatically pause for human review with explanatory context.'
+        description:
+          'High-consequence decisions, financial thresholds, and ambiguous exceptions automatically pause for human approval with side-by-side context.'
       },
       {
         title: 'Replayable Audit Trails',
-        description: 'Every observation, intermediate thought, tool argument, and outcome is logged immutably for compliance and operational debugging.'
+        description:
+          'Every input, model inference, tool parameter, and human sign-off is logged immutably for compliance auditing and operational debugging.'
       }
     ],
     architecturePoints: [
-      'Multi-agent task decomposition with deterministic state machines',
-      'Sandboxed tool execution environments with scoped OAuth/mTLS tokens',
-      'Bidirectional enterprise ERP, CRM, and internal API connectors',
-      'Event-driven asynchronous orchestrators with dead-letter queue recovery'
+      'Integration example: Email (IMAP/Exchange) and Secure File Transfer Protocol (SFTP) intake routed into SAP or PostgreSQL via deterministic state machines',
+      'Integration example: Sandboxed tool execution using scoped OAuth and Mutual Transport Layer Security (mTLS) tokens',
+      'Concrete deliverable: Bidirectional ERP and Customer Relationship Management (CRM) adapters with dead-letter recovery queues',
+      'Concrete deliverable: Operator triage workbench for inspecting, adjusting, and approving queued tasks'
     ],
-    technologies: ['Open-Weight LLMs', 'FastAPI', 'LangGraph / Custom State Machines', 'Redis', 'PostgreSQL', 'Docker'],
+    technologies: ['Open-Weight Large Language Models (LLMs)', 'FastAPI', 'Deterministic State Machines', 'Redis', 'PostgreSQL', 'Docker'],
     deliverables: [
-      'Production agentic microservices',
-      'Operator triage and approval consoles',
-      'Audit log and decision replay viewers',
-      'Integration adapters for enterprise workflows'
+      'Production workflow microservices',
+      'Operator triage and approval workbench',
+      'Immutable audit log & decision replay viewer',
+      'SAP, Salesforce, SQL & internal API connectors'
     ],
     relatedRoute: '/agentic-ai'
   },
@@ -44,38 +49,43 @@ export const capabilities: Capability[] = [
     id: 'document-intelligence',
     slug: 'document-intelligence',
     title: 'Document Intelligence & Knowledge Systems',
-    headline: 'Making complex unstructured documents computable.',
-    description: 'Transforming dense multi-format documents, legal contracts, engineering drawings, and regulatory filings into validated, queryable knowledge graphs with deterministic citation coordinates.',
+    headline: 'Turn multi-hundred-page contracts, filings, and PDFs into verifiable, queryable data.',
+    description:
+      'When critical rules and figures sit trapped in scanned PDFs, complex tables, and multi-jurisdiction contracts, we build spatial parsing and Retrieval-Augmented Generation (RAG) pipelines that output structured records linked to exact source bounding boxes.',
     coreConcepts: [
       {
         title: 'Spatial & Structural Parsing',
-        description: 'Preserving table coordinates, hierarchical headings, footnote attachments, and multi-column flows from raw PDFs and scans.'
+        description:
+          'Preserves multi-column layouts, table cell coordinates, footnotes, and hierarchical clauses beyond basic Optical Character Recognition (OCR).'
       },
       {
         title: 'Hybrid Semantic Retrieval',
-        description: 'Combining dense vector embeddings with sparse keyword indexing and entity graphs to eliminate hallucination in domain searches.'
+        description:
+          'Pairs dense vector embeddings with sparse keyword indexing and entity graphs to prevent fabricated answers on dense regulatory texts.'
       },
       {
         title: 'Deterministic Citation Grounding',
-        description: 'Every extracted attribute and synthesized summary links back to exact bounding-box coordinates in source documents.'
+        description:
+          'Every extracted field and summary links directly back to highlighted bounding-box coordinates inside the original source page.'
       },
       {
         title: 'Self-Hosted Fine-Tuned Models',
-        description: 'Fine-tuning specialized open-weight models (Llama, Mistral) on enterprise taxonomy for 100% private execution.'
+        description:
+          'Adapts specialized open-weight models (Llama, Mistral) to your domain taxonomy inside private infrastructure with zero external leakage.'
       }
     ],
     architecturePoints: [
-      'High-throughput asynchronous document ingestion pipelines',
-      'Qdrant & Milvus vector stores with partitioned multi-tenant collections',
-      'Knowledge graph creation with Neo4j and semantic entity linking',
-      'Human validation interface with synchronized PDF side-by-side viewers'
+      'Integration example: Multi-format PDF/scan ingestion connected to Qdrant or Milvus vector databases and Neo4j knowledge graphs',
+      'Integration example: Automated schema validation writing verified fields directly into downstream underwriting or compliance ERPs',
+      'Concrete deliverable: High-throughput asynchronous document extraction API with bounding-box coordinate retention',
+      'Concrete deliverable: Human verification workbench featuring synchronized side-by-side PDF source viewers'
     ],
-    technologies: ['Fine-tuned Llama / Mistral', 'Qdrant Vector DB', 'Neo4j', 'FastAPI', 'PyTorch', 'OCR Engines'],
+    technologies: ['Fine-tuned Llama / Mistral', 'Qdrant Vector Database', 'Neo4j', 'FastAPI', 'PyTorch', 'Optical Character Recognition (OCR)'],
     deliverables: [
       'Document parsing & extraction APIs',
-      'Domain-specific knowledge graph engines',
-      'Human-in-the-loop review workbenches',
-      'Enterprise search and compliance query services'
+      'Citation-grounded RAG search service',
+      'Domain knowledge graph engine',
+      'Side-by-side human PDF verification UI'
     ],
     relatedRoute: '/document-intelligence'
   },
@@ -83,155 +93,175 @@ export const capabilities: Capability[] = [
     id: 'ai-first-enterprise',
     slug: 'ai-first-enterprise',
     title: 'AI-First Enterprise Applications',
-    headline: 'AI, backend, frontend, and workflow as a single cohesive system.',
-    description: 'We do not build detached prototypes or wrapper scripts. We engineer complete production-grade applications that seamlessly weave AI models into user experiences and core business logic.',
+    headline: 'Ship complete operational software—not disconnected wrapper scripts.',
+    description:
+      'When off-the-shelf SaaS tools force teams into workarounds or brittle prototypes fail in production, we engineer cohesive full-stack applications combining modern interfaces, resilient backends, and embedded AI inference with full intellectual property ownership.',
     coreConcepts: [
       {
-        title: 'Full-Stack Architecture',
-        description: 'Integrating modern web frontends, resilient distributed backends, streaming state, and model inference into unified products.'
+        title: 'Unified Full-Stack Architecture',
+        description:
+          'Weaves web interfaces, asynchronous backends, relational and vector databases, and model routing into a single maintainable codebase.'
       },
       {
-        title: 'Low-Latency Interactive UX',
-        description: 'Optimistic updates, streaming UI components, and real-time state synchronization for effortless user interactions.'
+        title: 'Responsive Operator UX',
+        description:
+          'Streaming status updates, keyboard-friendly review queues, and optimistic interface states built for daily operational speed.'
       },
       {
-        title: 'Enterprise Security & RBAC',
-        description: 'Role-based access control, SSO/SAML integration, mTLS encryption, and multi-tenant data boundary partitioning.'
+        title: 'Enterprise Security & Governance',
+        description:
+          'Role-Based Access Control (RBAC), Single Sign-On via Security Assertion Markup Language (SSO/SAML), and multi-tenant data isolation.'
       },
       {
-        title: 'Production Handover Quality',
-        description: 'Clean, typed, tested, and documented codebases engineered for seamless long-term maintenance by your internal engineering team.'
+        title: 'Clean Team Handover',
+        description:
+          'Typed, tested codebases with Continuous Integration / Continuous Deployment (CI/CD) pipelines engineered for your internal team to maintain.'
       }
     ],
     architecturePoints: [
-      'Type-safe architectures across TypeScript, Python, and modern backend frameworks',
-      'Resilient database modeling (relational, vector, time-series, graph)',
-      'Enterprise security (RBAC, mTLS, encryption at rest and in transit)',
-      'CI/CD deployment pipelines with automated regression and benchmark testing'
+      'Integration example: Single Sign-On (SSO/SAML) identity federation paired with granular Role-Based Access Control (RBAC) across tenant boundaries',
+      'Integration example: Type-safe React and TypeScript frontends backed by Python FastAPI or Node.js distributed microservices',
+      'Concrete deliverable: Automated CI/CD deployment workflows with regression and model evaluation gates',
+      'Concrete deliverable: Unified relational, vector, and time-series data models owned 100% in your repository'
     ],
     technologies: ['React', 'TypeScript', 'Python / FastAPI', 'Node.js', 'PostgreSQL', 'Docker', 'Kubernetes'],
     deliverables: [
-      'Turnkey enterprise AI applications',
-      'Modern web and mobile user interfaces',
-      'Microservice and API backends',
-      'Complete documentation and handover packages'
+      'Turnkey full-stack enterprise web & mobile apps',
+      'Type-safe microservice APIs',
+      'SSO/SAML & RBAC security implementation',
+      'Automated CI/CD & engineering handover docs'
     ],
     relatedRoute: '/work'
   },
   {
     id: 'complex-business-systems',
     slug: 'complex-business-systems',
-    title: 'Complex Business Systems: ERP, Payments, Loyalty, CRM, Compliance',
-    headline: 'Hardened platforms for mission-critical enterprise workflows.',
-    description: 'Engineering complex business platforms including ERP workflow engines, multi-tiered loyalty & reward programs, merchant payment gateways, regulatory compliance portals, and operational productivity suites.',
+    title: 'Complex Business Systems: ERP, Payments, Loyalty, CRM & Compliance',
+    headline: 'Modernize mission-critical business logic, ledgers, and compliance operations.',
+    description:
+      'When core operations depend on fragmented spreadsheets, legacy Enterprise Resource Planning (ERP) tools, high-volume payment streams, or complex multi-tier rules, we engineer reliable platforms that unify business logic and maintain auditable accuracy.',
     coreConcepts: [
       {
         title: 'ERP & Legacy Stack Orchestration',
-        description: 'Deep bidirectional integrations with SAP, Oracle, NetSuite, Salesforce, and legacy SQL/SFTP systems without fragile scrapers.'
+        description:
+          'Bidirectional connectors for SAP, Oracle, NetSuite, Salesforce Customer Relationship Management (CRM), and legacy SQL/SFTP backends.'
       },
       {
-        title: 'Financial & Payment Processing',
-        description: 'Idempotent transaction workflows, PCI-compliant token handling, reconciliation ledgers, and dynamic fraud risk evaluation.'
+        title: 'Financial & Ledger Processing',
+        description:
+          'Idempotent transaction pipelines, Payment Card Industry (PCI)-conscious token workflows, ledger reconciliation, and real-time anomaly scoring.'
       },
       {
         title: 'Loyalty & Engagement Engines',
-        description: 'High-throughput rules engines executing point accruals, tiered rewards, personalized campaign delivery, and audit tracking.'
+        description:
+          'High-throughput rule engines managing multi-tier point accruals, dynamic rewards, and campaign attribution tracking.'
       },
       {
-        title: 'Regulatory & Compliance Workbenches',
-        description: 'Automated compliance rule verification, audit packet compilation, and strict data governance workflows.'
+        title: 'Compliance & Audit Workbenches',
+        description:
+          'Automated regulatory policy verification, immutable event logs, and structured audit packet generation.'
       }
     ],
     architecturePoints: [
-      'Transactional consistency with two-phase commit and saga orchestration patterns',
-      'High-throughput message brokers (Apache Kafka, RabbitMQ, Redis Streams)',
-      'Idempotent API design with comprehensive dead-letter queues',
-      'Auditable system-of-record event logging and compliance ledgers'
+      'Integration example: High-throughput Apache Kafka, RabbitMQ, and Redis Streams connecting payment gateways with real-time anomaly models',
+      'Integration example: Bidirectional synchronization between forecasting engines and SAP/Oracle purchase order workflows',
+      'Concrete deliverable: Idempotent payment and ledger reconciliation microservices with saga transaction consistency',
+      'Concrete deliverable: Compliance and procurement dashboards with explainable escalation queues'
     ],
     technologies: ['PostgreSQL', 'Apache Kafka', 'Redis', 'Node.js', 'Python / FastAPI', 'Docker', 'Kubernetes'],
     deliverables: [
-      'ERP & CRM workflow connectors',
-      'Payment processing & ledger microservices',
-      'Loyalty & points management platforms',
-      'Compliance and regulatory audit dashboards'
+      'Bidirectional ERP & CRM workflow connectors',
+      'Streaming ledger & anomaly detection services',
+      'Multi-tier loyalty & campaign rule platforms',
+      'Regulatory compliance & audit portals'
     ],
     relatedRoute: '/work'
   },
   {
     id: 'model-engineering',
     slug: 'on-prem-ai',
-    title: 'Model-Enabled Applications & On-Prem AI',
-    headline: 'Turn your data into a model you control.',
-    description: 'Benchmarking RAG vs fine-tuning vs distillation based on the actual problem. We adapt open-weight architectures (Llama, Mistral, Qwen, DeepSeek) with LoRA, QLoRA, and quantization, delivering client-controlled model artifacts deployed to edge, on-prem, or private cloud environments.',
+    title: 'Model-Enabled Applications & On-Premises AI',
+    headline: 'Select, adapt, and host models inside infrastructure you control.',
+    description:
+      'When external API calls violate data residency rules, exceed latency targets, or inflate token costs, we benchmark Retrieval-Augmented Generation (RAG) against fine-tuning and deploy quantized Small Language Models (SLMs) inside your private cloud or on-premises clusters.',
     coreConcepts: [
       {
-        title: 'RAG vs Tuning vs Distillation',
-        description: 'Objective benchmarking to determine whether dynamic retrieval, parameter-efficient fine-tuning, or model distillation achieves the optimal latency-accuracy-cost tradeoff.'
+        title: 'RAG vs Fine-Tuning vs Distillation',
+        description:
+          'Empirical evaluation to select whether retrieval, Low-Rank Adaptation (LoRA / QLoRA) tuning, or model distillation best meets cost and accuracy goals.'
       },
       {
-        title: 'LoRA / QLoRA Adaptation',
-        description: 'Adapting open-weight models to enterprise vocabularies, strict output formats (JSON/SQL), and domain taxonomy without full pretraining costs.'
+        title: 'Task-Specific Adaptation',
+        description:
+          'Adapting open-weight architectures (Llama, Mistral, Qwen, DeepSeek) to domain terminology and strict JSON/SQL output schemas.'
       },
       {
-        title: 'Client-Controlled Artifacts',
-        description: 'You own the datasets, evaluation harnesses, checkpoint weights, and deployment scripts with 100% intellectual property rights.'
+        title: 'Quantized Private Hosting',
+        description:
+          'Compressing models via 8-bit floating point (FP8) and 4-bit integer (INT4) quantization to cut graphics processing unit (GPU) memory and inference costs.'
       },
       {
-        title: 'Private & On-Prem Runtimes',
-        description: 'Deploying models inside customer VPCs, on-premise GPU clusters, or edge devices where data privacy mandates local execution.'
+        title: 'Full Model & Data Control',
+        description:
+          'Training datasets, evaluation suites, checkpoint weights, and deployment scripts stay 100% under your ownership.'
       }
     ],
     architecturePoints: [
-      'Evaluation benchmark suites with human ground-truth calibration',
-      'Parameter-efficient fine-tuning pipelines using PyTorch and Hugging Face',
-      'Quantization to FP8 and INT4 for reduced GPU hosting costs',
-      'Self-hosted inference servers with vLLM and TensorRT-LLM'
+      'Integration example: Self-hosted vLLM and NVIDIA TensorRT-LLM inference endpoints running inside customer Virtual Private Clouds (VPCs)',
+      'Integration example: Automated PyTorch and Hugging Face fine-tuning pipelines calibrated on human ground-truth benchmarks',
+      'Concrete deliverable: Domain evaluation harness comparing frontier APIs against fine-tuned Small Language Models (SLMs)',
+      'Concrete deliverable: Exportable model checkpoint weights and Infrastructure-as-Code deployment manifests'
     ],
     technologies: ['PyTorch', 'Hugging Face', 'vLLM', 'TensorRT-LLM', 'Docker', 'AWS SageMaker', 'Kubernetes'],
     deliverables: [
-      'Exportable model checkpoint weights & adapters',
-      'Domain evaluation harness & benchmark reports',
-      'Inference API microservices',
-      'Deployment scripts for VPC, on-prem, or cloud ML'
+      'Domain evaluation & benchmark report',
+      'Exportable model checkpoints & adapters',
+      'Private VPC or on-prem inference API',
+      'Automated retraining & drift scripts'
     ],
     relatedRoute: '/on-prem-ai'
   },
   {
     id: 'computer-vision-edge',
     slug: 'computer-vision',
-    title: 'Vision & Edge Systems',
-    headline: 'AI engineered for the physical world.',
-    description: 'Real-time computer vision, kinematic tracking, defect inspection, and low-latency edge inference executing on local devices, tablets, and industrial cameras without reliance on cloud roundtrips.',
+    title: 'Vision & Edge AI Systems',
+    headline: 'Run real-time visual inspection and motion tracking directly on local devices.',
+    description:
+      'When factory floors, clinics, or field teams need sub-second visual analysis without cloud bandwidth delays or privacy exposure, we build computer vision pipelines running locally on commercial tablets, industrial cameras, and edge hardware.',
     coreConcepts: [
       {
-        title: 'Sub-20ms On-Device Inference',
-        description: 'Compiling vision models with TensorRT, ONNX, and quantization to execute at high framerates on local tablets and edge hardware.'
+        title: 'Low-Latency Local Inference',
+        description:
+          'Compiling custom Convolutional Neural Networks (CNNs) and vision models via TensorRT and Open Neural Network Exchange (ONNX) for sub-20ms frame processing.'
       },
       {
-        title: 'Kinematic & Action Tracking',
-        description: 'Real-time landmark tracking, cadence measurement, and multi-phase movement classification over continuous camera streams.'
+        title: 'Kinematic & Activity Tracking',
+        description:
+          'Extracting skeletal landmarks, counting repetitions, and classifying movement phases in real time on commercial mobile devices.'
       },
       {
-        title: 'Industrial & Physical AI',
-        description: 'Automated defect inspection, object detection, and OpenVLA physical perception for industrial devices and robotics.'
+        title: 'Industrial & Physical Perception',
+        description:
+          'Surface defect inspection, component tolerance checks, and Vision-Language-Action (OpenVLA) physical perception on production lines.'
       },
       {
-        title: 'Local Edge Fleet Resilience',
-        description: 'Edge nodes operate autonomously without continuous internet connectivity, caching records locally with asynchronous sync.'
+        title: 'Offline-Resilient Edge Sync',
+        description:
+          'Local SQLite persistence, Bluetooth Low Energy (BLE) sensor coordination, and asynchronous cloud sync when connectivity returns.'
       }
     ],
     architecturePoints: [
-      'Custom lightweight CNN and transformer vision backbones',
-      'Hardware-accelerated pipelines using CUDA, TensorRT, CoreML, and Edge TPUs',
-      'WebRTC low-latency streaming and local IPC message buses',
-      'Edge fleet management, OTA model deployments, and telemetry sync'
+      'Integration example: WebRTC camera streams and local Inter-Process Communication (IPC) buses feeding TensorRT/ONNX inference nodes',
+      'Integration example: Tablet applications with Bluetooth Low Energy (BLE) peripheral pairing and offline SQLite synchronization',
+      'Concrete deliverable: Calibrated edge vision runtime with Over-the-Air (OTA) model update management',
+      'Concrete deliverable: Operator inspection station displaying live video replay and tolerance alerts'
     ],
-    technologies: ['PyTorch Mobile', 'TensorRT', 'ONNX Runtime', 'OpenCV', 'WebRTC', 'FastAPI', 'React'],
+    technologies: ['PyTorch Mobile', 'TensorRT', 'ONNX Runtime', 'OpenCV', 'WebRTC', 'FastAPI', 'React Native'],
     deliverables: [
-      'Edge vision inference runtimes',
-      'Real-time kinematic & defect detection engines',
-      'Field operator dashboards and tablet applications',
-      'Edge deployment and OTA synchronization infrastructure'
+      'On-device TensorRT / ONNX vision runtime',
+      'Kinematic or defect detection pipeline',
+      'Field operator tablet / web UI',
+      'OTA edge fleet update tooling'
     ],
     relatedRoute: '/computer-vision'
   }
