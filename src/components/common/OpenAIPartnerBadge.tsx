@@ -11,14 +11,14 @@ export function OpenAIPartnerBadge({ variant = 'compact', className = '' }: Prop
     return (
       <div 
         id="openai-partner-hero-badge"
-        className={`inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#16191f] border border-[#262a33] text-xs text-[#9ca3af] hover:border-[#384152] transition-colors ${className}`}
+        className={`inline-flex items-center gap-2.5 text-xs text-[var(--text-secondary)] ${className}`}
       >
-        <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="font-semibold text-[#e5e7eb] tracking-wide">
+        <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-ocean)]" />
+        <span className="font-semibold text-[var(--text-primary)] tracking-wide">
           {brand.partnerships.openai.status}
         </span>
-        <span className="text-[#4b5563]">|</span>
-        <span className="text-[#9ca3af] hidden sm:inline">
+        <span className="text-[var(--text-muted)]" aria-hidden="true">·</span>
+        <span className="text-[var(--text-secondary)] hidden sm:inline">
           {brand.partnerships.openai.specialization}
         </span>
       </div>
@@ -29,21 +29,21 @@ export function OpenAIPartnerBadge({ variant = 'compact', className = '' }: Prop
     return (
       <div 
         id="openai-partner-card"
-        className={`p-5 rounded-xl bg-[#111317] border border-[#1f232b] hover:border-[#2e333d] transition-all ${className}`}
+        className={`p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-all space-y-2 shadow-sm ${className}`}
       >
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-emerald-400 uppercase">
+        <div className="flex items-center justify-between gap-3 mb-1">
+          <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[var(--accent-orange-text)] uppercase font-bold">
             <Sparkles className="w-3.5 h-3.5" />
-            Verified Partnership
+            <span>Verified Partnership</span>
           </div>
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#1b1f27] text-[#9ca3af] border border-[#272d38]">
+          <span className="text-xs font-mono text-[var(--text-muted)]">
             Agent Architecture
           </span>
         </div>
-        <h4 className="text-base font-semibold text-white tracking-tight mb-1">
+        <h4 className="text-lg font-display font-bold text-[var(--text-primary)] tracking-tight">
           {brand.partnerships.openai.status}
         </h4>
-        <p className="text-xs text-[#9ca3af] leading-relaxed">
+        <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
           {brand.partnerships.openai.specialization}. Rigorous design of resilient agentic systems and production AI runtimes.
         </p>
       </div>
@@ -53,12 +53,12 @@ export function OpenAIPartnerBadge({ variant = 'compact', className = '' }: Prop
   return (
     <div 
       id="openai-partner-compact-badge"
-      className={`inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#12151b] border border-[#1f232b] text-[11px] text-[#9ca3af] ${className}`}
+      className={`inline-flex items-center gap-2 text-xs text-[var(--text-secondary)] ${className}`}
     >
-      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-      <span className="font-medium text-[#d1d5db]">{brand.partnerships.openai.status}</span>
-      <span className="text-[#4b5563]">•</span>
-      <span className="text-[#9ca3af]">{brand.partnerships.openai.specialization}</span>
+      <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-ocean)]" />
+      <span className="font-medium text-[var(--text-primary)]">{brand.partnerships.openai.status}</span>
+      <span className="text-[var(--text-muted)]" aria-hidden="true">·</span>
+      <span>{brand.partnerships.openai.specialization}</span>
     </div>
   );
 }

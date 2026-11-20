@@ -1,18 +1,14 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ArrowRight, 
-  Terminal, 
-  Users, 
-  Cpu, 
-  Workflow, 
-  Layers, 
-  CheckCircle2, 
-  ShieldCheck, 
-  ArrowUpRight,
-  Sparkles,
+import { motion } from 'motion/react';
+import {
+  ArrowRight,
+  Search,
+  Workflow,
+  Zap,
+  GitMerge,
   Server,
-  Zap
+  TrendingUp,
+  CheckCircle2
 } from 'lucide-react';
 import { RoutePath } from '../../types';
 import { MaskedHeading, ScrollText } from '../common/ScrollMotion';
@@ -21,262 +17,255 @@ interface ForwardDeployedOperatingModelProps {
   onNavigate: (path: RoutePath) => void;
 }
 
-interface FdeStep {
+interface EngagementStep {
   id: string;
   stepNumber: string;
   label: string;
   subtitle: string;
-  whoWeWorkWith: string[];
-  engineeringIntervention: string;
+  nhtechRole: string;
+  clientPartner: string[];
   deliverable: string;
-  icon: typeof Terminal;
-  accent: string;
+  icon: typeof Search;
 }
 
-const steps: FdeStep[] = [
+const ENGAGEMENT_STEPS: EngagementStep[] = [
   {
-    id: 'problem',
+    id: 'discover',
     stepNumber: '01',
-    label: 'Business Problem',
-    subtitle: 'Deconstruct ambiguity & operational failure modes',
-    whoWeWorkWith: ['Department Heads', 'Domain Analysts', 'Process Operators'],
-    engineeringIntervention: 'We dissect messy manual workflows, unpick legacy business rules, and establish mathematical error and latency budgets.',
-    deliverable: 'System Boundary Architecture & Latency Budget',
-    icon: Users,
-    accent: '#e0fb2e'
+    label: 'Discover',
+    subtitle: 'Shadow operations & frame the bottleneck',
+    clientPartner: ['Department Heads', 'Domain Analysts', 'Process Operators'],
+    nhtechRole:
+      'Senior engineers sit directly with your operators to dissect manual steps, legacy rules, incoming document formats, and real-world failure modes.',
+    deliverable: 'Problem Boundary & Error/Latency Budget',
+    icon: Search
   },
   {
-    id: 'embedded',
+    id: 'map-workflow',
     stepNumber: '02',
-    label: 'Embedded Engineers',
-    subtitle: 'Engineers inside the problem, not outside',
-    whoWeWorkWith: ['Customer Engineering Pod', 'Data Leads', 'Infra SecOps'],
-    engineeringIntervention: 'Senior NHTech engineers embed directly in your repos and communication channels, working shoulder-to-shoulder with your engineers.',
-    deliverable: 'Unified Sprint Cadence & Security Clearance',
-    icon: Terminal,
-    accent: '#38bdf8'
-  },
-  {
-    id: 'architecture',
-    stepNumber: '03',
-    label: 'Model & Architecture',
-    subtitle: 'The right model for the problem',
-    whoWeWorkWith: ['Enterprise Architecture', 'AI Lead', 'CISO / Risk'],
-    engineeringIntervention: 'Model-agnostic evaluation across OpenAI, Anthropic, DeepSeek, SLMs, and open-weights based on accuracy, cost, latency, and privacy.',
-    deliverable: 'Benchmark Matrix & Model Routing Engine',
-    icon: Cpu,
-    accent: '#d7bdf9'
+    label: 'Map Workflow',
+    subtitle: 'Design deterministic states & human checkpoints',
+    clientPartner: ['System Owners', 'Compliance Lead', 'Engineering Lead'],
+    nhtechRole:
+      'We map every input, approval gate, fallback rule, and database write—selecting Small Language Models (SLMs), frontier models, or deterministic logic per step.',
+    deliverable: 'Workflow State Map & Model Benchmark Matrix',
+    icon: Workflow
   },
   {
     id: 'prototype',
+    stepNumber: '03',
+    label: 'Prototype',
+    subtitle: 'Validate end-to-end behavior on live data',
+    clientPartner: ['Subject Matter Experts', 'QA Lead', 'End-Users'],
+    nhtechRole:
+      'We stand up a working prototype against real operational payloads to prove accuracy, latency, and human review ergonomics before scaling.',
+    deliverable: 'Functional End-to-End Prototype',
+    icon: Zap
+  },
+  {
+    id: 'integrate',
     stepNumber: '04',
-    label: 'Prototype Sprint',
-    subtitle: 'Rapid architectural proof with live data',
-    whoWeWorkWith: ['Business Stakeholders', 'QA Teams', 'End-Users'],
-    engineeringIntervention: 'We stand up functional end-to-end prototypes on realistic data to validate deterministic behavior and user interactions before full scale.',
-    deliverable: 'Functional End-to-End Proof of System',
-    icon: Zap,
-    accent: '#e0fb2e'
+    label: 'Integrate',
+    subtitle: 'Connect securely to ERPs, databases & APIs',
+    clientPartner: ['Database Admins', 'Security / SecOps', 'API Owners'],
+    nhtechRole:
+      'Engineers build hardened microservices, bidirectional SAP/Oracle/SQL connectors, Role-Based Access Control (RBAC), and inline operator workbenches.',
+    deliverable: 'Integrated Microservices & Approval Workbench',
+    icon: GitMerge
   },
   {
-    id: 'integration',
+    id: 'deploy',
     stepNumber: '05',
-    label: 'Systems Integration',
-    subtitle: 'Connecting to ERPs, databases & workflows',
-    whoWeWorkWith: ['Core Systems Owners', 'Database Admins', 'API Gateway Leads'],
-    engineeringIntervention: 'Engineering bidirectional microservices into existing enterprise systems: SAP, Salesforce, SQL clusters, and human approval queues.',
-    deliverable: 'Hardened Microservices & Human-in-the-Loop Gates',
-    icon: Workflow,
-    accent: '#38bdf8'
+    label: 'Deploy',
+    subtitle: 'Ship inside infrastructure you control',
+    clientPartner: ['Site Reliability / DevOps', 'IT Security', 'Executive Sponsor'],
+    nhtechRole:
+      'Deployed into your Virtual Private Cloud (VPC), on-premises GPU cluster, or edge hardware with automated CI/CD, observability, and full codebase handover.',
+    deliverable: 'Production Runtime & 100% IP Handover',
+    icon: Server
   },
   {
-    id: 'production',
+    id: 'optimise',
     stepNumber: '06',
-    label: 'Production System',
-    subtitle: '100% Client-owned IP, hardened & audited',
-    whoWeWorkWith: ['Site Reliability Engineers', 'Operations Lead', 'Executive Sponsor'],
-    engineeringIntervention: 'Complete deployment to your VPC, on-prem clusters, or edge devices. Full code, model weights, and runbooks handed over with zero lock-in.',
-    deliverable: 'Production Runtime & 100% IP Handover',
-    icon: ShieldCheck,
-    accent: '#e0fb2e'
+    label: 'Optimise',
+    subtitle: 'Calibrate accuracy, cost & operator throughput',
+    clientPartner: ['Operations Manager', 'Internal Developers'],
+    nhtechRole:
+      'We monitor live traffic, human override rates, and inference costs—quantizing models or tuning prompts and rules based on real production telemetry.',
+    deliverable: 'Telemetry Runbooks & Team Enablement',
+    icon: TrendingUp
   }
 ];
 
 export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOperatingModelProps) {
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
-  const currentStep = steps[activeStepIndex];
+  const currentStep = ENGAGEMENT_STEPS[activeStepIndex];
 
   return (
-    <section 
+    <section
       id="fde-operating-model-section"
-      className="py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative overflow-hidden"
+      className="py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 relative z-10">
-        
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest flex items-center gap-2"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
-              <span>THE FORWARD DEPLOYED OPERATING MODEL</span>
-            </motion.div>
-            
-            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.18]">
-              Bring us the business problem.{' '}
-              <span className="font-bold text-[var(--accent-secondary)]">
-                We’ll engineer the system.
+            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
+              Six-Stage Engagement Flow
+            </p>
+
+            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.15]">
+              Discover → Map Workflow → Prototype →{' '}
+              <span className="text-[var(--accent-secondary)]">
+                Integrate → Deploy → Optimise
               </span>
             </MaskedHeading>
           </div>
 
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left" delay={0.2}>
-            Forward Deployed Engineering is NHTech&apos;s primary differentiator. We work directly with your domain teams, business stakeholders, and existing infrastructure from initial problem framing through to production operations.
+          <ScrollText
+            className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left"
+            delay={0.12}
+          >
+            Select any stage along the track to inspect what our embedded engineering pod builds, who they collaborate with on your team, and what artifact is delivered at each gate.
           </ScrollText>
         </div>
 
-        {/* Visual Flow Stages - Desktop Linear Stepper + Mobile Scroll */}
-        <div className="space-y-8">
-          
-          {/* 6-Stage Progress Track */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {steps.map((step, idx) => {
-              const isActive = activeStepIndex === idx;
-              const isPast = activeStepIndex > idx;
-              const Icon = step.icon;
+        {/* Connected 6-Stage Hairline Track */}
+        <div className="space-y-10">
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="hidden lg:block absolute top-5 left-0 right-0 h-[1px] bg-[var(--border-color)]"
+            />
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 relative">
+              {ENGAGEMENT_STEPS.map((step, idx) => {
+                const isActive = activeStepIndex === idx;
+                const Icon = step.icon;
 
-              return (
-                <button
-                  key={step.id}
-                  onClick={() => setActiveStepIndex(idx)}
-                  className={`p-4 rounded-2xl border text-left transition-all relative overflow-hidden group cursor-pointer flex flex-col justify-between min-h-[120px] ${
-                    isActive
-                      ? 'bg-[var(--bg-surface-elevated)] border-[var(--accent-secondary)] shadow-md'
-                      : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span className={`text-[11px] font-mono font-bold ${isActive ? 'text-[#e0fb2e]' : 'text-[var(--text-muted)]'}`}>
-                      PHASE {step.stepNumber}
-                    </span>
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-[#e0fb2e]' : 'text-[var(--text-muted)] group-hover:text-[var(--text-primary)]'} transition-colors`} />
-                  </div>
-
-                  <div className="space-y-1 mt-2">
-                    <div className="text-xs sm:text-sm font-display font-bold text-[var(--text-primary)] leading-snug">
-                      {step.label}
+                return (
+                  <button
+                    key={step.id}
+                    type="button"
+                    onClick={() => setActiveStepIndex(idx)}
+                    className="text-left transition-all relative cursor-pointer group space-y-3 pt-1"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
+                          isActive
+                            ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
+                            : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span
+                        className={`text-xs font-mono font-bold tabular-nums ${
+                          isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
+                        }`}
+                      >
+                        {step.stepNumber}
+                      </span>
                     </div>
-                    <div className="text-[10px] text-[var(--text-muted)] line-clamp-2 leading-tight">
-                      {step.subtitle}
-                    </div>
-                  </div>
 
-                  {/* Active Indicator Bar */}
-                  {isActive && (
-                    <motion.div 
-                      layoutId="active-fde-indicator" 
-                      className="absolute bottom-0 left-0 right-0 h-1 bg-[#e0fb2e]" 
-                    />
-                  )}
-                </button>
-              );
-            })}
+                    <div className="space-y-1 pr-2">
+                      <div
+                        className={`text-sm font-display font-bold leading-snug transition-colors ${
+                          isActive
+                            ? 'text-[var(--text-primary)]'
+                            : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'
+                        }`}
+                      >
+                        {step.label}
+                      </div>
+                      <div className="text-xs text-[var(--text-muted)] leading-snug">
+                        {step.subtitle}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Detailed Stage Deep-Dive Card */}
+          {/* Unboxed Detailed Stage Editorial Spread */}
           <motion.div
             key={currentStep.id}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="p-8 sm:p-10 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm relative overflow-hidden text-left"
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="border-t border-b border-[var(--border-color)] py-8 sm:py-10 text-left"
           >
-            {/* Background Ambient Glow */}
-            <div 
-              className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-10"
-              style={{ backgroundColor: currentStep.accent }}
-            />
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-              
-              {/* Left Column: Core Focus & Intervention */}
-              <div className="lg:col-span-7 space-y-5">
-                <div className="flex items-center gap-3">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-[#e0fb2e]">
-                    PHASE {currentStep.stepNumber} // DEPLOYED EXECUTION
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:divide-x divide-[var(--border-color)]">
+              {/* Left Column */}
+              <div className="lg:col-span-7 space-y-5 lg:pr-6">
+                <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
+                  <span className="font-bold uppercase text-[var(--accent-orange-text)] tabular-nums">
+                    Stage {currentStep.stepNumber} · {currentStep.label}
                   </span>
-                  <span className="text-xs font-mono text-[var(--text-muted)]">
-                    {currentStep.label}
-                  </span>
+                  <span className="text-[var(--text-muted)]">/</span>
+                  <span className="text-[var(--text-secondary)]">{currentStep.subtitle}</span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-snug">
                   {currentStep.subtitle}
                 </h3>
 
                 <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
-                  {currentStep.engineeringIntervention}
+                  {currentStep.nhtechRole}
                 </p>
 
-                {/* Who We Work With */}
                 <div className="space-y-2 pt-2">
                   <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                    WHO NHTECH ENGINEERS WORK DIRECTLY WITH:
+                    Client Stakeholders Involved
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {currentStep.whoWeWorkWith.map((persona, pIdx) => (
-                      <span 
-                        key={pIdx} 
-                        className="px-3 py-1 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-medium text-[var(--text-primary)]"
-                      >
-                        {persona}
+                  <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-[var(--text-primary)]">
+                    {currentStep.clientPartner.map((persona) => (
+                      <span key={persona} className="inline-flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-secondary)]" />
+                        <span>{persona}</span>
                       </span>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Right Column: Key Production Deliverable & Nav */}
-              <div className="lg:col-span-5 p-6 sm:p-7 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-5">
-                <div className="text-xs font-mono text-[#e0fb2e] uppercase font-bold flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#e0fb2e]" />
-                  <span>PHASE ARTIFACT &amp; GUARANTEE</span>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="text-base font-display font-bold text-[var(--text-primary)]">
-                    {currentStep.deliverable}
+              {/* Right Column: Theme-Aware Ocean Decision Gate Module */}
+              <div className="lg:col-span-5 lg:pl-8 space-y-5">
+                <div className="p-6 sm:p-7 rounded-2xl bg-ocean-depth text-[var(--text-primary)] space-y-5 border border-[var(--border-hover)] shadow-lg">
+                  <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <span>Stage Output &amp; Decision Gate</span>
                   </div>
-                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                    Delivered directly into your infrastructure with automated CI/CD checks, deterministic schema validation, and zero proprietary lock-in.
-                  </p>
-                </div>
 
-                <div className="pt-4 border-t border-[var(--border-color)] flex items-center justify-between">
-                  <button
-                    onClick={() => onNavigate('/fde')}
-                    className="inline-flex items-center gap-2 text-xs font-display font-bold text-[var(--text-primary)] hover:text-[#e0fb2e] transition-colors cursor-pointer"
-                  >
-                    <span>Discuss an FDE Engagement</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-current" />
-                  </button>
+                  <div className="space-y-2">
+                    <div className="text-lg font-display font-bold text-[var(--text-primary)]">
+                      {currentStep.deliverable}
+                    </div>
+                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                      Delivered directly inside your repository and infrastructure with clear acceptance benchmarks before advancing to the next stage.
+                    </p>
+                  </div>
 
-                  <span className="text-[11px] font-mono text-[var(--text-muted)]">
-                    Step {activeStepIndex + 1} of 6
-                  </span>
+                  <div className="pt-4 border-t border-[var(--border-color)] flex items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={() => onNavigate('/contact')}
+                      className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-orange-text)] hover:underline cursor-pointer"
+                    >
+                      <span>Discuss an embedded engagement</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+
+                    <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
+                      Stage {activeStepIndex + 1} of 6
+                    </span>
+                  </div>
                 </div>
               </div>
-
             </div>
           </motion.div>
-
         </div>
-
       </div>
     </section>
   );

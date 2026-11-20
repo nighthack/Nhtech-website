@@ -4,11 +4,11 @@ export const engineeringTracks: EngineeringTrackMeta[] = [
   {
     id: 'fde',
     title: 'Forward Deployed AI Engineering',
-    shortTitle: '01 // FDE AI Engineering',
+    shortTitle: '01 · FDE AI Engineering',
     tagline: 'Forward deployed engineers working alongside your team to turn complex business problems into production systems.',
     description: 'We embed senior product and AI engineers directly into your domain to deconstruct difficult requirements, select and evaluate optimal models, and deliver resilient, production-ready software.',
     badge: 'CORE TRACK 01',
-    accent: '#e0fb2e',
+    accent: '#FF5A1F',
     subCapabilities: [
       'Agentic AI & state machine orchestration',
       'Small Language Models (SLMs) & low-latency runtimes',
@@ -22,11 +22,11 @@ export const engineeringTracks: EngineeringTrackMeta[] = [
   {
     id: 'vision-edge',
     title: 'Vision & Edge AI',
-    shortTitle: '02 // Vision & Edge AI',
+    shortTitle: '02 · Vision & Edge AI',
     tagline: 'Physical-world perception, kinematic tracking, and on-device inference with zero cloud latency.',
     description: 'High-frequency computer vision, open-weight vision-language-action (OpenVLA) models, and edge silicon optimization engineered for factory floors, biomechanics, robotics, and mobile devices.',
     badge: 'CORE TRACK 02',
-    accent: '#38bdf8',
+    accent: '#47849B',
     subCapabilities: [
       'Computer vision & defect classification',
       'OpenVLA / vision-language-action models',
@@ -39,11 +39,11 @@ export const engineeringTracks: EngineeringTrackMeta[] = [
   {
     id: 'complex-business',
     title: 'Complex Business Solutions',
-    shortTitle: '03 // Complex Business Solutions',
+    shortTitle: '03 · Complex Business Solutions',
     tagline: 'Translating intricate domain rules, compliance mandates, and legacy silos into resilient systems.',
     description: 'Building bespoke enterprise software for high-stakes operational environments where the challenge is deconstructing messy business logic, regulatory rules, and legacy architectures into bulletproof platforms.',
     badge: 'CORE TRACK 03',
-    accent: '#d7bdf9',
+    accent: '#75A4B5',
     subCapabilities: [
       'High-volume payments & streaming ledger telemetry',
       'Enterprise loyalty & dynamic reward architectures',

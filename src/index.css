@@ -1,47 +1,99 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
-    --font-sans: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    --font-display: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    --font-editorial: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    --font-mono: 'Roboto Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-editorial: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-    /* Theme Tokens - Dark Mode (Default) */
-    --bg-base: #09080d;
-    --bg-surface: #120d1c;
-    --bg-surface-elevated: #1a1326;
-    --bg-surface-subtle: #0d0a14;
-    --text-primary: #f7f4ec;
-    --text-secondary: #9f99aa;
-    --text-muted: #6e677a;
-    --border-color: rgba(215, 189, 249, 0.12);
-    --border-hover: rgba(215, 189, 249, 0.28);
-    
-    /* Limited Accent Palette */
-    --accent-primary: #e0fb2e; /* Acid Lime */
-    --accent-primary-text: #07060a;
-    --accent-secondary: #d7bdf9; /* Subtle Violet */
-    --accent-glow: rgba(224, 251, 46, 0.12);
+    /* Official NHTech Brand Palette Tokens */
+    --ocean-950: #061421;
+    --ocean-900: #0B2030;
+    --ocean-800: #173D5B;
+    --ocean-700: #24536F;
+    --ocean-600: #326B86;
+    --ocean-500: #47849B;
+    --ocean-400: #75A4B5;
+    --ocean-300: #A6C3CE;
+    --ocean-200: #D1E0E6;
+    --ocean-100: #EAF1F4;
+    --ocean-50:  #F5F8FA;
+
+    --graphite-950: #111820;
+    --graphite-900: #202A33;
+    --graphite-800: #34414C;
+    --grey-700:     #53616D;
+    --grey-600:     #6F7D88;
+    --grey-500:     #8D99A3;
+    --grey-400:     #AEB8C0;
+    --grey-300:     #CBD2D8;
+    --grey-200:     #E0E5E9;
+    --grey-100:     #EEF1F3;
+    --grey-50:      #F7F8F9;
+
+    --orange-900: #7F2A08;
+    --orange-800: #A63A0A;
+    --orange-700: #C9470D;
+    --orange-600: #E95013;
+    --orange-500: #FF5A1F;
+    --orange-400: #FF7A45;
+    --orange-300: #FF9A69;
+    --orange-200: #FFC09F;
+    --orange-100: #FFE0D1;
+    --orange-50:  #FFF3ED;
+
+    --semantic-success: #22A06B;
+    --semantic-warning: #D99A18;
+    --semantic-error:   #D64545;
+    --semantic-info:    #2786C7;
+
+    /* Theme Tokens - Dark Mode (Default: Deep Ocean) */
+    --bg-base: #061421;
+    --bg-surface: #0B2030;
+    --bg-surface-elevated: #173D5B;
+    --bg-surface-subtle: #091928;
+    --bg-neutral-surface: #111820;
+    --text-primary: #F5F8FA;
+    --text-secondary: #D1E0E6;
+    --text-muted: #A6C3CE;
+    --border-color: rgba(166, 195, 206, 0.16);
+    --border-hover: rgba(117, 164, 181, 0.36);
+
+    /* Accent Hierarchy: Signal Orange for CTAs/Highlights, Ocean for Identity */
+    --accent-primary: #FF5A1F;
+    --accent-primary-hover: #FF7A45;
+    --accent-primary-active: #E95013;
+    --accent-primary-text: #061421;
+    --accent-orange-text: #FF7A45;
+    --accent-secondary: #75A4B5;
+    --accent-ocean: #47849B;
+    --accent-glow: rgba(255, 90, 31, 0.14);
   }
 
   html.light, [data-theme="light"] {
-    /* Theme Tokens - Light Mode */
-    --bg-base: #f7f6f2;
-    --bg-surface: #ffffff;
-    --bg-surface-elevated: #edebe4;
-    --bg-surface-subtle: #f0eee8;
-    --text-primary: #0a0812;
-    --text-secondary: #524d5d;
-    --text-muted: #827b90;
-    --border-color: rgba(14, 10, 24, 0.08);
-    --border-hover: rgba(14, 10, 24, 0.22);
+    /* Theme Tokens - Light Mode (Ocean 50 & Graphite Neutrals) */
+    --bg-base: #F5F8FA;
+    --bg-surface: #FFFFFF;
+    --bg-surface-elevated: #EAF1F4;
+    --bg-surface-subtle: #F7F8F9;
+    --bg-neutral-surface: #EEF1F3;
+    --text-primary: #061421;
+    --text-secondary: #34414C;
+    --text-muted: #53616D;
+    --border-color: rgba(23, 61, 91, 0.14);
+    --border-hover: rgba(23, 61, 91, 0.30);
 
-    /* Light Mode Accents */
-    --accent-primary: #0a0812;
-    --accent-primary-text: #ffffff;
-    --accent-secondary: #6336a8;
-    --accent-glow: rgba(10, 8, 18, 0.06);
+    /* Light Mode Accents (WCAG AA compliant contrast on light surfaces) */
+    --accent-primary: #FF5A1F;
+    --accent-primary-hover: #E95013;
+    --accent-primary-active: #C9470D;
+    --accent-primary-text: #061421;
+    --accent-orange-text: #A63A0A;
+    --accent-secondary: #173D5B;
+    --accent-ocean: #24536F;
+    --accent-glow: rgba(23, 61, 91, 0.08);
   }
 
   html {
@@ -58,7 +110,22 @@
     width: 100%;
     line-height: 1.6;
     letter-spacing: -0.01em;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .date-picker-theme {
+    color-scheme: dark;
+  }
+
+  html.light .date-picker-theme,
+  [data-theme="light"] .date-picker-theme {
+    color-scheme: light;
+  }
+
+  .date-picker-theme::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.78;
+    accent-color: var(--accent-primary);
   }
 
   h1, h2, h3, h4, h5, h6, .font-display {
@@ -68,8 +135,12 @@
     font-weight: 700;
   }
 
-  p, li, span, .text-body {
+  p, li, .text-body {
     line-height: 1.6;
+  }
+
+  h1 span, h2 span, h3 span, h4 span, h5 span, h6 span, .font-display span {
+    line-height: inherit;
   }
 
   .font-editorial {
@@ -81,44 +152,41 @@
   }
 }
 
-.dark-date-popover {
-  background: #0d0d0d;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font-family: var(--font-mono);
+/* Signature Brand Gradients (use sparingly) */
+.bg-ocean-depth {
+  background: linear-gradient(135deg, #061421 0%, #173D5B 58%, #326B86 100%);
 }
 
-.dark-date-popover button {
-  font-family: var(--font-mono);
+html.light .bg-ocean-depth,
+[data-theme="light"] .bg-ocean-depth {
+  background: linear-gradient(135deg, #EEF1F3 0%, #E0E5E9 55%, #F7F8F9 100%);
 }
 
-.dark-date-popover .calendar-day {
-  border-radius: 6px;
-  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+.bg-industrial-heat {
+  background: linear-gradient(135deg, #A63A0A 0%, #FF5A1F 55%, #FFB05A 100%);
 }
 
-.dark-date-popover .calendar-day:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.07);
+.bg-engineered-transition {
+  background: linear-gradient(135deg, #173D5B 0%, #24536F 60%, #FF5A1F 100%);
 }
 
 /* Clear Typographic Scale with Generous Line-Height & No Clipping */
 .text-hero-display {
-  font-size: clamp(2rem, 5.2vw, 4.5rem);
+  font-size: clamp(2rem, 4.4vw, 3.85rem);
   line-height: 1.15;
   letter-spacing: -0.025em;
   font-weight: 800;
   overflow-wrap: break-word;
-  word-break: break-word;
+  text-wrap: balance;
 }
 
 .text-section-display {
-  font-size: clamp(1.65rem, 3.6vw, 3rem);
+  font-size: clamp(1.65rem, 3.4vw, 2.85rem);
   line-height: 1.18;
   letter-spacing: -0.02em;
   font-weight: 700;
   overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .text-card-display {
@@ -132,6 +200,11 @@
 .bg-subtle-grid {
   background-size: 32px 32px;
   background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+}
+
+/* Tabular numerals helper */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Custom minimal scrollbar */
@@ -150,7 +223,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-secondary);
+  background: var(--accent-ocean);
 }
 
 /* Reduced motion support */

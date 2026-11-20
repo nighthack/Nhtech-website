@@ -12,7 +12,7 @@ export function CustomModelPipelineStage() {
       shortTitle: '01. Data Ingestion',
       tagline: 'Your Proprietary Business Data',
       icon: Database,
-      accent: '#38bdf8',
+      accent: '#47849B',
       desc: 'Ingest and sanitize proprietary schemas, transaction logs, unstructured domain documents, and business records through structured data engineering pipelines.',
       metrics: [
         { label: 'Data Sources', value: 'Databases, PDFs, Spreadsheets, APIs' },
@@ -27,7 +27,7 @@ export function CustomModelPipelineStage() {
       shortTitle: '02. Evaluation Harness',
       tagline: 'Grounded Metrics Before Training',
       icon: BrainCircuit,
-      accent: '#d7bdf9',
+      accent: '#75A4B5',
       desc: 'Establish rigorous evaluation metrics, ground-truth test sets, and latency constraints to benchmark model options against your actual business requirements.',
       metrics: [
         { label: 'Metrics Framework', value: 'Accuracy, F1, Latency, Cost' },
@@ -42,7 +42,7 @@ export function CustomModelPipelineStage() {
       shortTitle: '03. Fine-Tuning',
       tagline: 'Llama & Mistral Family Adaptation',
       icon: Sparkles,
-      accent: '#e0fb2e',
+      accent: '#FF5A1F',
       desc: 'Fine-tune open-weight foundations (Llama-family, Mistral/Mixtral-family) and custom ML models using PyTorch, Hugging Face Transformers, and parameter-efficient techniques tailored to your domain vocabulary.',
       metrics: [
         { label: 'Supported Families', value: 'Llama-family & Mistral-family' },
@@ -57,7 +57,7 @@ export function CustomModelPipelineStage() {
       shortTitle: '04. Owned Artifacts',
       tagline: 'Your Intellectual Property',
       icon: Lock,
-      accent: '#34d399',
+      accent: '#47849B',
       desc: 'You retain full ownership of the trained model checkpoints, adapter weights, and inference pipelines. No recurring token tolls, no vendor lock-in, and full operational control.',
       metrics: [
         { label: 'Ownership', value: '100% Client-Owned Weights' },
@@ -72,7 +72,7 @@ export function CustomModelPipelineStage() {
       shortTitle: '05. ML Deployment',
       tagline: 'Cloud ML, Docker, & Kubernetes',
       icon: Server,
-      accent: '#f59e0b',
+      accent: '#FF5A1F',
       desc: 'Deploy fine-tuned models to your target environment—AWS SageMaker, Google AI Platform, Azure ML, or containerized via Docker and Kubernetes—with high-throughput FastAPI inference endpoints.',
       metrics: [
         { label: 'Target Platforms', value: 'AWS SageMaker, GCP, Azure ML' },
@@ -87,9 +87,8 @@ export function CustomModelPipelineStage() {
 
   return (
     <div className="space-y-8">
-      
       {/* 5-Step Progress Ribbon */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
         {steps.map((step, idx) => {
           const isCurrent = activeStep === idx;
           const isPassed = activeStep > idx;
@@ -98,29 +97,27 @@ export function CustomModelPipelineStage() {
           return (
             <button
               key={step.id}
+              type="button"
               onClick={() => setActiveStep(idx)}
               className={`p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between gap-2 relative overflow-hidden ${
                 isCurrent
-                  ? 'bg-[var(--bg-surface)] border-[var(--border-hover)] shadow-md ring-1 ring-[#e0fb2e]/40'
+                  ? 'bg-[var(--bg-surface)] border-[#FF5A1F] shadow-md'
                   : isPassed
                   ? 'bg-[var(--bg-surface-elevated)] border-[var(--border-color)] text-[var(--text-secondary)]'
-                  : 'bg-[var(--bg-surface-subtle)] border-[var(--border-color)] text-[var(--text-muted)] opacity-80'
+                  : 'bg-[var(--bg-surface-subtle)] border-[var(--border-color)] text-[var(--text-muted)] opacity-85'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-[10px] font-mono font-bold ${isCurrent ? 'text-[#e0fb2e]' : 'text-[var(--text-muted)]'}`}>
+                <span className={`text-[10px] font-mono font-bold tabular-nums ${isCurrent ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`}>
                   0{idx + 1}
                 </span>
-                <Icon className={`w-3.5 h-3.5 ${isCurrent ? 'text-[#e0fb2e]' : 'text-[var(--text-muted)]'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isCurrent ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
               </div>
               <span className={`text-xs font-medium line-clamp-1 ${isCurrent ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-secondary)]'}`}>
                 {step.shortTitle}
               </span>
               {isCurrent && (
-                <motion.div 
-                  layoutId="active-custom-pipeline-bar" 
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#e0fb2e]" 
-                />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5A1F]" />
               )}
             </button>
           );
@@ -131,16 +128,16 @@ export function CustomModelPipelineStage() {
       <AnimatePresence mode="wait">
         <motion.div
           key={current.id}
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -15 }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="p-6 sm:p-10 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6 text-left"
+          exit={{ opacity: 0, y: -12 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6 text-left"
         >
           {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div className="space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider font-bold" style={{ color: current.accent }}>
+              <span className="text-[11px] font-mono uppercase tracking-wider font-bold text-[var(--accent-orange-text)]">
                 {current.tagline}
               </span>
               <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -148,7 +145,7 @@ export function CustomModelPipelineStage() {
               </h3>
             </div>
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--text-primary)] px-3 py-1.5 rounded-lg bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#e0fb2e]" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
               <span>PHASE 0{current.id + 1} SPECIFICATION</span>
             </div>
           </div>
@@ -160,14 +157,13 @@ export function CustomModelPipelineStage() {
           {/* Architecture Nodes */}
           <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-3">
             <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase">
-              ENGINEERING ARTIFACTS &amp; DATA FLOW
+              Engineering Artifacts &amp; Data Flow
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {current.nodes.map((node, i) => (
                 <div key={i} className="p-3.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-1">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="font-bold text-[var(--text-primary)]">Component 0{i+1}</span>
-                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: current.accent }} />
+                    <span className="font-bold text-[var(--text-primary)] tabular-nums">Component 0{i + 1}</span>
                   </div>
                   <p className="text-[11px] text-[var(--text-secondary)] font-normal leading-snug">
                     {node}
@@ -186,10 +182,8 @@ export function CustomModelPipelineStage() {
               </div>
             ))}
           </div>
-
         </motion.div>
       </AnimatePresence>
-
     </div>
   );
 }

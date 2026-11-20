@@ -36,7 +36,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       id: 'rag',
       title: 'Retrieval-Augmented Generation (RAG)',
       badge: 'DYNAMIC KNOWLEDGE RETRIEVAL',
-      accent: '#38bdf8',
+      accent: 'var(--accent-secondary)',
       summary: 'Best for continuously changing knowledge, policy manuals, regulatory docs, and search where deterministic citation back to the original source text is mandatory.',
       pros: [
         'Zero training compute or weight modification required',
@@ -55,7 +55,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       id: 'finetuning',
       title: 'LoRA & QLoRA Parameter-Efficient Fine-Tuning',
       badge: 'STYLE, SYNTAX & DOMAIN ADAPTATION',
-      accent: '#e0fb2e',
+      accent: 'var(--accent-orange-text)',
       summary: 'Best for teaching specialized domain vocabularies, strict output schemas (JSON/SQL), clinical/legal taxonomy, and tone alignment on proprietary datasets.',
       pros: [
         'Adapts open-weight models (Llama, Mistral, Qwen) to custom syntax',
@@ -74,7 +74,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       id: 'distillation',
       title: 'Model Distillation & Quantisation',
       badge: 'HIGH-THROUGHPUT COMPACT RUNTIMES',
-      accent: '#d7bdf9',
+      accent: 'var(--accent-ocean)',
       summary: 'Transfer knowledge from large frontier models into compact 1B-8B parameter models quantized for FP8 or INT4 inference on commodity hardware or edge nodes.',
       pros: [
         'Dramatic reduction in inference latency (sub-20ms)',
@@ -92,35 +92,38 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
   };
 
   return (
-    <div id="on-prem-ai-chapter" className="min-h-screen pt-28 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)] space-y-24">
+    <div id="on-prem-ai-chapter" className="min-h-screen relative overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]">
       {/* 0. Ambient Subtle Canvas */}
-      <WorldCanvas mode="matrix" opacity={0.3} />
+      <WorldCanvas mode="matrix" opacity={0.22} />
 
       {/* 1. Spatial Header - On-Prem AI & Sovereign Model Engineering */}
-      <SpatialPageHeader
-        tag="MODEL ENGINEERING // ON-PREM AI & SOVEREIGN MODELS"
-        title="Turn your data into a"
-        titleAccent="model you control."
-        subtitle="RAG vs fine-tuning vs distillation based on the actual problem. We engineer domain-specialised sovereign models with LoRA, QLoRA, distillation, and quantisation—ensuring you control the data, evaluation assets, and model artifacts, deployed to private-cloud, on-prem, or edge environments where technically appropriate."
-        ctaText="Discuss Model Engineering"
-        ctaRoute="/contact"
-        secondaryCtaText="Explore Case Studies"
-        secondaryCtaRoute="/work"
-        onNavigate={onNavigate}
-        telemetryItems={[
-          { label: 'STRATEGY', value: 'RAG VS TUNING VS DISTILLATION' },
-          { label: 'TECHNIQUES', value: 'LORA / QLORA / QUANTISATION' },
-          { label: 'DEPLOYMENT', value: 'EDGE / ON-PREM / PRIVATE CLOUD' },
-        ]}
-      />
+      <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
+        <SpatialPageHeader
+          tag="Model Engineering · On-Prem AI & Sovereign Models"
+          title="Turn your data into a"
+          titleAccent="model you control."
+          subtitle="RAG vs fine-tuning vs distillation based on the actual problem. We engineer domain-specialised sovereign models with LoRA, QLoRA, distillation, and quantisation—ensuring you control the data, evaluation assets, and model artifacts, deployed to private-cloud, on-prem, or edge environments where technically appropriate."
+          ctaText="Discuss Model Engineering"
+          ctaRoute="/contact"
+          secondaryCtaText="Explore Case Studies"
+          secondaryCtaRoute="/work"
+          onNavigate={onNavigate}
+          telemetryItems={[
+            { label: 'Strategy', value: 'RAG · Fine-Tuning · Distillation' },
+            { label: 'Techniques', value: 'LoRA · QLoRA · Quantisation' },
+            { label: 'Deployment', value: 'Edge · On-Prem · Private Cloud' },
+          ]}
+        />
+      </section>
 
       {/* 2. RAG vs Fine-Tuning vs Distillation Decision Matrix */}
-      <section className="relative z-10 max-w-7xl mx-auto space-y-8 text-left">
+      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[#e0fb2e] uppercase font-bold flex items-center gap-2">
-              <Scale className="w-4 h-4 text-[#e0fb2e]" />
-              <span>ARCHITECTURAL SELECTION // DECISION MATRIX</span>
+            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
+              <Scale className="w-4 h-4 text-[var(--accent-orange-text)]" />
+              <span>Architectural Selection · Decision Matrix</span>
             </div>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
               RAG vs. Fine-Tuning vs. Distillation
@@ -142,15 +145,15 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 onClick={() => setSelectedTradeoff(key)}
                 className={`p-5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
                   isSelected
-                    ? 'bg-[var(--bg-surface-elevated)] border-[var(--border-hover)] shadow-md'
-                    : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-color)]/80 text-[var(--text-secondary)]'
+                    ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F]/60 shadow-md'
+                    : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)]'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold" style={{ color: item.accent }}>
                     {item.badge}
                   </span>
-                  {isSelected && <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.accent }} />}
+                  {isSelected && <span className="text-[10px] font-mono font-bold text-[#FF5A1F]">ACTIVE</span>}
                 </div>
                 <div className="font-display font-bold text-sm sm:text-base text-[var(--text-primary)]">
                   {item.title}
@@ -169,7 +172,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="p-6 sm:p-10 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-8"
+              className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-8"
             >
               <div className="space-y-3">
                 <div className="text-xs font-mono uppercase font-bold" style={{ color: current.accent }}>
@@ -185,14 +188,14 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[var(--border-color)]">
                 <div className="space-y-3">
-                  <div className="text-xs font-mono text-[#34d399] uppercase font-bold flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#34d399]" />
+                  <div className="text-xs font-mono text-[#22A06B] uppercase font-bold flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#22A06B]" />
                     <span>Primary Advantages</span>
                   </div>
                   <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-secondary)] font-mono">
                     {current.pros.map((pro, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <span className="text-[#34d399]">✓</span>
+                        <span className="text-[#22A06B]">✓</span>
                         <span>{pro}</span>
                       </li>
                     ))}
@@ -222,36 +225,37 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
             </motion.div>
           );
         })()}
+        </div>
       </section>
 
       {/* 3. Core Story & Visual Pipeline Stage: Data -> Eval -> Tuning -> Artifacts -> Deployment */}
-      <section className="relative z-10 max-w-7xl mx-auto space-y-8 text-left">
+      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[#e0fb2e] uppercase font-bold flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
-              <span>CUSTOM MODEL PIPELINE // STEP-BY-STEP</span>
+            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+              <span>Custom Model Pipeline · Step-by-Step</span>
             </div>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
               Domain Data to Deployed ML Architecture
             </MaskedHeading>
           </div>
           <span className="text-xs font-mono text-[var(--text-muted)]">
-            CLICK PHASES TO INSPECT ARTIFACTS
+            Click phases to inspect artifacts
           </span>
         </div>
 
         {/* Custom Model Pipeline Interactive Stage */}
         <CustomModelPipelineStage />
+        </div>
       </section>
 
-      {/* 4. Model Spectrum: The Right Model for the Problem */}
-      <section className="relative z-10 max-w-7xl mx-auto space-y-8 text-left">
-        <ModelEcosystemSpectrum onExploreWork={() => onNavigate('/work')} />
-      </section>
+      {/* 4. Model Spectrum: The Right Model for the Problem (owns its own section & max-w-7xl) */}
+      <ModelEcosystemSpectrum onExploreWork={() => onNavigate('/work')} />
 
       {/* 5. Deep Technical Focus: Methodology */}
-      <section className="relative z-10 max-w-7xl mx-auto space-y-12 text-left">
+      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
         <div className="max-w-3xl space-y-3">
           <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase">TECHNICAL METHODOLOGY</span>
           <MaskedHeading as="h2" className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -270,7 +274,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               title: 'RAG vs Fine-Tuning vs Distillation',
               desc: 'We benchmark whether your workload is best solved via semantic vector retrieval, adapter fine-tuning, or compact distilled models based on latency, domain specificity, and operational economics.',
               tech: ['Decision Matrix', 'Evaluation Benchmark Harness', 'Human-Labeled Ground Truth', 'Latency & Cost Profiling'],
-              accent: '#38bdf8'
+              accent: 'var(--accent-secondary)'
             },
             {
               icon: Sparkles,
@@ -278,7 +282,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               title: 'LoRA, QLoRA, Distillation & Quantisation',
               desc: 'We adapt open-weight architectures (Llama, Mistral, Qwen, DeepSeek) using parameter-efficient fine-tuning, knowledge distillation, and FP8/INT4 quantization tailored to your domain vocabulary.',
               tech: ['LoRA & QLoRA Adapters', 'Model Distillation', 'Quantization (FP8/INT4)', 'PyTorch & Hugging Face'],
-              accent: '#e0fb2e'
+              accent: 'var(--accent-orange-text)'
             },
             {
               icon: Lock,
@@ -286,7 +290,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               title: 'Client-Controlled Data & Model Artifacts',
               desc: 'Your business receives all training datasets, benchmark suites, adapter weights, and inference code. You maintain complete intellectual property control without recurring token taxes or vendor lock-in.',
               tech: ['Exportable Model Checkpoints', 'Evaluation Benchmarks', '100% Client IP Ownership', 'Zero Vendor Lock-In'],
-              accent: '#34d399'
+              accent: '#22A06B'
             },
             {
               icon: Server,
@@ -294,7 +298,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               title: 'Edge, On-Prem & Private-Cloud Deployment',
               desc: 'We deploy models onto AWS SageMaker, Google AI Platform, Azure ML, containerized Kubernetes clusters, or on-premise hardware where data residency and operational control are strictly mandated.',
               tech: ['Private VPC / SageMaker / GCP', 'Docker & Kubernetes', 'FastAPI Microservice Endpoints', 'On-Prem / Edge Inference'],
-              accent: '#d7bdf9'
+              accent: 'var(--accent-ocean)'
             }
           ].map((pillar, idx) => {
             const Icon = pillar.icon;
@@ -305,7 +309,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-all space-y-6 shadow-sm flex flex-col justify-between"
+                className="p-7 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-all space-y-6 shadow-sm flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -337,39 +341,41 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
             );
           })}
         </div>
+        </div>
       </section>
 
       {/* 6. Deployment Topologies Section: Managed Cloud, Containerized, Custom API */}
-      <section className="relative z-10 max-w-7xl mx-auto space-y-8 text-left">
+      <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
-              <span>DEPLOYMENT OPTIONS</span>
+            <div className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-bold">
+              <span>Deployment Options</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
               Production ML Deployment Environments
             </h2>
           </div>
           <span className="text-xs font-mono text-[var(--text-muted)]">
-            CLOUD ML • CONTAINERS • ON-PREM CLUSTERS
+            Cloud ML · Containers · On-Prem Clusters
           </span>
         </div>
 
         <SovereignTopologyStage />
+        </div>
       </section>
 
       {/* 7. Final Call to Action */}
-      <section className="relative z-10 max-w-7xl mx-auto">
-        <motion.div 
-          initial={{ opacity: 0, y: 24 }}
+      <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-8 sm:p-14 text-center space-y-6 shadow-xl"
+          viewport={{ once: true, amount: 'some' }}
+          transition={{ duration: 0.55 }}
+          className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[#e0fb2e] uppercase font-bold tracking-widest">
-            MODEL ENGINEERING ENGAGEMENT
+          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+            Model Engineering Engagement
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
             Ready to evaluate and fine-tune a model for your business?
@@ -377,13 +383,14 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
           <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl mx-auto font-normal leading-relaxed">
             Our AI/ML pod works with your team on domain data readiness, benchmark harness design, open-weight fine-tuning, and production deployment.
           </ScrollText>
-          <div className="pt-4">
+          <div className="pt-2">
             <button
+              type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--text-primary)] text-[var(--bg-base)] font-display font-bold text-xs tracking-tight hover:opacity-90 transition-all cursor-pointer shadow-xl"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Initiate Model Engineering Discovery</span>
-              <ArrowRight className="w-4 h-4 text-current" />
+              <ArrowRight className="w-4 h-4 text-[#061421]" />
             </button>
           </div>
         </motion.div>

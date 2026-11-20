@@ -227,7 +227,7 @@ const routeMetadataMap: Record<string, PageMeta> = {
   },
   '/industries/startups': {
     title: 'High-Velocity AI Engineering for Growth Startups | NHTech',
-    description: 'Rapid 30-day prototype-to-production validation tracks and dedicated engineering pods for scaleups.',
+    description: 'Rapid prototype-to-production validation tracks and dedicated engineering pods for scaleups.',
     ogType: 'website',
     pageType: 'WebPage',
     breadcrumbs: [

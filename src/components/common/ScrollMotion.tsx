@@ -22,7 +22,7 @@ export function MaskedHeading({
 }: MaskedHeadingProps) {
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.25 });
+  const isInView = useInView(ref, { once: true, amount: 'some' });
 
   if (shouldReduceMotion) {
     const Tag = Component;
@@ -30,11 +30,11 @@ export function MaskedHeading({
   }
 
   return (
-    <div ref={ref} className="overflow-hidden">
+    <div ref={ref} className="overflow-visible">
       <motion.div
-        initial={{ y: '100%', opacity: 0 }}
-        animate={isInView ? { y: 0, opacity: 1 } : { y: '100%', opacity: 0 }}
-        transition={{ duration: 0.8, delay, ease: defaultEase }}
+        initial={{ y: 12, opacity: 0 }}
+        animate={isInView ? { y: 0, opacity: 1 } : { y: 12, opacity: 0 }}
+        transition={{ duration: 0.55, delay, ease: defaultEase }}
       >
         <Component className={className}>{children}</Component>
       </motion.div>
@@ -44,7 +44,7 @@ export function MaskedHeading({
 
 /**
  * ScrollText
- * Subtle fade + 16px upward translation on entry for paragraphs and descriptions.
+ * Subtle fade + 12px upward translation on entry for paragraphs and descriptions.
  */
 interface ScrollTextProps {
   children: React.ReactNode;
@@ -57,11 +57,11 @@ export function ScrollText({
   children,
   as: Component = 'p',
   className = '',
-  delay = 0.1,
+  delay = 0.08,
 }: ScrollTextProps) {
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 'some' });
 
   if (shouldReduceMotion) {
     const Tag = Component;
@@ -73,9 +73,9 @@ export function ScrollText({
   return (
     <div ref={ref}>
       <MotionComponent
-        initial={{ opacity: 0, y: 16 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-        transition={{ duration: 0.65, delay, ease: defaultEase }}
+        initial={{ opacity: 0, y: 12 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: 0.5, delay, ease: defaultEase }}
         className={className}
       >
         {children}
@@ -316,5 +316,64 @@ export function SectionSceneWrapper({
     >
       {children}
     </motion.section>
+  );
+}
+
+/**
+ * ScrollProgressRail
+ * Precision top scroll progress indicator tied to page scroll position.
+ */
+export function ScrollProgressRail() {
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+
+  if (shouldReduceMotion) return null;
+
+  return (
+    <div
+      aria-hidden="true"
+      className="fixed top-0 left-0 right-0 h-[2px] z-[60] pointer-events-none bg-transparent"
+    >
+      <motion.div
+        style={{ scaleX: scrollYProgress, transformOrigin: '0% 50%' }}
+        className="w-full h-full bg-gradient-to-r from-[#326B86] via-[#47849B] to-[#FF5A1F]"
+      />
+    </div>
+  );
+}
+
+/**
+ * ParallaxFrame
+ * Subtle scroll-linked parallax container for editorial media without layout reflow.
+ */
+interface ParallaxFrameProps {
+  children: React.ReactNode;
+  className?: string;
+  offset?: number;
+}
+
+export function ParallaxFrame({
+  children,
+  className = '',
+  offset = 24
+}: ParallaxFrameProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start']
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [-offset, offset]);
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <div ref={ref} className={`overflow-hidden ${className}`}>
+      <motion.div style={{ y }} className="w-full h-full will-change-transform">
+        {children}
+      </motion.div>
+    </div>
   );
 }

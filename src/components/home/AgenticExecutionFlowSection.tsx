@@ -1,21 +1,13 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ArrowRight, 
-  Terminal, 
-  Cpu, 
-  ShieldCheck, 
-  Workflow, 
-  UserCheck, 
-  CheckCircle2, 
-  FileText, 
-  Database, 
-  Server, 
-  AlertCircle,
-  Play,
-  RotateCcw,
-  Clock,
-  Layers,
+import { motion } from 'motion/react';
+import {
+  ArrowRight,
+  Terminal,
+  ShieldCheck,
+  UserCheck,
+  Database,
+  Cpu,
+  FileInput,
   ArrowUpRight
 } from 'lucide-react';
 import { RoutePath } from '../../types';
@@ -35,275 +27,274 @@ interface ChainStep {
   whatHappens: string;
   sampleData: string;
   requiresHuman: boolean;
-  accent: string;
+  icon: typeof FileInput;
 }
 
-const executionChain: ChainStep[] = [
+const EXECUTION_CHAIN: ChainStep[] = [
   {
     id: 'input',
     stepNumber: '01',
     title: 'Input',
     subhead: 'Event & Document Ingestion',
-    role: 'Multi-channel raw event arrival across email attachments, SFTP, webhooks, or API streams.',
-    systemsAccessed: ['Internal API Gateway', 'SFTP Ingestion', 'Kafka Event Stream'],
-    whatHappens: 'System ingests incoming business payloads (invoices, legal contracts, claims, or telemetry packets) and normalizes schema boundaries.',
-    sampleData: 'EVENT: invoice_received_discrepancy | ID: INV-2026-8812 | Amount: $18,450.00',
+    role: 'Incoming business payloads arrive from email, file feeds, portals, or system webhooks.',
+    systemsAccessed: ['Internal API Gateway', 'SFTP Ingestion', 'Email / Document Queue'],
+    whatHappens:
+      'The system ingests incoming operational payloads (invoices, contracts, valuation sheets, or customer requests) and validates input structure before processing.',
+    sampleData: 'EVENT: invoice_discrepancy_check | ID: INV-2026-8812 | Source: SFTP_BATCH',
     requiresHuman: false,
-    accent: '#38bdf8'
+    icon: FileInput
   },
   {
-    id: 'reasoning',
+    id: 'ai-processing',
     stepNumber: '02',
-    title: 'AI Reasoning',
-    subhead: 'Context Assembly & Evaluation',
-    role: 'Semantic parsing, entity extraction, and business rule evaluation using calibrated models.',
-    systemsAccessed: ['Document Knowledge Base', 'Enterprise Vector Store', 'Historical Contract Archive'],
-    whatHappens: 'Models parse table line items, extract contractual terms, cross-reference master service agreements, and identify variance.',
-    sampleData: 'REASONING: Line item #4 billed at $210/hr. Master Contract rate card specifies $185/hr.',
+    title: 'AI Processing',
+    subhead: 'Extraction & Rule Evaluation',
+    role: 'Calibrated models extract fields with source citations and evaluate deterministic business rules.',
+    systemsAccessed: ['Fine-Tuned SLM / LLM Router', 'Document Vector Index', 'Deterministic Rule Engine'],
+    whatHappens:
+      'Structured extraction parses line items, links extracted values back to source page coordinates, and compares figures against your master rate cards and policies.',
+    sampleData: 'CHECK: Line item #4 variance detected ($210/hr billed vs $185/hr contract rate).',
     requiresHuman: false,
-    accent: '#e0fb2e'
+    icon: Cpu
   },
   {
-    id: 'human-approval',
+    id: 'human-review',
     stepNumber: '03',
-    title: 'Human Approval',
-    subhead: 'Mandatory Sign-off Gate',
-    role: 'Deterministic escalation where exceptions, high entropy, or spend thresholds trigger review.',
-    systemsAccessed: ['Human Triage Queue', 'Slack / Teams Webhook', 'Controller Workbench'],
-    whatHappens: 'Surfaces a structured visual diff with inline citations. Operators approve, reject, or adjust before any automated write happens.',
-    sampleData: 'GATE: Controller @j.doe approved adjusted payment of $15,950.00 at 14:32:08 UTC.',
+    title: 'Human Review',
+    subhead: 'Mandatory Approval Gate',
+    role: 'Exceptions, low-confidence extractions, or threshold breaches pause for operator sign-off.',
+    systemsAccessed: ['Operator Triage Workbench', 'Inline PDF Diff Viewer', 'Role-Based Approval Queue'],
+    whatHappens:
+      'Operators inspect a structured side-by-side comparison with highlighted source citations and approve, adjust, or reject before any downstream database mutation occurs.',
+    sampleData: 'GATE: Controller approved adjusted voucher $15,950.00 | Reason: Contract variance.',
     requiresHuman: true,
-    accent: '#e0fb2e'
+    icon: UserCheck
   },
   {
-    id: 'tool-action',
+    id: 'system-action',
     stepNumber: '04',
-    title: 'Tool / System Action',
-    subhead: 'Atomic System Commit',
-    role: 'Bi-directional execution directly into enterprise ERPs, SQL ledgers, or external APIs.',
-    systemsAccessed: ['SAP S/4HANA ERP', 'PostgreSQL Ledger', 'Banking ACH Gateway'],
-    whatHappens: 'Executes the approved transaction in core business records, posts adjustments, and triggers downstream event notifications.',
-    sampleData: 'WRITE: sap_commit_payment_voucher("PV-44109", adjusted_amt=$15950.00) -> HTTP 200 OK',
+    title: 'System Action',
+    subhead: 'Core ERP Write & Audit Log',
+    role: 'Approved actions commit to enterprise systems of record alongside an immutable audit trail.',
+    systemsAccessed: ['SAP / ERP Connector', 'PostgreSQL Ledger', 'Immutable Audit Log'],
+    whatHappens:
+      'The system writes the verified transaction to your core Enterprise Resource Planning (ERP) or SQL ledger and logs the inputs, model version, and approver identity.',
+    sampleData: 'COMMIT: ledger_voucher("PV-44109", amount=$15950.00) -> 200 OK | AUDIT LOGGED',
     requiresHuman: false,
-    accent: '#38bdf8'
-  },
-  {
-    id: 'audit-trail',
-    stepNumber: '05',
-    title: 'Audit Trail',
-    subhead: 'Cryptographic & Traceable Log',
-    role: 'Immutable recording of prompts, model versions, human approvals, and system state transitions.',
-    systemsAccessed: ['Immutable Audit Store', 'SOC2 / SOX Archival', 'OpenTelemetry Exporter'],
-    whatHappens: 'Records end-to-end evidence packets with timestamps, signer identity, and parameter hashes for full regulatory auditability.',
-    sampleData: 'AUDIT_HASH: 9f8a...3c12 | VERIFIED | Latency: 1.4s (excl human queue) | Zero Leakage',
-    requiresHuman: false,
-    accent: '#d7bdf9'
+    icon: Database
   }
 ];
 
 export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlowSectionProps) {
-  const [selectedStepIndex, setSelectedStepIndex] = useState<number>(0);
-  const currentStep = executionChain[selectedStepIndex];
+  const [selectedStepIndex, setSelectedStepIndex] = useState<number>(2);
+  const currentStep = EXECUTION_CHAIN[selectedStepIndex];
 
   return (
-    <section 
+    <section
       id="agentic-execution-chain-section"
-      className="py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative overflow-hidden"
+      className="py-20 sm:py-28 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 relative z-10">
-        
-        {/* Header with Buyer-Oriented Headline and Actionable Prompt */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest flex items-center gap-2"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
-              <span>AGENTIC WORKFLOWS // FORWARD DEPLOYED ENGINEERING</span>
-            </motion.div>
-            
-            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.18]">
-              AI that fits your workflow,{' '}
-              <span className="font-bold text-[var(--accent-secondary)]">
-                not the other way around.
+            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
+              Concrete Workflow Pattern
+            </p>
+
+            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.15]">
+              Input → AI Processing →{' '}
+              <span className="text-[var(--accent-secondary)]">
+                Human Review → System Action
               </span>
             </MaskedHeading>
           </div>
 
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left" delay={0.2}>
-            Show us the workflow, approvals, systems and failure points. We’ll map where AI fits and build the production path with deterministic guardrails.
+          <ScrollText
+            className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left"
+            delay={0.12}
+          >
+            AI models never write unverified changes straight into production records. Every automated workflow routes uncertain or high-value actions through explicit human approval and audit logging.
           </ScrollText>
         </div>
 
-        {/* 5-Step Visual Flow: Input → AI Reasoning → Human Approval → Tool/System Action → Audit Trail */}
-        <div className="space-y-8">
-          
-          {/* Progress Nodes: 5 Clean Stages */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {executionChain.map((step, idx) => {
-              const isSelected = selectedStepIndex === idx;
-              return (
-                <button
-                  key={step.id}
-                  onClick={() => setSelectedStepIndex(idx)}
-                  className={`p-4 rounded-2xl border text-left transition-all relative overflow-hidden cursor-pointer flex flex-col justify-between min-h-[140px] ${
-                    isSelected
-                      ? 'bg-[var(--bg-surface-elevated)] border-[var(--accent-secondary)] shadow-md ring-1 ring-[#e0fb2e]/40'
-                      : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span className={`text-[10px] font-mono font-bold ${isSelected ? 'text-[#e0fb2e]' : 'text-[var(--text-muted)]'}`}>
-                      STAGE {step.stepNumber}
-                    </span>
-                    {step.requiresHuman ? (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-[#e0fb2e]/10 text-[#e0fb2e] border border-[#e0fb2e]/30">
-                        HUMAN GATE
+        {/* Connected 4-Stage Visual Flow Track */}
+        <div className="space-y-10">
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="hidden lg:block absolute top-5 left-0 right-0 h-[1px] bg-[var(--border-color)]"
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+              {EXECUTION_CHAIN.map((step, idx) => {
+                const isSelected = selectedStepIndex === idx;
+                const StepIcon = step.icon;
+
+                return (
+                  <button
+                    key={step.id}
+                    type="button"
+                    onClick={() => setSelectedStepIndex(idx)}
+                    className="text-left transition-all cursor-pointer group space-y-3 pt-1"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2.5">
+                        <div
+                          className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
+                            isSelected
+                              ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
+                              : step.requiresHuman
+                              ? 'bg-[var(--bg-base)] border-[#FF5A1F]/60 text-[var(--accent-orange-text)]'
+                              : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
+                          }`}
+                        >
+                          <StepIcon className="w-4 h-4" />
+                        </div>
+                        <span
+                          className={`text-xs font-mono font-bold tabular-nums ${
+                            isSelected ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
+                          }`}
+                        >
+                          {step.stepNumber}
+                        </span>
+                      </div>
+
+                      <span
+                        className={`text-[10px] font-mono uppercase tracking-wider ${
+                          step.requiresHuman
+                            ? 'text-[var(--accent-orange-text)] font-bold'
+                            : 'text-[var(--accent-secondary)]'
+                        }`}
+                      >
+                        {step.requiresHuman ? 'Human Gate' : 'Automated'}
                       </span>
-                    ) : (
-                      <span className="text-[9px] font-mono text-[var(--text-muted)]">
-                        AUTOMATED
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="space-y-1 mt-2">
-                    <div className="text-sm font-display font-bold text-[var(--text-primary)]">
-                      {step.title}
                     </div>
-                    <div className="text-[11px] text-[var(--text-muted)] font-mono leading-tight">
-                      {step.subhead}
+
+                    <div className="space-y-1">
+                      <div className="text-base font-display font-bold text-[var(--text-primary)]">
+                        {step.title}
+                      </div>
+                      <p className="text-xs text-[var(--text-secondary)] leading-snug">
+                        {step.subhead}
+                      </p>
+                      <div className="text-[11px] font-mono text-[var(--text-muted)] truncate pt-1">
+                        {step.systemsAccessed[0]}
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="pt-2 border-t border-[var(--border-color)]">
-                    <span className="text-[10px] font-mono text-[var(--text-secondary)] line-clamp-1">
-                      {step.systemsAccessed[0]}
-                    </span>
-                  </div>
-
-                  {isSelected && (
-                    <motion.div 
-                      layoutId="active-chain-indicator" 
-                      className="absolute bottom-0 left-0 right-0 h-1 bg-[#e0fb2e]" 
-                    />
-                  )}
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Detailed Inspector Card for Selected Step */}
-          <motion.div 
+          {/* Unboxed Detailed Inspector Spread */}
+          <motion.div
             key={currentStep.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xl relative overflow-hidden"
+            transition={{ duration: 0.25 }}
+            className="border-t border-b border-[var(--border-color)] py-8 sm:py-10"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
-              {/* Left Column: Context & Systems */}
-              <div className="lg:col-span-7 space-y-6 text-left">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:divide-x divide-[var(--border-color)]">
+              {/* Left Column */}
+              <div className="lg:col-span-7 space-y-5 text-left lg:pr-6">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-[#e0fb2e] text-[#0b0c0e]">
-                      STAGE {currentStep.stepNumber} // {currentStep.title}
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+                    <span className="px-2.5 py-1 rounded-md font-bold bg-[#FF5A1F] text-[#061421] tabular-nums">
+                      Step {currentStep.stepNumber} · {currentStep.title}
                     </span>
-                    <span className="text-xs font-mono text-[var(--text-muted)] uppercase">
+                    <span className="text-[var(--text-muted)] uppercase">
                       {currentStep.subhead}
                     </span>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
+                  <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] leading-snug">
                     {currentStep.role}
                   </h3>
                 </div>
 
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
                   {currentStep.whatHappens}
                 </p>
 
-                {/* Systems Touched */}
-                <div className="space-y-2.5 pt-2">
-                  <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                    SYSTEM CONNECTORS &amp; TELEMETRY TOUCHED
+                <div className="space-y-2 pt-1">
+                  <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider block">
+                    System Components Connected
                   </span>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-mono text-[var(--text-primary)]">
                     {currentStep.systemsAccessed.map((sys) => (
-                      <span 
-                        key={sys}
-                        className="px-3 py-1.5 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)]"
-                      >
-                        {sys}
+                      <span key={sys} className="inline-flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-secondary)]" />
+                        <span>{sys}</span>
                       </span>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Right Column: Live Terminal Sample & Action Callout */}
-              <div className="lg:col-span-5 p-6 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-5 text-left">
-                <div className="flex items-center justify-between pb-3 border-b border-[var(--border-color)] text-xs font-mono">
-                  <div className="flex items-center gap-2 text-[var(--text-primary)]">
-                    <Terminal className="w-4 h-4 text-[#e0fb2e]" />
-                    <span>AUDIT RECORD // TRACE LOG</span>
+              {/* Right Column: Live Trace Console */}
+              <div className="lg:col-span-5 lg:pl-8 space-y-4 text-left">
+                <div className="p-6 rounded-2xl bg-[#061421] border border-[#173D5B] text-[#F5F8FA] space-y-4 shadow-lg">
+                  <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs font-mono">
+                    <div className="flex items-center gap-2 font-semibold">
+                      <Terminal className="w-4 h-4 text-[#FF7A45]" />
+                      <span>Execution Trace Example</span>
+                    </div>
+                    <span className="text-[#75A4B5] font-semibold">Audited</span>
                   </div>
-                  <span className="text-[#e0fb2e]">VERIFIED</span>
-                </div>
 
-                <div className="p-3.5 rounded-xl bg-[#09080d] border border-[var(--border-color)] text-xs font-mono text-[#e0fb2e] overflow-x-auto leading-relaxed">
-                  {currentStep.sampleData}
-                </div>
+                  <div className="p-3.5 rounded-xl bg-[#0B2030] border border-[#24536F]/50 text-xs font-mono text-[#F5F8FA] overflow-x-auto leading-relaxed">
+                    {currentStep.sampleData}
+                  </div>
 
-                <div className="space-y-2 text-xs text-[var(--text-secondary)] font-normal leading-relaxed">
-                  {currentStep.requiresHuman ? (
-                    <div className="flex items-start gap-2 text-[#e0fb2e]">
-                      <UserCheck className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span>Human sign-off is mandatory before downstream ERP commits execute. Zero unverified tool actions.</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-start gap-2 text-[var(--text-secondary)]">
-                      <ShieldCheck className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
-                      <span>Bounded execution with deterministic schema validation and sub-second fallback logic.</span>
-                    </div>
-                  )}
+                  <div className="text-xs leading-relaxed">
+                    {currentStep.requiresHuman ? (
+                      <div className="flex items-start gap-2 text-[#FF7A45] font-medium">
+                        <UserCheck className="w-4 h-4 shrink-0 mt-0.5" />
+                        <span>
+                          Human approval is mandatory before downstream system writes execute—no unverified database mutations.
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-start gap-2 text-[#D1E0E6]">
+                        <ShieldCheck className="w-4 h-4 text-[#75A4B5] shrink-0 mt-0.5" />
+                        <span>
+                          Bounded execution with strict schema validation, deterministic fallback routing, and immutable event logging.
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-
             </div>
           </motion.div>
-
         </div>
 
-        {/* Action Buttons with High Intent */}
-        <div className="pt-4 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border-color)] text-left">
+        {/* Footer Actions */}
+        <div className="pt-2 flex flex-wrap items-center justify-between gap-4 text-left">
           <div className="flex flex-wrap items-center gap-3">
             <button
+              type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[var(--text-primary)] text-[var(--bg-base)] font-display font-bold text-xs tracking-tight hover:opacity-90 transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
             >
-              <span>Show Us the Workflow</span>
-              <ArrowRight className="w-4 h-4 text-current" />
+              <span>Map Your Workflow With Us</span>
+              <ArrowRight className="w-4 h-4 text-[#061421]" />
             </button>
 
             <button
-              onClick={() => onNavigate('/fde')}
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-medium transition-all cursor-pointer"
+              type="button"
+              onClick={() => onNavigate('/work')}
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-transparent hover:bg-[var(--bg-surface)] border border-[var(--border-hover)] text-[var(--text-primary)] text-xs font-medium transition-all cursor-pointer"
             >
-              <span>Talk to an Engineering Pod</span>
+              <span>Explore Selected Production Work</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[var(--text-muted)]" />
             </button>
           </div>
 
           <span className="text-xs font-mono text-[var(--text-muted)]">
-            Input → AI Reasoning → Human Approval → Tool/System Action → Audit Trail
+            Input → AI Processing → Human Review → System Action
           </span>
         </div>
-
       </div>
     </section>
   );

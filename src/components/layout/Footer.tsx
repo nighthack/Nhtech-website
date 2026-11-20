@@ -1,6 +1,7 @@
 import { ShieldCheck, ArrowUpRight } from 'lucide-react';
 import { brand } from '../../config/brand';
 import { RoutePath } from '../../types';
+import { BrandLogo } from '../common/BrandLogo';
 
 interface FooterProps {
   onNavigate: (path: RoutePath) => void;
@@ -13,16 +14,7 @@ export function Footer({ onNavigate }: FooterProps) {
   };
 
   return (
-    <footer id="global-site-footer" className="bg-[var(--bg-surface-subtle)] border-t border-[var(--border-color)] pt-20 pb-12 text-[var(--text-primary)] text-xs relative overflow-hidden z-20">
-      
-      {/* Subtle Ghost Wordmark in Background */}
-      <div 
-        aria-hidden="true"
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[13vw] font-display font-black text-[var(--text-primary)] opacity-[0.025] tracking-tighter select-none pointer-events-none whitespace-nowrap leading-none z-0"
-      >
-        NHTECH
-      </div>
-
+    <footer id="global-site-footer" className="bg-[var(--bg-surface-subtle)] border-t border-[var(--border-color)] pt-16 pb-12 text-[var(--text-primary)] text-xs relative overflow-hidden z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
         
         {/* Top Grid */}
@@ -30,29 +22,24 @@ export function Footer({ onNavigate }: FooterProps) {
           
           {/* Brand & Editorial Positioning */}
           <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <img 
-                src="/logo.jpg" 
-                alt="NHTech Logo" 
-                className="h-8 w-auto max-h-8 object-contain shrink-0 rounded-lg"
-              />
-              <span className="text-lg font-display font-bold tracking-tight text-[var(--text-primary)]">
-                {brand.displayName}
-              </span>
-            </div>
+            <button
+              onClick={() => handleNav('/')}
+              className="inline-flex items-center cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5A1F] rounded-lg"
+              aria-label="NHTech Home"
+            >
+              <BrandLogo variant="combination" heightClass="h-6" />
+            </button>
 
             <p className="text-xs text-[var(--text-secondary)] max-w-sm leading-relaxed font-normal">
-              NHTech turns complex business problems into production systems. We combine product engineering, agentic AI, document intelligence and computer vision, deployed within infrastructure you control.
+              NHTech turns complex business operations into production-ready AI systems. We combine product engineering, agentic workflows, document intelligence and computer vision, deployed within infrastructure you control.
             </p>
 
-            {/* OpenAI Partner Badge */}
-            <div className="pt-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] text-[11px] text-[var(--text-secondary)]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#e0fb2e]" />
-                <span className="font-bold text-[var(--text-primary)]">{brand.partnerships.openai.status}</span>
-                <span className="text-[var(--text-muted)]">/</span>
-                <span>{brand.partnerships.openai.specialization}</span>
-              </div>
+            {/* OpenAI Partner Metadata */}
+            <div className="pt-1 flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-secondary)]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-ocean)] shrink-0" />
+              <span className="font-semibold text-[var(--text-primary)]">{brand.partnerships.openai.status}</span>
+              <span className="text-[var(--text-muted)]" aria-hidden="true">·</span>
+              <span>{brand.partnerships.openai.specialization}</span>
             </div>
           </div>
 
@@ -63,9 +50,8 @@ export function Footer({ onNavigate }: FooterProps) {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => handleNav('/fde')} className="text-[var(--text-primary)] font-bold hover:text-[#e0fb2e] transition-colors cursor-pointer text-left flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
-                  <span>Forward Deployed</span>
+                <button onClick={() => handleNav('/fde')} className="text-[var(--text-primary)] font-semibold hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer text-left">
+                  Forward Deployed
                 </button>
               </li>
               <li>
@@ -75,7 +61,7 @@ export function Footer({ onNavigate }: FooterProps) {
               </li>
               <li>
                 <button onClick={() => handleNav('/what-we-build')} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-left">
-                  Complex Business Solutions
+                  What We Build
                 </button>
               </li>
               <li>
@@ -141,9 +127,9 @@ export function Footer({ onNavigate }: FooterProps) {
                   <button 
                     id="footer-legal-terms-link"
                     onClick={() => handleNav('/terms-and-conditions')} 
-                    className="text-[var(--text-secondary)] hover:text-[#e0fb2e] transition-colors cursor-pointer text-left flex items-center gap-1.5"
+                    className="text-[var(--text-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer text-left"
                   >
-                    <span>Terms &amp; Conditions</span>
+                    Terms &amp; Conditions
                   </button>
                 </li>
                 <li>
@@ -168,9 +154,9 @@ export function Footer({ onNavigate }: FooterProps) {
               <div className="pt-1">
                 <button
                   onClick={() => handleNav('/contact')}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[var(--text-primary)] text-[var(--bg-base)] text-xs font-display font-bold tracking-tight hover:opacity-90 transition-all cursor-pointer shadow-sm"
+                  className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] text-xs font-display font-bold tracking-tight transition-all cursor-pointer shadow-sm"
                 >
-                  <span>Initiate Architecture Discussion</span>
+                  <span>Discuss a business workflow</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-current" />
                 </button>
               </div>
@@ -205,7 +191,7 @@ export function Footer({ onNavigate }: FooterProps) {
             <button 
               id="footer-link-terms"
               onClick={() => handleNav('/terms-and-conditions')} 
-              className="text-[var(--text-secondary)] hover:text-[#e0fb2e] transition-colors cursor-pointer font-bold border-l border-[var(--border-color)] pl-4"
+              className="text-[var(--text-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer font-bold sm:border-l sm:border-[var(--border-color)] sm:pl-4"
             >
               Terms &amp; Conditions
             </button>
