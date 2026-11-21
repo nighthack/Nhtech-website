@@ -91,7 +91,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
 
         </div>
 
-        <HeroModelAnimation activeTrack={activeStage} />
+        <HeroModelAnimation />
 
         <StageGroup label="Engineering tracks" className="hero-model-tracks relative z-10 grid grid-cols-3 gap-2 border-t border-[var(--border-color)] pt-3 sm:gap-3">
           {STAGES.map((stage) => {

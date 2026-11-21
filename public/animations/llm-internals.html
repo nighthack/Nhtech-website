@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LLM internals with a learning reservoir</title>
+<script>
+document.documentElement.dataset.theme = new URLSearchParams(location.search).get('theme') === 'light' ? 'light' : 'dark';
+</script>
+<style>
+/* Palette: one primary (blue) + one neutral (slate). Everything else is opacity. */
+:root{
+  --bg:#F4F6FB; --p:#2A4FDB; --n:#46506B; --hi:#1B2FA8;
+  --card:rgba(255,255,255,.94);
+  --dot:.14; --g1:.14; --g2:.03; --edge:.2; --slab-s:.3; --glow:.14;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A0F1F; --p:#7C97FF; --n:#AAB4CF; --hi:#E8EDFF;
+    --card:rgba(16,22,48,.92);
+    --dot:.1; --g1:.18; --g2:.04; --edge:.16; --slab-s:.26; --glow:.22;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A0F1F; --p:#7C97FF; --n:#AAB4CF; --hi:#E8EDFF;
+  --card:rgba(16,22,48,.92);
+  --dot:.1; --g1:.18; --g2:.04; --edge:.16; --slab-s:.26; --glow:.22;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg)}
+
+/* Fixed full-screen layer behind your page. Put your own content above it (position:relative; z-index:1). */
+.stage{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--bg);pointer-events:none}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+.flow,.spin,.node,.ln,.bar,.emerge,.bob,.slabglow,.spark,.dot,.qs{transform-box:fill-box;transform-origin:center}
+
+/* inputs */
+.shape{fill:var(--n);fill-opacity:.12;stroke:var(--n);stroke-opacity:.7;stroke-width:1.4;stroke-linejoin:round}
+.shape.line{fill:none;stroke-linecap:round}
+.shape.pri{fill:var(--p);fill-opacity:.12;stroke:var(--p);stroke-opacity:.75}
+.flow{animation:flow linear infinite}
+@keyframes flow{
+  0%{transform:translate(0,0) scale(.6);opacity:0}
+  10%{transform:translate(calc(var(--dx)*.1),calc(var(--dy)*.1)) scale(1);opacity:.95}
+  78%{transform:translate(calc(var(--dx)*.78),calc(var(--dy)*.78)) scale(1);opacity:.95}
+  100%{transform:translate(var(--dx),var(--dy)) scale(.12);opacity:0}
+}
+.spin{animation:spin linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* model */
+.slab{fill:url(#slab);stroke:var(--p);stroke-opacity:var(--slab-s);stroke-width:1}
+.ghost{fill:none;stroke:var(--p);stroke-opacity:.1;stroke-width:1}
+.slabglow{fill:var(--p);opacity:0;animation:glow 7s linear infinite both}
+@keyframes glow{0%{opacity:0}4%{opacity:.2}26%{opacity:0}100%{opacity:0}}
+.edge{stroke:var(--p);stroke-opacity:var(--edge);stroke-width:1}
+.node{fill:var(--p);opacity:.32;animation:fire 7s linear infinite both}
+.node.tok{fill:var(--n)}
+@keyframes fire{
+  0%{opacity:.32;transform:scale(1)}
+  4%{opacity:1;transform:scale(1.8)}
+  16%{opacity:.45;transform:scale(1)}
+  100%{opacity:.32;transform:scale(1)}
+}
+.arc{fill:none;stroke:var(--p);stroke-width:.8;opacity:.1;animation:arc 7s linear infinite both}
+@keyframes arc{
+  0%{opacity:.1;stroke-width:.8px}
+  3%{opacity:var(--pk);stroke-width:calc(.8px + var(--pk)*1.8px)}
+  15%{opacity:.14;stroke-width:.9px}
+  100%{opacity:.1;stroke-width:.8px}
+}
+
+/* qubits */
+.qs{fill:none;stroke:var(--p);stroke-width:1.2;opacity:.5;animation:qfire 7s linear infinite both}
+@keyframes qfire{0%{opacity:.45}5%{opacity:1}22%{opacity:.55}100%{opacity:.45}}
+.qb-eq{fill:none;stroke:var(--p);stroke-opacity:.5;stroke-width:1;stroke-dasharray:2 3}
+.qb-axis{stroke:var(--p);stroke-opacity:.28;stroke-width:1}
+.qb-vec{stroke:var(--hi);stroke-width:1.4;stroke-linecap:round}
+.qb-tip{fill:var(--hi)}
+.ent{fill:none;stroke:var(--p);stroke-opacity:.55;stroke-width:1.2;stroke-dasharray:3 4;animation:dash 1.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-14}}
+
+/* outputs */
+.emerge{animation:emerge 7s infinite both;animation-delay:var(--dl);animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+@keyframes emerge{
+  0%,42%{opacity:0;transform:translate(var(--fx),var(--fy)) scale(.12)}
+  56%{opacity:1;transform:translate(0,0) scale(1)}
+  93%{opacity:1;transform:translate(0,0) scale(1)}
+  99%,100%{opacity:0;transform:translate(0,-8px) scale(1)}
+}
+.bob{animation:bob 5s ease-in-out infinite alternate;animation-delay:var(--bd,0s)}
+@keyframes bob{from{transform:translateY(-3px)}to{transform:translateY(3px)}}
+.card{fill:var(--card);stroke:var(--p);stroke-opacity:.4;stroke-width:1}
+.card.hi{stroke-opacity:.9}
+.ln,.bar{animation-duration:7s;animation-iteration-count:infinite;animation-fill-mode:both;
+  animation-timing-function:cubic-bezier(.2,.8,.2,1);animation-delay:calc(var(--dl) + var(--i)*.12s)}
+.ln{animation-name:write;transform-origin:left center}
+.bar{animation-name:grow;transform-origin:center bottom}
+@keyframes write{0%,52%{transform:scaleX(0)}62%,100%{transform:scaleX(1)}}
+@keyframes grow{0%,52%{transform:scaleY(0)}64%,100%{transform:scaleY(1)}}
+.t-n{fill:var(--n);fill-opacity:.55}
+.t-p{fill:var(--p)}
+.t-p2{fill:var(--p);fill-opacity:.55}
+.grid{stroke:var(--n);stroke-opacity:.18;stroke-width:1}
+.axis{stroke:var(--n);stroke-opacity:.45;stroke-width:1}
+.table{fill:none;stroke:var(--n);stroke-opacity:.3}
+.trend{fill:none;stroke:var(--p);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1 1;animation:draw 7s infinite both;animation-delay:var(--dl);animation-timing-function:cubic-bezier(.3,.7,.3,1)}
+@keyframes draw{0%,52%{stroke-dashoffset:1}68%,100%{stroke-dashoffset:0}}
+.area{fill:url(#area);animation:areain 7s infinite both;animation-delay:var(--dl)}
+@keyframes areain{0%,60%{opacity:0}76%,100%{opacity:1}}
+.dot{fill:var(--p);animation:pop 7s infinite both;animation-delay:var(--dl)}
+@keyframes pop{0%,66%{transform:scale(0)}74%,100%{transform:scale(1)}}
+.seg{fill:none;stroke-width:14;animation:seg 7s infinite both;animation-delay:calc(var(--dl) + var(--i)*.14s);
+  animation-timing-function:cubic-bezier(.3,.7,.3,1)}
+.seg.a{stroke:var(--p)}
+.seg.b{stroke:var(--n);stroke-opacity:.6}
+.seg.c{stroke:var(--n);stroke-opacity:.28}
+@keyframes seg{0%,52%{stroke-dasharray:0 100}66%,100%{stroke-dasharray:var(--a) var(--r)}}
+.spark{fill:var(--p);animation:spark 3.2s ease-in-out infinite}
+@keyframes spark{0%,100%{transform:scale(.85) rotate(0)}50%{transform:scale(1.15) rotate(45deg)}}
+.beam{fill:none;stroke:var(--p);stroke-width:1.2;stroke-dasharray:1 1;opacity:0;
+  animation:beam 7s infinite both;animation-delay:var(--dl)}
+@keyframes beam{
+  0%,41%{stroke-dashoffset:1;opacity:0}
+  42%{stroke-dashoffset:1;opacity:.6}
+  54%{stroke-dashoffset:0;opacity:.6}
+  72%,100%{stroke-dashoffset:0;opacity:0}
+}
+
+/* reservoir observer */
+.membrane{fill:none;stroke:var(--p);stroke-opacity:.22;stroke-dasharray:3 6}
+.re{stroke:var(--p);stroke-width:.8;opacity:.08}
+.rnode{fill:var(--n)}
+.tap{fill:none;stroke:var(--p);stroke-width:1.1;stroke-dasharray:3 4;opacity:.15}
+.ro{stroke:var(--p);stroke-width:.7;opacity:.04}
+.rlamp{fill:var(--p)}
+.rring{fill:none;stroke:var(--n);stroke-width:1.2}
+.trace-a{fill:none;stroke:var(--n);stroke-opacity:.85;stroke-width:1.4;stroke-linejoin:round}
+.trace-p{fill:none;stroke:var(--p);stroke-width:1.7;stroke-linejoin:round}
+.loss-bg{fill:var(--n);fill-opacity:.2}
+.loss{fill:var(--p)}
+.cube{stroke:var(--n);stroke-opacity:.24;stroke-width:1}
+.vaxis{stroke:var(--n);stroke-opacity:.5;stroke-width:1}
+.cloud{fill:var(--p)}
+.trail{fill:none;stroke:var(--p);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.spoke{stroke:var(--p);stroke-width:.8}
+.svec{stroke:var(--hi);stroke-width:1.7;stroke-linecap:round}
+.stip{fill:var(--hi)}
+
+/* pointer interaction layer */
+.probe{stroke:var(--p);stroke-width:1;stroke-opacity:.6}
+.pring{fill:none;stroke:var(--p);stroke-width:1.3}
+
+@media (prefers-reduced-motion: reduce){
+  .stage *{animation:none!important}
+  .node{opacity:.65}
+  .arc{opacity:.25}
+}
+
+html,body{width:100%;height:100%;overflow:hidden;background:transparent}
+.stage{position:absolute;background:transparent}
+.stage *, .stage *::before, .stage *::after{animation-play-state:paused}
+:root[data-running] .stage *{animation-play-state:running}
+:root[data-reduced] .stage *{animation:none!important}
+:root[data-reduced] .emerge{opacity:1;transform:none}
+:root[data-reduced] .node{opacity:.65}
+:root[data-reduced] .arc{opacity:.25}
+:root[data-reduced] .ln,:root[data-reduced] .bar,:root[data-reduced] .dot{transform:none}
+:root[data-reduced] .area{opacity:1}
+:root[data-reduced] .trend{stroke-dashoffset:0}
+:root[data-reduced] .seg{stroke-dasharray:var(--a) var(--r)}
+</style>
+</head>
+<body>
+<div class="stage" aria-hidden="true">
+<svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
+  <defs>
+    <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r=".9" style="fill:var(--n);fill-opacity:var(--dot)"/>
+    </pattern>
+    <radialGradient id="bgc"><stop offset="0" style="stop-color:var(--p);stop-opacity:var(--glow)"/><stop offset="1" style="stop-color:var(--p);stop-opacity:0"/></radialGradient>
+    <radialGradient id="glowP"><stop offset="0" style="stop-color:var(--p);stop-opacity:.8"/><stop offset="1" style="stop-color:var(--p);stop-opacity:0"/></radialGradient>
+    <linearGradient id="slab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--p);stop-opacity:var(--g1)"/><stop offset="1" style="stop-color:var(--p);stop-opacity:var(--g2)"/></linearGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--p);stop-opacity:.35"/><stop offset="1" style="stop-color:var(--p);stop-opacity:0"/></linearGradient>
+  </defs>
+
+  <rect x="-2400" y="-2400" width="6400" height="5700" style="fill:var(--bg)"/>
+  <rect x="-2400" y="-2400" width="6400" height="5700" fill="url(#dots)"/>
+
+  <g id="world">
+    <!-- #main holds the model, the outputs and the observer. Scroll and mouse move it as one body. -->
+    <g id="main" transform="translate(800 410) scale(.86) translate(-800 -450)">
+      <ellipse cx="800" cy="450" rx="600" ry="400" fill="url(#bgc)"/>
+
+      <g id="slabs"></g>
+      <g id="edges"></g>
+      <g id="arcs"></g>
+      <g id="nodes"></g>
+      <g id="pulses"></g>
+      <g id="inputs"></g>
+
+      <g id="beams">
+        <path class="beam" pathLength="1" style="--dl:0s"   d="M1190 450 C1215 450 1215 295 1240 295"/>
+        <path class="beam" pathLength="1" style="--dl:.15s" d="M1190 450 C1300 450 1330 300 1420 300"/>
+        <path class="beam" pathLength="1" style="--dl:.3s"  d="M1190 450 C1215 450 1215 480 1240 480"/>
+        <path class="beam" pathLength="1" style="--dl:.45s" d="M1190 450 C1300 450 1350 455 1430 455"/>
+        <path class="beam" pathLength="1" style="--dl:.7s"  d="M1190 450 C1215 450 1215 612 1250 612"/>
+      </g>
+
+      <g id="outputs">
+        <!-- document -->
+        <g transform="translate(1240 200)">
+          <g class="emerge" style="--fx:-125px;--fy:155px;--dl:0s">
+            <g class="unrot" data-c="75 95">
+            <g class="bob" style="--bd:-1s">
+              <rect class="card" width="150" height="190" rx="12"/>
+              <rect class="ln t-p" style="--i:0" x="16" y="20" width="84" height="7" rx="3.5"/>
+              <rect class="ln t-n" style="--i:1" x="16" y="44" width="118" height="4" rx="2"/>
+              <rect class="ln t-n" style="--i:2" x="16" y="58" width="108" height="4" rx="2"/>
+              <rect class="ln t-n" style="--i:3" x="16" y="72" width="118" height="4" rx="2"/>
+              <rect class="ln t-n" style="--i:4" x="16" y="86" width="78" height="4" rx="2"/>
+              <rect class="table" x="16" y="108" width="118" height="62" rx="6"/>
+              <line class="grid" x1="16" y1="128" x2="134" y2="128"/>
+              <line class="grid" x1="16" y1="149" x2="134" y2="149"/>
+              <line class="grid" x1="55" y1="108" x2="55" y2="170"/>
+              <line class="grid" x1="95" y1="108" x2="95" y2="170"/>
+              <rect class="ln t-p"  style="--i:5" x="22" y="115" width="26" height="6" rx="3"/>
+              <rect class="ln t-n"  style="--i:6" x="61" y="135" width="28" height="6" rx="3"/>
+              <rect class="ln t-p2" style="--i:7" x="101" y="156" width="26" height="6" rx="3"/>
+            </g>
+            </g>
+          </g>
+        </g>
+        <!-- bar chart -->
+        <g transform="translate(1420 240)">
+          <g class="emerge" style="--fx:-290px;--fy:150px;--dl:.15s">
+            <g class="unrot" data-c="60 60">
+            <g class="bob" style="--bd:-2.5s">
+              <rect class="card" width="120" height="120" rx="12"/>
+              <line class="grid" x1="12" y1="40" x2="108" y2="40"/>
+              <line class="grid" x1="12" y1="70" x2="108" y2="70"/>
+              <rect class="bar t-n"  style="--i:0" x="16" y="72" width="12" height="28" rx="2"/>
+              <rect class="bar t-n"  style="--i:1" x="36" y="54" width="12" height="46" rx="2"/>
+              <rect class="bar t-n"  style="--i:2" x="56" y="64" width="12" height="36" rx="2"/>
+              <rect class="bar t-p2" style="--i:3" x="76" y="36" width="12" height="64" rx="2"/>
+              <rect class="bar t-p"  style="--i:4" x="96" y="18" width="12" height="82" rx="2"/>
+              <line class="axis" x1="10" y1="101" x2="110" y2="101"/>
+            </g>
+            </g>
+          </g>
+        </g>
+        <!-- line chart -->
+        <g transform="translate(1240 420)">
+          <g class="emerge" style="--fx:-135px;--fy:-30px;--dl:.3s">
+            <g class="unrot" data-c="85 60">
+            <g class="bob" style="--bd:-4s">
+              <rect class="card" width="170" height="120" rx="12"/>
+              <line class="grid" x1="14" y1="34" x2="156" y2="34"/>
+              <line class="grid" x1="14" y1="62" x2="156" y2="62"/>
+              <line class="axis" x1="14" y1="100" x2="156" y2="100"/>
+              <path class="area" style="--dl:.3s" d="M16 88 L40 76 L62 82 L88 56 L112 62 L138 34 L154 26 L154 100 L16 100Z"/>
+              <path class="trend" pathLength="1" style="--dl:.3s" d="M16 88 L40 76 L62 82 L88 56 L112 62 L138 34 L154 26"/>
+              <circle class="dot" style="--dl:.3s" cx="154" cy="26" r="4.5"/>
+            </g>
+            </g>
+          </g>
+        </g>
+        <!-- donut -->
+        <g transform="translate(1430 400)">
+          <g class="emerge" style="--fx:-295px;--fy:-5px;--dl:.45s">
+            <g class="unrot" data-c="55 55">
+            <g class="bob" style="--bd:-1.6s">
+              <rect class="card" width="110" height="110" rx="12"/>
+              <g transform="translate(55 55) rotate(-90)">
+                <circle class="seg a" style="--i:0;--a:46;--r:54;--dl:.45s" r="30" pathLength="100" stroke-dashoffset="0"/>
+                <circle class="seg b" style="--i:1;--a:28;--r:72;--dl:.45s" r="30" pathLength="100" stroke-dashoffset="-48"/>
+                <circle class="seg c" style="--i:2;--a:18;--r:82;--dl:.45s" r="30" pathLength="100" stroke-dashoffset="-78"/>
+              </g>
+            </g>
+            </g>
+          </g>
+        </g>
+        <!-- insight -->
+        <g transform="translate(1250 570)">
+          <g class="emerge" style="--fx:-205px;--fy:-162px;--dl:.7s">
+            <g class="unrot" data-c="145 42">
+            <g class="bob" style="--bd:-3s">
+              <rect class="card hi" width="290" height="84" rx="14"/>
+              <g transform="translate(36 42)"><path class="spark" d="M0 -13 L3.4 -3.4 L13 0 L3.4 3.4 L0 13 L-3.4 3.4 L-13 0 L-3.4 -3.4Z"/></g>
+              <rect class="ln t-p" style="--i:0" x="68" y="28" width="168" height="8" rx="4"/>
+              <rect class="ln t-n" style="--i:1" x="68" y="48" width="118" height="6" rx="3"/>
+            </g>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- the observer: a reservoir network that watches the model and learns to predict it -->
+      <g id="observer">
+        <ellipse class="membrane" cx="590" cy="860" rx="228" ry="94"/>
+        <g id="taps"></g>
+        <g id="resEdges"></g>
+        <g id="resNodes"></g>
+        <g id="readout"></g>
+        <g class="unrot" data-c="975 860">
+          <g id="trace"><rect class="card" x="900" y="815" width="150" height="90" rx="10"/></g>
+        </g>
+        <g class="unrot" data-c="1230 860">
+          <g id="viz"><rect class="card" x="1152" y="782" width="156" height="156" rx="14"/></g>
+        </g>
+      </g>
+
+      <g id="fx"></g>
+    </g>
+  </g>
+</svg>
+</div>
+
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(tag,attrs,parent){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs) e.setAttribute(k,attrs[k]);
+    if(parent) parent.appendChild(e);
+    return e;
+  }
+  var s=11;
+  function rnd(){ s=(s*16807)%2147483647; return s/2147483647; }
+  function R(a,b){ return a+(b-a)*rnd(); }
+  function f(v){ return v.toFixed(1); }
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+  var svg=document.getElementById('scene');
+  var world=document.getElementById('world');
+  var main=document.getElementById('main');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var frameId=0, embeddedPaused=true, embeddedVisible=false, embeddedScroll=0, embeddedMaxScroll=1;
+  var inputEnergy=0, running=false;
+  document.documentElement.toggleAttribute('data-reduced',reduce);
+  var T=7, STEP=.4, CY=450;
+
+  /* =====================================================
+     INPUT SHAPES
+     ===================================================== */
+  function polyPath(p){ return 'M'+p.map(function(q){return f(q[0])+' '+f(q[1]);}).join('L')+'Z'; }
+  function openPath(p){ return 'M'+p.map(function(q){return f(q[0])+' '+f(q[1]);}).join('L'); }
+  function blobPath(p){
+    var n=p.length, m0=[(p[n-1][0]+p[0][0])/2,(p[n-1][1]+p[0][1])/2];
+    var d='M'+f(m0[0])+' '+f(m0[1]);
+    for(var i=0;i<n;i++){
+      var a=p[i], b=p[(i+1)%n];
+      d+='Q'+f(a[0])+' '+f(a[1])+' '+f((a[0]+b[0])/2)+' '+f((a[1]+b[1])/2);
+    }
+    return d+'Z';
+  }
+  function ring(n,r){
+    var out=[], off=R(0,6.28);
+    for(var i=0;i<n;i++){
+      var a=off+i/n*6.283, rr=r*R(.55,1.25);
+      out.push([Math.cos(a)*rr*R(.7,1.3), Math.sin(a)*rr*R(.6,1.2)]);
+    }
+    return out;
+  }
+  var inG=document.getElementById('inputs'), wraps=[];
+  for(var i=0;i<22;i++){
+    var kind=['poly','poly','blob','blob','scribble','frag'][Math.floor(rnd()*6)];
+    var r=R(14,38), n=Math.floor(R(4,8));
+    var A,B,dA,dB;
+    if(kind==='scribble'){
+      var m=9,len=R(50,100); A=[];B=[];
+      for(var k=0;k<m;k++){ var x=-len/2+k*len/(m-1); A.push([x,R(-14,14)]); B.push([x,R(-14,14)]); }
+      dA=openPath(A); dB=openPath(B);
+    } else if(kind==='frag'){
+      var h=r*.7;
+      A=[[-r,-h],[0,-h+R(-6,6)],[r,-h],[r+R(-4,4),0],[r,h],[0,h+R(-6,6)],[-r,h],[-r+R(-4,4),0]];
+      B=A.map(function(p){return [p[0]+R(-.3,.3)*r,p[1]+R(-.3,.3)*r];});
+      dA=polyPath(A); dB=polyPath(B);
+    } else {
+      A=ring(n,r);
+      B=A.map(function(p){return [p[0]+R(-.45,.45)*r,p[1]+R(-.45,.45)*r];});
+      var mk=kind==='blob'?blobPath:polyPath; dA=mk(A); dB=mk(B);
+    }
+    var y0=R(110,710), dx=R(570,595), dur=R(9,14);
+    var w=el('g',{transform:'translate(-165 '+f(y0)+')'},inG);
+    w._y=y0; wraps.push(w);
+    var fl=el('g',{'class':'flow',style:'--dx:'+f(dx)+'px;--dy:'+f((CY-y0)*.5)+'px;animation-duration:'+f(dur)+'s;animation-delay:-'+f(R(0,dur))+'s'},w);
+    var cls='shape'+(kind==='scribble'?' line':'')+(rnd()<.22?' pri':'');
+    var p=el('path',{d:dA,'class':cls+' spin',
+      style:'animation-duration:'+f(R(10,26))+'s;animation-direction:'+(rnd()<.5?'reverse':'normal')},fl);
+    el('animate',{attributeName:'d',values:dA+';'+dB+';'+dA,dur:f(R(3,6))+'s',repeatCount:'indefinite',
+      calcMode:'spline',keyTimes:'0;.5;1',keySplines:'.4 0 .6 1;.4 0 .6 1'},p);
+  }
+
+  /* =====================================================
+     MODEL
+     ===================================================== */
+  var layers=[
+    {x:410, n:8, h:340, t:'port'},
+    {x:520, n:7, h:370, t:'embed'},
+    {x:640, n:6, h:430, t:'attn'},
+    {x:760, n:9, h:480, t:'mlp'},
+    {x:880, n:5, h:500, t:'qubit'},
+    {x:1000,n:6, h:430, t:'attn'},
+    {x:1110,n:7, h:370, t:'decode'},
+    {x:1190,n:8, h:340, t:'port2'}
+  ];
+  layers.forEach(function(L){
+    L.pts=[]; L.nodes=[]; var span=L.h-70;
+    for(var k=0;k<L.n;k++) L.pts.push([L.x, CY-span/2+k*span/(L.n-1)]);
+  });
+
+  var slabG=document.getElementById('slabs'), edgeG=document.getElementById('edges'),
+      arcG=document.getElementById('arcs'), nodeG=document.getElementById('nodes'),
+      pulseG=document.getElementById('pulses');
+
+  layers.forEach(function(L,i){
+    if(L.t==='port'||L.t==='port2') return;
+    var d=(i*STEP-.2).toFixed(2)+'s';
+    el('rect',{'class':'ghost',x:L.x-40,y:CY-L.h/2-10,width:64,height:L.h,rx:18},slabG);
+    el('rect',{'class':'slab',x:L.x-32,y:CY-L.h/2,width:64,height:L.h,rx:18},slabG);
+    el('rect',{'class':'slabglow',x:L.x-32,y:CY-L.h/2,width:64,height:L.h,rx:18,style:'animation-delay:'+d},slabG);
+  });
+
+  /* edges + pulses (pulses are JS-driven so scroll can change the data rate) */
+  var adj=[], pulses=[];
+  for(var i=0;i<layers.length-1;i++){
+    var LA=layers[i], LB=layers[i+1];
+    adj[i]=[];
+    LA.pts.forEach(function(pa,ka){
+      var picks=[]; while(picks.length<2){ var j=Math.floor(rnd()*LB.n); if(picks.indexOf(j)<0) picks.push(j); }
+      adj[i][ka]=picks;
+      picks.forEach(function(j){
+        var pb=LB.pts[j];
+        el('line',{'class':'edge',x1:pa[0],y1:f(pa[1]),x2:pb[0],y2:f(pb[1])},edgeG);
+        var g=el('g',{opacity:0,transform:'translate('+pa[0]+' '+f(pa[1])+')'},pulseG);
+        el('circle',{r:9,fill:'url(#glowP)'},g);
+        el('circle',{r:2.4,style:'fill:var(--hi)'},g);
+        pulses.push({g:g,ax:pa[0],ay:pa[1],bx:pb[0],by:pb[1],t0:i*STEP+.08+R(0,.06),on:false});
+      });
+    });
+  }
+
+  layers.forEach(function(L,i){
+    if(L.t!=='attn') return;
+    for(var a=0;a<L.n;a++) for(var b=a+1;b<L.n;b++){
+      var x=L.x+5, ya=L.pts[a][1], yb=L.pts[b][1], bulge=(14+(b-a)*9)*1.3;
+      el('path',{'class':'arc',
+        d:'M'+x+' '+f(ya)+'C'+(x+bulge)+' '+f(ya)+' '+(x+bulge)+' '+f(yb)+' '+x+' '+f(yb),
+        style:'--pk:'+R(.35,.95).toFixed(2)+';animation-delay:'+(i*STEP-.2+a*.28).toFixed(2)+'s'},arcG);
+    }
+  });
+
+  function qubit(x,y,delay){
+    var g=el('g',{transform:'translate('+x+' '+f(y)+')'},nodeG);
+    var shell=el('circle',{'class':'qs',r:24,style:'animation-delay:'+delay},g);
+    var t=el('g',{transform:'rotate(-24)'},g);
+    el('line',{'class':'qb-axis',x1:0,y1:-24,x2:0,y2:24},t);
+    el('ellipse',{'class':'qb-eq',rx:24,ry:8},t);
+    var N=24, rad=21.3, ry=7.1, lat=11, ph=R(0,6.28), xs=[], ys=[];
+    for(var k=0;k<=N;k++){
+      var ang=ph+k/N*6.2832;
+      xs.push((rad*Math.cos(ang)).toFixed(1)); ys.push((ry*Math.sin(ang)-lat).toFixed(1));
+    }
+    var dur=f(R(3,6))+'s';
+    var ln=el('line',{'class':'qb-vec',x1:0,y1:0,x2:xs[0],y2:ys[0]},t);
+    el('animate',{attributeName:'x2',values:xs.join(';'),dur:dur,repeatCount:'indefinite'},ln);
+    el('animate',{attributeName:'y2',values:ys.join(';'),dur:dur,repeatCount:'indefinite'},ln);
+    var tip=el('circle',{'class':'qb-tip',r:3,cx:xs[0],cy:ys[0]},t);
+    el('animate',{attributeName:'cx',values:xs.join(';'),dur:dur,repeatCount:'indefinite'},tip);
+    el('animate',{attributeName:'cy',values:ys.join(';'),dur:dur,repeatCount:'indefinite'},tip);
+    el('circle',{'class':'qb-tip',r:1.6,cx:0,cy:-24},t);
+    return shell;
+  }
+
+  var nodeList=[];
+  layers.forEach(function(L,i){
+    L.pts.forEach(function(p,k){
+      var delay=(i*STEP-.2+rnd()*.08).toFixed(2)+'s', st='animation-delay:'+delay, e;
+      if(L.t==='qubit'){
+        e=qubit(p[0],p[1],delay);
+        if(k<L.n-1){
+          var nx=L.pts[k+1];
+          el('path',{'class':'ent',d:'M'+p[0]+' '+f(p[1]+26)+'C'+(p[0]+18)+' '+f(p[1]+52)+' '+(p[0]-18)+' '+f(nx[1]-52)+' '+p[0]+' '+f(nx[1]-26)},edgeG);
+        }
+      } else if(L.t==='embed'){
+        e=el('rect',{'class':'node',x:p[0]-4.5,y:p[1]-4.5,width:9,height:9,rx:2.5,style:st},nodeG);
+      } else if(L.t==='port'||L.t==='port2'){
+        e=el('circle',{'class':'node',cx:p[0],cy:f(p[1]),r:2.3,style:st},nodeG);
+      } else {
+        e=el('circle',{'class':L.t==='attn'?'node tok':'node',cx:p[0],cy:f(p[1]),r:L.t==='attn'?5:4.5,style:st},nodeG);
+      }
+      var rec={x:p[0],y:p[1],i:i,k:k,el:e};
+      L.nodes.push(rec); nodeList.push(rec);
+    });
+  });
+
+  /* =====================================================
+     OBSERVER: echo state network (reservoir) that watches the model
+     and learns, online, to forecast it.
+     ===================================================== */
+  var OB={cx:590,cy:860,rx:205,ry:78};
+  var M=12, ALPHA=.35, TAU=8;
+
+  var rpos=[], tries=0;
+  while(rpos.length<44 && tries<6000){
+    tries++;
+    var ang=R(0,6.283), rr=Math.sqrt(rnd());
+    var px=OB.cx+Math.cos(ang)*rr*OB.rx, py=OB.cy+Math.sin(ang)*rr*OB.ry;
+    var ok=true;
+    for(var q=0;q<rpos.length;q++){ if(Math.hypot(rpos[q][0]-px,(rpos[q][1]-py)*1.6)<30){ ok=false; break; } }
+    if(ok) rpos.push([px,py]);
+  }
+  var N=rpos.length;
+
+  /* sparse recurrent weights, scaled so the largest singular value is below 1 (echo state property) */
+  var conn=[], Wd=[], i2, j2;
+  for(i2=0;i2<N;i2++){ Wd.push(new Float32Array(N)); conn.push([]); }
+  for(i2=0;i2<N;i2++){
+    var nc=3+Math.floor(rnd()*3);
+    for(var c=0;c<nc;c++){
+      j2=Math.floor(rnd()*N); if(j2===i2) continue;
+      var wv=R(-1,1); conn[i2].push({j:j2,w:wv}); Wd[i2][j2]+=wv;
+    }
+  }
+  (function scale(){
+    var v=new Float32Array(N), y=new Float32Array(N), z=new Float32Array(N), sigma=1, it, a, b;
+    for(a=0;a<N;a++) v[a]=rnd()-.5;
+    for(it=0;it<60;it++){
+      for(a=0;a<N;a++){ var sm=0; for(b=0;b<N;b++) sm+=Wd[a][b]*v[b]; y[a]=sm; }
+      for(b=0;b<N;b++){ var sm2=0; for(a=0;a<N;a++) sm2+=Wd[a][b]*y[a]; z[b]=sm2; }
+      var nz=0; for(b=0;b<N;b++) nz+=z[b]*z[b]; nz=Math.sqrt(nz)||1;
+      for(b=0;b<N;b++) v[b]=z[b]/nz;
+      sigma=Math.sqrt(nz);
+    }
+    var k=1.15/sigma;
+    conn.forEach(function(list){ list.forEach(function(e){ e.w*=k; }); });
+  })();
+
+  /* input ports: the six layer channels land on reservoir nodes along its top edge */
+  var port=[], used={};
+  for(var c=0;c<6;c++){
+    var tx=440+70*c, ty=OB.cy-OB.ry, best=-1, bd=1e9;
+    for(i2=0;i2<N;i2++){
+      if(used[i2]) continue;
+      var dd=Math.hypot(rpos[i2][0]-tx,rpos[i2][1]-ty);
+      if(dd<bd){ bd=dd; best=i2; }
+    }
+    used[best]=true; port.push(best);
+  }
+  var Win=new Float32Array(N*M), bias=new Float32Array(N);
+  for(i2=0;i2<N;i2++){
+    bias[i2]=R(-.2,.2);
+    for(var c2=0;c2<M;c2++) if(rnd()<.25) Win[i2*M+c2]=R(-.5,.5);
+  }
+  port.forEach(function(pn,c){ Win[pn*M+c]=(rnd()<.5?-1:1)*R(1.2,1.6); });
+
+  /* drawing */
+  var taps=document.getElementById('taps'), reE=document.getElementById('resEdges'),
+      reN=document.getElementById('resNodes'), roG=document.getElementById('readout');
+  var tapEls=[], redges=[], rnodes=[], rolines=[], lamps=[], rings=[];
+
+  port.forEach(function(pn,c){
+    var L=layers[c+1], x0=L.x, y0=CY+L.h/2, x1=rpos[pn][0], y1=rpos[pn][1];
+    tapEls.push(el('path',{'class':'tap',d:'M'+x0+' '+y0+'C'+x0+' '+(y0+55)+' '+x1+' '+(y1-55)+' '+x1+' '+f(y1)},taps));
+  });
+  for(i2=0;i2<N;i2++) conn[i2].forEach(function(e){
+    var ln=el('line',{'class':'re',x1:f(rpos[e.j][0]),y1:f(rpos[e.j][1]),x2:f(rpos[i2][0]),y2:f(rpos[i2][1])},reE);
+    redges.push({el:ln,j:e.j,w:e.w,o:-1});
+  });
+  for(i2=0;i2<N;i2++){
+    var nd=el('circle',{'class':'rnode',cx:f(rpos[i2][0]),cy:f(rpos[i2][1]),r:2.5,opacity:.25},reN);
+    rnodes.push({el:nd,sign:0});
+  }
+
+  var TIDX=[1,3,6], K=TIDX.length;
+  var ROX=860, ROY=[825,860,895];
+  var Wout=[], bout=new Float32Array(K);
+  for(var k=0;k<K;k++){
+    Wout.push(new Float32Array(N));
+    rolines.push([]);
+    for(i2=0;i2<N;i2++){
+      rolines[k].push(el('line',{'class':'ro',x1:f(rpos[i2][0]),y1:f(rpos[i2][1]),x2:ROX,y2:ROY[k]},roG));
+    }
+    rings.push(el('circle',{'class':'rring',cx:ROX,cy:ROY[k],r:9,opacity:.3},roG));
+    lamps.push(el('circle',{'class':'rlamp',cx:ROX,cy:ROY[k],r:5.5,opacity:.1},roG));
+  }
+
+  /* trace card: what happened (neutral) vs what the reservoir forecast (blue) */
+  var traceG=document.getElementById('trace'), TL=130;
+  var trA=[], trP=[];
+  for(var t0=0;t0<TL;t0++){ trA.push(0); trP.push(0); }
+  var pathA=el('path',{'class':'trace-a',d:''},traceG), pathP=el('path',{'class':'trace-p',d:''},traceG);
+  el('rect',{'class':'loss-bg',x:910,y:894,width:130,height:3,rx:1.5},traceG);
+  var lossBar=el('rect',{'class':'loss',x:910,y:894,width:2,height:3,rx:1.5},traceG);
+
+  /* 3D card: reservoir state vectors projected onto 3 learned principal axes */
+  var vizG=document.getElementById('viz'), VC=[1230,860], VR=50;
+  var cubeV=[], cubeL=[], cubeE=[], a3, b3;
+  for(a3=0;a3<8;a3++) cubeV.push([(a3&1)?1:-1,(a3&2)?1:-1,(a3&4)?1:-1]);
+  for(a3=0;a3<8;a3++) for(b3=a3+1;b3<8;b3++){
+    var df=a3^b3; if(df===1||df===2||df===4){ cubeE.push([a3,b3]); cubeL.push(el('line',{'class':'cube'},vizG)); }
+  }
+  var axisL=[0,1,2].map(function(){ return el('line',{'class':'vaxis'},vizG); });
+  var HN=150, hist=[], cloudEls=[];
+  for(var h2=0;h2<HN;h2++) cloudEls.push(el('circle',{'class':'cloud',r:1.4,opacity:0},vizG));
+  var spokes=[]; for(var h3=0;h3<12;h3++) spokes.push(el('line',{'class':'spoke',opacity:0},vizG));
+  var trailEls=[.25,.5,.95].map(function(o){ return el('path',{'class':'trail',opacity:o,d:''},vizG); });
+  var svec=el('line',{'class':'svec'},vizG);
+  var stipGlow=el('circle',{r:9,fill:'url(#glowP)'},vizG);
+  var stip=el('circle',{'class':'stip',r:3},vizG);
+
+  /* ---- ESN state ---- */
+  var x=new Float32Array(N), xn=new Float32Array(N), xring=[], xhead=0, ri;
+  for(ri=0;ri<TAU+1;ri++) xring.push(new Float32Array(N));
+  var u=new Float32Array(M);
+  var es=.06, nstep=0;
+
+  /* online PCA (Sanger's rule) gives the 3 axes of the 3D view */
+  var Wp=[], mean=new Float32Array(N), pv=[1,1,1], pc=[0,0,0], yk=[0,0,0], xc=new Float32Array(N);
+  for(var k=0;k<3;k++){
+    var row=new Float32Array(N), nn=0;
+    for(i2=0;i2<N;i2++){ row[i2]=rnd()-.5; nn+=row[i2]*row[i2]; }
+    nn=Math.sqrt(nn); for(i2=0;i2<N;i2++) row[i2]/=nn;
+    Wp.push(row);
+  }
+
+  /* ---- what the observer watches ---- */
+  function act(li,tc){
+    var peak=li*STEP+.08, d=((tc-peak+T/2)%T+T)%T-T/2;
+    return d<0?Math.exp(-(d/.14)*(d/.14)):Math.exp(-d/.55);
+  }
+  function envOut(tc){
+    var q=tc/T;
+    if(q<.42) return 0;
+    if(q<.56) return (q-.42)/.14;
+    if(q<.93) return 1;
+    if(q<.99) return (.99-q)/.06;
+    return 0;
+  }
+
+  /* user signals, smoothed */
+  var mxs=0,mys=0,mx=0,my=0,scrollP=0,sv=0,ci=0, tm=0, rate=1;
+
+  function esnStep(){
+    var tc=((tm%T)+T)%T, c, i, e;
+    for(c=0;c<6;c++) u[c]=act(c+1,tc);
+    u[6]=envOut(tc); u[7]=mxs; u[8]=mys; u[9]=scrollP; u[10]=clamp(sv,-1,1); u[11]=ci;
+
+    for(i=0;i<N;i++){
+      var pre=bias[i], o=i*M, list=conn[i];
+      for(c=0;c<M;c++) pre+=Win[o+c]*u[c];
+      for(e=0;e<list.length;e++) pre+=list[e].w*x[list[e].j];
+      xn[i]=(1-ALPHA)*x[i]+ALPHA*Math.tanh(pre);
+    }
+    var tmp=x; x=xn; xn=tmp;
+
+    xhead=(xhead+1)%(TAU+1);
+    xring[xhead].set(x);
+    var xd=xring[(xhead+1)%(TAU+1)];       /* state from TAU steps ago */
+
+    var nx=1, i3; for(i3=0;i3<N;i3++) nx+=xd[i3]*xd[i3];
+    var mse=0, k;
+    for(k=0;k<K;k++){
+      var pr=bout[k], wk=Wout[k];
+      for(i3=0;i3<N;i3++) pr+=wk[i3]*xd[i3];
+      var err=u[TIDX[k]]-pr; mse+=err*err;
+      var g=.4*err/nx;
+      for(i3=0;i3<N;i3++) wk[i3]=wk[i3]*.9999+g*xd[i3];
+      bout[k]+=g;
+      if(k===1){ trA.push(u[TIDX[k]]); trP.push(pr); trA.shift(); trP.shift(); }
+    }
+    es=es*.985+(mse/K)*.015;
+
+    /* Sanger update on the centred state */
+    var pp, a, j;
+    for(i3=0;i3<N;i3++){ mean[i3]+=.003*(x[i3]-mean[i3]); xc[i3]=x[i3]-mean[i3]; }
+    for(a=0;a<3;a++){ var sy=0, wa=Wp[a]; for(i3=0;i3<N;i3++) sy+=wa[i3]*xc[i3]; yk[a]=sy; }
+    for(a=0;a<3;a++){
+      var wa2=Wp[a];
+      for(i3=0;i3<N;i3++){
+        var rec=xc[i3];
+        for(j=0;j<=a;j++) rec-=yk[j]*Wp[j][i3];
+        wa2[i3]+=.012*yk[a]*rec;
+      }
+    }
+    for(a=0;a<3;a++){ pv[a]=pv[a]*.995+.005*yk[a]*yk[a]; pc[a]=clamp(yk[a]/(2.2*Math.sqrt(pv[a])+1e-4),-1.3,1.3); }
+    nstep++;
+    if(nstep%2===0){ hist.push([pc[0],pc[1],pc[2]]); if(hist.length>HN) hist.shift(); }
+  }
+
+  /* ---- observer rendering ---- */
+  var yaw=0, yawVel=0, ONE=[1,0,0];
+  function proj(p,yw,pt){
+    var cy_=Math.cos(yw), sy_=Math.sin(yw), cp=Math.cos(pt), sp=Math.sin(pt);
+    var x1=p[0]*cy_+p[2]*sy_, z1=-p[0]*sy_+p[2]*cy_;
+    var y1=p[1]*cp-z1*sp, z2=p[1]*sp+z1*cp;
+    var per=4/(4-z2);
+    return [VC[0]+VR*x1*per, VC[1]+VR*y1*per, z2];
+  }
+  function setA(e,k,v){ e.setAttribute(k,v); }
+
+  function renderObserver(){
+    var i, k, a;
+    for(i=0;i<N;i++){
+      var av=Math.abs(x[i]), rn=rnodes[i];
+      setA(rn.el,'r',(2.3+4.2*av).toFixed(2));
+      setA(rn.el,'opacity',(.22+Math.min(.78,av*1.9)).toFixed(2));
+      var sg=x[i]>=0?1:-1;
+      if(sg!==rn.sign){ rn.sign=sg; rn.el.style.fill=sg>0?'var(--p)':'var(--n)'; }
+    }
+    for(i=0;i<redges.length;i++){
+      var e=redges[i], op=(.05+Math.min(.75,Math.abs(e.w*x[e.j])*2.6)).toFixed(2);
+      if(op!==e.o){ e.o=op; setA(e.el,'opacity',op); }
+    }
+    for(k=0;k<6;k++) setA(tapEls[k],'opacity',(.12+.75*u[k]).toFixed(2));
+
+    for(k=0;k<K;k++){
+      var wk=Wout[k], fc=bout[k];
+      for(i=0;i<N;i++){
+        var c_=wk[i]*x[i]; fc+=c_;
+        setA(rolines[k][i],'opacity',Math.min(.7,.03+Math.abs(c_)*7).toFixed(2));
+      }
+      setA(lamps[k],'opacity',clamp(fc,0,1).toFixed(2));
+      setA(rings[k],'opacity',(.25+.7*clamp(u[TIDX[k]],0,1)).toFixed(2));
+    }
+
+    var dA='', dP='', X, Ya, Yp;
+    for(i=0;i<TL;i++){
+      X=(910+130*i/(TL-1)).toFixed(1);
+      Ya=(885-clamp(trA[i],-.1,1.2)*55).toFixed(1);
+      Yp=(885-clamp(trP[i],-.1,1.2)*55).toFixed(1);
+      dA+=(i?'L':'M')+X+' '+Ya; dP+=(i?'L':'M')+X+' '+Yp;
+    }
+    setA(pathA,'d',dA); setA(pathP,'d',dP);
+    setA(lossBar,'width',Math.max(2,130*clamp(1-Math.sqrt(es)*2.2,0,1)).toFixed(1));
+
+    /* 3D */
+    var yw=yaw+mxs*.9+scrollP*6.2832, pt=.45+mys*.45, P;
+    for(i=0;i<cubeE.length;i++){
+      var A=proj(cubeV[cubeE[i][0]],yw,pt), B=proj(cubeV[cubeE[i][1]],yw,pt), L=cubeL[i];
+      setA(L,'x1',A[0].toFixed(1)); setA(L,'y1',A[1].toFixed(1)); setA(L,'x2',B[0].toFixed(1)); setA(L,'y2',B[1].toFixed(1));
+    }
+    var O=proj([0,0,0],yw,pt), ax=[[1.2,0,0],[0,1.2,0],[0,0,1.2]];
+    for(i=0;i<3;i++){
+      var Q=proj(ax[i],yw,pt), L2=axisL[i];
+      setA(L2,'x1',O[0].toFixed(1)); setA(L2,'y1',O[1].toFixed(1)); setA(L2,'x2',Q[0].toFixed(1)); setA(L2,'y2',Q[1].toFixed(1));
+    }
+    var hl=hist.length, off=HN-hl, pts=[];
+    for(i=0;i<HN;i++){
+      var ce=cloudEls[i];
+      if(i<off){ setA(ce,'opacity',0); continue; }
+      P=proj(hist[i-off],yw,pt); pts.push(P);
+      var age=(i-off)/Math.max(1,hl-1);
+      setA(ce,'cx',P[0].toFixed(1)); setA(ce,'cy',P[1].toFixed(1));
+      setA(ce,'r',(1+.9*(P[2]+1.4)/2.8+age*.5).toFixed(2));
+      setA(ce,'opacity',(.08+.5*age*(.5+.5*(P[2]+1.4)/2.8)).toFixed(2));
+    }
+    for(i=0;i<spokes.length;i++){
+      var si=pts.length-1-i*9;
+      if(si<0){ setA(spokes[i],'opacity',0); continue; }
+      var S=pts[si], sp=spokes[i];
+      setA(sp,'x1',O[0].toFixed(1)); setA(sp,'y1',O[1].toFixed(1)); setA(sp,'x2',S[0].toFixed(1)); setA(sp,'y2',S[1].toFixed(1));
+      setA(sp,'opacity',(.38*(1-i/spokes.length)).toFixed(2));
+    }
+    var nTr=Math.min(54,pts.length);
+    if(nTr>3){
+      var seg=Math.floor(nTr/3);
+      for(var ch=0;ch<3;ch++){
+        var d3='', st=pts.length-nTr+ch*seg, en=ch===2?pts.length:st+seg+1;
+        for(i=st;i<en;i++) d3+=(i===st?'M':'L')+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1);
+        setA(trailEls[ch],'d',d3);
+      }
+      var tip=pts[pts.length-1];
+      setA(svec,'x1',O[0].toFixed(1)); setA(svec,'y1',O[1].toFixed(1)); setA(svec,'x2',tip[0].toFixed(1)); setA(svec,'y2',tip[1].toFixed(1));
+      setA(stip,'cx',tip[0].toFixed(1)); setA(stip,'cy',tip[1].toFixed(1));
+      setA(stipGlow,'cx',tip[0].toFixed(1)); setA(stipGlow,'cy',tip[1].toFixed(1));
+    }
+  }
+
+  /* =====================================================
+     INTERACTION: mouse, click, scroll
+     ===================================================== */
+  var fx=document.getElementById('fx');
+  var halo=el('circle',{r:150,fill:'url(#glowP)',opacity:0},fx);
+  var probes=[], prings=[];
+  for(var pi=0;pi<4;pi++){
+    probes.push(el('line',{'class':'probe'},fx));
+    prings.push(el('circle',{'class':'pring',r:9},fx));
+  }
+  var sparks=[], mcx=0, mcy=0, active=false, lastMove=-1e9, portrait=false;
+
+  function toMain(cx,cy){
+    var pt=svg.createSVGPoint(); pt.x=cx; pt.y=cy;
+    var m=main.getScreenCTM(); if(!m) return null;
+    var q=pt.matrixTransform(m.inverse()); return [q.x,q.y];
+  }
+  function flash(e){
+    if(reduce||!e.animate) return;
+    e.animate([{opacity:1,transform:'scale(2)'},{opacity:.4,transform:'scale(1)'}],{duration:700,easing:'ease-out'});
+  }
+  function ripple(pt){
+    if(!pt||!fx.animate) return;
+    var c=el('circle',{cx:f(pt[0]),cy:f(pt[1]),r:140,fill:'none',stroke:'var(--p)','stroke-width':1.6,
+      style:'transform-box:fill-box;transform-origin:center'},fx);
+    var an=c.animate([{transform:'scale(.04)',opacity:.85},{transform:'scale(1.5)',opacity:0}],{duration:1100,easing:'cubic-bezier(.2,.7,.3,1)'});
+    an.onfinish=function(){ c.remove(); };
+  }
+  function cascade(pt){
+    if(!pt) return;
+    var cand=nodeList.filter(function(n){ return n.i>=1&&n.i<=5; });
+    cand.sort(function(a,b){ return Math.hypot(a.x-pt[0],a.y-pt[1])-Math.hypot(b.x-pt[0],b.y-pt[1]); });
+    cand.slice(0,3).forEach(function(n0,idx){
+      var path=[n0], cur=n0;
+      while(cur.i<7){
+        var nxt=adj[cur.i][cur.k], j=nxt[Math.floor(Math.random()*nxt.length)];
+        cur=layers[cur.i+1].nodes[j]; path.push(cur);
+      }
+      var g=el('g',{opacity:0},fx);
+      el('circle',{r:11,fill:'url(#glowP)'},g);
+      el('circle',{r:2.8,style:'fill:var(--hi)'},g);
+      sparks.push({g:g,path:path,t:-idx*.06,last:-1});
+      flash(n0.el);
+    });
+  }
+  function onPointer(e){
+    if(active) inputEnergy=Math.min(1.2,inputEnergy+Math.hypot(e.clientX-mcx,e.clientY-mcy)*.007);
+    mcx=e.clientX; mcy=e.clientY; active=true; lastMove=performance.now();
+    mx=clamp(mcx/window.innerWidth*2-1,-1,1); my=clamp(mcy/window.innerHeight*2-1,-1,1);
+  }
+  if(!reduce){
+    window.addEventListener('pointermove',onPointer,{passive:true});
+    window.addEventListener('pointerdown',function(e){
+      onPointer(e);
+      var pt=toMain(e.clientX,e.clientY);
+      ripple(pt); cascade(pt);
+      ci=1; yawVel+=(Math.random()<.5?-1:1)*2.6;
+    },{passive:true});
+    document.documentElement.addEventListener('mouseleave',function(){ active=false; });
+  }
+  function maxScroll(){ return embeddedMaxScroll; }
+
+  /* camera: mouse parallax + scroll travel, applied to the whole body */
+  var camOx=0, camOy=0;
+  var dotPat=document.getElementById('dots');
+  function applyCam(){
+    var tx=800+camOx-30*scrollP, ty=410+camOy, sc=.86*(1+.1*scrollP);
+    main.setAttribute('transform','translate('+tx.toFixed(2)+' '+ty.toFixed(2)+') scale('+sc.toFixed(4)+') translate(-800 -450)');
+    dotPat.setAttribute('patternTransform','translate('+(camOx*-2.4-scrollP*180).toFixed(1)+' '+(camOy*-2.4-scrollP*260).toFixed(1)+')');
+  }
+
+  /* =====================================================
+     LOOP
+     ===================================================== */
+  var anims=[], lastRate=1, lastT=0, lastY=window.scrollY, acc=0, frameN=0;
+  function setRate(){
+    if(Math.abs(rate-lastRate)<.03) return;
+    lastRate=rate;
+    for(var i=0;i<anims.length;i++) anims[i].playbackRate=rate;
+  }
+  function updatePulses(){
+    var u_=((tm%T)+T)%T;
+    for(var i=0;i<pulses.length;i++){
+      var p=pulses[i], sx=(u_-p.t0)/STEP;
+      if(sx>=0&&sx<=1){
+        var o=sx<.12?sx/.12:(sx>.88?(1-sx)/.12:1);
+        p.g.setAttribute('transform','translate('+(p.ax+(p.bx-p.ax)*sx).toFixed(1)+' '+(p.ay+(p.by-p.ay)*sx).toFixed(1)+')');
+        p.g.setAttribute('opacity',o.toFixed(2)); p.on=true;
+      } else if(p.on){ p.g.setAttribute('opacity',0); p.on=false; }
+    }
+  }
+  function updateFx(now,dt){
+    var idle=(now-lastMove)/1000, vis=active?clamp(1-(idle-1.6)/1.2,0,1):0;
+    if(vis>0){
+      var pt=toMain(mcx,mcy);
+      if(pt){
+        var near=nodeList.slice().sort(function(a,b){ return Math.hypot(a.x-pt[0],a.y-pt[1])-Math.hypot(b.x-pt[0],b.y-pt[1]); }).slice(0,4);
+        setA(halo,'cx',pt[0].toFixed(1)); setA(halo,'cy',pt[1].toFixed(1)); setA(halo,'opacity',(.2*vis).toFixed(2));
+        for(var i=0;i<4;i++){
+          var n=near[i], d=Math.hypot(n.x-pt[0],n.y-pt[1]), fo=clamp(1-d/330,0,1)*vis;
+          setA(probes[i],'x1',pt[0].toFixed(1)); setA(probes[i],'y1',pt[1].toFixed(1));
+          setA(probes[i],'x2',n.x.toFixed(1)); setA(probes[i],'y2',n.y.toFixed(1));
+          setA(probes[i],'opacity',fo.toFixed(2));
+          setA(prings[i],'cx',n.x.toFixed(1)); setA(prings[i],'cy',n.y.toFixed(1)); setA(prings[i],'opacity',fo.toFixed(2));
+        }
+      }
+    } else {
+      setA(halo,'opacity',0);
+      for(var j=0;j<4;j++){ setA(probes[j],'opacity',0); setA(prings[j],'opacity',0); }
+    }
+    for(var s2=sparks.length-1;s2>=0;s2--){
+      var sp=sparks[s2]; sp.t+=dt;
+      var hop=.11, pos=sp.t/hop;
+      if(pos<0) continue;
+      var idx=Math.floor(pos);
+      if(idx>=sp.path.length-1){ sp.g.remove(); sparks.splice(s2,1); continue; }
+      if(idx!==sp.last){ sp.last=idx; if(idx>0) flash(sp.path[idx].el); }
+      var a=sp.path[idx], b=sp.path[idx+1], fr=pos-idx;
+      sp.g.setAttribute('transform','translate('+(a.x+(b.x-a.x)*fr).toFixed(1)+' '+(a.y+(b.y-a.y)*fr).toFixed(1)+')');
+      sp.g.setAttribute('opacity',1);
+    }
+  }
+
+  function frame(now){
+    if(!running) return;
+    var dt=Math.min(.05,(now-lastT)/1000||.016); lastT=now; frameN++;
+
+    var y=embeddedScroll, vel=(y-lastY)/Math.max(dt,.001)/window.innerHeight; lastY=y;
+    sv+=(vel-sv)*Math.min(1,dt*6);
+    scrollP=clamp(y/maxScroll(),0,1);
+    inputEnergy*=Math.exp(-dt*3);
+    var target=1+Math.min(2.5,Math.abs(sv)*1.2)+inputEnergy;
+    rate+=(target-rate)*Math.min(1,dt*4);
+    setRate();
+    tm+=dt*rate;
+
+    mxs+=(mx-mxs)*Math.min(1,dt*4); mys+=(my-mys)*Math.min(1,dt*4);
+    ci=Math.max(0,ci-dt*1.4);
+    yaw+=dt*(.18+yawVel); yawVel*=Math.pow(.25,dt);
+
+    var sx=mxs*14, sy=mys*9;
+    var tOx=portrait?-sy:-sx, tOy=portrait?sx:-sy;
+    camOx+=(tOx-camOx)*Math.min(1,dt*3); camOy+=(tOy-camOy)*Math.min(1,dt*3);
+    applyCam();
+
+    acc+=dt*30; var guard=0;
+    while(acc>=1&&guard<4){ esnStep(); acc-=1; guard++; }
+    if(guard===4) acc=0;
+
+    updatePulses();
+    updateFx(now,dt);
+    if(window.innerWidth>=700||frameN%2===0) renderObserver();
+
+    frameId=requestAnimationFrame(frame);
+  }
+
+  /* =====================================================
+     RESPONSIVE LAYOUT
+     Landscape: input left, output right, observer underneath.
+     Portrait: the scene rotates so data flows top to bottom;
+     cards and widgets are counter-rotated so they stay upright.
+     ===================================================== */
+  var unrots=[].slice.call(document.querySelectorAll('.unrot'));
+  function layout(){
+    var a=window.innerWidth/Math.max(window.innerHeight,1), par;
+    portrait=a<1;
+    if(portrait){
+      svg.setAttribute('viewBox','0 0 900 1600');
+      world.setAttribute('transform','translate(950 0) rotate(90)');
+      par=a<=.58?'xMidYMid slice':'xMidYMid meet';
+    } else {
+      svg.setAttribute('viewBox','0 0 1600 900');
+      world.removeAttribute('transform');
+      par=(a>=1.7&&a<=2.05)?'xMidYMid slice':'xMidYMid meet';
+    }
+    svg.setAttribute('preserveAspectRatio',par);
+    unrots.forEach(function(g){
+      if(portrait) g.setAttribute('transform','rotate(-90 '+g.getAttribute('data-c')+')');
+      else g.removeAttribute('transform');
+    });
+  }
+  layout();
+  var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(layout,80); });
+
+
+  function syncPlayback(){
+    var next=embeddedVisible&&!embeddedPaused&&!reduce&&!document.hidden;
+    document.documentElement.toggleAttribute('data-running',next);
+    document.documentElement.toggleAttribute('data-reduced',reduce);
+    document.getAnimations().forEach(function(animation){
+      if(next) animation.play(); else animation.pause();
+    });
+    if(next===running) return;
+    running=next;
+    if(running){
+      lastT=performance.now();
+      lastY=embeddedScroll;
+      svg.unpauseAnimations();
+      frameId=requestAnimationFrame(frame);
+    } else {
+      cancelAnimationFrame(frameId);
+      svg.pauseAnimations();
+    }
+  }
+  function staticFrame(){
+    document.documentElement.setAttribute('data-reduced','');
+    svg.pauseAnimations();
+    wraps.forEach(function(w){ w.setAttribute('transform','translate('+f(R(30,400))+' '+f(w._y)+')'); });
+    for(var wu=0;wu<240;wu++){ tm+=1/30; esnStep(); }
+    updatePulses();
+    renderObserver();
+  }
+  window.addEventListener('message',function(event){
+    if(event.source!==parent||!event.data||event.data.type!=='nhtech-hero') return;
+    var data=event.data;
+    if(data.action==='state'){
+      document.documentElement.dataset.theme=data.theme==='light'?'light':'dark';
+      if(data.palette){
+        ['bg','p','n','hi','card'].forEach(function(key){
+          if(typeof data.palette[key]==='string') document.documentElement.style.setProperty('--'+key,data.palette[key]);
+        });
+      }
+      var changed=reduce!==Boolean(data.reducedMotion);
+      reduce=Boolean(data.reducedMotion);
+      embeddedPaused=Boolean(data.paused);
+      embeddedVisible=Boolean(data.visible);
+      if(changed&&reduce) staticFrame();
+      syncPlayback();
+    } else if(data.action==='pointer'&&!reduce&&!embeddedPaused&&embeddedVisible){
+      onPointer({clientX:data.x*innerWidth,clientY:data.y*innerHeight});
+      if(data.down){
+        var point=toMain(mcx,mcy);
+        ripple(point); cascade(point);
+        ci=1; yawVel+=1.8;
+      }
+    } else if(data.action==='leave'){
+      active=false;
+    } else if(data.action==='scroll'){
+      embeddedScroll=Number(data.y)||0;
+      embeddedMaxScroll=Math.max(1,Number(data.max)||1);
+    }
+  });
+  document.addEventListener('visibilitychange',syncPlayback);
+  anims=document.getAnimations().filter(function(a){return !window.CSSAnimation||a instanceof CSSAnimation;});
+  if(reduce) staticFrame();
+  syncPlayback();
+  parent.postMessage({type:'nhtech-hero-ready'},location.origin);
+})();
+</script>
+</body>
+</html>

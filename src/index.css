@@ -355,8 +355,7 @@ html.light .home-backdrop {
   --backdrop-signal: #a63a0a;
 }
 
-.home-backdrop > svg,
-.hero-model-animation > svg {
+.home-backdrop > svg {
   position: absolute;
   inset: -4%;
   width: 108%;
@@ -412,28 +411,16 @@ html.light .home-backdrop {
 }
 
 .hero-model-animation {
-  --model-line: #8fc6df;
-  --model-signal: #ffad7e;
-  --model-bright: #ffdec9;
-  --model-surface: #102738;
-  --model-depth: #19384a;
-  --backdrop-text-veil: color-mix(in srgb, var(--backdrop-cover) 83%, transparent);
-  --backdrop-art-veil: color-mix(in srgb, var(--backdrop-cover) 12%, transparent);
+  --backdrop-text-veil: color-mix(in srgb, var(--backdrop-cover) 91%, transparent);
+  --backdrop-art-veil: color-mix(in srgb, var(--backdrop-cover) 10%, transparent);
 }
 
-html.light .hero-model-animation {
-  --model-line: #45768d;
-  --model-signal: #bb4d24;
-  --model-bright: #c4511f;
-  --model-surface: #edf5f8;
-  --model-depth: #d7e8ed;
-}
-
-.hero-model-animation > svg {
-  inset: 6% -1.5% auto auto;
-  width: 63%;
-  height: 74%;
-  overflow: visible;
+.hero-model-animation > iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .hero-model-toggle.site-button {
@@ -526,7 +513,7 @@ html.light .hero-model-animation {
   .hero-model-animation {
     position: relative;
     inset: auto;
-    aspect-ratio: 820 / 485;
+    aspect-ratio: 9 / 13;
     width: min(100%, 38rem);
     justify-self: center;
   }
@@ -535,7 +522,7 @@ html.light .hero-model-animation {
     background: linear-gradient(90deg, var(--backdrop-art-veil), transparent 30% 84%, var(--backdrop-art-veil));
   }
 
-  .hero-model-animation > svg {
+  .hero-model-animation > iframe {
     inset: 0;
     width: 100%;
     height: 100%;
