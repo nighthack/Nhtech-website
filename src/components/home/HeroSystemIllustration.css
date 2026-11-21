@@ -33,6 +33,16 @@
   animation: synthesis-shape var(--synthesis-duration) ease-in-out infinite;
 }
 
+.hero-signal-pulse {
+  stroke-dasharray: 3 97;
+  animation: hero-signal-flow 7s linear infinite;
+}
+
+@keyframes hero-signal-flow {
+  from { stroke-dashoffset: 3; }
+  to { stroke-dashoffset: -97; }
+}
+
 .hero-synthesis[data-visible='false'] * {
   animation-play-state: paused;
 }
@@ -67,6 +77,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-synthesis * { animation: none !important; }
+  .hero-signal-pulse { opacity: 0; }
   .hero-synthesis-fragment { transform: var(--shape) scale(var(--size)); }
   .hero-synthesis-code,
   .hero-synthesis-electron { opacity: 0; }

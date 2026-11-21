@@ -1,10 +1,18 @@
 import { useEffect, useId, useRef, type CSSProperties, type RefObject } from 'react';
-import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react';
 import './HeroSystemIllustration.css';
 
 export type SpatialSystemMode = 'embedded' | 'vision-edge' | 'custom-platforms';
 
 const center = { x: 408, y: 185 };
+// Curves share a narrow waist at the nucleus and fan out towards the hero edges.
+const signalPaths = Array.from({ length: 19 }, (_, index) => {
+  const lane = index - 9;
+  return `M -40 ${225 + lane * 7}
+    C 125 ${290 + lane * 9}, 236 ${94 + lane * 6}, 408 ${185 + lane * 1.8}
+    S 598 ${210 - lane * 10}, 760 ${116 - lane * 9}`;
+});
+
 const fragments = [
   'const', 'pipeline', '=', 'async', '() => {',
   'await', 'ingest', '(input)', ';',
@@ -34,12 +42,15 @@ export function HeroSystemIllustration({ activeMode, heroRef }: {
   heroRef: RefObject<HTMLElement | null>;
 }) {
   const washId = useId();
+  const signalId = useId();
   const fieldRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const driftX = useSpring(x, { stiffness: 85, damping: 24 });
   const driftY = useSpring(y, { stiffness: 85, damping: 24 });
+
+  const signalBend = useTransform(driftY, [-17, 17], [-4, 4]);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -108,8 +119,34 @@ export function HeroSystemIllustration({ activeMode, heroRef }: {
               <stop stopColor="var(--accent-primary)" stopOpacity="0.15" />
               <stop offset="1" stopColor="var(--accent-primary)" stopOpacity="0" />
             </radialGradient>
+            <linearGradient id={signalId} gradientUnits="userSpaceOnUse" x1="-40" x2="760">
+              <stop stopColor="var(--accent-secondary)" stopOpacity="0" />
+              <stop offset=".23" stopColor="var(--accent-secondary)" stopOpacity=".3" />
+              <stop offset=".58" stopColor="var(--accent-primary)" stopOpacity=".65" />
+              <stop offset="1" stopColor="var(--accent-secondary)" stopOpacity="0" />
+            </linearGradient>
           </defs>
           <ellipse cx={center.x} cy={center.y} rx="244" ry="160" fill={`url(#${washId})`} />
+          <motion.g
+            style={{ skewY: reduceMotion ? 0 : signalBend, transformOrigin: '408px 185px' }}
+            stroke={`url(#${signalId})`}
+            strokeLinecap="round"
+          >
+            {signalPaths.map((path, index) => (
+              <g key={index}>
+                <path d={path} strokeWidth=".8" opacity=".58" />
+                {index % 4 === 1 && (
+                  <path
+                    d={path}
+                    pathLength="100"
+                    className="hero-signal-pulse"
+                    strokeWidth="2"
+                    style={{ animationDelay: `-${index * 1.37}s` }}
+                  />
+                )}
+              </g>
+            ))}
+          </motion.g>
           <g transform={`translate(${center.x} ${center.y})`}>
             <g className="hero-synthesis-orientation">
               <g className="hero-synthesis-atom" stroke="var(--accent-primary)">
