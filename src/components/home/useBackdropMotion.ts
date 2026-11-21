@@ -1,13 +1,13 @@
 import { useContext, useEffect, useRef } from 'react';
 import { HomeMotionContext } from './HomeMotionContext';
 
-export function useBackdropMotion() {
+export function useBackdropMotion(sectionSelector?: string) {
   const { paused } = useContext(HomeMotionContext);
   const layerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const layer = layerRef.current;
-    const section = layer?.parentElement;
+    const section = sectionSelector ? layer?.closest<HTMLElement>(sectionSelector) : layer?.parentElement;
     const svg = layer?.querySelector('svg');
     if (!layer || !section || !svg) return;
 
@@ -120,7 +120,7 @@ export function useBackdropMotion() {
       preference.removeEventListener('change', onPreferenceChange);
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [paused]);
+  }, [paused, sectionSelector]);
 
   return layerRef;
 }

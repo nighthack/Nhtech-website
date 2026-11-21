@@ -7,8 +7,8 @@ import {
   Layers
 } from 'lucide-react';
 import { RoutePath } from '../../types';
-import { HeroNeuralNetwork } from './HeroNeuralNetwork';
-import type { EngineeringTrack } from './HeroNeuralNetwork';
+import { HeroModelAnimation } from './HeroModelAnimation';
+import type { EngineeringTrack } from './HeroModelAnimation';
 import { StageGroup } from './StageGroup';
 
 interface HeroMediaStageProps {
@@ -70,8 +70,8 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
       id="hero-section"
       className="home-hero relative isolate overflow-hidden border-b border-[var(--border-color)] pt-[calc(var(--header-height)+2.25rem)] pb-16 sm:pb-20 lg:pt-[calc(var(--header-height)+5.5rem)] lg:pb-24"
     >
-      <div className="site-container relative z-10 grid gap-6 lg:grid-cols-2 lg:gap-12">
-        <div className="min-w-0">
+      <div className="site-container hero-model-grid">
+        <div className="hero-model-copy relative z-10 min-w-0">
           <h1 className="text-hero-display text-[var(--text-primary)]">
             We turn complex business operations into{' '}
             <span className="text-[var(--accent-secondary)]">production&#8209;ready AI systems.</span>
@@ -89,29 +89,32 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
             </button>
           </div>
 
-          <StageGroup label="Engineering tracks" className="mt-8 grid grid-cols-3 gap-2 border-t border-[var(--border-color)] pt-3 sm:gap-3">
-            {STAGES.map((stage) => {
-              const isActive = activeStage === stage.id;
-              const Icon = stage.icon;
-              return (
-                <button
-                  key={stage.id}
-                  type="button"
-                  aria-pressed={isActive}
-                  aria-controls="hero-system-readout"
-                  data-suggested={nextStage.id === stage.id}
-                  onClick={() => setActiveStage(stage.id)}
-                  className="stage-control flex min-w-0 flex-col items-start gap-2 rounded-lg border border-transparent p-2 text-left text-xs font-semibold leading-snug text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] aria-pressed:border-[var(--border-control)] aria-pressed:bg-[var(--bg-surface)] aria-pressed:text-[var(--text-primary)] sm:p-3 sm:text-sm"
-                >
-                  <Icon aria-hidden="true" className={`stage-indicator size-4 shrink-0 ${isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'}`} />
-                  <span>{stage.tabLabel}</span>
-                </button>
-              );
-            })}
-          </StageGroup>
         </div>
 
-        <div className="min-w-0 lg:self-end">
+        <HeroModelAnimation activeTrack={activeStage} />
+
+        <StageGroup label="Engineering tracks" className="hero-model-tracks relative z-10 grid grid-cols-3 gap-2 border-t border-[var(--border-color)] pt-3 sm:gap-3">
+          {STAGES.map((stage) => {
+            const isActive = activeStage === stage.id;
+            const Icon = stage.icon;
+            return (
+              <button
+                key={stage.id}
+                type="button"
+                aria-pressed={isActive}
+                aria-controls="hero-system-readout"
+                data-suggested={nextStage.id === stage.id}
+                onClick={() => setActiveStage(stage.id)}
+                className="stage-control flex min-w-0 flex-col items-start gap-2 rounded-lg border border-transparent p-2 text-left text-xs font-semibold leading-snug text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] aria-pressed:border-[var(--border-control)] aria-pressed:bg-[var(--bg-surface)] aria-pressed:text-[var(--text-primary)] sm:p-3 sm:text-sm"
+              >
+                <Icon aria-hidden="true" className={`stage-indicator size-4 shrink-0 ${isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'}`} />
+                <span>{stage.tabLabel}</span>
+              </button>
+            );
+          })}
+        </StageGroup>
+
+        <div className="hero-model-readout relative z-10 min-w-0">
           <div id="hero-system-readout" className="hero-system-readout border-t border-[var(--border-color)] pt-4">
             <div aria-live="polite" aria-atomic="true" className="space-y-1">
               <h2 className="text-card-display">{currentStage.offeringTitle}</h2>
@@ -128,7 +131,6 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
           </div>
         </div>
       </div>
-      <HeroNeuralNetwork activeTrack={activeStage} />
     </section>
   );
 }

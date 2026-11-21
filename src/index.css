@@ -327,7 +327,7 @@ html:has(.case-study-dialog[open]) {
 }
 
 .home-backdrop,
-.hero-neural-network {
+.hero-model-animation {
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -338,7 +338,7 @@ html:has(.case-study-dialog[open]) {
 }
 
 .home-backdrop::after,
-.hero-neural-network::after {
+.hero-model-animation::after {
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, var(--backdrop-text-veil) 34%, var(--backdrop-art-veil) 80%);
@@ -356,7 +356,7 @@ html.light .home-backdrop {
 }
 
 .home-backdrop > svg,
-.hero-neural-network > svg {
+.hero-model-animation > svg {
   position: absolute;
   inset: -4%;
   width: 108%;
@@ -411,20 +411,32 @@ html.light .home-backdrop {
   background: radial-gradient(ellipse at center, var(--backdrop-text-veil) 34%, var(--backdrop-art-veil) 95%);
 }
 
-.hero-neural-network {
-  --neural-filament: #8cbcd6;
-  --neural-signal: #ff9766;
-  --neural-peak: #ffe1cd;
-  --backdrop-text-veil: color-mix(in srgb, var(--backdrop-cover) 79%, transparent);
+.hero-model-animation {
+  --model-line: #8fc6df;
+  --model-signal: #ffad7e;
+  --model-bright: #ffdec9;
+  --model-surface: #102738;
+  --model-depth: #19384a;
+  --backdrop-text-veil: color-mix(in srgb, var(--backdrop-cover) 83%, transparent);
+  --backdrop-art-veil: color-mix(in srgb, var(--backdrop-cover) 12%, transparent);
 }
 
-html.light .hero-neural-network {
-  --neural-filament: #346780;
-  --neural-signal: #ad4c21;
-  --neural-peak: #d05216;
+html.light .hero-model-animation {
+  --model-line: #45768d;
+  --model-signal: #bb4d24;
+  --model-bright: #c4511f;
+  --model-surface: #edf5f8;
+  --model-depth: #d7e8ed;
 }
 
-.hero-neural-toggle.site-button {
+.hero-model-animation > svg {
+  inset: 6% -1.5% auto auto;
+  width: 63%;
+  height: 74%;
+  overflow: visible;
+}
+
+.hero-model-toggle.site-button {
   position: absolute;
   z-index: 11;
   right: max(var(--site-gutter), calc((100% - var(--site-width)) / 2 + var(--site-gutter)));
@@ -436,7 +448,7 @@ html.light .hero-neural-network {
   font-weight: 600;
 }
 
-.hero-neural-toggle:hover {
+.hero-model-toggle:hover {
   color: var(--text-primary);
   background: var(--bg-surface-elevated);
 }
@@ -489,20 +501,44 @@ html.light .hero-neural-network {
   }
 }
 
+.hero-model-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
 @media (min-width: 64rem) {
   .home-hero {
     min-height: 44rem;
   }
+
+  .hero-model-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "copy readout" "tracks readout";
+    gap: 2rem 3rem;
+  }
+
+  .hero-model-copy { grid-area: copy; }
+  .hero-model-tracks { grid-area: tracks; }
+  .hero-model-readout { grid-area: readout; align-self: end; }
 }
 
 @media (max-width: 63.99rem) {
-  .hero-neural-network::after {
-    background: linear-gradient(var(--backdrop-text-veil) 40%, var(--backdrop-art-veil) 77%, var(--backdrop-text-veil));
+  .hero-model-animation {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 820 / 485;
+    width: min(100%, 38rem);
+    justify-self: center;
   }
 
-  .hero-neural-network__layout {
-    transform-origin: 720px 360px;
-    transform: translate(-142px, 120px) scale(.72);
+  .hero-model-animation::after {
+    background: linear-gradient(90deg, var(--backdrop-art-veil), transparent 30% 84%, var(--backdrop-art-veil));
+  }
+
+  .hero-model-animation > svg {
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .home-backdrop::after,
@@ -517,12 +553,6 @@ html.light .hero-neural-network {
   .home-backdrop--meridian::after,
   .home-backdrop--convergence::after {
     background: color-mix(in srgb, var(--backdrop-cover) 58%, transparent);
-  }
-}
-
-@media (max-width: 35rem) {
-  .hero-neural-network__layout {
-    transform: translate(-122px, 134px) scale(.61);
   }
 }
 
