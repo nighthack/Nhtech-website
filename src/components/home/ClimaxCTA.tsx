@@ -20,7 +20,7 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
         className="pointer-events-none absolute inset-0 w-full h-full opacity-20"
       >
         <circle cx="600" cy="640" r="360" fill="none" stroke="currentColor" strokeOpacity="0.35" strokeWidth="0.8" />
-        <circle cx="600" cy="640" r="500" fill="none" stroke="#FF5A1F" strokeWidth="0.7" strokeDasharray="4 10" />
+        <circle cx="600" cy="640" r="500" fill="none" stroke="var(--accent-primary)" strokeWidth="0.7" strokeDasharray="4 10" />
         <circle cx="600" cy="640" r="640" fill="none" stroke="currentColor" strokeOpacity="0.22" strokeWidth="0.6" />
       </svg>
 
@@ -31,7 +31,7 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.5 }}
-          className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold"
+          className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-text)] font-semibold"
         >
           Forward Deployed Engineering Initiative
         </motion.p>
@@ -60,10 +60,10 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
           <button
             type="button"
             onClick={() => onNavigate('/contact')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 min-h-[48px] px-7 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] active:bg-[#E95013] text-[#061421] font-display font-bold text-sm tracking-tight active:scale-[0.98] transition-all cursor-pointer shadow-md"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 min-h-[48px] px-7 py-3.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:bg-[var(--accent-primary-active)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight active:scale-[0.98] transition-all cursor-pointer shadow-md"
           >
             <span>Discuss a business workflow</span>
-            <ArrowRight className="w-4 h-4 text-[#061421]" />
+            <ArrowRight className="w-4 h-4 text-current" />
           </button>
 
           <button
@@ -85,7 +85,7 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
           className="pt-8 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[var(--text-secondary)] border-t border-[var(--border-color)]"
         >
           <div className="flex items-center gap-2">
-            <Lock className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
+            <Lock className="w-3.5 h-3.5 text-[var(--accent-text)]" />
             <span>Mutual NDA from First Call</span>
           </div>
           <div className="flex items-center gap-2">

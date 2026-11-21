@@ -13,7 +13,7 @@ export function InterstitialStatement({
   tag,
   primaryText,
   secondaryText,
-  accentColor = '#e0fb2e',
+  accentColor = 'var(--accent-primary)',
 }: InterstitialStatementProps) {
   const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ export function InterstitialStatement({
   return (
     <section
       ref={containerRef}
-      className="py-28 sm:py-36 bg-[#07060a] relative overflow-hidden flex items-center justify-center border-y border-[#d7bdf9]/10"
+      className="py-28 sm:py-36 bg-[#0B1523] relative overflow-hidden flex items-center justify-center border-y border-[#8CA5BD]/10"
     >
       {/* Background Architectural Vector Lines */}
       <div className="absolute inset-0 bg-architectural-grid opacity-25 pointer-events-none" />
@@ -43,17 +43,17 @@ export function InterstitialStatement({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#d7bdf9]"
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#8CA5BD]"
         >
           <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />
           <span>{tag}</span>
         </motion.div>
 
-        <MaskedHeading as="h3" className="text-display-massive font-display font-black text-[#f7f4ec] tracking-tight leading-[0.95] text-balance">
+        <MaskedHeading as="h3" className="text-display-massive font-display font-black text-[#F2F6FC] tracking-tight leading-[0.95] text-balance">
           {primaryText}
         </MaskedHeading>
 
-        <ScrollText className="text-base sm:text-lg lg:text-xl text-[#f7f4ec]/75 font-light max-w-3xl mx-auto leading-relaxed" delay={0.2}>
+        <ScrollText className="text-base sm:text-lg lg:text-xl text-[#F2F6FC]/75 font-light max-w-3xl mx-auto leading-relaxed" delay={0.2}>
           {secondaryText}
         </ScrollText>
       </motion.div>

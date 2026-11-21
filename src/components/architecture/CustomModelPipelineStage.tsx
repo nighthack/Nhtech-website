@@ -42,7 +42,7 @@ export function CustomModelPipelineStage() {
       shortTitle: '03. Fine-Tuning',
       tagline: 'Llama & Mistral Family Adaptation',
       icon: Sparkles,
-      accent: '#FF5A1F',
+      accent: 'var(--accent-primary)',
       desc: 'Fine-tune open-weight foundations (Llama-family, Mistral/Mixtral-family) and custom ML models using PyTorch, Hugging Face Transformers, and parameter-efficient techniques tailored to your domain vocabulary.',
       metrics: [
         { label: 'Supported Families', value: 'Llama-family & Mistral-family' },
@@ -72,7 +72,7 @@ export function CustomModelPipelineStage() {
       shortTitle: '05. ML Deployment',
       tagline: 'Cloud ML, Docker, & Kubernetes',
       icon: Server,
-      accent: '#FF5A1F',
+      accent: 'var(--accent-primary)',
       desc: 'Deploy fine-tuned models to your target environment—AWS SageMaker, Google AI Platform, Azure ML, or containerized via Docker and Kubernetes—with high-throughput FastAPI inference endpoints.',
       metrics: [
         { label: 'Target Platforms', value: 'AWS SageMaker, GCP, Azure ML' },
@@ -101,23 +101,23 @@ export function CustomModelPipelineStage() {
               onClick={() => setActiveStep(idx)}
               className={`p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between gap-2 relative overflow-hidden ${
                 isCurrent
-                  ? 'bg-[var(--bg-surface)] border-[#FF5A1F] shadow-md'
+                  ? 'bg-[var(--bg-surface)] border-[var(--accent-primary)] shadow-md'
                   : isPassed
                   ? 'bg-[var(--bg-surface-elevated)] border-[var(--border-color)] text-[var(--text-secondary)]'
                   : 'bg-[var(--bg-surface-subtle)] border-[var(--border-color)] text-[var(--text-muted)] opacity-85'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-[10px] font-mono font-bold tabular-nums ${isCurrent ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`}>
+                <span className={`text-[10px] font-mono font-bold tabular-nums ${isCurrent ? 'text-[var(--accent-text)]' : 'text-[var(--text-muted)]'}`}>
                   0{idx + 1}
                 </span>
-                <Icon className={`w-3.5 h-3.5 ${isCurrent ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isCurrent ? 'text-[var(--accent-text)]' : 'text-[var(--text-muted)]'}`} />
               </div>
               <span className={`text-xs font-medium line-clamp-1 ${isCurrent ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-secondary)]'}`}>
                 {step.shortTitle}
               </span>
               {isCurrent && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5A1F]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent-primary)]" />
               )}
             </button>
           );
@@ -137,7 +137,7 @@ export function CustomModelPipelineStage() {
           {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div className="space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider font-bold text-[var(--accent-orange-text)]">
+              <span className="text-[11px] font-mono uppercase tracking-wider font-bold text-[var(--accent-text)]">
                 {current.tagline}
               </span>
               <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -145,7 +145,7 @@ export function CustomModelPipelineStage() {
               </h3>
             </div>
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--text-primary)] px-3 py-1.5 rounded-lg bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-text)]" />
               <span>PHASE 0{current.id + 1} SPECIFICATION</span>
             </div>
           </div>

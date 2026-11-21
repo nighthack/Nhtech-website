@@ -158,7 +158,7 @@ export function ForwardDeployedEngineeringPage({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold"
+                className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-text)] font-semibold"
               >
                 Embedded Engineering Teams
               </motion.p>
@@ -185,15 +185,15 @@ export function ForwardDeployedEngineeringPage({
                 </div>
                 <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-display font-semibold text-[var(--text-primary)]">
                   <span>Discover</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
+                  <span className="text-[var(--accent-text)]">→</span>
                   <span>Map Workflow</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
+                  <span className="text-[var(--accent-text)]">→</span>
                   <span>Prototype</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
+                  <span className="text-[var(--accent-text)]">→</span>
                   <span>Integrate</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
+                  <span className="text-[var(--accent-text)]">→</span>
                   <span>Deploy</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
+                  <span className="text-[var(--accent-text)]">→</span>
                   <span>Optimise</span>
                 </div>
               </div>
@@ -202,10 +202,10 @@ export function ForwardDeployedEngineeringPage({
                 <button
                   type="button"
                   onClick={() => onNavigate('/contact')}
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-sm"
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-sm"
                 >
                   <span>Discuss a business workflow</span>
-                  <ArrowRight className="w-4 h-4 text-[#061421]" />
+                  <ArrowRight className="w-4 h-4 text-current" />
                 </button>
 
                 <button
@@ -233,7 +233,7 @@ export function ForwardDeployedEngineeringPage({
       <section className="py-20 sm:py-24 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
           <div className="max-w-3xl space-y-3">
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
+            <p className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-[0.14em] font-semibold">
               Clear Joint Ownership
             </p>
             <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)]">
@@ -249,19 +249,19 @@ export function ForwardDeployedEngineeringPage({
             <div className="py-8 md:pr-10 space-y-5">
               <div className="flex items-center justify-between gap-2 pb-4 border-b border-[var(--border-color)]">
                 <div className="flex items-center gap-2.5">
-                  <Code2 className="w-5 h-5 text-[var(--accent-orange-text)]" />
+                  <Code2 className="w-5 h-5 text-[var(--accent-text)]" />
                   <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
                     What NHTech does
                   </h3>
                 </div>
-                <span className="text-xs font-mono font-semibold text-[var(--accent-orange-text)]">
+                <span className="text-xs font-mono font-semibold text-[var(--accent-text)]">
                   Engineering Pod
                 </span>
               </div>
               <ul className="space-y-4 text-sm text-[var(--text-secondary)]">
                 {nhtechResponsibilities.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-1" />
+                    <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-1" />
                     <span className="leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -298,7 +298,7 @@ export function ForwardDeployedEngineeringPage({
       <section className="py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
           <div className="max-w-3xl space-y-3">
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
+            <p className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-[0.14em] font-semibold">
               Execution Cadence
             </p>
             <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)]">
@@ -317,7 +317,7 @@ export function ForwardDeployedEngineeringPage({
               >
                 {/* Phase & Timeline Anchor */}
                 <div className="lg:col-span-3 space-y-2">
-                  <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase text-[var(--accent-orange-text)] tabular-nums">
+                  <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase text-[var(--accent-text)] tabular-nums">
                     <CalendarClock className="w-4 h-4" />
                     <span>{item.phase} · {item.days}</span>
                   </div>
@@ -340,7 +340,7 @@ export function ForwardDeployedEngineeringPage({
                     ))}
                   </ul>
                   <div className="pt-3 border-t border-[var(--border-color)] space-y-1">
-                    <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase font-semibold text-[var(--accent-orange-text)]">
+                    <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase font-semibold text-[var(--accent-text)]">
                       <Flag className="w-3.5 h-3.5" />
                       <span>Decision Gate</span>
                     </div>
@@ -361,7 +361,7 @@ export function ForwardDeployedEngineeringPage({
                         key={del}
                         className="text-xs sm:text-sm text-[var(--text-primary)] flex items-start gap-2"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-0.5" />
                         <span>{del}</span>
                       </li>
                     ))}
@@ -382,7 +382,7 @@ export function ForwardDeployedEngineeringPage({
           <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[var(--border-color)] border-t border-b border-[var(--border-color)]">
             {/* When this model is right */}
             <div className="py-8 lg:pr-10 space-y-4">
-              <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
+              <p className="text-xs font-mono text-[var(--accent-text)] uppercase font-semibold tracking-wider">
                 Fit Assessment
               </p>
               <h2 className="text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -390,15 +390,15 @@ export function ForwardDeployedEngineeringPage({
               </h2>
               <ul className="space-y-3 text-sm text-[var(--text-secondary)]">
                 <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-1" />
                   <span>Your core workflow spans fragmented emails, PDFs, spreadsheets, and legacy ERPs where off-the-shelf SaaS fails.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-1" />
                   <span>Data privacy, compliance, or latency requirements demand VPC, on-premises, or edge deployment.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-1" />
                   <span>You want working production software owned by your organization—not slideware or vendor lock-in.</span>
                 </li>
               </ul>
@@ -432,7 +432,7 @@ export function ForwardDeployedEngineeringPage({
           {/* Confirmed Engagement Options */}
           <div className="space-y-6">
             <div className="space-y-2">
-              <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
+              <p className="text-xs font-mono text-[var(--accent-text)] uppercase font-semibold tracking-wider">
                 Confirmed Engagement Tracks
               </p>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)]">
@@ -443,7 +443,7 @@ export function ForwardDeployedEngineeringPage({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-7 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-3">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="font-bold text-[var(--accent-orange-text)]">Option 01 · Validation</span>
+                  <span className="font-bold text-[var(--accent-text)]">Option 01 · Validation</span>
                   <span className="text-[var(--text-muted)] tabular-nums">Prototype Sprint</span>
                 </div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
@@ -456,7 +456,7 @@ export function ForwardDeployedEngineeringPage({
 
               <div className="p-7 rounded-2xl bg-ocean-depth text-[var(--text-primary)] border border-[var(--border-hover)] space-y-3 shadow-lg">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="font-bold text-[var(--accent-orange-text)]">Option 02 · Production</span>
+                  <span className="font-bold text-[var(--accent-text)]">Option 02 · Production</span>
                   <span className="text-[var(--text-muted)] tabular-nums">Dedicated Pod</span>
                 </div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
@@ -489,7 +489,7 @@ export function ForwardDeployedEngineeringPage({
               return (
                 <div key={idx} className="p-6 sm:p-7 bg-[var(--bg-surface-subtle)] space-y-4">
                   <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
-                    <span className="font-bold text-[var(--accent-orange-text)]">0{idx + 1}</span>
+                    <span className="font-bold text-[var(--accent-text)]">0{idx + 1}</span>
                     <Icon className="w-4 h-4 text-[var(--accent-secondary)]" />
                   </div>
                   <h3 className="text-lg font-display font-bold text-[var(--text-primary)]">
@@ -510,7 +510,7 @@ export function ForwardDeployedEngineeringPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-2">
-              <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-semibold">
+              <p className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-wider font-semibold">
                 Verified Outcomes
               </p>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)]">
@@ -520,7 +520,7 @@ export function ForwardDeployedEngineeringPage({
             <button
               type="button"
               onClick={() => onNavigate('/work')}
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-orange-text)] hover:underline cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-text)] hover:underline cursor-pointer"
             >
               <span>View all case studies</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -537,12 +537,12 @@ export function ForwardDeployedEngineeringPage({
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-2 text-xs font-mono text-[var(--text-muted)]">
                     <span>{cs.clientAnonymousName}</span>
-                    <span className="text-[var(--accent-orange-text)] font-bold tabular-nums">
+                    <span className="text-[var(--accent-text)] font-bold tabular-nums">
                       {cs.scaleEvidence.primaryMetric}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors leading-snug">
+                  <h3 className="text-xl font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-text)] transition-colors leading-snug">
                     {cs.title}
                   </h3>
 
@@ -566,7 +566,7 @@ export function ForwardDeployedEngineeringPage({
 
                 <div className="pt-4 border-t border-[var(--border-color)] flex items-center justify-between text-xs font-mono text-[var(--text-primary)]">
                   <span>Inspect System Architecture</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[var(--accent-orange-text)] group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[var(--accent-text)] group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             ))}
@@ -577,7 +577,7 @@ export function ForwardDeployedEngineeringPage({
       {/* 9. BOTTOM OCEAN DEPTH CTA */}
       <section className="py-24 sm:py-28 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-7">
-          <p className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold">
+          <p className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-text)] font-semibold">
             Start a Conversation
           </p>
 
@@ -593,10 +593,10 @@ export function ForwardDeployedEngineeringPage({
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Discuss a business workflow</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </div>

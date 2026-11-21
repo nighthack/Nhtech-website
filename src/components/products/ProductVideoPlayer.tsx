@@ -15,7 +15,7 @@ export function ProductVideoPlayer({
   src,
   title,
   poster,
-  accentColor = '#FF5A1F',
+  accentColor = 'var(--accent-primary)',
   badge,
   liveUrl,
   ctaLabel,
@@ -80,7 +80,7 @@ export function ProductVideoPlayer({
         >
           <p className="text-xs text-white p-4">
             Your browser does not support HTML5 video. View the live application at{' '}
-            {liveUrl ? <a href={liveUrl} className="underline text-[#FF7A45]">{title}</a> : title}.
+            {liveUrl ? <a href={liveUrl} className="underline text-[var(--accent-primary)]">{title}</a> : title}.
           </p>
         </video>
 

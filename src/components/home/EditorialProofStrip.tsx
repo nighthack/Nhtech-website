@@ -58,7 +58,7 @@ export function EditorialProofStrip() {
         className="pointer-events-none absolute inset-0 w-full h-full opacity-15"
       >
         <circle cx="980" cy="120" r="320" fill="none" stroke="currentColor" strokeOpacity="0.45" strokeWidth="0.75" />
-        <circle cx="980" cy="120" r="460" fill="none" stroke="#FF5A1F" strokeWidth="0.6" strokeDasharray="5 9" />
+        <circle cx="980" cy="120" r="460" fill="none" stroke="var(--accent-primary)" strokeWidth="0.6" strokeDasharray="5 9" />
       </svg>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 relative z-10">
@@ -70,7 +70,7 @@ export function EditorialProofStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 'some' }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.16em] font-semibold"
+              className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-[0.16em] font-semibold"
             >
               Verified Production Proof
             </motion.p>
@@ -106,7 +106,7 @@ export function EditorialProofStrip() {
                     <span className="uppercase tracking-wider">{proof.label}</span>
                     <Icon
                       className={`w-4 h-4 shrink-0 ${
-                        proof.isSignal ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
+                        proof.isSignal ? 'text-[var(--accent-text)]' : 'text-[var(--accent-secondary)]'
                       }`}
                     />
                   </div>
@@ -120,7 +120,7 @@ export function EditorialProofStrip() {
                   </p>
                 </div>
 
-                <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent-secondary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent-secondary)] group-hover:text-[var(--accent-text)] transition-colors">
                   Verified Architecture
                 </div>
               </motion.div>

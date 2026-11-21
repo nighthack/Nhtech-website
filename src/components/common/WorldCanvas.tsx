@@ -116,7 +116,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
           p.x += p.vx;
           p.y += p.vy;
 
-          ctx.fillStyle = i % 5 === 0 ? 'rgba(255, 90, 31, 0.65)' : 'rgba(117, 164, 181, 0.65)';
+          ctx.fillStyle = i % 5 === 0 ? 'rgba(128, 165, 255, 0.65)' : 'rgba(117, 164, 181, 0.65)';
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
           ctx.fill();
@@ -149,7 +149,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         ctx.fillRect(0, scanY - 20, width, 40);
 
         // Crosshair at mouse
-        ctx.strokeStyle = 'rgba(255, 90, 31, 0.45)';
+        ctx.strokeStyle = 'rgba(128, 165, 255, 0.45)';
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, 25, 0, Math.PI * 2);
         ctx.moveTo(mouse.x - 35, mouse.y);
@@ -181,7 +181,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
             }
           }
 
-          ctx.fillStyle = idx % 6 === 0 ? 'rgba(255, 90, 31, 0.8)' : 'rgba(117, 164, 181, 0.75)';
+          ctx.fillStyle = idx % 6 === 0 ? 'rgba(128, 165, 255, 0.8)' : 'rgba(117, 164, 181, 0.75)';
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius * 1.2, 0, Math.PI * 2);
           ctx.fill();
@@ -223,7 +223,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         });
 
         animatedJoints.forEach((j, i) => {
-          ctx.fillStyle = i === 0 ? '#FF5A1F' : '#75A4B5';
+          ctx.fillStyle = i === 0 ? '#80A5FF' : '#75A4B5';
           ctx.beginPath();
           ctx.arc(j.x, j.y, 3.5, 0, Math.PI * 2);
           ctx.fill();
@@ -238,7 +238,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
           if (p.y > height) p.y = 0;
           if (p.y < 0) p.y = height;
 
-          ctx.fillStyle = idx % 5 === 0 ? 'rgba(255, 90, 31, 0.45)' : 'rgba(117, 164, 181, 0.45)';
+          ctx.fillStyle = idx % 5 === 0 ? 'rgba(128, 165, 255, 0.45)' : 'rgba(117, 164, 181, 0.45)';
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
           ctx.fill();

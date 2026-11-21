@@ -45,7 +45,7 @@ export default function App() {
     setCurrentPath(path);
     if (typeof window !== 'undefined') {
       window.history.pushState({}, '', path);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
   };
 
@@ -116,9 +116,10 @@ export default function App() {
   return (
     <ThemeProvider>
       <SEOHead currentPath={currentPath} />
-      <div id="nhtech-app-root" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[#FF5A1F] selection:text-[#061421] transition-colors duration-300">
+      <div id="nhtech-app-root" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[var(--accent-primary)] selection:text-[var(--accent-primary-text)] transition-colors duration-300">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[var(--bg-surface)] focus:px-4 focus:py-2">Skip to content</a>
         <Navbar currentPath={currentPath} onNavigate={handleNavigate} />
-        <main className="flex-1">
+        <main id="main-content" tabIndex={-1} className="flex-1">
           {renderCurrentView()}
         </main>
         <Footer onNavigate={handleNavigate} />

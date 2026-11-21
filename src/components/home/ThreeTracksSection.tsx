@@ -33,7 +33,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
               transition={{ duration: 0.5 }}
               className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest flex items-center gap-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)]" />
               <span>CORE ARCHITECTURAL TRACKS</span>
             </motion.div>
             
@@ -62,14 +62,14 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
             className="p-8 sm:p-12 lg:p-14 rounded-3xl bg-[var(--bg-surface)] border-2 border-[var(--border-color)] hover:border-[var(--accent-secondary)] transition-all shadow-lg relative overflow-hidden"
           >
             {/* Ambient Background Accent */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#e0fb2e]/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--accent-primary)]/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
               
               {/* Left Column: Story & Positioning */}
               <div className="lg:col-span-7 space-y-6">
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#e0fb2e] text-[#0b0c0e]">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[var(--accent-primary)] text-[var(--accent-primary-text)]">
                     TRACK 01 // PRIMARY DISCIPLINE
                   </span>
                   <span className="text-xs font-mono text-[var(--text-muted)] uppercase">
@@ -98,7 +98,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {fdeTrack.subCapabilities.map((sub, sIdx) => (
                       <div key={sIdx} className="flex items-start gap-2 text-xs text-[var(--text-primary)]">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#e0fb2e] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-primary)] shrink-0 mt-0.5" />
                         <span className="font-medium">{sub}</span>
                       </div>
                     ))}
@@ -131,7 +131,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
                 <div className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-6">
                   
                   <div className="flex items-center justify-between pb-3 border-b border-[var(--border-color)]">
-                    <span className="text-xs font-mono text-[#e0fb2e] uppercase font-bold">
+                    <span className="text-xs font-mono text-[var(--accent-primary)] uppercase font-bold">
                       FDE LIFECYCLE
                     </span>
                     <span className="text-[10px] font-mono text-[var(--text-muted)]">
@@ -163,7 +163,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
                       }
                     ].map((phase, pIdx) => (
                       <div key={pIdx} className="flex items-start gap-3.5">
-                        <div className="w-6 h-6 rounded-lg bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-[10px] font-mono font-bold text-[#e0fb2e] flex items-center justify-center shrink-0 mt-0.5">
+                        <div className="w-6 h-6 rounded-lg bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-[10px] font-mono font-bold text-[var(--accent-primary)] flex items-center justify-center shrink-0 mt-0.5">
                           {phase.step}
                         </div>
                         <div className="space-y-0.5">
@@ -180,7 +180,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
 
                   <div className="pt-3 border-t border-[var(--border-color)] flex items-center justify-between text-[11px] font-mono text-[var(--text-secondary)]">
                     <span>Handover: 100% Customer IP</span>
-                    <span className="text-[#e0fb2e]">No Lock-In</span>
+                    <span className="text-[var(--accent-primary)]">No Lock-In</span>
                   </div>
 
                 </div>
@@ -255,7 +255,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
             >
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-mono text-[#d7bdf9]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-mono text-[#8CA5BD]">
                     <Building2 className="w-3.5 h-3.5" />
                     <span>TRACK 03 // ENTERPRISE PLATFORMS</span>
                   </div>
@@ -278,7 +278,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
                   <ul className="space-y-2 text-xs text-[var(--text-secondary)] font-normal">
                     {businessTrack.subCapabilities.map((sub, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-[#d7bdf9] font-bold">▸</span>
+                        <span className="text-[#8CA5BD] font-bold">▸</span>
                         <span>{sub}</span>
                       </li>
                     ))}
@@ -289,7 +289,7 @@ export function ThreeTracksSection({ onNavigate }: ThreeTracksSectionProps) {
               <div className="pt-4 border-t border-[var(--border-color)] flex items-center justify-between">
                 <button
                   onClick={() => onNavigate('/what-we-build')}
-                  className="inline-flex items-center gap-2 text-xs font-display font-bold text-[var(--text-primary)] group-hover:text-[#d7bdf9] transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs font-display font-bold text-[var(--text-primary)] group-hover:text-[#8CA5BD] transition-colors cursor-pointer"
                 >
                   <span>See Production Use Cases</span>
                   <ArrowRight className="w-3.5 h-3.5 text-current" />

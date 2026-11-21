@@ -144,7 +144,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
         <button
           id="nav-brand-logo"
           onClick={() => handleNavClick('/')}
-          className="flex items-center group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5A1F] focus-visible:outline-offset-4 rounded-lg py-1 shrink-0"
+          className="flex items-center group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-4 rounded-lg py-1 shrink-0"
           aria-label="NHTech Home"
         >
           <BrandLogo variant="combination" heightClass="h-6" />
@@ -175,7 +175,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
-            <Terminal className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
+            <Terminal className="w-3.5 h-3.5 text-[var(--accent-text)]" />
             <span>FDE</span>
           </button>
 
@@ -229,7 +229,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
               aria-haspopup="true"
             >
               <span>Industries</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${industriesOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${industriesOpen ? 'rotate-180 text-[var(--accent-text)]' : 'text-[var(--text-muted)]'}`} />
             </button>
 
             {industriesOpen && (
@@ -244,7 +244,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                     <span>Operating Sectors</span>
                     <button 
                       onClick={() => handleNavClick('/industries')} 
-                      className="text-[var(--accent-orange-text)] hover:underline cursor-pointer"
+                      className="text-[var(--accent-text)] hover:underline cursor-pointer"
                     >
                       View all →
                     </button>
@@ -256,7 +256,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                         onClick={() => handleNavClick(item.path)}
                         className="w-full text-left p-2.5 rounded-xl hover:bg-[var(--bg-surface-elevated)] transition-colors flex flex-col gap-0.5 group cursor-pointer"
                       >
-                        <span className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
+                        <span className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-text)] transition-colors">
                           {item.label}
                         </span>
                         <span className="text-[11px] text-[var(--text-muted)] font-normal leading-snug">
@@ -318,7 +318,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
               aria-haspopup="true"
             >
               <span>Company</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${companyOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${companyOpen ? 'rotate-180 text-[var(--accent-text)]' : 'text-[var(--text-muted)]'}`} />
             </button>
 
             {companyOpen && (
@@ -336,7 +336,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
                         onClick={() => handleNavClick(item.path)}
                         className="w-full text-left p-2.5 rounded-xl hover:bg-[var(--bg-surface-elevated)] transition-colors group cursor-pointer"
                       >
-                        <div className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
+                        <div className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-text)] transition-colors">
                           {item.label}
                         </div>
                         <div className="text-[11px] text-[var(--text-muted)] font-normal leading-snug">
@@ -362,17 +362,17 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-[#FF7A45]" />
+              <Sun className="w-4 h-4 text-[var(--accent-primary)]" />
             ) : (
-              <Moon className="w-4 h-4 text-[#173D5B]" />
+              <Moon className="w-4 h-4 text-[var(--accent-secondary)]" />
             )}
           </button>
 
-          {/* Primary CTA (Signal Orange 500 + Ocean 950 text for WCAG AA contrast) */}
+          {/* Contact action */}
           <button
             id="nav-talk-to-us-cta"
             onClick={() => handleNavClick('/contact')}
-            className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] active:bg-[#E95013] text-[#061421] text-xs font-display font-bold tracking-tight transition-all cursor-pointer shadow-sm whitespace-nowrap shrink-0"
+            className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl border border-[var(--border-hover)] bg-transparent text-[var(--text-primary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-text)] hover:bg-[var(--accent-glow)] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] text-xs font-display font-bold tracking-tight transition-all cursor-pointer shadow-sm whitespace-nowrap shrink-0"
           >
             <span>Talk to us</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-current" />
@@ -412,10 +412,10 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
               }`}
             >
               <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-[var(--accent-orange-text)]" />
+                <Terminal className="w-4 h-4 text-[var(--accent-text)]" />
                 <span className="font-bold">Forward Deployed Engineering</span>
               </div>
-              <span className="text-xs font-mono text-[var(--accent-orange-text)]">FDE</span>
+              <span className="text-xs font-mono text-[var(--accent-text)]">FDE</span>
             </button>
 
             <button
@@ -466,7 +466,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
               className="w-full flex items-center justify-between px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               <span>Industries</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileIndustriesOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : ''}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileIndustriesOpen ? 'rotate-180 text-[var(--accent-text)]' : ''}`} />
             </button>
             {mobileIndustriesOpen && (
               <div className="grid grid-cols-1 gap-1 mt-1 pl-2">
@@ -491,7 +491,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
               className="w-full flex items-center justify-between px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               <span>Company</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileCompanyOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : ''}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileCompanyOpen ? 'rotate-180 text-[var(--accent-text)]' : ''}`} />
             </button>
             {mobileCompanyOpen && (
               <div className="grid grid-cols-1 gap-1 mt-1 pl-2">
@@ -512,7 +512,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
           <div className="pt-3 border-t border-[var(--border-color)]">
             <button
               onClick={() => handleNavClick('/contact')}
-              className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] text-sm font-bold transition-all cursor-pointer"
+              className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3 rounded-xl border border-[var(--border-hover)] bg-transparent text-[var(--text-primary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-text)] hover:bg-[var(--accent-glow)] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] text-sm font-bold transition-all cursor-pointer"
             >
               <span>Talk to us</span>
               <ArrowUpRight className="w-4 h-4 text-current" />

@@ -33,67 +33,51 @@
     --grey-100:     #EEF1F3;
     --grey-50:      #F7F8F9;
 
-    --orange-900: #7F2A08;
-    --orange-800: #A63A0A;
-    --orange-700: #C9470D;
-    --orange-600: #E95013;
-    --orange-500: #FF5A1F;
-    --orange-400: #FF7A45;
-    --orange-300: #FF9A69;
-    --orange-200: #FFC09F;
-    --orange-100: #FFE0D1;
-    --orange-50:  #FFF3ED;
-
     --semantic-success: #22A06B;
     --semantic-warning: #D99A18;
     --semantic-error:   #D64545;
     --semantic-info:    #2786C7;
 
-    /* Theme Tokens - Dark Mode (Default: Deep Ocean) */
-    --bg-base: #061421;
-    --bg-surface: #0B2030;
-    --bg-surface-elevated: #173D5B;
-    --bg-surface-subtle: #091928;
-    --bg-neutral-surface: #111820;
-    --text-primary: #F5F8FA;
-    --text-secondary: #D1E0E6;
-    --text-muted: #A6C3CE;
-    --border-color: rgba(166, 195, 206, 0.16);
-    --border-hover: rgba(117, 164, 181, 0.36);
+    --bg-base: #0B1523;
+    --bg-surface: #132238;
+    --bg-surface-elevated: #1B304A;
+    --bg-surface-subtle: #101C2D;
+    --bg-neutral-surface: #101C2D;
+    --text-primary: #F2F6FC;
+    --text-secondary: #C4D1E1;
+    --text-muted: #A6B8CC;
+    --border-color: rgb(140 165 189 / 20%);
+    --border-hover: rgb(140 165 189 / 45%);
 
-    /* Accent Hierarchy: Signal Orange for CTAs/Highlights, Ocean for Identity */
-    --accent-primary: #FF5A1F;
-    --accent-primary-hover: #FF7A45;
-    --accent-primary-active: #E95013;
-    --accent-primary-text: #061421;
-    --accent-orange-text: #FF7A45;
-    --accent-secondary: #75A4B5;
-    --accent-ocean: #47849B;
-    --accent-glow: rgba(255, 90, 31, 0.14);
+    --accent-on-dark: #80A5FF;
+    --accent-primary: var(--accent-on-dark);
+    --accent-primary-hover: #A0BAFF;
+    --accent-primary-active: #6B95FF;
+    --accent-primary-text: #101C2D;
+    --accent-text: var(--accent-primary);
+    --accent-secondary: #8CA5BD;
+    --accent-ocean: #8CA5BD;
+    --accent-glow: color-mix(in srgb, var(--accent-primary) 14%, transparent);
   }
 
   html.light, [data-theme="light"] {
-    /* Theme Tokens - Light Mode (Ocean 50 & Graphite Neutrals) */
-    --bg-base: #F5F8FA;
+    --bg-base: #F7F9FC;
     --bg-surface: #FFFFFF;
-    --bg-surface-elevated: #EAF1F4;
-    --bg-surface-subtle: #F7F8F9;
-    --bg-neutral-surface: #EEF1F3;
-    --text-primary: #061421;
-    --text-secondary: #34414C;
-    --text-muted: #53616D;
-    --border-color: rgba(23, 61, 91, 0.14);
-    --border-hover: rgba(23, 61, 91, 0.30);
+    --bg-surface-elevated: #E8EEF6;
+    --bg-surface-subtle: #F0F4F9;
+    --bg-neutral-surface: #EDF2F8;
+    --text-primary: #101C2D;
+    --text-secondary: #3B4D63;
+    --text-muted: #536B84;
+    --border-color: rgb(83 107 132 / 22%);
+    --border-hover: rgb(83 107 132 / 46%);
 
-    /* Light Mode Accents (WCAG AA compliant contrast on light surfaces) */
-    --accent-primary: #FF5A1F;
-    --accent-primary-hover: #E95013;
-    --accent-primary-active: #C9470D;
-    --accent-primary-text: #061421;
-    --accent-orange-text: #A63A0A;
-    --accent-secondary: #173D5B;
-    --accent-ocean: #24536F;
-    --accent-glow: rgba(23, 61, 91, 0.08);
+    --accent-primary: #244FD9;
+    --accent-primary-hover: #2045C0;
+    --accent-primary-active: #193AA5;
+    --accent-primary-text: #FFFFFF;
+    --accent-secondary: #536B84;
+    --accent-ocean: #536B84;
   }
 
   html {
@@ -154,28 +138,24 @@
 
 /* Signature Brand Gradients (use sparingly) */
 .bg-ocean-depth {
-  background: linear-gradient(135deg, #061421 0%, #173D5B 58%, #326B86 100%);
+  background: linear-gradient(135deg, #0B1523 0%, #1B304A 58%, #36526F 100%);
 }
 
 html.light .bg-ocean-depth,
 [data-theme="light"] .bg-ocean-depth {
-  background: linear-gradient(135deg, #EEF1F3 0%, #E0E5E9 55%, #F7F8F9 100%);
-}
-
-.bg-industrial-heat {
-  background: linear-gradient(135deg, #A63A0A 0%, #FF5A1F 55%, #FFB05A 100%);
+  background: linear-gradient(135deg, #EDF2F8 0%, #E8EEF6 55%, #F7F9FC 100%);
 }
 
 .bg-engineered-transition {
-  background: linear-gradient(135deg, #173D5B 0%, #24536F 60%, #FF5A1F 100%);
+  background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--accent-secondary) 60%, var(--accent-primary) 100%);
 }
 
 /* Clear Typographic Scale with Generous Line-Height & No Clipping */
 .text-hero-display {
-  font-size: clamp(2rem, 4.4vw, 3.85rem);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  font-weight: 800;
+  font-size: clamp(2.45rem, 4.55vw, 4.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.038em;
+  font-weight: 700;
   overflow-wrap: break-word;
   text-wrap: balance;
 }
@@ -235,3 +215,18 @@ html.light .bg-ocean-depth,
     scroll-behavior: auto !important;
   }
 }
+
+.page-intro {
+  max-inline-size: 62ch;
+  font-size: clamp(1rem, 1.26vw, 1.1875rem);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+:where(button, a, input, textarea, select):focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}
+
+:where(input, textarea) { caret-color: var(--accent-primary); }

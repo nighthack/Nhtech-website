@@ -1,0 +1,17 @@
+.hero-foil {
+  --foil-shadow: #233a64;
+  --foil-mid: #587bb6;
+  --foil-edge: #d1e0ff;
+  display: block;
+  width: 115%;
+  max-width: none;
+  margin-inline: -7.5%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+html.light .hero-foil {
+  --foil-shadow: #334e77;
+  --foil-mid: #7291c4;
+  --foil-edge: #dce8ff;
+}

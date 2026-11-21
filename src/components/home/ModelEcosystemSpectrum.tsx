@@ -56,7 +56,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Models hosted directly on your VPC or on-premise GPU clusters. 100% data privacy with zero third-party API exposure.',
       examples: 'Llama 3.3 70B, Mistral Large, Qwen 2.5, DeepSeek V3',
       bestFor: 'Private cloud / on-prem infrastructure, strict regulatory boundaries, self-hosted workloads',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-primary)'
     },
     {
       id: 'fine-tuned',
@@ -65,7 +65,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Models distilled and quantized on your proprietary domain corpus. Achieves frontier accuracy on specific business tasks at 1/10th the inference cost.',
       examples: 'Custom LoRA / QLoRA checkpoints, quantized FP8 / INT4 engines',
       bestFor: 'Proprietary enterprise schemas, specialized terminology, cost reduction at scale',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-primary)'
     }
   ];
 
@@ -83,7 +83,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 'some' }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold"
+              className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-[0.14em] font-semibold"
             >
               Model-Agnostic Positioning
             </motion.p>
@@ -118,7 +118,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                 key={lab.name}
                 className={`p-3 rounded-xl border transition-all text-left space-y-1 ${
                   lab.isPartner
-                    ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F]/45 shadow-sm'
+                    ? 'bg-[var(--bg-surface-elevated)] border-[var(--accent-primary)]/45 shadow-sm'
                     : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
                 }`}
               >
@@ -127,7 +127,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                     {lab.name}
                   </div>
                   {lab.isPartner && (
-                    <span className="text-[9px] font-mono font-bold text-[var(--accent-orange-text)]" title="Verified Select Partner">
+                    <span className="text-[9px] font-mono font-bold text-[var(--accent-text)]" title="Verified Select Partner">
                       Select
                     </span>
                   )}
@@ -157,7 +157,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   onClick={() => setSelectedCategory(tier.id as any)}
                   className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden cursor-pointer space-y-2 ${
                     isSelected
-                      ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F] shadow-md'
+                      ? 'bg-[var(--bg-surface-elevated)] border-[var(--accent-primary)] shadow-md'
                       : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
                   }`}
                 >
@@ -172,7 +172,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   </div>
 
                   {isSelected && (
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF5A1F]" />
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--accent-primary)]" />
                   )}
                 </button>
               );
@@ -192,7 +192,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
                   <div>
-                    <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+                    <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold">
                       Tier Architecture
                     </span>
                     <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -232,7 +232,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   key={cIdx}
                   className="p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2 text-left"
                 >
-                  <Icon className="w-4 h-4 text-[var(--accent-orange-text)]" />
+                  <Icon className="w-4 h-4 text-[var(--accent-text)]" />
                   <div className="text-xs font-display font-bold text-[var(--text-primary)]">
                     {crit.name}
                   </div>
@@ -250,10 +250,10 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
           <button
             type="button"
             onClick={onExploreWork}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
           >
             <span>Explore Production Case Studies</span>
-            <ArrowRight className="w-4 h-4 text-[#061421]" />
+            <ArrowRight className="w-4 h-4 text-current" />
           </button>
 
           <span className="text-xs font-mono text-[var(--text-muted)]">

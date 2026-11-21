@@ -24,7 +24,7 @@ export function Footer({ onNavigate }: FooterProps) {
           <div className="md:col-span-5 space-y-4">
             <button
               onClick={() => handleNav('/')}
-              className="inline-flex items-center cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5A1F] rounded-lg"
+              className="inline-flex items-center cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] rounded-lg"
               aria-label="NHTech Home"
             >
               <BrandLogo variant="combination" heightClass="h-6" />
@@ -50,7 +50,7 @@ export function Footer({ onNavigate }: FooterProps) {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => handleNav('/fde')} className="text-[var(--text-primary)] font-semibold hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer text-left">
+                <button onClick={() => handleNav('/fde')} className="text-[var(--text-primary)] font-semibold hover:text-[var(--accent-text)] transition-colors cursor-pointer text-left">
                   Forward Deployed
                 </button>
               </li>
@@ -127,7 +127,7 @@ export function Footer({ onNavigate }: FooterProps) {
                   <button 
                     id="footer-legal-terms-link"
                     onClick={() => handleNav('/terms-and-conditions')} 
-                    className="text-[var(--text-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer text-left"
+                    className="text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors cursor-pointer text-left"
                   >
                     Terms &amp; Conditions
                   </button>
@@ -154,7 +154,7 @@ export function Footer({ onNavigate }: FooterProps) {
               <div className="pt-1">
                 <button
                   onClick={() => handleNav('/contact')}
-                  className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] text-xs font-display font-bold tracking-tight transition-all cursor-pointer shadow-sm"
+                  className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] text-xs font-display font-bold tracking-tight transition-all cursor-pointer shadow-sm"
                 >
                   <span>Discuss a business workflow</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-current" />
@@ -191,7 +191,7 @@ export function Footer({ onNavigate }: FooterProps) {
             <button 
               id="footer-link-terms"
               onClick={() => handleNav('/terms-and-conditions')} 
-              className="text-[var(--text-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer font-bold sm:border-l sm:border-[var(--border-color)] sm:pl-4"
+              className="text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors cursor-pointer font-bold sm:border-l sm:border-[var(--border-color)] sm:pl-4"
             >
               Terms &amp; Conditions
             </button>

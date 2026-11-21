@@ -20,7 +20,7 @@ export function ProductPartnerPath({ onNavigate }: ProductPartnerPathProps) {
       title: 'Senior Pod Deployment',
       timeline: 'Days 1 — 7',
       description: 'We embed senior AI research engineers directly with your domain leaders to audit proprietary datasets, infrastructure bottlenecks, and compliance constraints.',
-      accent: '#e0fb2e',
+      accent: 'var(--accent-primary)',
       deliverable: 'Private Topology Blueprint & Zero-Egress Architecture'
     },
     {
@@ -28,7 +28,7 @@ export function ProductPartnerPath({ onNavigate }: ProductPartnerPathProps) {
       title: 'Architectural Pipeline Build',
       timeline: 'Days 8 — 30',
       description: 'We engineer fine-tuned open-weights models, local vector indexers, deterministic verification state machines, and hardware acceleration runtimes.',
-      accent: '#d7bdf9',
+      accent: 'var(--accent-secondary)',
       deliverable: 'Air-Gapped MVP Running Inside Customer VPC / On-Prem'
     },
     {
@@ -53,7 +53,7 @@ export function ProductPartnerPath({ onNavigate }: ProductPartnerPathProps) {
     <section
       ref={containerRef}
       id="product-partnership-pathway"
-      className="py-28 sm:py-36 bg-[#07060a] relative overflow-hidden border-b border-[#d7bdf9]/10"
+      className="py-28 sm:py-36 bg-[var(--bg-base)] relative overflow-hidden border-b border-[var(--accent-secondary)]/10"
     >
       {/* Background Grid */}
       <div className="absolute inset-0 bg-architectural-grid opacity-15 pointer-events-none" />
@@ -61,23 +61,23 @@ export function ProductPartnerPath({ onNavigate }: ProductPartnerPathProps) {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10 space-y-20">
         
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-[#d7bdf9]/15">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-[var(--accent-secondary)]/15">
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#e0fb2e] uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e] animate-pulse" />
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent-primary)] uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] animate-pulse" />
               THE ENGAGEMENT BLUEPRINT // ZERO FRICTION TO SCALE
             </div>
-            <h2 className="text-display-massive font-display font-black text-[#f7f4ec] tracking-tight leading-[0.95]">
+            <h2 className="text-display-massive font-display font-black text-[var(--text-primary)] tracking-tight leading-[0.95]">
               How we build with you.
             </h2>
-            <p className="text-base text-[#f7f4ec]/75 font-light leading-relaxed max-w-2xl">
+            <p className="text-base text-[var(--text-primary)]/75 font-light leading-relaxed max-w-2xl">
               From day one, our pods operate as an extension of your engineering team. Every line of code and model checkpoint belongs exclusively to you.
             </p>
           </div>
 
           <button
             onClick={() => onNavigate('/contact')}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#1c0e30] border border-[#d7bdf9]/30 text-xs font-mono text-[#f7f4ec] hover:border-[#e0fb2e] hover:text-[#e0fb2e] transition-all cursor-pointer self-start lg:self-end"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--accent-secondary)]/30 text-xs font-mono text-[var(--text-primary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-all cursor-pointer self-start lg:self-end"
           >
             <span>DISCUSS ENGAGEMENT WINDOWS</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -89,30 +89,30 @@ export function ProductPartnerPath({ onNavigate }: ProductPartnerPathProps) {
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="p-8 rounded-3xl bg-gradient-to-b from-[#120a1f] to-[#07060a] border border-[#d7bdf9]/20 hover:border-[#d7bdf9]/50 transition-all space-y-6 flex flex-col justify-between group shadow-xl"
+              className="p-8 rounded-3xl bg-gradient-to-b from-[var(--bg-surface)] to-[var(--bg-base)] border border-[var(--accent-secondary)]/20 hover:border-[var(--accent-secondary)]/50 transition-all space-y-6 flex flex-col justify-between group shadow-xl"
             >
               <div className="space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-[#d7bdf9]/15">
+                <div className="flex items-center justify-between pb-3 border-b border-[var(--accent-secondary)]/15">
                   <span className="text-2xl font-display font-black" style={{ color: step.accent }}>
                     {step.num}
                   </span>
-                  <span className="text-[11px] font-mono text-[#d7bdf9] px-2 py-0.5 rounded bg-[#1c0e30]">
+                  <span className="text-[11px] font-mono text-[var(--accent-secondary)] px-2 py-0.5 rounded bg-[var(--bg-surface-elevated)]">
                     {step.timeline}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-display font-bold text-[#f7f4ec] group-hover:text-white transition-colors">
+                <h3 className="text-xl font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-text)] transition-colors">
                   {step.title}
                 </h3>
 
-                <p className="text-xs text-[#f7f4ec]/75 font-light leading-relaxed">
+                <p className="text-xs text-[var(--text-primary)]/75 font-light leading-relaxed">
                   {step.description}
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#d7bdf9]/15 space-y-1">
-                <div className="text-[10px] font-mono text-[#d7bdf9] uppercase">Key Deliverable:</div>
-                <div className="text-xs font-medium text-[#f7f4ec] leading-snug" style={{ color: step.accent }}>
+              <div className="pt-4 border-t border-[var(--accent-secondary)]/15 space-y-1">
+                <div className="text-[10px] font-mono text-[var(--accent-secondary)] uppercase">Key Deliverable:</div>
+                <div className="text-xs font-medium text-[var(--text-primary)] leading-snug" style={{ color: step.accent }}>
                   {step.deliverable}
                 </div>
               </div>

@@ -194,7 +194,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left">
           <div className="lg:col-span-7 space-y-5">
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--accent-orange-text)] font-semibold">
+            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--accent-text)] font-semibold">
               <GitMerge className="w-4 h-4" />
               <span>Composable Systems Engineering</span>
             </div>
@@ -215,7 +215,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 onClick={() => setBrowseMode('challenge')}
                 className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                   browseMode === 'challenge'
-                    ? 'bg-[#FF5A1F] text-[#061421] shadow-sm'
+                    ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] shadow-sm'
                     : 'bg-transparent border border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -226,7 +226,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 onClick={() => setBrowseMode('capability')}
                 className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                   browseMode === 'capability'
-                    ? 'bg-[#FF5A1F] text-[#061421] shadow-sm'
+                    ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] shadow-sm'
                     : 'bg-transparent border border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -257,7 +257,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[var(--border-color)]">
           <div>
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-semibold">
+            <p className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-wider font-semibold">
               {browseMode === 'challenge'
                 ? 'Route 01 · Browse by Business Challenge'
                 : 'Route 02 · Browse by Engineering Capability'}
@@ -295,14 +295,14 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     <span
                       aria-hidden="true"
                       className={`absolute top-0 left-0 h-[2px] transition-all duration-300 ${
-                        isActive ? 'w-full bg-[#FF5A1F]' : 'w-0'
+                        isActive ? 'w-full bg-[var(--accent-primary)]' : 'w-0'
                       }`}
                     />
                     <div className="flex items-center justify-between text-xs font-mono">
                       <span
                         className={`font-bold tabular-nums ${
                           isActive
-                            ? 'text-[var(--accent-orange-text)]'
+                            ? 'text-[var(--accent-text)]'
                             : 'text-[var(--accent-secondary)]'
                         }`}
                       >
@@ -330,7 +330,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
             >
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
                 <div className="space-y-4 max-w-3xl">
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-semibold tracking-wider">
                     Operational Bottleneck 0{activeChallengeIdx + 1}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -352,10 +352,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 <button
                   type="button"
                   onClick={() => onNavigate(activeChallenge.primaryRoute)}
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm self-start shrink-0"
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm self-start shrink-0"
                 >
                   <span>{activeChallenge.primaryRouteLabel}</span>
-                  <ArrowRight className="w-4 h-4 text-[#061421]" />
+                  <ArrowRight className="w-4 h-4 text-current" />
                 </button>
               </div>
 
@@ -380,10 +380,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                       >
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-mono font-semibold text-[var(--accent-secondary)] flex items-center gap-2">
-                            <CapIcon className="w-4 h-4 text-[var(--accent-orange-text)]" />
+                            <CapIcon className="w-4 h-4 text-[var(--accent-text)]" />
                             <span>Capability 0{item.capIndex + 1}</span>
                           </span>
-                          <span className="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent-orange-text)] transition-colors">
+                          <span className="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent-text)] transition-colors">
                             Inspect →
                           </span>
                         </div>
@@ -416,7 +416,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 </div>
 
                 <div className="space-y-3 md:pl-8 md:border-l border-[var(--border-color)]">
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-semibold tracking-wider">
                     Concrete Deliverables
                   </span>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -425,7 +425,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                         key={del}
                         className="text-xs sm:text-sm font-medium text-[var(--text-primary)] flex items-start gap-2"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-0.5" />
                         <span>{del}</span>
                       </li>
                     ))}
@@ -456,10 +456,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     <span
                       aria-hidden="true"
                       className={`absolute top-0 left-0 h-[2px] transition-all duration-300 ${
-                        isSelected ? 'w-full bg-[#FF5A1F]' : 'w-0'
+                        isSelected ? 'w-full bg-[var(--accent-primary)]' : 'w-0'
                       }`}
                     />
-                    <span className="tabular-nums text-[var(--accent-orange-text)] font-bold">
+                    <span className="tabular-nums text-[var(--accent-text)] font-bold">
                       0{idx + 1}
                     </span>
                     <span className="line-clamp-2 leading-tight font-sans font-semibold">{cap.title}</span>
@@ -478,7 +478,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[var(--border-color)]">
                 <div className="space-y-2 max-w-3xl">
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-semibold tracking-wider">
                     Capability Domain 0{activeCapIdx + 1} · Business Outcome
                   </span>
                   <h3 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -496,10 +496,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                   <button
                     type="button"
                     onClick={() => onNavigate(activeCap.relatedRoute!)}
-                    className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm self-start lg:self-auto shrink-0"
+                    className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm self-start lg:self-auto shrink-0"
                   >
                     <span>Explore Dedicated Page</span>
-                    <ArrowRight className="w-4 h-4 text-[#061421]" />
+                    <ArrowRight className="w-4 h-4 text-current" />
                   </button>
                 )}
               </div>
@@ -532,7 +532,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                   <ul className="space-y-2.5 text-xs sm:text-sm text-[var(--text-secondary)]">
                     {activeCap.architecturePoints.map((pt, pIdx) => (
                       <li key={pIdx} className="flex items-start gap-2.5 leading-relaxed">
-                        <span className="text-[var(--accent-orange-text)] font-bold mt-0.5">→</span>
+                        <span className="text-[var(--accent-text)] font-bold mt-0.5">→</span>
                         <span>{pt}</span>
                       </li>
                     ))}
@@ -558,7 +558,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
                   {activeCap.deliverables && (
                     <div className="space-y-2.5 pt-3 border-t border-[var(--border-color)]">
-                      <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider block">
+                      <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-semibold tracking-wider block">
                         What You Receive
                       </span>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -567,7 +567,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                             key={dIdx}
                             className="text-xs text-[var(--text-primary)] flex items-start gap-2"
                           >
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-orange-text)] shrink-0 mt-0.5" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-text)] shrink-0 mt-0.5" />
                             <span>{del}</span>
                           </li>
                         ))}
@@ -609,10 +609,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
-                    <span className="tabular-nums font-bold text-[var(--accent-orange-text)]">0{idx + 1}</span>
+                    <span className="tabular-nums font-bold text-[var(--accent-text)]">0{idx + 1}</span>
                     <span className="text-[var(--accent-secondary)] uppercase">Engineering Domain</span>
                   </div>
-                  <h3 className="text-lg font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
+                  <h3 className="text-lg font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-text)] transition-colors">
                     {cap.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-3 leading-relaxed">
@@ -622,7 +622,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
                 <div className="pt-3 border-t border-[var(--border-color)] flex items-center justify-between text-xs font-mono text-[var(--text-primary)]">
                   <span>View Architecture &amp; Deliverables</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-[var(--accent-orange-text)]" />
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-[var(--accent-text)]" />
                 </div>
               </button>
             ))}
@@ -639,7 +639,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Architecture Evaluation
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -652,10 +652,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Discuss a business workflow</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

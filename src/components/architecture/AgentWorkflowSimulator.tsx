@@ -133,7 +133,7 @@ export function AgentWorkflowSimulator() {
       {/* Header & Mission */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 mb-6 border-b border-[var(--border-color)]">
         <div>
-          <div className="text-xs font-mono text-[var(--accent-orange-text)] mb-2 uppercase tracking-wider font-semibold">
+          <div className="text-xs font-mono text-[var(--accent-text)] mb-2 uppercase tracking-wider font-semibold">
             Architectural Operating Model
           </div>
           <h3 className="text-2xl sm:text-3xl font-display font-semibold text-[var(--text-primary)] tracking-tight">
@@ -150,7 +150,7 @@ export function AgentWorkflowSimulator() {
             type="button"
             onClick={handleRunSimulation}
             disabled={isSimulating}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] disabled:opacity-50 text-xs font-bold text-[#061421] transition-all cursor-pointer shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] disabled:opacity-50 text-xs font-bold text-[var(--accent-primary-text)] transition-all cursor-pointer shadow-sm"
           >
             {isSimulating ? (
               <>
@@ -194,7 +194,7 @@ export function AgentWorkflowSimulator() {
               onClick={() => handleStepClick(idx)}
               className={`flex flex-col items-start p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F] shadow-sm'
+                  ? 'bg-[var(--bg-surface-elevated)] border-[var(--accent-primary)] shadow-sm'
                   : isPassed
                   ? 'bg-[var(--bg-surface-subtle)] border-[var(--border-hover)] text-[var(--text-primary)]'
                   : 'bg-[var(--bg-surface-subtle)] border-[var(--border-color)] text-[var(--text-muted)] hover:border-[var(--border-hover)]'
@@ -204,7 +204,7 @@ export function AgentWorkflowSimulator() {
                 <div
                   className={`p-1.5 rounded-md ${
                     isActive
-                      ? 'bg-[#FF5A1F]/15 text-[var(--accent-orange-text)]'
+                      ? 'bg-[var(--accent-primary)]/15 text-[var(--accent-text)]'
                       : 'bg-[var(--bg-surface)] text-[var(--accent-secondary)]'
                   }`}
                 >
@@ -227,13 +227,13 @@ export function AgentWorkflowSimulator() {
         <div className="lg:col-span-6 space-y-4">
           <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <div className="text-xs font-mono text-[var(--accent-orange-text)] font-semibold">
+              <div className="text-xs font-mono text-[var(--accent-text)] font-semibold">
                 Current State: {currentStep.label.toUpperCase()}
               </div>
               <span
                 className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
                   currentStep.checkpointState === 'HUMAN_REVIEW_REQUIRED'
-                    ? 'bg-[#FF5A1F]/15 text-[var(--accent-orange-text)] border-[#FF5A1F]/40'
+                    ? 'bg-[var(--accent-primary)]/15 text-[var(--accent-text)] border-[var(--accent-primary)]/40'
                     : 'bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] border-[var(--border-color)]'
                 }`}
               >
@@ -283,7 +283,7 @@ export function AgentWorkflowSimulator() {
 
           {/* Core Principle Banner */}
           <div className="p-3.5 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] flex items-start gap-2.5">
-            <ShieldAlert className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-0.5" />
+            <ShieldAlert className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-0.5" />
             <div>
               <span className="text-[var(--text-primary)] font-medium">Automation without invisible decision-making. </span>
               Every meaningful action is designed around explicit permissions, human checkpoints, and traceable execution.
@@ -296,7 +296,7 @@ export function AgentWorkflowSimulator() {
           <div className="flex-1 rounded-xl bg-[#061421] border border-[#173D5B] p-4 flex flex-col font-mono text-xs">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#173D5B] text-[11px] text-[#75A4B5]">
               <div className="flex items-center gap-2">
-                <Terminal className="w-3.5 h-3.5 text-[#FF5A1F]" />
+                <Terminal className="w-3.5 h-3.5 text-[var(--accent-on-dark)]" />
                 <span className="text-[#F5F8FA] font-semibold">{currentStep.samplePayload.title}</span>
               </div>
               <span className="text-[10px] text-[#A8B8C7]">IMMUTABLE SCHEMA VALIDATION</span>
@@ -308,7 +308,7 @@ export function AgentWorkflowSimulator() {
 
             <div className="mt-3 pt-3 border-t border-[#173D5B] flex items-center justify-between text-[10px] text-[#75A4B5]">
               <span>STATUS: REPLAYABLE_EVENT</span>
-              <span className="text-[#FF7A45]">SIGNATURE: VERIFIED_ED25519</span>
+              <span className="text-[var(--accent-on-dark)]">SIGNATURE: VERIFIED_ED25519</span>
             </div>
           </div>
         </div>

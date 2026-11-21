@@ -35,8 +35,8 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
       case 'hoot':
         return {
           videoSrc: '/Hoot.mp4',
-          accent: '#FF5A1F',
-          badge: 'bg-[var(--bg-surface-elevated)] text-[var(--accent-orange-text)] border border-[var(--border-color)]',
+          accent: 'var(--accent-primary)',
+          badge: 'bg-[var(--bg-surface-elevated)] text-[var(--accent-text)] border border-[var(--border-color)]',
           telemetryBadge: 'Enterprise Messaging · Context Agents'
         };
       case 'agent-platform':
@@ -70,7 +70,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
           secondaryCtaRoute="/fde"
           onNavigate={onNavigate}
           telemetryItems={[
-            { label: 'PLATFORMS', value: '3 PUBLIC PRODUCTS', color: 'var(--accent-orange-text)' },
+            { label: 'PLATFORMS', value: '3 PUBLIC PRODUCTS', color: 'var(--accent-text)' },
             { label: 'DEPLOYMENT', value: 'VPC / ON-PREM READY', color: 'var(--text-primary)' },
             { label: 'STATUS', value: 'LIVE & IN PRODUCTION', color: 'var(--accent-secondary)' },
           ]}
@@ -86,7 +86,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
             transition={{ duration: 0.45 }}
             className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-[var(--border-color)]"
           >
-            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+            <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
               Incubated Software Suite
             </div>
 
@@ -96,7 +96,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                 onClick={() => setActiveTab('all')}
                 className={`px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                   activeTab === 'all'
-                    ? 'bg-[#FF5A1F] text-[#061421] font-bold shadow-sm'
+                    ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] font-bold shadow-sm'
                     : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -109,7 +109,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                   onClick={() => setActiveTab(p.id)}
                   className={`px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                     activeTab === p.id
-                      ? 'bg-[#FF5A1F] text-[#061421] font-bold shadow-sm'
+                      ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] font-bold shadow-sm'
                       : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:text-[var(--text-primary)]'
                   }`}
                 >
@@ -192,7 +192,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                       href={product.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-display font-bold bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] transition-all cursor-pointer shadow-lg hover:shadow-xl"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-display font-bold bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] transition-all cursor-pointer shadow-lg hover:shadow-xl"
                     >
                       <span>{product.ctaLabel || `Explore ${product.name} ↗`}</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
@@ -309,7 +309,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                         href={product.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[var(--accent-orange-text)] hover:underline"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[var(--accent-text)] hover:underline"
                       >
                         <span>{product.ctaLabel || `Explore ${product.name} ↗`}</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -335,7 +335,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Enterprise Platform Pilots
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -348,10 +348,10 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Request Platform Consultation</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

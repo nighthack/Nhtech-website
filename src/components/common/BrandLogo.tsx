@@ -6,13 +6,7 @@ interface BrandLogoProps {
   heightClass?: string;
 }
 
-/**
- * Renders the official uploaded NHTech SVG brand assets verbatim without
- * modifying any SVG paths or colors.
- * - Dark backgrounds: Combination-logo (warm-white #FFF2EC wordmark + #FF4800 N)
- * - Light backgrounds: Dark-logo (#021422 single-colour wordmark + N)
- * - Monochrome dark: Light-logo (#FFF2EC single-colour wordmark + N)
- */
+/** Chooses a cobalt or monochrome NHTech mark for the current theme. */
 export function BrandLogo({
   variant = 'combination',
   className = '',

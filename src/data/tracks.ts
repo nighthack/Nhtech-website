@@ -8,7 +8,7 @@ export const engineeringTracks: EngineeringTrackMeta[] = [
     tagline: 'Forward deployed engineers working alongside your team to turn complex business problems into production systems.',
     description: 'We embed senior product and AI engineers directly into your domain to deconstruct difficult requirements, select and evaluate optimal models, and deliver resilient, production-ready software.',
     badge: 'CORE TRACK 01',
-    accent: '#FF5A1F',
+    accent: 'var(--accent-primary)',
     subCapabilities: [
       'Agentic AI & state machine orchestration',
       'Small Language Models (SLMs) & low-latency runtimes',

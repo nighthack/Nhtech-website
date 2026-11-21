@@ -98,7 +98,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
+            <p className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-[0.14em] font-semibold">
               Concrete Workflow Pattern
             </p>
 
@@ -142,17 +142,17 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                         <div
                           className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
                             isSelected
-                              ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
+                              ? 'bg-[var(--accent-primary)] border-[var(--accent-primary)] text-[var(--accent-primary-text)] shadow-md'
                               : step.requiresHuman
-                              ? 'bg-[var(--bg-base)] border-[#FF5A1F]/60 text-[var(--accent-orange-text)]'
-                              : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
+                              ? 'bg-[var(--bg-base)] border-[var(--accent-primary)]/60 text-[var(--accent-text)]'
+                              : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[var(--accent-primary)]'
                           }`}
                         >
                           <StepIcon className="w-4 h-4" />
                         </div>
                         <span
                           className={`text-xs font-mono font-bold tabular-nums ${
-                            isSelected ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
+                            isSelected ? 'text-[var(--accent-text)]' : 'text-[var(--text-muted)]'
                           }`}
                         >
                           {step.stepNumber}
@@ -162,7 +162,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                       <span
                         className={`text-[10px] font-mono uppercase tracking-wider ${
                           step.requiresHuman
-                            ? 'text-[var(--accent-orange-text)] font-bold'
+                            ? 'text-[var(--accent-text)] font-bold'
                             : 'text-[var(--accent-secondary)]'
                         }`}
                       >
@@ -200,7 +200,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
               <div className="lg:col-span-7 space-y-5 text-left lg:pr-6">
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-                    <span className="px-2.5 py-1 rounded-md font-bold bg-[#FF5A1F] text-[#061421] tabular-nums">
+                    <span className="px-2.5 py-1 rounded-md font-bold bg-[var(--accent-primary)] text-[var(--accent-primary-text)] tabular-nums">
                       Step {currentStep.stepNumber} · {currentStep.title}
                     </span>
                     <span className="text-[var(--text-muted)] uppercase">
@@ -236,7 +236,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                 <div className="p-6 rounded-2xl bg-[#061421] border border-[#173D5B] text-[#F5F8FA] space-y-4 shadow-lg">
                   <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs font-mono">
                     <div className="flex items-center gap-2 font-semibold">
-                      <Terminal className="w-4 h-4 text-[#FF7A45]" />
+                      <Terminal className="w-4 h-4 text-[var(--accent-on-dark)]" />
                       <span>Execution Trace Example</span>
                     </div>
                     <span className="text-[#75A4B5] font-semibold">Audited</span>
@@ -248,7 +248,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
 
                   <div className="text-xs leading-relaxed">
                     {currentStep.requiresHuman ? (
-                      <div className="flex items-start gap-2 text-[#FF7A45] font-medium">
+                      <div className="flex items-start gap-2 text-[var(--accent-on-dark)] font-medium">
                         <UserCheck className="w-4 h-4 shrink-0 mt-0.5" />
                         <span>
                           Human approval is mandatory before downstream system writes execute—no unverified database mutations.
@@ -275,10 +275,10 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
             >
               <span>Map Your Workflow With Us</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
 
             <button

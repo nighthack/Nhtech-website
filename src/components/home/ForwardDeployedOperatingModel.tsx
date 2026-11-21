@@ -110,7 +110,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
+            <p className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-[0.14em] font-semibold">
               Six-Stage Engagement Flow
             </p>
 
@@ -153,15 +153,15 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
                       <div
                         className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
                           isActive
-                            ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
-                            : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
+                            ? 'bg-[var(--accent-primary)] border-[var(--accent-primary)] text-[var(--accent-primary-text)] shadow-md'
+                            : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[var(--accent-primary)]'
                         }`}
                       >
                         <Icon className="w-4 h-4" />
                       </div>
                       <span
                         className={`text-xs font-mono font-bold tabular-nums ${
-                          isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
+                          isActive ? 'text-[var(--accent-text)]' : 'text-[var(--text-muted)]'
                         }`}
                       >
                         {step.stepNumber}
@@ -200,7 +200,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
               {/* Left Column */}
               <div className="lg:col-span-7 space-y-5 lg:pr-6">
                 <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-                  <span className="font-bold uppercase text-[var(--accent-orange-text)] tabular-nums">
+                  <span className="font-bold uppercase text-[var(--accent-text)] tabular-nums">
                     Stage {currentStep.stepNumber} · {currentStep.label}
                   </span>
                   <span className="text-[var(--text-muted)]">/</span>
@@ -233,7 +233,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
               {/* Right Column: Theme-Aware Ocean Decision Gate Module */}
               <div className="lg:col-span-5 lg:pl-8 space-y-5">
                 <div className="p-6 sm:p-7 rounded-2xl bg-ocean-depth text-[var(--text-primary)] space-y-5 border border-[var(--border-hover)] shadow-lg">
-                  <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
+                  <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 shrink-0" />
                     <span>Stage Output &amp; Decision Gate</span>
                   </div>
@@ -251,7 +251,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
                     <button
                       type="button"
                       onClick={() => onNavigate('/contact')}
-                      className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-orange-text)] hover:underline cursor-pointer"
+                      className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-text)] hover:underline cursor-pointer"
                     >
                       <span>Discuss an embedded engagement</span>
                       <ArrowRight className="w-3.5 h-3.5" />

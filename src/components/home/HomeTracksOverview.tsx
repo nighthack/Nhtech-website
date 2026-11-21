@@ -75,7 +75,7 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <p className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold">
+            <p className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-text)] font-semibold">
               Core Engineering Offerings
             </p>
             <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -89,7 +89,7 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
           <button
             type="button"
             onClick={() => onNavigate('/what-we-build')}
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-orange-text)] hover:underline transition-colors cursor-pointer self-start sm:self-end shrink-0"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-text)] hover:underline transition-colors cursor-pointer self-start sm:self-end shrink-0"
           >
             <span>Explore all capabilities</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -125,7 +125,7 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
                         onNavigate(offering.route);
                       }
                     }}
-                    className="group cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-[#FF5A1F] transition-transform duration-300 hover:-translate-y-0.5"
+                    className="group cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] transition-transform duration-300 hover:-translate-y-0.5"
                     aria-label={`${offering.title} — ${offering.cta}`}
                   >
                     <OfferingTrackVisual
@@ -141,7 +141,7 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
                 <div
                   className={`lg:col-span-6 space-y-6 ${isEven ? 'lg:order-1 lg:pr-4' : 'lg:order-2 lg:pl-4'}`}
                 >
-                  <div className="flex items-center gap-3 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase tracking-wider">
+                  <div className="flex items-center gap-3 text-xs font-mono text-[var(--accent-text)] font-bold uppercase tracking-wider">
                     <Icon className="w-4 h-4" />
                     <span>Offering {offering.number}</span>
                     <span className="text-[var(--border-hover)]">/</span>
@@ -164,7 +164,7 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
                         key={hIdx}
                         className="py-3.5 flex items-start gap-3 text-sm text-[var(--text-secondary)]"
                       >
-                        <span className="font-mono text-xs font-bold text-[var(--accent-orange-text)] tabular-nums mt-0.5">
+                        <span className="font-mono text-xs font-bold text-[var(--accent-text)] tabular-nums mt-0.5">
                           0{hIdx + 1}
                         </span>
                         <span className="leading-snug text-[var(--text-primary)]">{item}</span>
@@ -176,10 +176,10 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
                     <button
                       type="button"
                       onClick={() => onNavigate(offering.route)}
-                      className="inline-flex items-center gap-3 text-sm font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer group"
+                      className="inline-flex items-center gap-3 text-sm font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-text)] transition-colors cursor-pointer group"
                     >
                       <span>{offering.cta}</span>
-                      <span className="w-8 h-8 rounded-full border border-[var(--border-hover)] group-hover:border-[#FF5A1F] group-hover:bg-[#FF5A1F] group-hover:text-[#061421] flex items-center justify-center transition-all">
+                      <span className="w-8 h-8 rounded-full border border-[var(--border-hover)] group-hover:border-[var(--accent-primary)] group-hover:bg-[var(--accent-primary)] group-hover:text-[var(--accent-primary-text)] flex items-center justify-center transition-all">
                         <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </button>
