@@ -1,6 +1,6 @@
 import { RoutePath, CaseStudy } from '../types';
 import { ScrollProgressRail } from '../components/common/ScrollMotion';
-import { IntelligenceCore3D } from '../components/home/IntelligenceCore3D';
+import { HomeAtmosphere } from '../components/home/HomeAtmosphere';
 import { HeroMediaStage } from '../components/home/HeroMediaStage';
 import { WhoWeWorkWithStrip } from '../components/home/WhoWeWorkWithStrip';
 import { FeaturedCaseStudySection } from '../components/home/FeaturedCaseStudySection';
@@ -18,8 +18,7 @@ export function HomePage({ onNavigate, onSelectCaseStudy }: HomePageProps) {
   return (
     <div id="nhtech-homepage" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] relative selection:bg-[var(--accent-primary)] selection:text-[var(--accent-primary-text)]">
       <ScrollProgressRail />
-      {/* 0. Ambient Subtle Ocean & Signal Light Field */}
-      <IntelligenceCore3D />
+      <HomeAtmosphere />
 
       {/* 1. HERO: We turn complex business operations into production-ready AI systems */}
       <div className="relative z-10">
