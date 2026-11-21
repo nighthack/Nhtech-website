@@ -319,11 +319,84 @@ html:has(.case-study-dialog[open]) {
   background: rgb(6 20 33 / 78%);
 }
 
-/* Neural illustration colors are independent of text and control contrast. */
+/* Landing-page motion lives underneath the editorial content. */
+.home-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.home-backdrop,
 .hero-neural-network {
-  --neural-filament: #87b7d0;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-backdrop {
+  --backdrop-ink: #8bb8d0;
+  --backdrop-signal: #ff9a69;
+  mask-image: linear-gradient(90deg, transparent, #0004 42%, #0009 70%, #0008);
+}
+
+html.light .home-backdrop {
+  --backdrop-ink: #315e78;
+  --backdrop-signal: #a63a0a;
+}
+
+.home-backdrop svg,
+.hero-neural-network svg {
+  position: absolute;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  transform: translate3d(var(--backdrop-x, 0px), var(--backdrop-y, 0px), 0);
+  transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-backdrop__art {
+  stroke: var(--backdrop-ink);
+  stroke-width: 1.3;
+  stroke-opacity: .52;
+}
+
+.home-backdrop__signal {
+  stroke: var(--backdrop-signal);
+  stroke-width: 2;
+  stroke-opacity: .78;
+  stroke-dasharray: 2 18 8 72;
+  stroke-dashoffset: var(--backdrop-scroll, 0px);
+  transition: stroke-dashoffset 320ms ease-out;
+}
+
+.home-backdrop__node {
+  fill: var(--backdrop-signal);
+  stroke: none;
+}
+
+.home-section--reverse > .home-backdrop {
+  mask-image: linear-gradient(90deg, #0008, #0009 30%, #0004 58%, transparent);
+}
+
+.home-section--reverse > .home-backdrop svg {
+  transform: translate3d(var(--backdrop-x, 0px), var(--backdrop-y, 0px), 0) scaleX(-1);
+}
+
+#selected-work-section > .home-backdrop {
+  opacity: .68;
+}
+
+.home-section--center > .home-backdrop {
+  mask-image: linear-gradient(90deg, #0009, #0002 38%, #0002 62%, #0009);
+}
+
+.hero-neural-network {
+  --neural-filament: #8cbcd6;
   --neural-signal: #ff9766;
   --neural-peak: #ffe1cd;
+  background: radial-gradient(ellipse at 72% 48%, color-mix(in srgb, var(--neural-filament) 12%, transparent), transparent 70%);
+  mask-image: linear-gradient(90deg, #0002, #0004 37%, #000 65%);
 }
 
 html.light .hero-neural-network {
@@ -332,12 +405,130 @@ html.light .hero-neural-network {
   --neural-peak: #d05216;
 }
 
-.hero-neural-toggle {
-  background: color-mix(in srgb, var(--bg-base) 90%, transparent);
+.hero-neural-network__connections {
+  stroke: var(--neural-filament);
+  opacity: .55;
+}
+
+.hero-neural-network__nodes {
+  fill: var(--neural-filament);
+  opacity: .82;
+}
+
+.hero-neural-network__highlight {
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+
+.hero-neural-network__cluster[data-active="true"] .hero-neural-network__highlight {
+  opacity: .9;
+}
+
+.hero-neural-network__cluster[data-active="true"] .hero-neural-network__nodes {
+  fill: var(--neural-signal);
+}
+
+.hero-neural-toggle.site-button {
+  position: absolute;
+  z-index: 11;
+  right: max(var(--site-gutter), calc((100% - var(--site-width)) / 2 + var(--site-gutter)));
+  bottom: .65rem;
+  padding-inline: .75rem;
+  color: var(--text-secondary);
+  background: var(--bg-base);
+  font-size: .75rem;
+  font-weight: 600;
 }
 
 .hero-neural-toggle:hover {
+  color: var(--text-primary);
   background: var(--bg-surface-elevated);
+}
+
+.hero-system-readout {
+  padding-inline: 1rem;
+  border-radius: .75rem;
+  background: linear-gradient(90deg, var(--bg-base), color-mix(in srgb, var(--bg-base) 82%, transparent));
+}
+
+.stage-control {
+  position: relative;
+  min-height: var(--control-height);
+  cursor: pointer;
+  background: color-mix(in srgb, var(--bg-surface) 80%, transparent);
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.stage-control:hover,
+.stage-control:focus-visible,
+.stage-control[aria-pressed="true"] {
+  border-color: var(--accent-orange-text);
+  background: var(--bg-surface);
+}
+
+.stage-control:hover .stage-indicator,
+.stage-control:focus-visible .stage-indicator,
+.stage-control[aria-pressed="true"] .stage-indicator {
+  color: var(--accent-orange-text);
+}
+
+.stage-control::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--accent-orange-text);
+  border-radius: inherit;
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes stage-glow {
+  0%, 100% { opacity: 0; }
+  45% { opacity: .74; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion-active] .stage-control[data-stage-in-view][data-suggested="true"]::after {
+    animation: stage-glow 2.7s ease-in-out .55s 2;
+  }
+}
+
+@media (min-width: 64rem) {
+  .home-hero {
+    min-height: 44rem;
+  }
+}
+
+@media (max-width: 63.99rem) {
+  .hero-neural-network {
+    mask-image: linear-gradient(#0002 6%, #0004 52%, #000a 84%, #0006);
+  }
+
+  .hero-neural-network__layout {
+    transform-origin: 720px 360px;
+    transform: translate(-125px, 90px) scale(.76);
+  }
+
+  .home-backdrop,
+  .home-section--reverse > .home-backdrop {
+    mask-image: linear-gradient(#0003, #0005 48%, #0008);
+  }
+}
+
+@media (max-width: 35rem) {
+  .hero-neural-network__layout {
+    transform: translate(-146px, 125px) scale(.62);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-backdrop svg,
+  .hero-neural-network svg,
+  .home-backdrop__signal,
+  .hero-neural-network__highlight,
+  .stage-control {
+    transition: none;
+  }
 }
 
 /* Signature Brand Gradients (use sparingly) */

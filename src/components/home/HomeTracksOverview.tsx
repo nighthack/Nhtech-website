@@ -1,8 +1,6 @@
-import { motion } from 'motion/react';
-import { ArrowRight, Users, Eye, Layers } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { RoutePath } from '../../types';
-import { MaskedHeading, ScrollText } from '../common/ScrollMotion';
-import { OfferingTrackVisual } from '../visuals/WorkflowVisuals';
+import { SectionBackdrop } from './SectionBackdrop';
 
 interface HomeTracksOverviewProps {
   onNavigate: (path: RoutePath) => void;
@@ -12,13 +10,9 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
   const offerings = [
     {
       id: 'embedded-teams',
-      visualMode: 'embedded' as const,
-      number: '01',
-      badge: 'Forward Deployed Engineering',
+      visualMode: 'routing' as const,
       title: 'Embedded Engineering Teams',
       route: '/fde' as RoutePath,
-      icon: Users,
-      imageCaption: 'Workflow State Routing & Human Review Gates',
       summary:
         'Senior product and AI engineers deployed alongside your domain team to turn bottlenecks into production software—from workflow discovery through live enterprise integration.',
       highlights: [
@@ -30,13 +24,9 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
     },
     {
       id: 'vision-edge',
-      visualMode: 'vision-edge' as const,
-      number: '02',
-      badge: 'Physical Perception & Edge',
+      visualMode: 'vision' as const,
       title: 'Vision & Edge AI Systems',
       route: '/computer-vision' as RoutePath,
-      icon: Eye,
-      imageCaption: 'On-Device Edge Inference · Zero Cloud Latency',
       summary:
         'Computer vision, kinematic movement tracking, and industrial defect inspection running locally on commercial tablets, cameras, and edge hardware with zero cloud latency.',
       highlights: [
@@ -48,13 +38,9 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
     },
     {
       id: 'custom-platforms',
-      visualMode: 'custom-platforms' as const,
-      number: '03',
-      badge: 'Enterprise Systems & Workflows',
+      visualMode: 'platforms' as const,
       title: 'Custom AI Platforms & Workflow Systems',
       route: '/what-we-build' as RoutePath,
-      icon: Layers,
-      imageCaption: 'Private VPC, On-Premises & Custom Platforms',
       summary:
         'Bespoke enterprise applications, document intelligence, and high-throughput data platforms—integrating ERP, CRM, payments, loyalty, and compliance pipelines with full IP retention.',
       highlights: [
@@ -67,129 +53,49 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
   ];
 
   return (
-    <section
-      id="three-core-tracks-overview"
-      className="py-16 sm:py-24 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-[var(--border-color)]">
-          <div className="space-y-3 max-w-2xl text-left">
-            <p className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold">
-              Core Engineering Offerings
-            </p>
-            <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              Three ways we deliver production AI.
-            </MaskedHeading>
-            <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
-              Every engagement starts with your operational constraint—combining embedded engineering teams, edge perception, and custom enterprise architecture.
-            </ScrollText>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => onNavigate('/what-we-build')}
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-orange-text)] hover:underline transition-colors cursor-pointer self-start sm:self-end shrink-0"
-          >
-            <span>Explore all capabilities</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+    <section id="three-core-tracks-overview" className="border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)]">
+      <div className="site-container flex flex-wrap items-end justify-between gap-6 py-14 sm:py-20">
+        <div className="max-w-2xl space-y-3">
+          <h2 className="text-section-display">Three ways we deliver production AI.</h2>
+          <p className="site-lead">
+            Every engagement starts with your operational constraint—combining embedded engineering teams, edge perception, and custom enterprise architecture.
+          </p>
         </div>
-
-        {/* Alternating Asymmetric Editorial Chapters (Zero identical card walls) */}
-        <div className="space-y-16 sm:space-y-20">
-          {offerings.map((offering, idx) => {
-            const Icon = offering.icon;
-            const isEven = idx % 2 === 1;
-
-            return (
-              <motion.article
-                key={offering.id}
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 'some' }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left"
-              >
-                {/* Purposeful Live Architecture Diagram (alternates left/right on desktop) */}
-                <div
-                  className={`lg:col-span-6 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}
-                >
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => onNavigate(offering.route)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        onNavigate(offering.route);
-                      }
-                    }}
-                    className="group cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-[#FF5A1F] transition-transform duration-300 hover:-translate-y-0.5"
-                    aria-label={`${offering.title} — ${offering.cta}`}
-                  >
-                    <OfferingTrackVisual
-                      mode={offering.visualMode}
-                      indexNumber={offering.number}
-                      badge={offering.badge}
-                      caption={offering.imageCaption}
-                    />
-                  </div>
-                </div>
-
-                {/* Unboxed Editorial Copy & Deliverables */}
-                <div
-                  className={`lg:col-span-6 space-y-6 ${isEven ? 'lg:order-1 lg:pr-4' : 'lg:order-2 lg:pl-4'}`}
-                >
-                  <div className="flex items-center gap-3 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase tracking-wider">
-                    <Icon className="w-4 h-4" />
-                    <span>Offering {offering.number}</span>
-                    <span className="text-[var(--border-hover)]">/</span>
-                    <span className="text-[var(--accent-secondary)] font-normal">{offering.badge}</span>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h3 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-tight">
-                      {offering.title}
-                    </h3>
-                    <p className="text-base text-[var(--text-secondary)] leading-relaxed">
-                      {offering.summary}
-                    </p>
-                  </div>
-
-                  {/* Clean Hairline List instead of boxed checkmarks */}
-                  <ul className="divide-y divide-[var(--border-color)] border-t border-b border-[var(--border-color)]">
-                    {offering.highlights.map((item, hIdx) => (
-                      <li
-                        key={hIdx}
-                        className="py-3.5 flex items-start gap-3 text-sm text-[var(--text-secondary)]"
-                      >
-                        <span className="font-mono text-xs font-bold text-[var(--accent-orange-text)] tabular-nums mt-0.5">
-                          0{hIdx + 1}
-                        </span>
-                        <span className="leading-snug text-[var(--text-primary)]">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="pt-1">
-                    <button
-                      type="button"
-                      onClick={() => onNavigate(offering.route)}
-                      className="inline-flex items-center gap-3 text-sm font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer group"
-                    >
-                      <span>{offering.cta}</span>
-                      <span className="w-8 h-8 rounded-full border border-[var(--border-hover)] group-hover:border-[#FF5A1F] group-hover:bg-[#FF5A1F] group-hover:text-[#061421] flex items-center justify-center transition-all">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
+        <button
+          type="button"
+          onClick={() => onNavigate('/what-we-build')}
+          className="site-button button-secondary"
+        >
+          Explore all capabilities <ArrowRight aria-hidden="true" className="size-4" />
+        </button>
       </div>
+
+      {offerings.map((offering, index) => (
+        <article
+          key={offering.id}
+          className={`home-section home-offering border-t border-[var(--border-color)] py-12 sm:py-16 lg:py-20 ${index % 2 === 1 ? 'home-section--reverse' : ''}`}
+        >
+          <SectionBackdrop mode={offering.visualMode} />
+          <div className={`site-container relative z-10 flex ${index % 2 === 1 ? 'lg:justify-end' : ''}`}>
+            <div className="w-full space-y-5 lg:max-w-[33rem]">
+              <h3 className="text-section-display">{offering.title}</h3>
+              <p className="leading-relaxed text-[var(--text-secondary)]">{offering.summary}</p>
+              <ul className="divide-y divide-[var(--border-color)] border-y border-[var(--border-color)]">
+                {offering.highlights.map((item) => (
+                  <li key={item} className="py-3 text-sm leading-relaxed text-[var(--text-primary)]">{item}</li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                onClick={() => onNavigate(offering.route)}
+                className="site-button button-secondary"
+              >
+                {offering.cta} <ArrowRight aria-hidden="true" className="size-4" />
+              </button>
+            </div>
+          </div>
+        </article>
+      ))}
     </section>
   );
 }

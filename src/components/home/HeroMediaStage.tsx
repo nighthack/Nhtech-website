@@ -9,6 +9,7 @@ import {
 import { RoutePath } from '../../types';
 import { HeroNeuralNetwork } from './HeroNeuralNetwork';
 import type { EngineeringTrack } from './HeroNeuralNetwork';
+import { StageGroup } from './StageGroup';
 
 interface HeroMediaStageProps {
   onNavigate: (path: RoutePath) => void;
@@ -60,18 +61,16 @@ const STAGES: OfferingStage[] = [
 
 export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
   const [activeStage, setActiveStage] = useState<EngineeringTrack>('embedded');
-  const currentStage = STAGES.find((s) => s.id === activeStage) ?? STAGES[0];
+  const currentIndex = STAGES.findIndex((stage) => stage.id === activeStage);
+  const currentStage = STAGES[currentIndex];
+  const nextStage = STAGES[(currentIndex + 1) % STAGES.length];
 
   return (
     <section
       id="hero-section"
-      className="relative overflow-hidden border-b border-[var(--border-color)] pt-[calc(var(--header-height)+2.25rem)] pb-12 sm:pb-16 lg:pt-[calc(var(--header-height)+4.5rem)] lg:pb-20"
+      className="home-hero relative isolate overflow-hidden border-b border-[var(--border-color)] pt-[calc(var(--header-height)+2.25rem)] pb-16 sm:pb-20 lg:pt-[calc(var(--header-height)+5.5rem)] lg:pb-24"
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_28%_25%,var(--accent-glow),transparent_62%)] opacity-40" />
-        <div className="absolute inset-0 bg-subtle-grid opacity-25 [mask-image:linear-gradient(black,transparent)]" />
-      </div>
-      <div className="site-container relative grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="site-container relative z-10 grid gap-6 lg:grid-cols-2 lg:gap-12">
         <div className="min-w-0">
           <h1 className="text-hero-display text-[var(--text-primary)]">
             We turn complex business operations into{' '}
@@ -90,7 +89,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
             </button>
           </div>
 
-          <div role="group" aria-label="Engineering tracks" className="mt-8 grid grid-cols-3 gap-2 border-t border-[var(--border-color)] pt-3 sm:gap-3">
+          <StageGroup label="Engineering tracks" className="mt-8 grid grid-cols-3 gap-2 border-t border-[var(--border-color)] pt-3 sm:gap-3">
             {STAGES.map((stage) => {
               const isActive = activeStage === stage.id;
               const Icon = stage.icon;
@@ -100,20 +99,20 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
                   type="button"
                   aria-pressed={isActive}
                   aria-controls="hero-system-readout"
+                  data-suggested={nextStage.id === stage.id}
                   onClick={() => setActiveStage(stage.id)}
-                  className="flex min-w-0 flex-col items-start gap-2 rounded-lg border border-transparent p-2 text-left text-xs font-semibold leading-snug text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] aria-pressed:border-[var(--border-control)] aria-pressed:bg-[var(--bg-surface)] aria-pressed:text-[var(--text-primary)] sm:p-3 sm:text-sm"
+                  className="stage-control flex min-w-0 flex-col items-start gap-2 rounded-lg border border-transparent p-2 text-left text-xs font-semibold leading-snug text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] aria-pressed:border-[var(--border-control)] aria-pressed:bg-[var(--bg-surface)] aria-pressed:text-[var(--text-primary)] sm:p-3 sm:text-sm"
                 >
-                  <Icon aria-hidden="true" className={`size-4 shrink-0 ${isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'}`} />
+                  <Icon aria-hidden="true" className={`stage-indicator size-4 shrink-0 ${isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'}`} />
                   <span>{stage.tabLabel}</span>
                 </button>
               );
             })}
-          </div>
+          </StageGroup>
         </div>
 
-        <div className="min-w-0">
-          <HeroNeuralNetwork activeTrack={activeStage} />
-          <div id="hero-system-readout" className="mt-2 border-t border-[var(--border-color)] pt-4">
+        <div className="min-w-0 lg:self-end">
+          <div id="hero-system-readout" className="hero-system-readout border-t border-[var(--border-color)] pt-4">
             <div aria-live="polite" aria-atomic="true" className="space-y-1">
               <h2 className="text-card-display">{currentStage.offeringTitle}</h2>
               <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{currentStage.proofDetail}</p>
@@ -129,6 +128,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
           </div>
         </div>
       </div>
+      <HeroNeuralNetwork activeTrack={activeStage} />
     </section>
   );
 }
