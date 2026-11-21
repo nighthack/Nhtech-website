@@ -1,5 +1,4 @@
 import { ArrowRight, ArrowUpRight, Factory, Building2, Landmark, ShoppingBag, Rocket } from 'lucide-react';
-import { SectionBackdrop } from './SectionBackdrop';
 import { RoutePath } from '../../types';
 
 interface WhoWeWorkWithStripProps {
@@ -46,7 +45,6 @@ export function WhoWeWorkWithStrip({ onNavigate }: WhoWeWorkWithStripProps) {
       aria-label="Who we work with"
       className="home-section py-12 sm:py-16 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)]"
     >
-      <SectionBackdrop mode="sectors" />
       <div className="site-container relative z-10 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-1.5 text-left max-w-2xl">

@@ -50,7 +50,7 @@ export function EditorialProofStrip() {
       id="production-proof-section"
       className="home-section py-16 sm:py-24 bg-ocean-depth text-[var(--text-primary)] border-b border-[var(--border-color)] relative overflow-hidden"
     >
-      <SectionBackdrop mode="ledger" />
+      <SectionBackdrop mode="meridian" />
       <div className="site-container relative z-10 space-y-10">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
@@ -78,7 +78,7 @@ export function EditorialProofStrip() {
                 className="py-6 lg:px-6 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between gap-6 text-left group"
               >
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)]">
+                  <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-secondary)]">
                     <span className="uppercase tracking-wider">{proof.label}</span>
                     <Icon
                       className={`w-4 h-4 shrink-0 ${
@@ -91,7 +91,7 @@ export function EditorialProofStrip() {
                     {proof.metric}
                   </div>
 
-                  <p className="text-xs text-[var(--text-secondary)] font-normal leading-relaxed">
+                  <p className="text-sm text-[var(--text-secondary)] font-normal leading-relaxed">
                     {proof.context}
                   </p>
                 </div>

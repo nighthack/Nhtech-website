@@ -59,7 +59,7 @@ export function FeaturedCaseStudySection({
       id="featured-case-study"
       className="home-section py-16 sm:py-24 bg-[var(--bg-base)] border-b border-[var(--border-color)]"
     >
-      <SectionBackdrop mode="routing" />
+      <SectionBackdrop mode="valuation" activeStage={activePipelineIdx} />
       <div className="site-container relative z-10 space-y-12">
         <div className="max-w-3xl space-y-5 text-left">
           <h2 className="text-section-display">{featured.title}</h2>

@@ -21,7 +21,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
         'Deconstructing fragmented customer intake, PDF valuation models, and custom formulas into an automated pipeline with mandatory human sign-off gates.',
       outcomeMetric: 'Automated Hub',
       outcomeLabel: 'Straight-Through Processing & Audit Trail',
-      diagramType: 'routing' as const,
+      diagramType: 'document' as const,
       stackLine: 'PDF / SFTP Intake → Citation Grounding → Human Gate → ERP Writeback'
     },
     {
@@ -32,7 +32,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
         'Processing live optical video feeds on standard commercial tablets to extract skeletal joint angles locally in bandwidth-constrained facilities.',
       outcomeMetric: 'On-Device Edge',
       outcomeLabel: 'Local Inference (Zero Cloud Dependency)',
-      diagramType: 'vision' as const,
+      diagramType: 'kinematic' as const,
       stackLine: 'Tablet Camera → Pose 3D & ONNX Runtime → Local SQLite → Coach UI'
     },
     {
@@ -43,7 +43,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
         'Evaluating complex multi-hop transaction topologies in real-time streaming windows without false-positive cascades blocking legitimate payments.',
       outcomeMetric: 'Real-Time Scale',
       outcomeLabel: 'Continuous Distributed Stream Capacity',
-      diagramType: 'ledger' as const,
+      diagramType: 'stream' as const,
       stackLine: 'Kafka Event Stream → Custom PyTorch DNN → Threshold Scoring → VPC Ledger'
     }
   ];
