@@ -1,0 +1,75 @@
+@property --synthesis-tilt {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: -12deg;
+}
+
+.hero-synthesis {
+  --synthesis-duration: 14s;
+  transition: --synthesis-tilt 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-synthesis-orientation {
+  transform: rotate(var(--synthesis-tilt));
+}
+
+.hero-synthesis-fragment {
+  animation: synthesis-travel var(--synthesis-duration) ease-in-out infinite;
+}
+
+.hero-synthesis-code {
+  animation: synthesis-code var(--synthesis-duration) ease-in-out infinite;
+}
+
+.hero-synthesis-atom {
+  animation: synthesis-atom var(--synthesis-duration) ease-in-out infinite;
+}
+
+.hero-synthesis-electron {
+  animation: synthesis-electron var(--synthesis-duration) ease-in-out infinite;
+}
+
+.hero-synthesis-shape {
+  animation: synthesis-shape var(--synthesis-duration) ease-in-out infinite;
+}
+
+.hero-synthesis[data-visible='false'] * {
+  animation-play-state: paused;
+}
+
+@keyframes synthesis-travel {
+  0%, 14%, 100% { transform: var(--code); }
+  34% { transform: var(--gather); }
+  49%, 56% { transform: var(--orbit); }
+  78%, 90% { transform: var(--shape) scale(var(--size)); }
+  96% { transform: var(--code); }
+}
+
+@keyframes synthesis-code {
+  0%, 15%, 100% { opacity: 0.74; }
+  34%, 95% { opacity: 0; }
+}
+
+@keyframes synthesis-atom {
+  0%, 24%, 78%, 100% { opacity: 0.13; transform: scale(0.92); }
+  44%, 57% { opacity: 0.72; transform: scale(1); }
+}
+
+@keyframes synthesis-electron {
+  0%, 19%, 77%, 100% { opacity: 0; }
+  34%, 54% { opacity: 0.78; }
+}
+
+@keyframes synthesis-shape {
+  0%, 55%, 92%, 100% { opacity: 0; }
+  74%, 85% { opacity: 0.76; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-synthesis * { animation: none !important; }
+  .hero-synthesis-fragment { transform: var(--shape) scale(var(--size)); }
+  .hero-synthesis-code,
+  .hero-synthesis-electron { opacity: 0; }
+  .hero-synthesis-atom { opacity: 0.52; }
+  .hero-synthesis-shape { opacity: 0.48; }
+}

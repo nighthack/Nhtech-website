@@ -56,6 +56,6 @@
 
 - The combination marks use a cobalt N with an ink wordmark on light backgrounds and a frost-white wordmark on dark backgrounds. The monochrome marks use ink or frost white.
 - Use a filled cobalt button for the main action and outlined buttons for secondary actions.
-- Use steel blue for supporting illustration geometry. The homepage illustration uses cobalt for its central contour.
+- Use steel blue for supporting illustration geometry. The homepage SVG uses cobalt for atoms and steel blue for code and supporting shapes.
 - Use bright cobalt for labels drawn on dark technical simulations in either page theme.
 - Reserve semantic colors for states such as warnings and errors.

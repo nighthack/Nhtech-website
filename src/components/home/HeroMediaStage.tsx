@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, MotionConfig } from 'motion/react';
 import {
   ArrowUpRight,
@@ -63,19 +63,21 @@ const STAGES: OfferingStage[] = [
 ];
 
 export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
+  const heroRef = useRef<HTMLElement>(null);
   const [activeStage, setActiveStage] = useState<SpatialSystemMode>('embedded');
   const currentStage = STAGES.find((s) => s.id === activeStage) ?? STAGES[0];
 
   return (
     <MotionConfig reducedMotion="user">
       <section
+        ref={heroRef}
         id="hero-section"
         className="relative min-h-[90vh] flex items-center justify-center pt-28 pb-14 sm:pb-20 overflow-hidden border-b border-[var(--border-color)]"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Left Column: Editorial Positioning & Actions */}
-            <div className="lg:col-span-6 space-y-8 text-left">
+            <div className="relative z-10 lg:col-span-6 space-y-8 text-left">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -181,11 +183,11 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
             </div>
 
             <div className="lg:col-span-6 relative flex flex-col">
-              <HeroSystemIllustration activeMode={activeStage} />
+              <HeroSystemIllustration activeMode={activeStage} heroRef={heroRef} />
 
               <div
                 id="hero-offering-details"
-                className="mt-3 pt-4 border-t border-[var(--border-color)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left"
+                className="relative mt-3 pt-4 border-t border-[var(--border-color)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left"
               >
                 <div className="space-y-1 min-w-0">
                   <div className="text-[11px] font-mono text-[var(--accent-secondary)] uppercase tracking-wider leading-relaxed">
