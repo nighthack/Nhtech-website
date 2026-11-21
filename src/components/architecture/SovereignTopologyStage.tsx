@@ -97,7 +97,7 @@ export function SovereignTopologyStage({
               onClick={() => handleModeSelect(modeKey)}
               className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                 isSelected
-                  ? 'bg-[#FF5A1F] text-[#061421] font-bold shadow-sm'
+                  ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] font-bold shadow-sm'
                   : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]'
               }`}
             >
@@ -121,7 +121,7 @@ export function SovereignTopologyStage({
           {/* Topology Overview Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div className="space-y-1 text-left">
-              <div className="text-[11px] font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-bold">
+              <div className="text-[11px] font-mono text-[var(--accent-text)] uppercase tracking-wider font-bold">
                 {current.badge}
               </div>
               <div className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -172,7 +172,7 @@ export function SovereignTopologyStage({
                     className="p-3.5 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-1.5"
                   >
                     <div className="flex items-center gap-2 text-[11px] font-mono text-[var(--text-muted)]">
-                      <Icon className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
+                      <Icon className="w-3.5 h-3.5 text-[var(--accent-text)]" />
                       <span>{spec.label}</span>
                     </div>
                     <div className="text-xs font-medium text-[var(--text-primary)]">

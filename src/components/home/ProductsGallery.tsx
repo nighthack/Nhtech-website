@@ -23,7 +23,7 @@ export function ProductsGallery({ onNavigate }: ProductsGalleryProps) {
       case 'talkument': return '#38bdf8';
       case 'hoot': return '#ff4b3e';
       case 'agent-platform':
-      default: return '#e0fb2e';
+      default: return 'var(--accent-primary)';
     }
   };
 
@@ -38,7 +38,7 @@ export function ProductsGallery({ onNavigate }: ProductsGalleryProps) {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl text-left">
             <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)]" />
               <span>INTERNAL INCUBATED PRODUCTS // PROPRIETARY IP</span>
             </div>
 

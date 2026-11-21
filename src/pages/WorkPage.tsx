@@ -49,7 +49,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
           secondaryCtaRoute="/fde"
           onNavigate={onNavigate}
           telemetryItems={[
-            { label: 'TRACKS', value: '3 CORE DOMAINS', color: 'var(--accent-orange-text)' },
+            { label: 'TRACKS', value: '3 CORE DOMAINS', color: 'var(--accent-text)' },
             { label: 'CLIENT IP', value: '100% OWNED BY CLIENT', color: 'var(--text-primary)' },
             { label: 'DELIVERY', value: 'VPC / ON-PREM / EDGE', color: 'var(--accent-secondary)' },
           ]}
@@ -65,7 +65,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
             transition={{ duration: 0.45 }}
             className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-[var(--border-color)]"
           >
-            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+            <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
               Organized by Engineering Track
             </div>
 
@@ -75,7 +75,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
                 onClick={() => setFilterTrack('all')}
                 className={`px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                   filterTrack === 'all'
-                    ? 'bg-[#FF5A1F] text-[#061421] font-bold shadow-sm'
+                    ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] font-bold shadow-sm'
                     : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -88,7 +88,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
                   onClick={() => setFilterTrack(tr.id)}
                   className={`px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                     filterTrack === tr.id
-                      ? 'bg-[#FF5A1F] text-[#061421] font-bold shadow-sm'
+                      ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] font-bold shadow-sm'
                       : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:text-[var(--text-primary)]'
                   }`}
                 >
@@ -116,7 +116,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
                   <span className="text-xs font-mono px-3 py-1 rounded-md bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] border border-[var(--border-color)] font-bold">
                     SYSTEM DOSSIER 0{idx + 1}
                   </span>
-                  <span className="text-xs font-mono px-2.5 py-0.5 rounded text-[var(--accent-orange-text)] bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded text-[var(--accent-text)] bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
                     {trackMeta?.badge || 'ENGINEERING TRACK'}
                   </span>
                   <span className="text-base sm:text-xl font-display font-bold text-[var(--text-primary)]">
@@ -152,7 +152,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
                   </div>
 
                   <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] space-y-1.5">
-                    <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+                    <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold">
                       PRODUCTION SYSTEM ARCHITECTED &amp; DEPLOYED
                     </div>
                     <div className="text-xs text-[var(--text-primary)] leading-relaxed font-normal">
@@ -188,14 +188,14 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
                   <div className="space-y-3 font-mono text-xs text-[var(--text-secondary)]">
                     {study.architecture.slice(0, 3).map((layer, lIdx) => (
                       <div key={lIdx} className="p-3 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] flex items-start gap-2.5">
-                        <span className="text-[var(--accent-orange-text)] font-bold tabular-nums">0{lIdx + 1}</span>
+                        <span className="text-[var(--accent-text)] font-bold tabular-nums">0{lIdx + 1}</span>
                         <span className="text-[var(--text-primary)] font-medium font-sans leading-relaxed">{layer}</span>
                       </div>
                     ))}
                   </div>
 
                   <div className="text-[11px] font-mono text-[var(--text-muted)] pt-1 flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#FF5A1F]" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
                     <span>Engineered with 100% Client Codebase Ownership</span>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
           <div className="bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl max-w-4xl w-full p-6 sm:p-10 shadow-2xl space-y-8 my-8 relative text-left">
             <div className="flex items-center justify-between pb-6 border-b border-[var(--border-color)]">
               <div>
-                <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+                <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
                   System Dossier · {activeModalStudy.clientName || activeModalStudy.clientAnonymousName}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -241,11 +241,11 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
               </div>
 
               <div className="space-y-2">
-                <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">Architecture Pipeline</div>
+                <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold">Architecture Pipeline</div>
                 <div className="space-y-1.5 font-mono">
                   {activeModalStudy.architecture.map((layer, lIdx) => (
                     <div key={lIdx} className="flex items-start gap-2 text-xs text-[var(--text-primary)]">
-                      <span className="text-[var(--accent-orange-text)] font-bold">•</span>
+                      <span className="text-[var(--accent-text)] font-bold">•</span>
                       <span>{layer}</span>
                     </div>
                   ))}
@@ -270,7 +270,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
                   handleCloseDetail();
                   onNavigate('/contact');
                 }}
-                className="px-6 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs transition-all cursor-pointer shadow-md"
+                className="px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs transition-all cursor-pointer shadow-md"
               >
                 Discuss Similar Architecture Deployment
               </button>
@@ -288,7 +288,7 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Forward Deployed Pod Dispatch
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -301,10 +301,10 @@ export function WorkPage({ onNavigate, selectedCaseStudy, onSelectCaseStudy }: W
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Schedule Architecture Consultation</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

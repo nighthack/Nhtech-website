@@ -28,7 +28,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           secondaryCtaRoute="/fde"
           onNavigate={onNavigate}
           telemetryItems={[
-            { label: 'ORIGINS', value: 'MICROSOFT R&D INDIA', color: 'var(--accent-orange-text)' },
+            { label: 'ORIGINS', value: 'MICROSOFT R&D INDIA', color: 'var(--accent-text)' },
             { label: 'PARTNERSHIP', value: 'OPENAI SELECT', color: 'var(--text-primary)' },
             { label: 'DELIVERY', value: 'FORWARD DEPLOYED PODS', color: 'var(--accent-secondary)' },
           ]}
@@ -38,7 +38,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       {/* 2. Proof Stats Strip with Scroll-triggered Counter */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+          <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
             Production Systems &amp; Delivery Track Record
           </div>
 
@@ -46,7 +46,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             {publicProofStats.map(stat => (
               <StaggerItem key={stat.id}>
                 <div className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-2 text-left h-full">
-                  <div className="text-4xl font-display font-bold text-[var(--accent-orange-text)] tabular-nums">
+                  <div className="text-4xl font-display font-bold text-[var(--accent-text)] tabular-nums">
                     <AnimatedCounter value={stat.value} />
                   </div>
                   <div className="text-base font-display font-bold text-[var(--text-primary)] mt-1">{stat.label}</div>
@@ -71,7 +71,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           <StaggerContainer className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-px">
             <StaggerItem>
               <div className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-3 h-full">
-                <div className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">01 · INCEPTION &amp; RESEARCH RIGOR</div>
+                <div className="text-xs font-mono text-[var(--accent-text)] font-bold tracking-wider">01 · INCEPTION &amp; RESEARCH RIGOR</div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
                   Research roots before market noise
                 </h3>
@@ -107,7 +107,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
             <StaggerItem>
               <div className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-3 h-full">
-                <div className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">04 · POD ENGAGEMENT</div>
+                <div className="text-xs font-mono text-[var(--accent-text)] font-bold tracking-wider">04 · POD ENGAGEMENT</div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
                   Small, senior pods. 100% client code ownership.
                 </h3>
@@ -140,7 +140,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-3 shadow-sm"
             >
               <div className="flex items-center justify-between gap-3 mb-2">
-                <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
                   <Sparkles className="w-4 h-4" />
                   <span>Research Inception</span>
                 </div>
@@ -163,7 +163,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       <section className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1.5 text-left">
-            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+            <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
               Corporate Identity
             </div>
             <div className="text-sm sm:text-base font-sans text-[var(--text-secondary)]">
@@ -176,10 +176,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           <button
             type="button"
             onClick={() => onNavigate('/contact')}
-            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md self-start md:self-auto"
+            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md self-start md:self-auto"
           >
             <span>Get in touch with our engineering leadership</span>
-            <ArrowRight className="w-4 h-4 text-[#061421]" />
+            <ArrowRight className="w-4 h-4 text-current" />
           </button>
         </div>
       </section>

@@ -163,18 +163,18 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
     updateCameraFraming(width, height);
 
     // Three-point studio lighting + cool Ocean hemisphere fill (restrained intensity)
-    const hemiLight = new THREE.HemisphereLight(0x75a4b5, 0x061421, 0.72);
+    const hemiLight = new THREE.HemisphereLight(0x8ca5bd, 0x0b1523, 0.72);
     scene.add(hemiLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfff1e6, 1.55);
+    const keyLight = new THREE.DirectionalLight(0xf2f6fc, 1.55);
     keyLight.position.set(5, 7, 5);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x47849b, 1.65);
+    const rimLight = new THREE.DirectionalLight(0x536b84, 1.65);
     rimLight.position.set(-6, 3, -5);
     scene.add(rimLight);
 
-    const accentPoint = new THREE.PointLight(0xff5a1f, 1.85, 12, 1.8);
+    const accentPoint = new THREE.PointLight(0x80a5ff, 1.85, 12, 1.8);
     accentPoint.position.set(0, 0.4, 2.2);
     scene.add(accentPoint);
 
@@ -190,7 +190,7 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
     });
 
     const brushedTitaniumMat = new THREE.MeshPhysicalMaterial({
-      color: 0x75a4b5,
+      color: 0x8ca5bd,
       metalness: 0.92,
       roughness: 0.18,
       clearcoat: 0.65,
@@ -203,9 +203,9 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       roughness: 0.46
     });
 
-    const signalOrangeMat = new THREE.MeshStandardMaterial({
-      color: 0xff5a1f,
-      emissive: 0xff5a1f,
+    const cobaltMaterial = new THREE.MeshStandardMaterial({
+      color: 0x80a5ff,
+      emissive: 0x80a5ff,
       emissiveIntensity: 0.5,
       metalness: 0.35,
       roughness: 0.28
@@ -236,9 +236,9 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       outerGimbal.add(collar);
     }
 
-    // 2. Governance Human-Review Meridian Ring (Signal Orange Hairline Ring)
+    // 2. Governance Human-Review Meridian Ring (Cobalt Hairline Ring)
     const governanceRingGeo = new THREE.TorusGeometry(1.78, 0.022, 12, 84);
-    const governanceRing = new THREE.Mesh(governanceRingGeo, signalOrangeMat);
+    const governanceRing = new THREE.Mesh(governanceRingGeo, cobaltMaterial);
     governanceRing.rotation.y = Math.PI * 0.25;
     rootGroup.add(governanceRing);
 
@@ -255,7 +255,7 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
 
     const coreWireGeo = new THREE.EdgesGeometry(new THREE.OctahedronGeometry(0.68, 0));
     const coreWireMat = new THREE.LineBasicMaterial({
-      color: 0xa6c3ce,
+      color: 0xb3c4d6,
       transparent: true,
       opacity: 0.34
     });
@@ -263,13 +263,13 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
     rootGroup.add(coreWire);
 
     const coreHeartGeo = new THREE.OctahedronGeometry(0.24, 0);
-    const coreHeart = new THREE.Mesh(coreHeartGeo, signalOrangeMat);
+    const coreHeart = new THREE.Mesh(coreHeartGeo, brushedTitaniumMat);
     rootGroup.add(coreHeart);
 
     // 5. Base Architectural Calibration Ring (grounded reference plane)
     const basePlinthGeo = new THREE.RingGeometry(2.15, 2.22, 72);
     const basePlinthMat = new THREE.MeshBasicMaterial({
-      color: 0x47849b,
+      color: 0x536b84,
       transparent: true,
       opacity: 0.16,
       side: THREE.DoubleSide,
@@ -307,7 +307,7 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       _quat.identity();
       _mat4.compose(_vec3A, _quat, _scale);
       nodeInstanced.setMatrixAt(i, _mat4);
-      _color.setHex(i % 5 === 0 ? 0xff5a1f : i % 2 === 0 ? 0x75a4b5 : 0x24536f);
+      _color.setHex(i % 2 === 0 ? 0x8ca5bd : 0x36526f);
       nodeInstanced.setColorAt(i, _color);
     }
     nodeInstanced.instanceMatrix.needsUpdate = true;
@@ -321,7 +321,7 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
     const packetInstanced = new THREE.InstancedMesh(packetGeo, packetMat, PACKET_COUNT);
     packetInstanced.frustumCulled = false;
     for (let i = 0; i < PACKET_COUNT; i++) {
-      _color.setHex(i % 3 === 0 ? 0xff5a1f : 0xa6c3ce);
+      _color.setHex(i % 3 === 0 ? 0x8ca5bd : 0xb3c4d6);
       packetInstanced.setColorAt(i, _color);
     }
     if (packetInstanced.instanceColor) packetInstanced.instanceColor.needsUpdate = true;
@@ -425,9 +425,14 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       const mode = modeRef.current;
       const isDark = themeRef.current === 'dark';
 
+      const orbitColor = isDark ? 0x80a5ff : 0x244fd9;
+      accentPoint.color.setHex(orbitColor);
+      cobaltMaterial.color.setHex(orbitColor);
+      cobaltMaterial.emissive.setHex(orbitColor);
+
       // Adapt material tint slightly for light vs dark background harmony
-      anodizedNavyMat.color.setHex(isDark ? 0x173d5b : 0x24536f);
-      coreWireMat.color.setHex(isDark ? 0xa6c3ce : 0x24536f);
+      anodizedNavyMat.color.setHex(isDark ? 0x173d5b : 0x36526f);
+      coreWireMat.color.setHex(isDark ? 0xb3c4d6 : 0x36526f);
       basePlinthMat.opacity = isDark ? 0.16 : 0.1;
 
       if (!isDragging && !prefersReducedMotion) {
@@ -567,9 +572,9 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       <div className="w-full h-full flex items-center justify-center relative select-none">
         <svg viewBox="0 0 400 400" className="w-4/5 h-4/5 max-w-[380px]">
           <circle cx="200" cy="200" r="150" fill="none" stroke="currentColor" strokeOpacity="0.2" strokeWidth="1.5" />
-          <circle cx="200" cy="200" r="108" fill="none" stroke="#FF5A1F" strokeOpacity="0.8" strokeWidth="1.5" strokeDasharray="6 6" />
+          <circle cx="200" cy="200" r="108" fill="none" stroke="var(--accent-primary)" strokeOpacity="0.8" strokeWidth="1.5" strokeDasharray="6 6" />
           <circle cx="200" cy="200" r="64" fill="none" stroke="#47849B" strokeOpacity="0.65" strokeWidth="1.5" />
-          <polygon points="200,152 242,200 200,248 158,200" fill="#173D5B" fillOpacity="0.65" stroke="#FF5A1F" strokeWidth="1.5" />
+          <polygon points="200,152 242,200 200,248 158,200" fill="var(--accent-secondary)" fillOpacity="0.35" stroke="var(--accent-secondary)" strokeWidth="1.5" />
         </svg>
       </div>
     );

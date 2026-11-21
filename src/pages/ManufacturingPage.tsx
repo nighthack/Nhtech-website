@@ -19,7 +19,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
       title: 'Shop-Floor Optical Feeds',
       role: 'High-Speed Optics',
       desc: 'Interfacing directly with GigE industrial cameras and optical sensors over local Ethernet buses with deterministic frame capture.',
-      accent: 'var(--accent-orange-text)'
+      accent: 'var(--accent-text)'
     },
     {
       num: '02',
@@ -40,7 +40,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
       title: 'Plant Historian & ERP Sync',
       role: 'Asynchronous Persistence',
       desc: 'Bridging inspected part tallies and yield statistics asynchronously to SAP/Siemens plant databases over secure internal IPC queues.',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-primary)'
     }
   ];
 
@@ -74,7 +74,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
           <div className="flex flex-wrap items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
-              <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+              <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
                 Plant Topology · Air-Gapped Runtime
               </span>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -104,7 +104,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
                   <span
                     aria-hidden="true"
                     className={`absolute top-0 left-0 h-[2px] transition-all duration-300 ${
-                      isSelected ? 'w-full bg-[#FF5A1F]' : 'w-0'
+                      isSelected ? 'w-full bg-[var(--accent-primary)]' : 'w-0'
                     }`}
                   />
                   <div className="text-xs font-bold" style={{ color: node.accent }}>
@@ -186,7 +186,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
                 transition={{ duration: 0.45, delay: idx * 0.08 }}
                 className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-3.5"
               >
-                <div className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">
+                <div className="text-xs font-mono text-[var(--accent-text)] font-bold tracking-wider">
                   System 0{idx + 1} · {item.tag}
                 </div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
@@ -210,7 +210,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Plant Prototype Sprint
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -223,10 +223,10 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Schedule Plant Engineering Discussion</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

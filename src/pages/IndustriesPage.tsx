@@ -65,7 +65,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                   <Factory className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
                     Primary Industrial Focus · DACH &amp; Northern Europe
                   </span>
                   <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)]">
@@ -77,7 +77,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
               <button
                 type="button"
                 onClick={() => onNavigate('/industries/manufacturing')}
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
               >
                 <span>Explore Dedicated Manufacturing Chapter</span>
                 <ArrowRight className="w-4 h-4 text-current" />
@@ -90,15 +90,15 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 font-mono text-xs text-[var(--text-secondary)]">
               <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
-                <span className="text-[var(--accent-orange-text)] font-bold block mb-1">01 · Optics &amp; Edge IPC</span>
+                <span className="text-[var(--accent-text)] font-bold block mb-1">01 · Optics &amp; Edge IPC</span>
                 GigE camera feeds &amp; on-device TensorRT classification.
               </div>
               <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
-                <span className="text-[var(--accent-orange-text)] font-bold block mb-1">02 · Air-Gapped Isolation</span>
+                <span className="text-[var(--accent-text)] font-bold block mb-1">02 · Air-Gapped Isolation</span>
                 Zero CAD or yield data transmitted outside factory walls.
               </div>
               <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
-                <span className="text-[var(--accent-orange-text)] font-bold block mb-1">03 · Operator Gates</span>
+                <span className="text-[var(--accent-text)] font-bold block mb-1">03 · Operator Gates</span>
                 Floor engineers retain final verification signoff.
               </div>
             </div>
@@ -130,7 +130,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="p-3 rounded-xl bg-[var(--bg-surface-elevated)] text-[#FF5A1F] border border-[var(--border-color)]">
+                      <div className="p-3 rounded-xl bg-[var(--bg-surface-elevated)] text-[var(--accent-primary)] border border-[var(--border-color)]">
                         <Icon className="w-5 h-5" />
                       </div>
                       <span className="text-[11px] font-mono px-3 py-1 rounded-md bg-[var(--bg-surface-subtle)] text-[var(--text-secondary)] border border-[var(--border-color)]">
@@ -147,7 +147,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                     </p>
 
                     <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] font-mono leading-relaxed">
-                      <strong className="text-[var(--accent-orange-text)]">Operational Friction: </strong>
+                      <strong className="text-[var(--accent-text)]">Operational Friction: </strong>
                       {ind.challenge}
                     </div>
 
@@ -158,7 +158,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                       <ul className="space-y-1.5 text-xs font-mono text-[var(--text-secondary)]">
                         {ind.systems.slice(0, 3).map((sys, sIdx) => (
                           <li key={sIdx} className="flex items-start gap-2">
-                            <span className="text-[#FF5A1F]">▸</span>
+                            <span className="text-[var(--accent-primary)]">▸</span>
                             <span>{sys}</span>
                           </li>
                         ))}
@@ -170,7 +170,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                     <button
                       type="button"
                       onClick={() => onNavigate(`/industries/${ind.slug}` as RoutePath)}
-                      className="text-xs font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="text-xs font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-text)] inline-flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <span>Inspect Sector Architecture</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -200,7 +200,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Sector Consultation
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -213,10 +213,10 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Schedule Sector Technical Session</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

@@ -19,7 +19,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
       title: 'Spatial Layout & Bounding-Box Parsing',
       desc: 'Raw multi-hundred page PDFs, scans, and spreadsheets are parsed while retaining table grid coordinates, hierarchical headings, footnotes, and stamps.',
       metric: 'Exact pixel-level coordinate retention',
-      accent: 'var(--accent-orange-text)'
+      accent: 'var(--accent-text)'
     },
     {
       num: '02',
@@ -40,7 +40,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
       title: 'Deterministic Citation Verification Gate',
       desc: 'Every extracted attribute, compliance summary, or calculated entity provides verifiable bounding-box citations linked back to the exact source paragraph.',
       metric: 'Verifiable paragraph citation trail',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-primary)'
     }
   ];
 
@@ -74,7 +74,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
-              <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+              <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold">
                 Ingestion Architecture · 04 Stages
               </span>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -104,7 +104,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
                   <span
                     aria-hidden="true"
                     className={`absolute top-0 left-0 h-[2.5px] transition-all duration-300 ${
-                      isSelected ? 'w-full bg-[#FF5A1F]' : 'w-0'
+                      isSelected ? 'w-full bg-[var(--accent-primary)]' : 'w-0'
                     }`}
                   />
                   <div className="text-xs font-bold" style={{ color: step.accent }}>
@@ -184,7 +184,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
                 transition={{ duration: 0.45, delay: idx * 0.08 }}
                 className="p-7 bg-[var(--bg-surface-subtle)] space-y-4"
               >
-                <div className="text-xs font-mono text-[var(--accent-orange-text)] font-bold">
+                <div className="text-xs font-mono text-[var(--accent-text)] font-bold">
                   0{idx + 1} · {item.tag}
                 </div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
@@ -208,7 +208,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Document Workflow Pilot
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -221,10 +221,10 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Schedule Document Architecture Assessment</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

@@ -141,7 +141,7 @@ export function IndustriesWorlds({ onNavigate, onActiveIndexChange }: Industries
               transition={{ duration: 0.5 }}
               className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest flex items-center gap-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)]" />
               <span>SECTOR ARCHITECTURES</span>
             </motion.div>
             
@@ -204,7 +204,7 @@ export function IndustriesWorlds({ onNavigate, onActiveIndexChange }: Industries
             >
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-secondary)]">
-                  <Icon className="w-3.5 h-3.5 text-[#e0fb2e]" />
+                  <Icon className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
                   <span>{active.name}</span>
                 </div>
                 
@@ -222,7 +222,7 @@ export function IndustriesWorlds({ onNavigate, onActiveIndexChange }: Industries
                 <div className="text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider">CORE CAPABILITIES</div>
                 {active.capabilities.map((cap, i) => (
                   <div key={i} className="flex items-start gap-2.5 text-xs text-[var(--text-secondary)]">
-                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#e0fb2e]" />
+                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[var(--accent-primary)]" />
                     <span>{cap}</span>
                   </div>
                 ))}

@@ -116,7 +116,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <SEOHead currentPath={currentPath} />
-      <div id="nhtech-app-root" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[#FF5A1F] selection:text-[#061421] transition-colors duration-300">
+      <div id="nhtech-app-root" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[var(--accent-primary)] selection:text-[var(--accent-primary-text)] transition-colors duration-300">
         <Navbar currentPath={currentPath} onNavigate={handleNavigate} />
         <main className="flex-1">
           {renderCurrentView()}

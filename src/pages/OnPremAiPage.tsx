@@ -55,7 +55,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       id: 'finetuning',
       title: 'LoRA & QLoRA Parameter-Efficient Fine-Tuning',
       badge: 'STYLE, SYNTAX & DOMAIN ADAPTATION',
-      accent: 'var(--accent-orange-text)',
+      accent: 'var(--accent-text)',
       summary: 'Best for teaching specialized domain vocabularies, strict output schemas (JSON/SQL), clinical/legal taxonomy, and tone alignment on proprietary datasets.',
       pros: [
         'Adapts open-weight models (Llama, Mistral, Qwen) to custom syntax',
@@ -121,8 +121,8 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
-              <Scale className="w-4 h-4 text-[var(--accent-orange-text)]" />
+            <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold flex items-center gap-2">
+              <Scale className="w-4 h-4 text-[var(--accent-text)]" />
               <span>Architectural Selection · Decision Matrix</span>
             </div>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -145,7 +145,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 onClick={() => setSelectedTradeoff(key)}
                 className={`p-5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
                   isSelected
-                    ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F]/60 shadow-md'
+                    ? 'bg-[var(--bg-surface-elevated)] border-[var(--accent-primary)]/60 shadow-md'
                     : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)]'
                 }`}
               >
@@ -153,7 +153,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                   <span className="text-[10px] font-mono font-bold" style={{ color: item.accent }}>
                     {item.badge}
                   </span>
-                  {isSelected && <span className="text-[10px] font-mono font-bold text-[#FF5A1F]">ACTIVE</span>}
+                  {isSelected && <span className="text-[10px] font-mono font-bold text-[var(--accent-primary)]">ACTIVE</span>}
                 </div>
                 <div className="font-display font-bold text-sm sm:text-base text-[var(--text-primary)]">
                   {item.title}
@@ -233,7 +233,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+            <div className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold">
               <span>Custom Model Pipeline · Step-by-Step</span>
             </div>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -282,7 +282,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               title: 'LoRA, QLoRA, Distillation & Quantisation',
               desc: 'We adapt open-weight architectures (Llama, Mistral, Qwen, DeepSeek) using parameter-efficient fine-tuning, knowledge distillation, and FP8/INT4 quantization tailored to your domain vocabulary.',
               tech: ['LoRA & QLoRA Adapters', 'Model Distillation', 'Quantization (FP8/INT4)', 'PyTorch & Hugging Face'],
-              accent: 'var(--accent-orange-text)'
+              accent: 'var(--accent-text)'
             },
             {
               icon: Lock,
@@ -374,7 +374,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Model Engineering Engagement
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -387,10 +387,10 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Initiate Model Engineering Discovery</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

@@ -113,14 +113,14 @@ function EdgeVisionLiveSimulator({ mode }: { mode: UseCaseCategory }) {
 
         nodes.forEach(([x, y], i) => {
           const isKey = i === 6 || i === 7 || i === 8;
-          ctx.fillStyle = isKey ? '#FF5A1F' : '#F5F8FA';
+          ctx.fillStyle = isKey ? '#80A5FF' : '#F5F8FA';
           ctx.beginPath();
           ctx.arc(x, y, isKey ? 5 : 3.4, 0, Math.PI * 2);
           ctx.fill();
         });
       } else if (mode === 'defect') {
         const scanX = ((prefersReducedMotion ? 0.52 : (time * 0.22) % 1) * w * 0.72) + w * 0.14;
-        ctx.strokeStyle = 'rgba(255, 90, 31, 0.85)';
+        ctx.strokeStyle = 'rgba(128, 165, 255, 0.85)';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(scanX, h * 0.14);
@@ -134,11 +134,11 @@ function EdgeVisionLiveSimulator({ mode }: { mode: UseCaseCategory }) {
           { x: w * 0.68, y: h * 0.36, bw: 84, bh: 60, flagged: false }
         ];
         boxes.forEach((b) => {
-          ctx.strokeStyle = b.flagged ? '#FF5A1F' : '#75A4B5';
+          ctx.strokeStyle = b.flagged ? '#80A5FF' : '#75A4B5';
           ctx.lineWidth = b.flagged ? 2 : 1.4;
           ctx.strokeRect(b.x, b.y, b.bw, b.bh);
           if (b.flagged) {
-            ctx.fillStyle = 'rgba(255, 90, 31, 0.16)';
+            ctx.fillStyle = 'rgba(128, 165, 255, 0.16)';
             ctx.fillRect(b.x, b.y, b.bw, b.bh);
           }
         });
@@ -157,7 +157,7 @@ function EdgeVisionLiveSimulator({ mode }: { mode: UseCaseCategory }) {
         ctx.arc(0, 0, 96, 0, Math.PI * 1.4);
         ctx.stroke();
         ctx.rotate(-rot * 2);
-        ctx.strokeStyle = '#FF5A1F';
+        ctx.strokeStyle = '#80A5FF';
         ctx.lineWidth = 1.8;
         ctx.beginPath();
         ctx.arc(0, 0, 58, 0, Math.PI * 1.1);
@@ -204,7 +204,7 @@ function EdgeVisionLiveSimulator({ mode }: { mode: UseCaseCategory }) {
         className="w-full h-full block"
       />
       <div className="pointer-events-none absolute top-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-[#D1E0E6]">
-        <span className="px-2.5 py-1 rounded bg-[#0B2030] border border-[#47849B]/50 text-[#FF7A45] font-semibold">
+        <span className="px-2.5 py-1 rounded bg-[#0B2030] border border-[#47849B]/50 text-[var(--accent-primary)] font-semibold">
           Live Edge Pipeline View
         </span>
         <span className="hidden sm:inline px-2.5 py-1 rounded bg-[#0B2030] border border-white/10">
@@ -475,7 +475,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
         <div className="max-w-3xl space-y-2">
-          <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-orange-text)] font-semibold">
+          <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-text)] font-semibold">
             Edge Architecture Pattern
           </p>
           <MaskedHeading as="h2" className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -500,7 +500,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                     <div
                       className={`w-9 h-9 rounded-full flex items-center justify-center border relative z-10 ${
                         node.isSignal
-                          ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421]'
+                          ? 'bg-[var(--accent-primary)] border-[var(--accent-primary)] text-[var(--accent-primary-text)]'
                           : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)]'
                       }`}
                     >
@@ -508,7 +508,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                     </div>
                     <span
                       className={`text-[11px] font-mono uppercase tracking-wider font-semibold ${
-                        node.isSignal ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
+                        node.isSignal ? 'text-[var(--accent-text)]' : 'text-[var(--accent-secondary)]'
                       }`}
                     >
                       {node.roleLabel}
@@ -537,7 +537,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             <span>On-Device AI Processing</span>
           </span>
           <span className="inline-flex items-center gap-2">
-            <UserCheck className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
+            <UserCheck className="w-3.5 h-3.5 text-[var(--accent-text)]" />
             <span>Human Review</span>
           </span>
           <span className="inline-flex items-center gap-2">
@@ -553,7 +553,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-5 border-b border-[var(--border-color)]">
           <div className="space-y-2 max-w-2xl">
-            <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-orange-text)] font-semibold">
+            <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-text)] font-semibold">
               Applied Use Cases
             </p>
             <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -581,7 +581,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                 onClick={() => setSelectedUseCase(tab.id)}
                 className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                   selectedUseCase === tab.id
-                    ? 'bg-[#FF5A1F] text-[#061421] shadow-sm'
+                    ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] shadow-sm'
                     : 'bg-transparent border border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -630,7 +630,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                     <div className="flex items-center justify-between gap-2 text-xs font-mono">
                       <span
                         className={`font-semibold ${
-                          isHumanStage ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
+                          isHumanStage ? 'text-[var(--accent-text)]' : 'text-[var(--accent-secondary)]'
                         }`}
                       >
                         {stage.role}
@@ -653,12 +653,12 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                       type="button"
                       aria-expanded={isExpanded}
                       onClick={() => toggleStageDetails(stageKey)}
-                      className="w-full flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer"
+                      className="w-full flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-primary)] hover:text-[var(--accent-text)] transition-colors cursor-pointer"
                     >
                       <span>{isExpanded ? 'Hide technical details' : 'View technical details'}</span>
                       <ChevronDown
                         className={`w-4 h-4 transition-transform duration-200 ${
-                          isExpanded ? 'rotate-180 text-[var(--accent-orange-text)]' : ''
+                          isExpanded ? 'rotate-180 text-[var(--accent-text)]' : ''
                         }`}
                       />
                     </button>
@@ -667,7 +667,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                       <ul className="space-y-2 pt-1 text-xs text-[var(--text-secondary)]">
                         {stage.technicalDetails.map((detail, dIdx) => (
                           <li key={dIdx} className="flex items-start gap-2 leading-relaxed">
-                            <span className="text-[var(--accent-orange-text)] font-bold mt-0.5">·</span>
+                            <span className="text-[var(--accent-text)] font-bold mt-0.5">·</span>
                             <span>{detail}</span>
                           </li>
                         ))}
@@ -734,7 +734,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             return (
               <div key={item.title} className="p-6 sm:p-7 bg-[var(--bg-base)] space-y-3">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="font-bold text-[var(--accent-orange-text)]">0{idx + 1}</span>
+                  <span className="font-bold text-[var(--accent-text)]">0{idx + 1}</span>
                   <Icon className="w-4 h-4 text-[var(--accent-secondary)]" />
                 </div>
                 <h3 className="text-base font-display font-bold text-[var(--text-primary)]">
@@ -765,7 +765,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
               </span>
             </div>
             <ChevronDown
-              className={`w-5 h-5 text-[var(--accent-orange-text)] transition-transform duration-200 ${
+              className={`w-5 h-5 text-[var(--accent-text)] transition-transform duration-200 ${
                 showFullStack ? 'rotate-180' : ''
               }`}
             />
@@ -775,7 +775,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 border-t border-[var(--border-color)]">
               {VISION_TECH_STACK.map((group) => (
                 <div key={group.category} className="space-y-2.5">
-                  <div className="text-xs font-mono font-semibold text-[var(--accent-orange-text)] uppercase">
+                  <div className="text-xs font-mono font-semibold text-[var(--accent-text)] uppercase">
                     {group.category}
                   </div>
                   <div className="flex flex-wrap gap-1.5 text-xs font-mono text-[var(--text-secondary)]">
@@ -805,7 +805,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Vision Feasibility Evaluation
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -818,10 +818,10 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Discuss a Vision Workflow</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

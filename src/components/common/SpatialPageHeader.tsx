@@ -41,7 +41,7 @@ export function SpatialPageHeader({
           className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[var(--border-color)] text-xs"
         >
           {tag && (
-            <span className="font-medium tracking-wide text-[var(--accent-orange-text)]">
+            <span className="font-medium tracking-wide text-[var(--accent-text)]">
               {tag}
             </span>
           )}
@@ -87,7 +87,7 @@ export function SpatialPageHeader({
             ctaHref ? (
               <a
                 href={ctaHref}
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] active:bg-[#E95013] text-[#061421] font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md no-underline whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:bg-[var(--accent-primary-active)] text-[var(--accent-primary-text)] font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md no-underline whitespace-nowrap"
               >
                 <span>{ctaText}</span>
                 <ArrowRight className="w-4 h-4 text-current" />
@@ -95,7 +95,7 @@ export function SpatialPageHeader({
             ) : (
               <button
                 onClick={() => onNavigate(ctaRoute)}
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] active:bg-[#E95013] text-[#061421] font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:bg-[var(--accent-primary-active)] text-[var(--accent-primary-text)] font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md whitespace-nowrap"
               >
                 <span>{ctaText}</span>
                 <ArrowRight className="w-4 h-4 text-current" />

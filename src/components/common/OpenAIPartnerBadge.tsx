@@ -32,7 +32,7 @@ export function OpenAIPartnerBadge({ variant = 'compact', className = '' }: Prop
         className={`p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-all space-y-2 shadow-sm ${className}`}
       >
         <div className="flex items-center justify-between gap-3 mb-1">
-          <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[var(--accent-orange-text)] uppercase font-bold">
+          <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[var(--accent-text)] uppercase font-bold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Verified Partnership</span>
           </div>

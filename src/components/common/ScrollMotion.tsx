@@ -336,7 +336,7 @@ export function ScrollProgressRail() {
     >
       <motion.div
         style={{ scaleX: scrollYProgress, transformOrigin: '0% 50%' }}
-        className="w-full h-full bg-gradient-to-r from-[#326B86] via-[#47849B] to-[#FF5A1F]"
+        className="w-full h-full bg-gradient-to-r from-[#326B86] via-[#47849B] to-[var(--accent-primary)]"
       />
     </div>
   );

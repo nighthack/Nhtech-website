@@ -29,7 +29,7 @@ export function SovereignArchitecturalSection({ onNavigate }: SovereignArchitect
               transition={{ duration: 0.5 }}
               className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest flex items-center gap-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#d7bdf9]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#8CA5BD]" />
               <span>MODEL ENGINEERING CAPABILITY // ON-PREM AI &amp; SOVEREIGN MODELS</span>
             </motion.div>
 
@@ -78,7 +78,7 @@ export function SovereignArchitecturalSection({ onNavigate }: SovereignArchitect
             className="p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2 shadow-sm"
           >
             <div className="text-lg font-display font-bold text-[var(--text-primary)] flex items-center gap-2">
-              <Cpu className="w-4 h-4 text-[#e0fb2e]" />
+              <Cpu className="w-4 h-4 text-[var(--accent-primary)]" />
               <span>RAG vs Fine-Tuning vs Distillation</span>
             </div>
             <p className="text-xs text-[var(--text-secondary)] font-normal leading-relaxed">
@@ -110,7 +110,7 @@ export function SovereignArchitecturalSection({ onNavigate }: SovereignArchitect
             className="p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2 shadow-sm"
           >
             <div className="text-lg font-display font-bold text-[var(--text-primary)] flex items-center gap-2">
-              <Server className="w-4 h-4 text-[#d7bdf9]" />
+              <Server className="w-4 h-4 text-[#8CA5BD]" />
               <span>Edge, On-Prem &amp; Private Cloud</span>
             </div>
             <p className="text-xs text-[var(--text-secondary)] font-normal leading-relaxed">

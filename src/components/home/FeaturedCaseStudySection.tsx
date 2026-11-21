@@ -64,7 +64,7 @@ export function FeaturedCaseStudySection({
         {/* Top Editorial Asymmetric Showcase Header + Visual Frame */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 space-y-5 text-left">
-            <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.15em] text-[var(--accent-orange-text)] font-semibold">
+            <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.15em] text-[var(--accent-text)] font-semibold">
               <span>Featured Case Study</span>
               <span className="text-[var(--border-hover)]">/</span>
               <span className="text-[var(--accent-secondary)]">{featured.clientAnonymousName}</span>
@@ -76,7 +76,7 @@ export function FeaturedCaseStudySection({
 
             <div className="pt-5 mt-1 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4 sm:gap-7 items-start">
               <div className="sm:pr-7 sm:border-r sm:border-[var(--border-color)] shrink-0">
-                <div className="text-2xl sm:text-3xl font-display font-extrabold text-[var(--accent-orange-text)] tracking-tight tabular-nums leading-tight">
+                <div className="text-2xl sm:text-3xl font-display font-extrabold text-[var(--accent-text)] tracking-tight tabular-nums leading-tight">
                   {featured.scaleEvidence.primaryMetric}
                 </div>
                 <div className="text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider mt-1">
@@ -96,13 +96,13 @@ export function FeaturedCaseStudySection({
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)] text-xs font-mono font-bold text-[var(--text-primary)] transition-all cursor-pointer"
               >
                 <span>Inspect full case study</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-[var(--accent-text)]" />
               </button>
 
               <button
                 type="button"
                 onClick={() => onNavigate('/work')}
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-secondary)] hover:text-[var(--accent-text)] transition-colors cursor-pointer"
               >
                 <span>View all 6 verified deployments</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -123,7 +123,7 @@ export function FeaturedCaseStudySection({
         <div className="border-t border-b border-[var(--border-color)] grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-[var(--border-color)]">
           {/* 01 Problem */}
           <div className="py-8 lg:pr-8 space-y-3 text-left">
-            <div className="text-xs font-mono uppercase tracking-wider text-[var(--accent-orange-text)] font-bold">
+            <div className="text-xs font-mono uppercase tracking-wider text-[var(--accent-text)] font-bold">
               01 · Problem
             </div>
             <h3 className="text-lg font-display font-bold text-[var(--text-primary)]">
@@ -156,14 +156,14 @@ export function FeaturedCaseStudySection({
           {/* 03 Outcome */}
           <div className="py-8 lg:pl-8 space-y-4 text-left flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="text-xs font-mono uppercase tracking-wider text-[var(--accent-orange-text)] font-bold">
+              <div className="text-xs font-mono uppercase tracking-wider text-[var(--accent-text)] font-bold">
                 03 · Outcome
               </div>
               <h3 className="text-lg font-display font-bold text-[var(--text-primary)]">
                 Verified operational acceleration with immutable traceability
               </h3>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-1" />
+                <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-1" />
                 <span>{featured.operationalImpact}</span>
               </p>
             </div>
@@ -211,15 +211,15 @@ export function FeaturedCaseStudySection({
                       <div
                         className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
                           isActive
-                            ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
-                            : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
+                            ? 'bg-[var(--accent-primary)] border-[var(--accent-primary)] text-[var(--accent-primary-text)] shadow-md'
+                            : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[var(--accent-primary)]'
                         }`}
                       >
                         <Icon className="w-4 h-4" />
                       </div>
                       <span
                         className={`text-[11px] font-mono uppercase tracking-wider font-bold ${
-                          isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
+                          isActive ? 'text-[var(--accent-text)]' : 'text-[var(--text-muted)]'
                         }`}
                       >
                         {step.step} · {step.label}
@@ -248,7 +248,7 @@ export function FeaturedCaseStudySection({
             transition={{ duration: 0.25 }}
             className="px-4 py-3 rounded-xl bg-[#061421] border border-[#173D5B] text-[#F5F8FA] font-mono text-xs flex flex-wrap items-center justify-between gap-3"
           >
-            <span className="text-[#FF7A45] font-semibold">
+            <span className="text-[var(--accent-on-dark)] font-semibold">
               TRACE [{activeStep.label.toUpperCase()}]
             </span>
             <span className="text-[#D1E0E6] overflow-x-auto">{activeStep.payload}</span>

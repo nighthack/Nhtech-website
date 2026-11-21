@@ -42,7 +42,7 @@ export function AgenticAiPage({ onNavigate }: AgenticAiPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 text-left">
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
-              <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+              <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold">
                 Execution Sandbox · 01
               </span>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -79,7 +79,7 @@ export function AgenticAiPage({ onNavigate }: AgenticAiPageProps) {
               transition={{ duration: 0.45 }}
               className="p-7 bg-[var(--bg-surface-subtle)] space-y-4"
             >
-              <div className="w-10 h-10 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] flex items-center justify-center text-[#FF5A1F]">
+              <div className="w-10 h-10 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)]">
                 <Lock className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">Bounded Tool Permissions</h3>
@@ -141,7 +141,7 @@ export function AgenticAiPage({ onNavigate }: AgenticAiPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Agent Architecture Roadmap
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -154,10 +154,10 @@ export function AgenticAiPage({ onNavigate }: AgenticAiPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Schedule Architecture Session</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

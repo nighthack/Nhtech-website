@@ -103,7 +103,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
           secondaryCtaRoute="/fde"
           onNavigate={onNavigate}
           telemetryItems={[
-            { label: 'REVIEW', value: 'DIRECT SENIOR POD', color: 'var(--accent-orange-text)' },
+            { label: 'REVIEW', value: 'DIRECT SENIOR POD', color: 'var(--accent-text)' },
             { label: 'CONFIDENTIALITY', value: 'MUTUAL NDA READY', color: 'var(--text-primary)' },
             { label: 'DELIVERY', value: 'EMBEDDED POD MODEL', color: 'var(--accent-secondary)' },
           ]}
@@ -120,9 +120,9 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="p-8 sm:p-12 rounded-2xl bg-[var(--bg-surface)] border border-[#FF5A1F]/40 space-y-6 text-center shadow-sm"
+                className="p-8 sm:p-12 rounded-2xl bg-[var(--bg-surface)] border border-[var(--accent-primary)]/40 space-y-6 text-center shadow-sm"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[#FF5A1F] text-[#061421] flex items-center justify-center mx-auto font-black shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-[var(--accent-primary)] text-[var(--accent-primary-text)] flex items-center justify-center mx-auto font-black shadow-lg">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <div className="space-y-2">
@@ -130,7 +130,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     Inquiry Delivered to Engineering Pod
                   </h3>
                   <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto leading-relaxed font-normal">
-                    Thank you, <strong className="text-[var(--text-primary)]">{formData.name}</strong>. Your technical problem dossier has been dispatched to <strong className="text-[var(--text-primary)]">info@nighthack.in</strong> and the technical-intake agent. A forward-deployed engineer will review your problem statement and technical constraints and follow up at <strong className="text-[var(--accent-orange-text)]">{formData.email}</strong>.
+                    Thank you, <strong className="text-[var(--text-primary)]">{formData.name}</strong>. Your technical problem dossier has been dispatched to <strong className="text-[var(--text-primary)]">info@nighthack.in</strong> and the technical-intake agent. A forward-deployed engineer will review your problem statement and technical constraints and follow up at <strong className="text-[var(--accent-text)]">{formData.email}</strong>.
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-left text-xs font-mono space-y-1.5 text-[var(--text-secondary)]">
@@ -154,7 +154,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                 className="p-6 sm:p-10 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-6 shadow-sm text-left"
               >
                 <div className="flex items-center justify-between pb-4 border-b border-[var(--border-color)]">
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
+                  <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold">
                     TECHNICAL INTAKE FORM
                   </span>
                   <span className="text-[11px] font-mono text-[var(--text-muted)]">
@@ -174,7 +174,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Dr. Markus Weber"
-                      className="date-picker-theme w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                      className="date-picker-theme w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
                     />
                   </div>
 
@@ -189,7 +189,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="m.weber@enterprise.de"
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
                     />
                   </div>
                 </div>
@@ -206,7 +206,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       placeholder="e.g. Industrial Solutions GmbH"
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
                     />
                   </div>
 
@@ -220,7 +220,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                       placeholder="VP Engineering / CTO / Head of AI"
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
                     />
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     id="contact-stage"
                     value={formData.projectStage}
                     onChange={(e) => setFormData({ ...formData, projectStage: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors cursor-pointer"
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors cursor-pointer"
                   >
                     {stageOptions.map(opt => (
                       <option key={opt} value={opt}>{opt}</option>
@@ -247,7 +247,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative">
-                      <button id="contact-scheduling-date" type="button" onClick={() => setIsDatePickerOpen(!isDatePickerOpen)} className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-left text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors" aria-label="Preferred engineering review date" aria-expanded={isDatePickerOpen}>
+                      <button id="contact-scheduling-date" type="button" onClick={() => setIsDatePickerOpen(!isDatePickerOpen)} className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-left text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors" aria-label="Preferred engineering review date" aria-expanded={isDatePickerOpen}>
                         {formatDateLabel(formData.schedulingDate)}
                       </button>
                       {isDatePickerOpen && (
@@ -263,7 +263,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                               const value = day ? formatDateValue(day) : '';
                               const disabled = !day || value < today;
                               const selected = value === formData.schedulingDate;
-                              return <button key={`${value}-${index}`} type="button" disabled={disabled} onClick={() => { if (day) { setFormData({ ...formData, schedulingDate: value }); setIsDatePickerOpen(false); } }} className={`h-8 rounded-lg text-xs transition-colors ${selected ? 'bg-[#FF5A1F] text-[#061421] font-bold' : disabled ? 'text-[var(--text-muted)]/40 cursor-not-allowed' : 'text-[var(--text-primary)] hover:bg-[var(--accent-glow)]'}`}>{day?.getDate() || ''}</button>;
+                              return <button key={`${value}-${index}`} type="button" disabled={disabled} onClick={() => { if (day) { setFormData({ ...formData, schedulingDate: value }); setIsDatePickerOpen(false); } }} className={`h-8 rounded-lg text-xs transition-colors ${selected ? 'bg-[var(--accent-primary)] text-[var(--accent-primary-text)] font-bold' : disabled ? 'text-[var(--text-muted)]/40 cursor-not-allowed' : 'text-[var(--text-primary)] hover:bg-[var(--accent-glow)]'}`}>{day?.getDate() || ''}</button>;
                             })}
                           </div>
                         </div>
@@ -274,7 +274,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                       required
                       value={formData.schedulingTime}
                       onChange={(e) => setFormData({ ...formData, schedulingTime: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors cursor-pointer"
+                      className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors cursor-pointer"
                       aria-label="Preferred engineering review time"
                     >
                       <option value="">Select a time (9 AM–9 PM)</option>
@@ -300,7 +300,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     value={formData.problemStatement}
                     onChange={(e) => setFormData({ ...formData, problemStatement: e.target.value })}
                     placeholder="Describe the latency constraint, document volume, edge camera requirement, or enterprise integration friction..."
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors font-sans leading-relaxed"
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors font-sans leading-relaxed"
                   />
                 </div>
 
@@ -314,7 +314,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     value={formData.constraints}
                     onChange={(e) => setFormData({ ...formData, constraints: e.target.value })}
                     placeholder="e.g. Air-gapped on-premise requirement, SAP ERP, German data residency, NVIDIA Jetson hardware..."
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[#FF5A1F] transition-colors font-sans leading-relaxed"
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors font-sans leading-relaxed"
                   />
                 </div>
 
@@ -328,7 +328,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   id="contact-submit-btn"
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-xl flex items-center justify-center gap-2 disabled:opacity-60"
+                  className="w-full py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-xl flex items-center justify-center gap-2 disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <span>Transmitting to Engineering Pod...</span>
@@ -351,7 +351,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
               transition={{ duration: 0.55, delay: 0.1 }}
               className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-6 shadow-sm"
             >
-              <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
                 <Terminal className="w-4 h-4" />
                 <span>Direct Intake Channels</span>
               </div>
@@ -382,7 +382,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
               transition={{ duration: 0.55, delay: 0.18 }}
               className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm"
             >
-              <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
                 <ShieldCheck className="w-4 h-4" />
                 <span>Confidentiality &amp; IP Guarantee</span>
               </div>

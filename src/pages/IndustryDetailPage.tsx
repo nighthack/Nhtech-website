@@ -57,7 +57,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-10 shadow-sm space-y-8">
             <div className="space-y-3 pb-6 border-b border-[var(--border-color)]">
-              <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+              <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-wider">
                 Operational Friction Point
               </span>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)]">
@@ -75,7 +75,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
               <div className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-px font-mono text-xs">
                 {industry.systems.map((sys, idx) => (
                   <div key={idx} className="p-5 bg-[var(--bg-surface-subtle)] flex items-start gap-3">
-                    <span className="text-[var(--accent-orange-text)] font-bold mt-0.5 tabular-nums">0{idx + 1}</span>
+                    <span className="text-[var(--accent-text)] font-bold mt-0.5 tabular-nums">0{idx + 1}</span>
                     <span className="text-[var(--text-primary)] font-sans text-xs sm:text-sm leading-relaxed">{sys}</span>
                   </div>
                 ))}
@@ -106,7 +106,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
                 className="p-6 bg-[var(--bg-surface)] space-y-3 flex flex-col justify-between"
               >
                 <div className="space-y-2.5">
-                  <div className="text-[var(--accent-orange-text)] font-bold tabular-nums">Focus 0{idx + 1}</div>
+                  <div className="text-[var(--accent-text)] font-bold tabular-nums">Focus 0{idx + 1}</div>
                   <div className="text-sm font-display font-bold text-[var(--text-primary)] font-sans leading-snug">
                     {focus}
                   </div>
@@ -129,7 +129,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Sector Engagement
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -142,10 +142,10 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
             >
               <span>Initiate Sector Discussion</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </button>
           </div>
         </motion.div>

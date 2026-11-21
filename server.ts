@@ -187,8 +187,8 @@ async function startServer() {
           <style>
             body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #111; background-color: #f8fafc; margin: 0; padding: 24px; }
             .container { max-width: 650px; margin: 0 auto; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
-            .header { background: #0b0c0e; color: #ffffff; padding: 24px; }
-            .badge { display: inline-block; background: #e0fb2e; color: #000; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 8px; }
+            .header { background: #0b1523; color: #ffffff; padding: 24px; }
+            .badge { display: inline-block; background: #244fd9; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 8px; }
             .title { margin: 0; font-size: 20px; font-weight: 700; color: #fff; }
             .content { padding: 24px; }
             .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px; }

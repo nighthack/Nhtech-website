@@ -81,7 +81,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
         className="pointer-events-none absolute right-[-8%] top-[10%] w-[640px] h-[640px] rounded-full opacity-25 dark:opacity-35"
         style={{
           background:
-            'radial-gradient(circle, rgba(50,107,134,0.18) 0%, rgba(255,90,31,0.04) 42%, rgba(6,20,33,0) 72%)'
+            'radial-gradient(circle, color-mix(in srgb, var(--accent-secondary) 18%, transparent) 0%, var(--accent-glow) 42%, transparent 72%)'
         }}
       />
 
@@ -93,9 +93,9 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold"
+              className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-text)] font-semibold"
             >
-              <span className="inline-block w-6 h-[1.5px] bg-[#FF5A1F]" aria-hidden="true" />
+              <span className="inline-block w-6 h-[1.5px] bg-[var(--accent-primary)]" aria-hidden="true" />
               <span>Applied AI &amp; Production Systems Engineering</span>
             </motion.div>
 
@@ -107,9 +107,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
             >
               <h1 className="text-hero-display text-[var(--text-primary)] leading-[1.12] text-balance">
                 We turn complex business operations into{' '}
-                <span className="text-[var(--accent-secondary)]">
-                  production&#8209;ready AI systems.
-                </span>
+                production&#8209;ready AI systems.
               </h1>
 
               <p className="text-base sm:text-lg text-[var(--text-secondary)] font-normal max-w-xl leading-[1.68]">
@@ -127,10 +125,10 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
               <button
                 type="button"
                 onClick={() => onNavigate('/contact')}
-                className="inline-flex items-center justify-center gap-2.5 min-h-[48px] px-6 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-sm tracking-tight active:scale-[0.98] transition-all cursor-pointer shadow-sm"
+                className="inline-flex items-center justify-center gap-2.5 min-h-[48px] px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight active:scale-[0.98] transition-all cursor-pointer shadow-sm"
               >
                 <span>Discuss a business workflow</span>
-                <ArrowRight className="w-4 h-4 text-[#061421]" />
+                <ArrowRight className="w-4 h-4 text-current" />
               </button>
 
               <button
@@ -162,16 +160,16 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
                   >
                     <div
                       className={`absolute top-0 left-0 h-[2px] transition-all duration-300 ${
-                        isActive ? 'w-full bg-[#FF5A1F]' : 'w-0 group-hover:w-8 bg-[var(--accent-secondary)]'
+                        isActive ? 'w-full bg-[var(--accent-primary)]' : 'w-0 group-hover:w-8 bg-[var(--accent-secondary)]'
                       }`}
                     />
                     <div className="flex items-center justify-between text-[11px] font-mono">
-                      <span className={isActive ? 'text-[var(--accent-orange-text)] font-bold' : 'text-[var(--text-muted)]'}>
+                      <span className={isActive ? 'text-[var(--accent-text)] font-bold' : 'text-[var(--text-muted)]'}>
                         {stage.index}
                       </span>
                       <Icon
                         className={`w-3.5 h-3.5 transition-colors ${
-                          isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
+                          isActive ? 'text-[var(--accent-text)]' : 'text-[var(--accent-secondary)]'
                         }`}
                       />
                     </div>
@@ -208,7 +206,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
                 <span className="text-[var(--border-hover)]">/</span>
                 <span>Drag to Orbit</span>
               </div>
-              <div className="pointer-events-none absolute top-2 right-0 sm:right-2 text-[10px] font-mono text-[var(--accent-orange-text)] font-semibold uppercase tracking-widest z-10 tabular-nums">
+              <div className="pointer-events-none absolute top-2 right-0 sm:right-2 text-[10px] font-mono text-[var(--accent-text)] font-semibold uppercase tracking-widest z-10 tabular-nums">
                 {currentStage.proofMetric}
               </div>
 
@@ -231,7 +229,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
               <button
                 type="button"
                 onClick={() => onNavigate(currentStage.targetRoute)}
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[var(--accent-orange-text)] hover:underline cursor-pointer shrink-0 whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[var(--accent-text)] hover:underline cursor-pointer shrink-0 whitespace-nowrap"
               >
                 <span>{currentStage.routeLabel}</span>
                 <ArrowRight className="w-3.5 h-3.5" />

@@ -51,7 +51,7 @@ const proofPipeline: VisionFlowStage[] = [
     sub: 'Spatial Keypoint Tracking',
     role: 'Extracting high-precision anatomical or object landmarks frame-by-frame, mapping joint coordinates or component boundaries.',
     icon: Eye,
-    accent: '#e0fb2e',
+    accent: 'var(--accent-primary)',
     tech: ['Landmark Extraction', 'Keypoint Coordinates', 'Spatial Geometry']
   },
   {
@@ -60,7 +60,7 @@ const proofPipeline: VisionFlowStage[] = [
     sub: 'Temporal State Modeling',
     role: 'Classifying movement phases over time (e.g. eccentric, isometric, concentric transitions) and continuous activity states.',
     icon: Activity,
-    accent: '#d7bdf9',
+    accent: '#8CA5BD',
     tech: ['Temporal Modeling', 'Phase State Machine', 'Transition Triggers']
   },
   {
@@ -78,7 +78,7 @@ const proofPipeline: VisionFlowStage[] = [
     sub: 'Local Runtime Execution',
     role: 'Deploying optimized models onto tablets and edge hardware, executing locally under strict latency constraints without network reliance.',
     icon: Cpu,
-    accent: '#e0fb2e',
+    accent: 'var(--accent-primary)',
     tech: ['Tablet Runtimes', 'Latency Optimization', 'Offline Resilience']
   },
   {
@@ -87,7 +87,7 @@ const proofPipeline: VisionFlowStage[] = [
     sub: 'Operator Telemetry & Action',
     role: 'Syncing actionable feedback to coach/operator interfaces with BLE hardware coordination, alerts, and session analytics.',
     icon: Tablet,
-    accent: '#d7bdf9',
+    accent: '#8CA5BD',
     tech: ['Real-Time UI', 'BLE / IoT Coordination', 'Operator Analytics']
   }
 ];
@@ -107,7 +107,7 @@ const capabilityThemes = [
     tag: 'VISION-LANGUAGE-ACTION // EMBODIED AI',
     desc: 'Multimodal vision-language-action perception integrating OpenVLA and spatial vision models to translate visual scenes into structured physical action policies and robotic control.',
     stats: 'OpenVLA integration • Spatial perception • Scene understanding • Action policies',
-    accent: '#e0fb2e'
+    accent: 'var(--accent-primary)'
   },
   {
     id: 'inspection',
@@ -123,7 +123,7 @@ const capabilityThemes = [
     tag: 'PRODUCT + AI + HARDWARE COORDINATION',
     desc: 'Sensor and data pipelines connecting edge devices, tablets, and IoT communication protocols (including BLE and local device state) into cohesive operational software.',
     stats: 'Tablet workflows • IoT & BLE coordination • Sensor data pipelines',
-    accent: '#d7bdf9'
+    accent: '#8CA5BD'
   }
 ];
 
@@ -171,7 +171,7 @@ export function VisionEdgeShowcaseSection({ onNavigate }: VisionEdgeShowcaseSect
               <Gauge className="w-4 h-4 text-[#38bdf8]" />
               <span>EXERCISE &amp; MOVEMENT ANALYTICS PROOF PATTERN</span>
             </div>
-            <span className="text-[11px] font-mono text-[#e0fb2e]">
+            <span className="text-[11px] font-mono text-[var(--accent-primary)]">
               CLICK STAGES TO INSPECT VERIFIED TELEMETRY
             </span>
           </div>
@@ -275,7 +275,7 @@ export function VisionEdgeShowcaseSection({ onNavigate }: VisionEdgeShowcaseSect
               </div>
 
               <div className="pt-4 border-t border-[var(--border-color)] space-y-3">
-                <div className="text-[11px] font-mono text-[#e0fb2e]">
+                <div className="text-[11px] font-mono text-[var(--accent-primary)]">
                   {theme.stats}
                 </div>
               </div>

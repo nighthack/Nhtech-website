@@ -106,11 +106,11 @@ function LiveTelemetryCanvas({ mode }: { mode: 'document-ast' | 'kinematic-mesh'
           ctx.stroke();
         });
 
-        // Joints (highlight key articulated wrists/shoulders in Signal Orange)
+        // Joints (highlight key articulated wrists/shoulders in cobalt)
         (Object.keys(joints) as (keyof typeof joints)[]).forEach((key) => {
           const j = joints[key];
           const isSignal = key.includes('Wrist') || key === 'pelvis';
-          ctx.fillStyle = isSignal ? '#FF5A1F' : '#F5F8FA';
+          ctx.fillStyle = isSignal ? '#80A5FF' : '#F5F8FA';
           ctx.beginPath();
           ctx.arc(j.x, j.y, isSignal ? 4.5 : 3.2, 0, Math.PI * 2);
           ctx.fill();
@@ -147,20 +147,20 @@ function LiveTelemetryCanvas({ mode }: { mode: 'document-ast' | 'kinematic-mesh'
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Highlight anomaly threshold markers in Signal Orange
+        // Highlight anomaly threshold markers in cobalt
         for (let i = 4; i < 70; i += 14) {
           const x = i * stepX;
           const phase = i * 0.25 - time * 2.6;
           const val = Math.abs(Math.sin(phase * 0.35));
           if (val > 0.72) {
             const y = baselineY - val * 48;
-            ctx.strokeStyle = 'rgba(255, 90, 31, 0.55)';
+            ctx.strokeStyle = 'rgba(128, 165, 255, 0.55)';
             ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x, baselineY + 26);
             ctx.stroke();
 
-            ctx.fillStyle = '#FF5A1F';
+            ctx.fillStyle = '#80A5FF';
             ctx.beginPath();
             ctx.arc(x, y, 4.5, 0, Math.PI * 2);
             ctx.fill();
@@ -177,7 +177,7 @@ function LiveTelemetryCanvas({ mode }: { mode: 'document-ast' | 'kinematic-mesh'
         ctx.lineWidth = 1;
         ctx.strokeRect(docX, docY, docW, docH);
 
-        // Simulated document line bands + Signal Orange citation anchor
+        // Simulated document line bands + cobalt citation anchor
         const scanProgress = prefersReducedMotion ? 0.55 : (Math.sin(time * 1.1) + 1) * 0.5;
         const scanY = docY + scanProgress * docH;
 
@@ -185,18 +185,18 @@ function LiveTelemetryCanvas({ mode }: { mode: 'document-ast' | 'kinematic-mesh'
           const ry = docY + 22 + r * 30;
           const isAnchored = r === 2;
           ctx.fillStyle = isAnchored
-            ? 'rgba(255, 90, 31, 0.22)'
+            ? 'rgba(128, 165, 255, 0.22)'
             : 'rgba(117, 164, 181, 0.18)';
           ctx.fillRect(docX + 20, ry, docW - 40, 14);
           if (isAnchored) {
-            ctx.strokeStyle = '#FF5A1F';
+            ctx.strokeStyle = '#80A5FF';
             ctx.lineWidth = 1.5;
             ctx.strokeRect(docX + 18, ry - 2, docW - 36, 18);
           }
         }
 
         // Laser scan hairline
-        ctx.strokeStyle = '#FF5A1F';
+        ctx.strokeStyle = '#80A5FF';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(docX - 10, scanY);
@@ -295,7 +295,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 'some' }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.16em] font-semibold"
+              className="text-xs font-mono text-[var(--accent-text)] uppercase tracking-[0.16em] font-semibold"
             >
               Across All Three Offerings
             </motion.p>
@@ -309,7 +309,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
           <button
             type="button"
             onClick={() => onNavigate('/work')}
-            className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[var(--accent-orange-text)] hover:underline transition-colors cursor-pointer group self-start lg:self-end"
+            className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[var(--accent-text)] hover:underline transition-colors cursor-pointer group self-start lg:self-end"
           >
             <span>Explore all engineering case studies</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -335,14 +335,14 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
                   <span
                     aria-hidden="true"
                     className={`absolute left-0 top-6 bottom-6 w-[2.5px] transition-all duration-300 ${
-                      isSelected ? 'bg-[#FF5A1F]' : 'bg-transparent group-hover:bg-[var(--border-hover)]'
+                      isSelected ? 'bg-[var(--accent-primary)]' : 'bg-transparent group-hover:bg-[var(--border-hover)]'
                     }`}
                   />
                   <div className="pl-5 space-y-2">
                     <div className="flex items-center justify-between text-xs font-mono">
                       <span
                         className={`font-bold flex items-center gap-2 ${
-                          isSelected ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
+                          isSelected ? 'text-[var(--accent-text)]' : 'text-[var(--accent-secondary)]'
                         }`}
                       >
                         <Icon className="w-3.5 h-3.5" />
@@ -386,7 +386,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
 
               {/* Top Telemetry Meta */}
               <div className="relative z-10 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#D1E0E6]">
-                <span className="uppercase tracking-wider text-[#FF7A45] font-semibold">
+                <span className="uppercase tracking-wider text-[var(--accent-on-dark)] font-semibold">
                   {activeStudy.industry}
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#061421]/80 border border-white/15 text-[11px]">
@@ -412,7 +412,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
                 <button
                   type="button"
                   onClick={() => onNavigate('/work')}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shrink-0 self-start sm:self-end"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shrink-0 self-start sm:self-end"
                 >
                   <span>Inspect Case Studies</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />

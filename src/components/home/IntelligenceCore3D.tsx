@@ -39,17 +39,17 @@ export function IntelligenceCore3D() {
     window.addEventListener('resize', handleResize, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // Subtle ambient color orbs (restrained Deep Ocean and subtle Signal Orange glow)
+    // Subtle ambient color orbs (restrained Deep Ocean and subtle cobalt glow)
     const isDark = theme === 'dark';
     const orbs = isDark
       ? [
           { x: width * 0.28, y: height * 0.2, radius: 580, color: 'rgba(23, 61, 91, 0.22)', vx: 0.14, vy: 0.1, phase: 0 },
-          { x: width * 0.78, y: height * 0.35, radius: 520, color: 'rgba(255, 90, 31, 0.045)', vx: -0.1, vy: 0.12, phase: 2 },
+          { x: width * 0.78, y: height * 0.35, radius: 520, color: 'rgba(128, 165, 255, 0.045)', vx: -0.1, vy: 0.12, phase: 2 },
           { x: width * 0.45, y: height * 0.82, radius: 540, color: 'rgba(50, 107, 134, 0.12)', vx: 0.09, vy: -0.1, phase: 4 }
         ]
       : [
           { x: width * 0.28, y: height * 0.2, radius: 580, color: 'rgba(36, 83, 111, 0.05)', vx: 0.14, vy: 0.1, phase: 0 },
-          { x: width * 0.78, y: height * 0.35, radius: 520, color: 'rgba(255, 90, 31, 0.03)', vx: -0.1, vy: 0.12, phase: 2 },
+          { x: width * 0.78, y: height * 0.35, radius: 520, color: 'rgba(36, 79, 217, 0.03)', vx: -0.1, vy: 0.12, phase: 2 },
           { x: width * 0.45, y: height * 0.82, radius: 540, color: 'rgba(71, 132, 155, 0.045)', vx: 0.09, vy: -0.1, phase: 4 }
         ];
 

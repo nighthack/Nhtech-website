@@ -17,7 +17,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
       title: 'Applied AI & State Machine Researcher',
       focus: 'Agent architectures, LLM fine-tuning, deterministic evaluation frameworks, and constrained decoding pipelines.',
       tech: ['PyTorch', 'vLLM', 'LangGraph', 'FastAPI', 'Qdrant'],
-      accent: 'var(--accent-orange-text)'
+      accent: 'var(--accent-text)'
     },
     {
       num: '02',
@@ -38,7 +38,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
       title: 'Senior Product Engineer (Full-Stack)',
       focus: 'Type-safe enterprise frontends, streaming state management, and human-in-the-loop triage consoles.',
       tech: ['TypeScript', 'React', 'FastAPI', 'PostgreSQL', 'Tailwind'],
-      accent: '#FF5A1F'
+      accent: 'var(--accent-primary)'
     }
   ];
 
@@ -78,7 +78,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
               transition={{ duration: 0.45 }}
               className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-3"
             >
-              <div className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">01 · AUTONOMY</div>
+              <div className="text-xs font-mono text-[var(--accent-text)] font-bold tracking-wider">01 · AUTONOMY</div>
               <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">Direct Technical Ownership</h3>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal leading-relaxed font-sans">
                 You architect, build, and deploy systems directly. No endless bureaucracy or non-technical handoffs.
@@ -172,9 +172,9 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
                 <div className="pt-4 border-t border-[var(--border-color)]">
                   <a
                     href={`mailto:info@nighthack.in?subject=Application%20-%20${encodeURIComponent(pod.title)}`}
-                    className="inline-flex items-center gap-2 text-xs font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer no-underline"
+                    className="inline-flex items-center gap-2 text-xs font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-text)] transition-colors cursor-pointer no-underline"
                   >
-                    <Mail className="w-3.5 h-3.5 text-[#FF5A1F]" />
+                    <Mail className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
                     <span>Email us your profile</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
@@ -194,7 +194,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-text)] uppercase font-bold tracking-widest block">
             Join the Collective
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -206,11 +206,11 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
           <div className="pt-2">
             <a
               href="mailto:info@nighthack.in?subject=Engineering%20Background%20-%20General%20Application"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md no-underline"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-[var(--accent-primary-text)] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md no-underline"
             >
-              <Mail className="w-4 h-4 text-[#061421]" />
+              <Mail className="w-4 h-4 text-current" />
               <span>Email Your CV &amp; Profile (info@nighthack.in)</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
+              <ArrowRight className="w-4 h-4 text-current" />
             </a>
           </div>
         </motion.div>

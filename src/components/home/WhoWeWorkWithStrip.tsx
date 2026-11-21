@@ -65,7 +65,7 @@ export function WhoWeWorkWithStrip({ onNavigate }: WhoWeWorkWithStripProps) {
           <button
             type="button"
             onClick={() => onNavigate('/industries')}
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-orange-text)] hover:underline cursor-pointer self-start sm:self-end shrink-0"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-text)] hover:underline cursor-pointer self-start sm:self-end shrink-0"
           >
             <span>Explore all industries</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -87,24 +87,24 @@ export function WhoWeWorkWithStrip({ onNavigate }: WhoWeWorkWithStripProps) {
                 onClick={() => onNavigate(item.route)}
                 className="group relative p-5 bg-[var(--bg-surface-subtle)] hover:bg-[var(--bg-surface)] text-left transition-colors cursor-pointer flex flex-col justify-between gap-3"
               >
-                {/* Signal Orange hairline sweep on hover */}
+                {/* cobalt hairline sweep on hover */}
                 <span
                   aria-hidden="true"
-                  className="absolute top-0 left-0 h-[2px] w-0 bg-[#FF5A1F] group-hover:w-full transition-all duration-300"
+                  className="absolute top-0 left-0 h-[2px] w-0 bg-[var(--accent-primary)] group-hover:w-full transition-all duration-300"
                 />
 
                 <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)]">
-                  <span className="tabular-nums font-semibold group-hover:text-[var(--accent-orange-text)] transition-colors">
+                  <span className="tabular-nums font-semibold group-hover:text-[var(--accent-text)] transition-colors">
                     {item.index}
                   </span>
                   <div className="flex items-center gap-1.5">
-                    <Icon className="w-3.5 h-3.5 text-[var(--accent-secondary)] group-hover:text-[var(--accent-orange-text)] transition-colors" />
-                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[var(--accent-orange-text)]" />
+                    <Icon className="w-3.5 h-3.5 text-[var(--accent-secondary)] group-hover:text-[var(--accent-text)] transition-colors" />
+                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[var(--accent-text)]" />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <div className="text-sm font-display font-bold text-[var(--text-primary)] leading-snug group-hover:text-[var(--accent-orange-text)] transition-colors">
+                  <div className="text-sm font-display font-bold text-[var(--text-primary)] leading-snug group-hover:text-[var(--accent-text)] transition-colors">
                     {item.label}
                   </div>
                   <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
