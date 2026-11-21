@@ -7,14 +7,15 @@ import {
   Layers
 } from 'lucide-react';
 import { RoutePath } from '../../types';
-import { NeuralSystemsCore3D, SpatialSystemMode } from './NeuralSystemsCore3D';
+import { HeroNeuralNetwork } from './HeroNeuralNetwork';
+import type { EngineeringTrack } from './HeroNeuralNetwork';
 
 interface HeroMediaStageProps {
   onNavigate: (path: RoutePath) => void;
 }
 
 interface OfferingStage {
-  id: SpatialSystemMode;
+  id: EngineeringTrack;
   tabLabel: string;
   offeringTitle: string;
   targetRoute: RoutePath;
@@ -58,7 +59,7 @@ const STAGES: OfferingStage[] = [
 ];
 
 export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
-  const [activeStage, setActiveStage] = useState<SpatialSystemMode>('embedded');
+  const [activeStage, setActiveStage] = useState<EngineeringTrack>('embedded');
   const currentStage = STAGES.find((s) => s.id === activeStage) ?? STAGES[0];
 
   return (
@@ -66,6 +67,10 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
       id="hero-section"
       className="relative overflow-hidden border-b border-[var(--border-color)] pt-[calc(var(--header-height)+2.25rem)] pb-12 sm:pb-16 lg:pt-[calc(var(--header-height)+4.5rem)] lg:pb-20"
     >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_28%_25%,var(--accent-glow),transparent_62%)] opacity-40" />
+        <div className="absolute inset-0 bg-subtle-grid opacity-25 [mask-image:linear-gradient(black,transparent)]" />
+      </div>
       <div className="site-container relative grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
         <div className="min-w-0">
           <h1 className="text-hero-display text-[var(--text-primary)]">
@@ -107,9 +112,7 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
         </div>
 
         <div className="min-w-0">
-          <div className="relative h-[clamp(14rem,65vw,23rem)] w-full lg:h-[clamp(23rem,32vw,29rem)]">
-            <NeuralSystemsCore3D activeMode={activeStage} />
-          </div>
+          <HeroNeuralNetwork activeTrack={activeStage} />
           <div id="hero-system-readout" className="mt-2 border-t border-[var(--border-color)] pt-4">
             <div aria-live="polite" aria-atomic="true" className="space-y-1">
               <h2 className="text-card-display">{currentStage.offeringTitle}</h2>

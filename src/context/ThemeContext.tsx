@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -12,28 +12,33 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('nhtech-theme') as Theme;
-      if (stored === 'dark' || stored === 'light') return stored;
-      if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-        return 'dark'; // default to premium dark mode unless user prefers light
-      }
-    }
+    const stored = typeof window !== 'undefined' ? readStoredTheme() : null;
+    if (stored === 'light' || stored === 'dark') return stored;
     return 'dark';
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = document.documentElement;
-    if (theme === 'light') {
-      root.classList.add('light');
-      root.classList.remove('dark');
-      root.setAttribute('data-theme', 'light');
-    } else {
-      root.classList.add('dark');
-      root.classList.remove('light');
-      root.setAttribute('data-theme', 'dark');
+    root.classList.add('theme-changing');
+    root.classList.toggle('light', theme === 'light');
+    root.classList.toggle('dark', theme === 'dark');
+    root.dataset.theme = theme;
+
+    try {
+      localStorage.setItem('nhtech-theme', theme);
+    } catch {
+      // Theme changes still apply when storage is unavailable.
     }
-    localStorage.setItem('nhtech-theme', theme);
+
+    let restoreFrame = 0;
+    const paintFrame = requestAnimationFrame(() => {
+      restoreFrame = requestAnimationFrame(() => root.classList.remove('theme-changing'));
+    });
+    return () => {
+      cancelAnimationFrame(paintFrame);
+      cancelAnimationFrame(restoreFrame);
+      root.classList.remove('theme-changing');
+    };
   }, [theme]);
 
   const toggleTheme = () => {
@@ -49,6 +54,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       {children}
     </ThemeContext.Provider>
   );
+}
+
+function readStoredTheme() {
+  try {
+    return localStorage.getItem('nhtech-theme');
+  } catch {
+    return null;
+  }
 }
 
 export function useTheme() {

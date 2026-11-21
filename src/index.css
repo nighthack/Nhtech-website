@@ -307,12 +307,37 @@
   clip-path: inset(50%);
 }
 
+.theme-changing * {
+  transition: none !important;
+}
+
 html:has(.case-study-dialog[open]) {
   overflow: hidden;
 }
 
 .case-study-dialog::backdrop {
   background: rgb(6 20 33 / 78%);
+}
+
+/* Neural illustration colors are independent of text and control contrast. */
+.hero-neural-network {
+  --neural-filament: #87b7d0;
+  --neural-signal: #ff9766;
+  --neural-peak: #ffe1cd;
+}
+
+html.light .hero-neural-network {
+  --neural-filament: #346780;
+  --neural-signal: #ad4c21;
+  --neural-peak: #d05216;
+}
+
+.hero-neural-toggle {
+  background: color-mix(in srgb, var(--bg-base) 90%, transparent);
+}
+
+.hero-neural-toggle:hover {
+  background: var(--bg-surface-elevated);
 }
 
 /* Signature Brand Gradients (use sparingly) */
