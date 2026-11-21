@@ -92,8 +92,9 @@ export function FeaturedCaseStudySection({
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 type="button"
+                aria-haspopup="dialog"
                 onClick={() => onSelectCaseStudy(featured)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)] text-xs font-mono font-bold text-[var(--text-primary)] transition-all cursor-pointer"
+                className="site-button button-secondary"
               >
                 <span>Inspect full case study</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />

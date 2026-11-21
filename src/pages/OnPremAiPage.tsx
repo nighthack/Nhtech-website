@@ -118,7 +118,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
       {/* 2. RAG vs Fine-Tuning vs Distillation Decision Matrix */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
             <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
@@ -142,6 +142,9 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
             return (
               <button
                 key={key}
+                type="button"
+                aria-pressed={isSelected}
+                aria-controls="on-prem-strategy-detail"
                 onClick={() => setSelectedTradeoff(key)}
                 className={`p-5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
                   isSelected
@@ -149,11 +152,11 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                     : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)]'
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold" style={{ color: item.accent }}>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-xs font-mono font-bold" style={{ color: item.accent }}>
                     {item.badge}
                   </span>
-                  {isSelected && <span className="text-[10px] font-mono font-bold text-[#FF5A1F]">ACTIVE</span>}
+                  {isSelected && <span className="text-xs font-mono font-bold text-[var(--accent-orange-text)]">ACTIVE</span>}
                 </div>
                 <div className="font-display font-bold text-sm sm:text-base text-[var(--text-primary)]">
                   {item.title}
@@ -169,7 +172,8 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
           return (
             <motion.div
               key={selectedTradeoff}
-              initial={{ opacity: 0, y: 10 }}
+              id="on-prem-strategy-detail"
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-8"
@@ -188,14 +192,14 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[var(--border-color)]">
                 <div className="space-y-3">
-                  <div className="text-xs font-mono text-[#22A06B] uppercase font-bold flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#22A06B]" />
+                  <div className="text-xs font-mono text-[var(--status-success-text)] uppercase font-bold flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[var(--status-success-text)]" />
                     <span>Primary Advantages</span>
                   </div>
                   <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-secondary)] font-mono">
                     {current.pros.map((pro, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <span className="text-[#22A06B]">✓</span>
+                        <span className="text-[var(--status-success-text)]">✓</span>
                         <span>{pro}</span>
                       </li>
                     ))}
@@ -230,7 +234,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
       {/* 3. Core Story & Visual Pipeline Stage: Data -> Eval -> Tuning -> Artifacts -> Deployment */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
             <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
@@ -255,7 +259,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
       {/* 5. Deep Technical Focus: Methodology */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div className="site-container space-y-12 text-left">
         <div className="max-w-3xl space-y-3">
           <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase">TECHNICAL METHODOLOGY</span>
           <MaskedHeading as="h2" className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -290,7 +294,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               title: 'Client-Controlled Data & Model Artifacts',
               desc: 'Your business receives all training datasets, benchmark suites, adapter weights, and inference code. You maintain complete intellectual property control without recurring token taxes or vendor lock-in.',
               tech: ['Exportable Model Checkpoints', 'Evaluation Benchmarks', '100% Client IP Ownership', 'Zero Vendor Lock-In'],
-              accent: '#22A06B'
+              accent: 'var(--status-success-text)'
             },
             {
               icon: Server,
@@ -346,7 +350,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
       {/* 6. Deployment Topologies Section: Managed Cloud, Containerized, Custom API */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
             <div className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-bold">
@@ -387,7 +391,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Initiate Model Engineering Discovery</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

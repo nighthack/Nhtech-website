@@ -38,7 +38,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Complex multi-step decision chains, deep code synthesis, unstructured legal synthesis, and open-ended agent deliberation.',
       examples: 'GPT-4.5, Claude 3.7 Sonnet, Gemini 2.0 Pro, DeepSeek R1',
       bestFor: 'Multi-modal research, high-ambiguity planning, unstructured extraction',
-      accent: '#75A4B5'
+      accent: 'var(--accent-secondary)'
     },
     {
       id: 'slm',
@@ -47,7 +47,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Compact parameter architectures (1B-8B) optimized for sub-15ms classification, routing, and embedded execution with minimal memory footprint.',
       examples: 'Phi-4, Llama 3.2 3B, Qwen 2.5 7B, Gemma 2 2B',
       bestFor: 'Edge devices, high-frequency classification, interactive typing assistance',
-      accent: '#47849B'
+      accent: 'var(--accent-ocean)'
     },
     {
       id: 'open-weight',
@@ -56,7 +56,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Models hosted directly on your VPC or on-premise GPU clusters. 100% data privacy with zero third-party API exposure.',
       examples: 'Llama 3.3 70B, Mistral Large, Qwen 2.5, DeepSeek V3',
       bestFor: 'Private cloud / on-prem infrastructure, strict regulatory boundaries, self-hosted workloads',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-orange-text)'
     },
     {
       id: 'fine-tuned',
@@ -65,7 +65,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
       desc: 'Models distilled and quantized on your proprietary domain corpus. Achieves frontier accuracy on specific business tasks at 1/10th the inference cost.',
       examples: 'Custom LoRA / QLoRA checkpoints, quantized FP8 / INT4 engines',
       bestFor: 'Proprietary enterprise schemas, specialized terminology, cost reduction at scale',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-orange-text)'
     }
   ];
 
@@ -250,7 +250,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
           <button
             type="button"
             onClick={onExploreWork}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
+            className="button-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
           >
             <span>Explore Production Case Studies</span>
             <ArrowRight className="w-4 h-4 text-[#061421]" />

@@ -51,9 +51,9 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
 
       {/* 2. Featured Manufacturing Sector Highlight */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 'some' }}
             transition={{ duration: 0.55 }}
@@ -77,7 +77,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
               <button
                 type="button"
                 onClick={() => onNavigate('/industries/manufacturing')}
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
+                className="button-primary inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
               >
                 <span>Explore Dedicated Manufacturing Chapter</span>
                 <ArrowRight className="w-4 h-4 text-current" />
@@ -108,7 +108,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
 
       {/* 3. The 4 Other Enterprise Domain Chapters */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="site-container space-y-8">
           <div className="border-b border-[var(--border-color)] pb-4">
             <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase font-semibold">Sector Architectures</span>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -122,7 +122,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
               return (
                 <motion.div
                   key={ind.id}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 'some' }}
                   transition={{ duration: 0.45, delay: idx * 0.08 }}
@@ -194,7 +194,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
       {/* 4. Bottom CTA */}
       <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55 }}
@@ -213,7 +213,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Schedule Sector Technical Session</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

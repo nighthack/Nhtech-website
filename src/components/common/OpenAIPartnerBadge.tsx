@@ -40,9 +40,9 @@ export function OpenAIPartnerBadge({ variant = 'compact', className = '' }: Prop
             Agent Architecture
           </span>
         </div>
-        <h4 className="text-lg font-display font-bold text-[var(--text-primary)] tracking-tight">
+        <h3 className="text-lg font-display font-bold text-[var(--text-primary)] tracking-tight">
           {brand.partnerships.openai.status}
-        </h4>
+        </h3>
         <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
           {brand.partnerships.openai.specialization}. Rigorous design of resilient agentic systems and production AI runtimes.
         </p>

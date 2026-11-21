@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowUpRight, ChevronDown, Server, Sun, Moon, Terminal, Eye } from 'lucide-react';
-import { RoutePath } from '../../types';
+import { useEffect, useRef, useState } from 'react';
+import type { FocusEvent, KeyboardEvent, MouseEvent } from 'react';
+import { ArrowUpRight, ChevronDown, Eye, Menu, Moon, Server, Sun, Terminal, X } from 'lucide-react';
+import type { RoutePath } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
 import { BrandLogo } from '../common/BrandLogo';
 
@@ -9,517 +10,240 @@ interface NavbarProps {
   onNavigate: (path: RoutePath) => void;
 }
 
+interface NavItem {
+  label: string;
+  path: RoutePath;
+  description?: string;
+  mobileLabel?: string;
+  icon?: typeof Terminal;
+  related?: string[];
+}
+
+const desktopStart: NavItem[] = [
+  { label: 'What We Build', path: '/what-we-build', related: ['/agentic-ai', '/document-intelligence'] },
+  { label: 'FDE', mobileLabel: 'Forward Deployed Engineering', path: '/fde', icon: Terminal, related: ['/forward-deployed-engineering'] },
+  { label: 'Vision & Edge AI', path: '/computer-vision', icon: Eye },
+  { label: 'On-Prem AI', path: '/on-prem-ai', icon: Server, related: ['/sovereign-models', '/sovereign-ai'] },
+];
+
+const desktopEnd: NavItem[] = [
+  { label: 'Work', mobileLabel: 'Work & Case Studies', path: '/work' },
+  { label: 'Products', path: '/products' },
+];
+
+const industries: NavItem[] = [
+  { label: 'All industries', path: '/industries' },
+  { label: 'Manufacturing', path: '/industries/manufacturing', description: 'Vision, edge intelligence & industrial automation' },
+  { label: 'Enterprise', path: '/industries/enterprise', description: 'Workflow intelligence & system orchestration' },
+  { label: 'FinTech & BFSI', path: '/industries/fintech', description: 'Anomaly detection, document pipelines & compliance' },
+  { label: 'Retail & Commerce', path: '/industries/retail', description: 'Forecasting, visual commerce & shelf segmentation' },
+  { label: 'Tech Startups', path: '/industries/startups', description: 'Applied AI engineering & core engine builds' },
+];
+
+const company: NavItem[] = [
+  { label: 'About', path: '/about', description: 'Our team, engineering thesis and pedigree' },
+  { label: 'Careers', path: '/careers', description: 'Join our forward-deployed systems pods' },
+  { label: 'Contact', path: '/contact', description: 'Architecture consultation and pod feasibility' },
+  { label: 'Terms & Conditions', path: '/terms-and-conditions', description: 'Legal terms, billing policies & data privacy' },
+];
+
+const navItem = 'flex min-h-11 items-center gap-2 rounded-lg px-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface-elevated)] hover:text-[var(--text-primary)]';
+const navItemActive = 'bg-[var(--bg-surface-elevated)] text-[var(--text-primary)]';
+
 export function Navbar({ currentPath, onNavigate }: NavbarProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [industriesOpen, setIndustriesOpen] = useState(false);
-  const [companyOpen, setCompanyOpen] = useState(false);
-  const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
-  const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false);
-
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
-
-  const industriesRef = useRef<HTMLDivElement>(null);
-  const companyRef = useRef<HTMLDivElement>(null);
-  const industriesTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const companyTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    if (!mobileOpen) return;
+    const closeOutside = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setMobileOpen(false);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    document.addEventListener('pointerdown', closeOutside);
+    return () => document.removeEventListener('pointerdown', closeOutside);
+  }, [mobileOpen]);
 
-  // Handle closing on Escape key & clicks outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (industriesRef.current && !industriesRef.current.contains(event.target as Node)) {
-        setIndustriesOpen(false);
-      }
-      if (companyRef.current && !companyRef.current.contains(event.target as Node)) {
-        setCompanyOpen(false);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIndustriesOpen(false);
-        setCompanyOpen(false);
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
-
-  // Cleanup timeout timers on unmount
-  useEffect(() => {
-    return () => {
-      if (industriesTimerRef.current) clearTimeout(industriesTimerRef.current);
-      if (companyTimerRef.current) clearTimeout(companyTimerRef.current);
-    };
-  }, []);
-
-  // Industries Hover Handlers with 250ms close grace period
-  const handleIndustriesMouseEnter = () => {
-    if (industriesTimerRef.current) {
-      clearTimeout(industriesTimerRef.current);
-      industriesTimerRef.current = null;
-    }
-    setIndustriesOpen(true);
-  };
-
-  const handleIndustriesMouseLeave = () => {
-    if (industriesTimerRef.current) {
-      clearTimeout(industriesTimerRef.current);
-    }
-    industriesTimerRef.current = setTimeout(() => {
-      setIndustriesOpen(false);
-    }, 250);
-  };
-
-  // Company Hover Handlers with 250ms close grace period
-  const handleCompanyMouseEnter = () => {
-    if (companyTimerRef.current) {
-      clearTimeout(companyTimerRef.current);
-      companyTimerRef.current = null;
-    }
-    setCompanyOpen(true);
-  };
-
-  const handleCompanyMouseLeave = () => {
-    if (companyTimerRef.current) {
-      clearTimeout(companyTimerRef.current);
-    }
-    companyTimerRef.current = setTimeout(() => {
-      setCompanyOpen(false);
-    }, 250);
-  };
-
-  const handleNavClick = (path: RoutePath) => {
+  const route = (path: RoutePath) => (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    setMobileOpen(false);
     onNavigate(path);
-    setIndustriesOpen(false);
-    setCompanyOpen(false);
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const industryLinks = [
-    { label: 'Manufacturing', path: '/industries/manufacturing' as RoutePath, desc: 'Vision, edge intelligence & industrial automation' },
-    { label: 'Enterprise', path: '/industries/enterprise' as RoutePath, desc: 'Workflow intelligence & system orchestration' },
-    { label: 'FinTech & BFSI', path: '/industries/fintech' as RoutePath, desc: 'Anomaly detection, document pipelines & compliance' },
-    { label: 'Retail & Commerce', path: '/industries/retail' as RoutePath, desc: 'Forecasting, visual commerce & shelf segmentation' },
-    { label: 'Tech Startups', path: '/industries/startups' as RoutePath, desc: 'Applied AI engineering & core engine builds' },
-  ];
+  const isActive = (item: NavItem) => currentPath === item.path || item.related?.includes(currentPath);
 
-  const companyLinks = [
-    { label: 'About', path: '/about' as RoutePath, desc: 'Our team, engineering thesis and pedigree' },
-    { label: 'Careers', path: '/careers' as RoutePath, desc: 'Join our forward-deployed systems pods' },
-    { label: 'Contact', path: '/contact' as RoutePath, desc: 'Architecture consultation and pod feasibility' },
-    { label: 'Terms & Conditions', path: '/terms-and-conditions' as RoutePath, desc: 'Legal terms, billing policies & data privacy' },
-  ];
+  const renderLink = (item: NavItem, mobile = false) => {
+    const Icon = item.icon;
+    return (
+      <a
+        key={item.path}
+        href={item.path}
+        onClick={route(item.path)}
+        aria-current={currentPath === item.path ? 'page' : undefined}
+        className={`${navItem} ${isActive(item) ? navItemActive : ''}`}
+      >
+        {Icon && <Icon aria-hidden="true" className="size-4 shrink-0 text-[var(--accent-ocean)]" />}
+        {mobile ? item.mobileLabel ?? item.label : item.label}
+      </a>
+    );
+  };
 
-  const isIndustryActive = currentPath.startsWith('/industries');
-  const isCompanyActive = currentPath === '/about' || currentPath === '/careers' || currentPath === '/contact' || currentPath === '/terms-and-conditions';
+  const closeMobileOnEscape = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key !== 'Escape' || event.defaultPrevented || !mobileOpen) return;
+    setMobileOpen(false);
+    mobileToggleRef.current?.focus();
+  };
 
   return (
     <header
       id="main-navigation-bar"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[var(--bg-base)]/92 backdrop-blur-xl border-b border-[var(--border-color)] py-3 shadow-md'
-          : 'bg-[var(--bg-base)]/75 backdrop-blur-md border-b border-transparent py-4'
-      }`}
+      ref={headerRef}
+      onKeyDown={closeMobileOnEscape}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setMobileOpen(false);
+      }}
+      className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border-color)] bg-[var(--bg-base)]"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-        
-        {/* Official Brand Combination SVG Logo */}
-        <button
-          id="nav-brand-logo"
-          onClick={() => handleNavClick('/')}
-          className="flex items-center group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5A1F] focus-visible:outline-offset-4 rounded-lg py-1 shrink-0"
-          aria-label="NHTech Home"
-        >
+      <div className="site-container flex h-[var(--header-height)] items-center justify-between gap-3">
+        <a id="nav-brand-logo" href="/" onClick={route('/')} className="inline-flex min-h-11 shrink-0 items-center rounded-lg" aria-label="NHTech home">
           <BrandLogo variant="combination" heightClass="h-6" />
-        </button>
+        </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {/* What We Build */}
-          <button
-            id="nav-link-what-we-build"
-            onClick={() => handleNavClick('/what-we-build')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-              currentPath === '/what-we-build' || currentPath.startsWith('/agentic-ai') || currentPath.startsWith('/document-intelligence')
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-            }`}
-          >
-            What We Build
-          </button>
-
-          {/* FDE */}
-          <button
-            id="nav-link-fde"
-            onClick={() => handleNavClick('/fde')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-              currentPath === '/fde' || currentPath === '/forward-deployed-engineering'
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-            }`}
-          >
-            <Terminal className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
-            <span>FDE</span>
-          </button>
-
-          {/* Vision & Edge AI */}
-          <button
-            id="nav-link-vision-edge"
-            onClick={() => handleNavClick('/computer-vision')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-              currentPath === '/computer-vision'
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-            }`}
-          >
-            <Eye className="w-3.5 h-3.5 text-[var(--accent-ocean)]" />
-            <span>Vision &amp; Edge AI</span>
-          </button>
-
-          {/* On-Prem AI */}
-          <button
-            id="nav-link-on-prem-ai"
-            onClick={() => handleNavClick('/on-prem-ai')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-              currentPath === '/on-prem-ai' || currentPath === '/sovereign-models' || currentPath === '/sovereign-ai'
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-            }`}
-          >
-            <Server className="w-3.5 h-3.5 text-[var(--accent-ocean)]" />
-            <span>On-Prem AI</span>
-          </button>
-
-          {/* Industries Dropdown */}
-          <div 
-            ref={industriesRef} 
-            className="relative"
-            onMouseEnter={handleIndustriesMouseEnter}
-            onMouseLeave={handleIndustriesMouseLeave}
-          >
-            <button
-              id="nav-industries-trigger"
-              onClick={() => {
-                if (industriesTimerRef.current) clearTimeout(industriesTimerRef.current);
-                setIndustriesOpen(!industriesOpen);
-              }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1 whitespace-nowrap shrink-0 ${
-                isIndustryActive || industriesOpen
-                  ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-              }`}
-              aria-expanded={industriesOpen}
-              aria-haspopup="true"
-            >
-              <span>Industries</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${industriesOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
-            </button>
-
-            {industriesOpen && (
-              <div 
-                id="nav-industries-dropdown"
-                className="absolute top-full left-0 pt-2 w-72 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
-                onMouseEnter={handleIndustriesMouseEnter}
-                onMouseLeave={handleIndustriesMouseLeave}
-              >
-                <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-2 shadow-xl backdrop-blur-2xl">
-                  <div className="px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--border-color)] mb-1 flex items-center justify-between">
-                    <span>Operating Sectors</span>
-                    <button 
-                      onClick={() => handleNavClick('/industries')} 
-                      className="text-[var(--accent-orange-text)] hover:underline cursor-pointer"
-                    >
-                      View all →
-                    </button>
-                  </div>
-                  <div className="space-y-0.5">
-                    {industryLinks.map((item) => (
-                      <button
-                        key={item.path}
-                        onClick={() => handleNavClick(item.path)}
-                        className="w-full text-left p-2.5 rounded-xl hover:bg-[var(--bg-surface-elevated)] transition-colors flex flex-col gap-0.5 group cursor-pointer"
-                      >
-                        <span className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
-                          {item.label}
-                        </span>
-                        <span className="text-[11px] text-[var(--text-muted)] font-normal leading-snug">
-                          {item.desc}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Work */}
-          <button
-            id="nav-link-work"
-            onClick={() => handleNavClick('/work')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-              currentPath === '/work'
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-            }`}
-          >
-            Work
-          </button>
-
-          {/* Products */}
-          <button
-            id="nav-link-products"
-            onClick={() => handleNavClick('/products')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-              currentPath === '/products'
-                ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-            }`}
-          >
-            Products
-          </button>
-
-          {/* Company Dropdown */}
-          <div 
-            ref={companyRef} 
-            className="relative"
-            onMouseEnter={handleCompanyMouseEnter}
-            onMouseLeave={handleCompanyMouseLeave}
-          >
-            <button
-              id="nav-company-trigger"
-              onClick={() => {
-                if (companyTimerRef.current) clearTimeout(companyTimerRef.current);
-                setCompanyOpen(!companyOpen);
-              }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-1 whitespace-nowrap shrink-0 ${
-                isCompanyActive || companyOpen
-                  ? 'text-[var(--text-primary)] bg-[var(--bg-surface-elevated)] border border-[var(--border-hover)]'
-                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-              }`}
-              aria-expanded={companyOpen}
-              aria-haspopup="true"
-            >
-              <span>Company</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${companyOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'}`} />
-            </button>
-
-            {companyOpen && (
-              <div 
-                id="nav-company-dropdown"
-                className="absolute top-full right-0 pt-2 w-60 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
-                onMouseEnter={handleCompanyMouseEnter}
-                onMouseLeave={handleCompanyMouseLeave}
-              >
-                <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-2 shadow-xl backdrop-blur-2xl">
-                  <div className="space-y-0.5">
-                    {companyLinks.map((item) => (
-                      <button
-                        key={item.path}
-                        onClick={() => handleNavClick(item.path)}
-                        className="w-full text-left p-2.5 rounded-xl hover:bg-[var(--bg-surface-elevated)] transition-colors group cursor-pointer"
-                      >
-                        <div className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
-                          {item.label}
-                        </div>
-                        <div className="text-[11px] text-[var(--text-muted)] font-normal leading-snug">
-                          {item.desc}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+        <nav aria-label="Main navigation" className="hidden items-center gap-1 whitespace-nowrap xl:flex">
+          {desktopStart.map((item) => renderLink(item))}
+          <NavDisclosure id="nav-industries" label="Industries" items={industries} currentPath={currentPath} route={route} />
+          {desktopEnd.map((item) => renderLink(item))}
+          <NavDisclosure id="nav-company" label="Company" items={company} currentPath={currentPath} route={route} />
         </nav>
 
-        {/* Right Action: Theme Switcher & Talk to us CTA */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          {/* Theme Toggle Button */}
+        <div className="flex shrink-0 items-center gap-2">
           <button
+            type="button"
             id="theme-toggle-button"
             onClick={toggleTheme}
-            className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer"
+            className="site-button button-secondary size-11 p-0"
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
-            {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-[#FF7A45]" />
-            ) : (
-              <Moon className="w-4 h-4 text-[#173D5B]" />
-            )}
+            {theme === 'dark' ? <Sun aria-hidden="true" className="size-4 text-[var(--accent-orange-text)]" /> : <Moon aria-hidden="true" className="size-4" />}
           </button>
 
-          {/* Primary CTA (Signal Orange 500 + Ocean 950 text for WCAG AA contrast) */}
-          <button
-            id="nav-talk-to-us-cta"
-            onClick={() => handleNavClick('/contact')}
-            className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] active:bg-[#E95013] text-[#061421] text-xs font-display font-bold tracking-tight transition-all cursor-pointer shadow-sm whitespace-nowrap shrink-0"
-          >
-            <span>Talk to us</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-current" />
-          </button>
+          <a id="nav-talk-to-us-cta" href="/contact" onClick={route('/contact')} className="site-button button-primary hidden whitespace-nowrap min-[400px]:inline-flex">
+            Talk to us <ArrowUpRight aria-hidden="true" className="size-4" />
+          </a>
 
-          {/* Mobile Menu Toggle */}
           <button
+            type="button"
             id="nav-mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-color)] transition-colors cursor-pointer"
-            aria-label="Toggle navigation menu"
+            ref={mobileToggleRef}
+            onClick={() => setMobileOpen((open) => !open)}
+            className="site-button button-secondary size-11 p-0 xl:hidden"
+            aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'}
+            aria-expanded={mobileOpen}
+            aria-controls="nav-mobile-drawer"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileOpen ? <X aria-hidden="true" className="size-5" /> : <Menu aria-hidden="true" className="size-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div 
-          id="nav-mobile-drawer"
-          className="lg:hidden bg-[var(--bg-base)] border-b border-[var(--border-color)] px-4 pt-4 pb-6 space-y-3 max-h-[85vh] overflow-y-auto"
-        >
-          <div className="space-y-1">
-            <button
-              onClick={() => handleNavClick('/what-we-build')}
-              className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-surface)] flex items-center justify-between"
-            >
-              <span>What We Build</span>
-              <span className="text-xs text-[var(--text-muted)] font-mono">Capabilities</span>
-            </button>
-
-            <button
-              onClick={() => handleNavClick('/fde')}
-              className={`w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-between ${
-                currentPath === '/fde' ? 'bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-[var(--accent-orange-text)]" />
-                <span className="font-bold">Forward Deployed Engineering</span>
-              </div>
-              <span className="text-xs font-mono text-[var(--accent-orange-text)]">FDE</span>
-            </button>
-
-            <button
-              onClick={() => handleNavClick('/computer-vision')}
-              className={`w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-between ${
-                currentPath === '/computer-vision' ? 'bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-[var(--accent-ocean)]" />
-                <span>Vision &amp; Edge AI</span>
-              </div>
-              <span className="text-xs font-mono text-[var(--text-muted)]">Edge Systems</span>
-            </button>
-
-            <button
-              onClick={() => handleNavClick('/on-prem-ai')}
-              className={`w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-between ${
-                currentPath === '/on-prem-ai' || currentPath === '/sovereign-models' || currentPath === '/sovereign-ai' ? 'bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] border border-[var(--border-hover)]' : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <Server className="w-4 h-4 text-[var(--accent-ocean)]" />
-                <span>On-Prem AI</span>
-              </div>
-              <span className="text-xs font-mono text-[var(--text-muted)]">Model Eng</span>
-            </button>
-
-            <button
-              onClick={() => handleNavClick('/work')}
-              className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-surface)]"
-            >
-              Work &amp; Case Studies
-            </button>
-
-            <button
-              onClick={() => handleNavClick('/products')}
-              className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-surface)]"
-            >
-              Products
-            </button>
+      <nav
+        id="nav-mobile-drawer"
+        aria-label="Mobile navigation"
+        hidden={!mobileOpen}
+        className="max-h-[calc(100dvh-var(--header-height))] overflow-y-auto border-t border-[var(--border-color)] xl:hidden"
+      >
+        {mobileOpen && (
+          <div className="site-container space-y-1 py-4 pb-6">
+            {[...desktopStart, ...desktopEnd].map((item) => renderLink(item, true))}
+            <NavDisclosure id="mobile-industries" label="Industries" items={industries} currentPath={currentPath} route={route} mobile />
+            <NavDisclosure id="mobile-company" label="Company" items={company} currentPath={currentPath} route={route} mobile />
+            <a href="/contact" onClick={route('/contact')} className="site-button button-primary mt-3 w-full">
+              Talk to us <ArrowUpRight aria-hidden="true" className="size-4" />
+            </a>
           </div>
-
-          {/* Mobile Tap-to-Toggle Industries */}
-          <div className="pt-2 border-t border-[var(--border-color)]">
-            <button
-              onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
-              className="w-full flex items-center justify-between px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-            >
-              <span>Industries</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileIndustriesOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : ''}`} />
-            </button>
-            {mobileIndustriesOpen && (
-              <div className="grid grid-cols-1 gap-1 mt-1 pl-2">
-                {industryLinks.map((ind) => (
-                  <button
-                    key={ind.path}
-                    onClick={() => handleNavClick(ind.path)}
-                    className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] flex items-center justify-between"
-                  >
-                    <span>{ind.label}</span>
-                    <span className="text-xs text-[var(--text-muted)]">→</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Mobile Tap-to-Toggle Company */}
-          <div className="pt-2 border-t border-[var(--border-color)]">
-            <button
-              onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
-              className="w-full flex items-center justify-between px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-            >
-              <span>Company</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileCompanyOpen ? 'rotate-180 text-[var(--accent-orange-text)]' : ''}`} />
-            </button>
-            {mobileCompanyOpen && (
-              <div className="grid grid-cols-1 gap-1 mt-1 pl-2">
-                {companyLinks.map((item) => (
-                  <button
-                    key={item.path}
-                    onClick={() => handleNavClick(item.path)}
-                    className="w-full text-left min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] flex items-center justify-between"
-                  >
-                    <span>{item.label}</span>
-                    <span className="text-xs text-[var(--text-muted)]">→</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="pt-3 border-t border-[var(--border-color)]">
-            <button
-              onClick={() => handleNavClick('/contact')}
-              className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] text-sm font-bold transition-all cursor-pointer"
-            >
-              <span>Talk to us</span>
-              <ArrowUpRight className="w-4 h-4 text-current" />
-            </button>
-          </div>
-        </div>
-      )}
+        )}
+      </nav>
     </header>
+  );
+}
+
+interface NavDisclosureProps {
+  id: string;
+  label: string;
+  items: NavItem[];
+  currentPath: string;
+  route: (path: RoutePath) => (event: MouseEvent<HTMLAnchorElement>) => void;
+  mobile?: boolean;
+}
+
+function NavDisclosure({ id, label, items, currentPath, route, mobile = false }: NavDisclosureProps) {
+  const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const disclosureRef = useRef<HTMLDivElement>(null);
+  const active = items.some((item) => item.path === currentPath);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOutside = (event: PointerEvent) => {
+      if (!disclosureRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener('pointerdown', closeOutside);
+    return () => document.removeEventListener('pointerdown', closeOutside);
+  }, [open]);
+
+  const onBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+  };
+
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Escape' || !open) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  return (
+    <div ref={disclosureRef} className="relative" onBlur={onBlur} onKeyDown={onKeyDown}>
+      <button
+        type="button"
+        id={`${id}-trigger`}
+        ref={triggerRef}
+        onClick={() => setOpen((value) => !value)}
+        className={`${navItem} ${open || active ? navItemActive : ''} ${mobile ? 'w-full justify-between text-left' : ''} cursor-pointer`}
+        aria-expanded={open}
+        aria-controls={`${id}-links`}
+      >
+        {label}
+        <ChevronDown aria-hidden="true" className={`size-4 motion-safe:transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <ul
+        id={`${id}-links`}
+        hidden={!open}
+        className={mobile
+          ? 'ml-3 mt-1 space-y-1 border-l border-[var(--border-color)] pl-2'
+          : 'absolute right-0 top-full mt-2 w-72 space-y-1 whitespace-normal rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-2 shadow-lg'}
+      >
+        {items.map((item) => (
+          <li key={item.path}>
+            <a
+              href={item.path}
+              onClick={(event) => {
+                route(item.path)(event);
+                if (event.defaultPrevented) setOpen(false);
+              }}
+              aria-current={currentPath === item.path ? 'page' : undefined}
+              className={`${navItem} flex-col items-start justify-center gap-0.5 py-2 ${currentPath === item.path ? navItemActive : ''}`}
+            >
+              <span className="font-semibold text-[var(--text-primary)]">{item.label}</span>
+              {!mobile && item.description && <span className="text-xs leading-snug text-[var(--text-muted)]">{item.description}</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

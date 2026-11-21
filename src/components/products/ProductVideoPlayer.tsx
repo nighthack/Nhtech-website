@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize2, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ArrowUpRight, Play } from 'lucide-react';
 
 interface ProductVideoPlayerProps {
   src: string;
@@ -15,164 +15,76 @@ export function ProductVideoPlayer({
   src,
   title,
   poster,
-  accentColor = '#FF5A1F',
+  accentColor = 'var(--accent-primary)',
   badge,
   liveUrl,
   ctaLabel,
 }: ProductVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  const [showControls, setShowControls] = useState(true);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [playbackError, setPlaybackError] = useState(false);
 
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch((err) => {
-        console.warn("Video play interrupted:", err);
-      });
-    } else {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
-  };
+  const play = async () => {
+    const video = videoRef.current;
+    if (!video) return;
 
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!videoRef.current) return;
-    videoRef.current.muted = !videoRef.current.muted;
-    setIsMuted(videoRef.current.muted);
-  };
-
-  const toggleFullscreen = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!videoRef.current) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else if (videoRef.current.requestFullscreen) {
-      videoRef.current.requestFullscreen();
+    setPlaybackError(false);
+    try {
+      await video.play();
+      video.focus({ preventScroll: true });
+    } catch {
+      setPlaybackError(true);
     }
   };
 
   return (
-    <div 
-      className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] shadow-xl transition-all group"
-      onMouseEnter={() => setShowControls(true)}
-      onMouseLeave={() => setShowControls(true)}
-    >
-      {/* Video Container with 16:9 Aspect Ratio */}
-      <div className="relative aspect-video w-full bg-black/90 flex items-center justify-center overflow-hidden">
+    <div className="overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)]">
+      <div className="relative aspect-video w-full bg-black">
         <video
           ref={videoRef}
           src={src}
           poster={poster}
           playsInline
-          muted={isMuted}
+          muted
           loop
-          controls
+          controls={hasStarted}
+          tabIndex={hasStarted ? 0 : -1}
           preload="metadata"
-          aria-label={`Demonstration video for ${title}`}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          className="w-full h-full object-contain sm:object-cover"
+          aria-label={`${title} demonstration video`}
+          onPlay={() => setHasStarted(true)}
+          onError={() => setPlaybackError(true)}
+          className="h-full w-full object-contain focus-visible:-outline-offset-4"
         >
-          <p className="text-xs text-white p-4">
-            Your browser does not support HTML5 video. View the live application at{' '}
-            {liveUrl ? <a href={liveUrl} className="underline text-[#FF7A45]">{title}</a> : title}.
-          </p>
+          Your browser does not support HTML video.
         </video>
-
-        {/* Custom Play Overlay when paused and not yet interacting */}
-        {!isPlaying && (
-          <div 
-            role="button"
-            tabIndex={0}
-            aria-label={`Play demonstration video for ${title}`}
-            onClick={togglePlay}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                togglePlay();
-              }
-            }}
-            className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity z-10 p-4"
-          >
-            <div 
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shadow-2xl transition-transform hover:scale-105 bg-[var(--bg-surface)] border border-[var(--border-color)]"
-              style={{ color: accentColor }}
-            >
-              <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1" />
-            </div>
-            <div className="mt-3 text-center">
-              <span className="text-xs sm:text-sm font-display font-bold text-white tracking-wide drop-shadow-md">
-                Click to Watch {title} Demo
-              </span>
-            </div>
+        {!hasStarted && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-3">
+            <button type="button" onClick={play} className="site-button button-secondary">
+              <Play aria-hidden="true" className="size-4" />
+              Watch the {title} demo
+            </button>
           </div>
         )}
       </div>
 
-      {/* Clean Bottom Bar with Real Video Tagging, Quick Status & Live Link */}
-      <div className="px-4 py-3 bg-[var(--bg-surface)] border-t border-[var(--border-color)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[var(--text-secondary)]">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: accentColor }} />
-          {liveUrl ? (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[11px] font-bold text-[var(--text-primary)] hover:underline flex items-center gap-1 group/link cursor-pointer"
-            >
-              <span>{title}</span>
-              <ArrowUpRight className="w-3 h-3 text-[var(--text-muted)] group-hover/link:text-[var(--text-primary)] transition-colors" />
-            </a>
-          ) : (
-            <span className="text-[11px] font-bold text-[var(--text-primary)] tracking-tight">
-              {title}
-            </span>
-          )}
-          {badge && (
-            <span className="hidden sm:inline-block text-[10px] text-[var(--text-muted)] border-l border-[var(--border-color)] pl-2">
-              {badge}
-            </span>
-          )}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border-color)] px-4 py-3">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span aria-hidden="true" className="size-2 rounded-full" style={{ backgroundColor: accentColor }} />
+          <span className="text-sm font-bold text-[var(--text-primary)]">{title}</span>
+          {badge && <span className="text-xs text-[var(--text-muted)]">{badge}</span>}
         </div>
 
-        <div className="flex items-center gap-3">
-          {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[10px] font-mono font-bold text-[var(--text-primary)] transition-colors shadow-sm cursor-pointer"
-            >
-              <span>{ctaLabel || `Visit ${title}`}</span>
-              <ArrowUpRight className="w-3 h-3 text-[var(--accent-secondary)]" />
-            </a>
-          )}
+        {liveUrl && (
+          <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="site-button button-secondary">
+            {ctaLabel || `Visit ${title}`} <ArrowUpRight aria-hidden="true" className="size-4" />
+          </a>
+        )}
 
-          <div className="flex items-center gap-1 border-l border-[var(--border-color)] pl-2">
-            <button
-              onClick={toggleMute}
-              className="p-1 rounded-lg hover:bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
-              title={isMuted ? "Unmute Audio" : "Mute Audio"}
-              aria-label={isMuted ? "Unmute Audio" : "Mute Audio"}
-            >
-              {isMuted ? <VolumeX className="w-4 h-4 text-[var(--text-muted)]" /> : <Volume2 className="w-4 h-4 text-[var(--accent-secondary)]" />}
-            </button>
-
-            <button
-              onClick={toggleFullscreen}
-              className="p-1 rounded-lg hover:bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
-              title="Expand Fullscreen"
-              aria-label="Expand Fullscreen"
-            >
-              <Maximize2 className="w-4 h-4 text-[var(--text-muted)]" />
-            </button>
-          </div>
-        </div>
+        {playbackError && (
+          <p role="status" className="w-full text-sm text-[var(--status-error-text)]">
+            The demo could not play. You can try again or open the video directly. <a href={src} className="underline underline-offset-4">Open video</a>
+          </p>
+        )}
       </div>
     </div>
   );

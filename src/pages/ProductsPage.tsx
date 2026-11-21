@@ -29,6 +29,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
         return {
           videoSrc: '/Talkument.mp4',
           accent: '#47849B',
+          textAccent: 'var(--accent-ocean)',
           badge: 'bg-[var(--bg-surface-elevated)] text-[var(--accent-secondary)] border border-[var(--border-color)]',
           telemetryBadge: 'Document Intelligence · Spatial RAG'
         };
@@ -36,6 +37,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
         return {
           videoSrc: '/Hoot.mp4',
           accent: '#FF5A1F',
+          textAccent: 'var(--accent-orange-text)',
           badge: 'bg-[var(--bg-surface-elevated)] text-[var(--accent-orange-text)] border border-[var(--border-color)]',
           telemetryBadge: 'Enterprise Messaging · Context Agents'
         };
@@ -44,6 +46,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
         return {
           videoSrc: '/Ottom8.mp4',
           accent: '#75A4B5',
+          textAccent: 'var(--accent-secondary)',
           badge: 'bg-[var(--bg-surface-elevated)] text-[var(--accent-secondary)] border border-[var(--border-color)]',
           telemetryBadge: 'Workflow Orchestration · DAG Runtime'
         };
@@ -79,9 +82,9 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
 
       {/* 2. Platform Filter Bar & Deep Showcases */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="site-container space-y-12">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
             className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-[var(--border-color)]"
@@ -128,7 +131,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                 <motion.div
                   key={product.id}
                   id={`product-showcase-${product.id}`}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 'some' }}
                   transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
@@ -143,13 +146,13 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-3 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-transform hover:scale-105 cursor-pointer"
-                      style={{ color: media.accent }}
+                      style={{ color: media.textAccent }}
                       title={`Visit ${product.name} website`}
                     >
                       <Icon className="w-5 h-5" />
                     </a>
                   ) : (
-                    <div className="p-3 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]" style={{ color: media.accent }}>
+                    <div className="p-3 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]" style={{ color: media.textAccent }}>
                       <Icon className="w-5 h-5" />
                     </div>
                   )}
@@ -192,7 +195,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                       href={product.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-display font-bold bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] transition-all cursor-pointer shadow-lg hover:shadow-xl"
+                      className="button-primary inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-display font-bold cursor-pointer shadow-lg hover:shadow-xl"
                     >
                       <span>{product.ctaLabel || `Explore ${product.name} ↗`}</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
@@ -240,7 +243,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
 
                   {/* Problem Solved */}
                   <div className="p-4 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-1.5">
-                    <div className="text-[11px] font-mono uppercase font-bold" style={{ color: media.accent }}>
+                    <div className="text-[11px] font-mono uppercase font-bold" style={{ color: media.textAccent }}>
                       Enterprise Challenge Addressed
                     </div>
                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-normal">
@@ -255,7 +258,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
                     </div>
                     {product.keyCapabilities.map((cap, capIdx) => (
                       <div key={capIdx} className="flex items-start gap-2.5 text-xs text-[var(--text-secondary)] font-normal">
-                        <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: media.accent }} />
+                        <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: media.textAccent }} />
                         <span className="leading-relaxed font-sans">{cap}</span>
                       </div>
                     ))}
@@ -329,7 +332,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
       {/* 4. Bottom CTA */}
       <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55 }}
@@ -348,7 +351,7 @@ export function ProductsPage({ onNavigate }: ProductsPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Request Platform Consultation</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

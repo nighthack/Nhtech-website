@@ -54,7 +54,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
 
       {/* 2. Challenge & Engineered Systems Stage */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+        <div className="site-container text-left">
           <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-10 shadow-sm space-y-8">
             <div className="space-y-3 pb-6 border-b border-[var(--border-color)]">
               <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
@@ -87,7 +87,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
 
       {/* 3. Architectural Focus Pillars */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
           <div className="border-b border-[var(--border-color)] pb-4">
             <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">System Constraints</span>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -142,7 +142,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Initiate Sector Discussion</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

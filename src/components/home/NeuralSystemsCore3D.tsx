@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Pause, Play, RotateCcw, RotateCw } from 'lucide-react';
+import { useReducedMotion } from 'motion/react';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { useTheme } from '../../context/ThemeContext';
@@ -71,24 +73,27 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
   const modeRef = useRef<SpatialSystemMode>(activeMode);
   const { theme } = useTheme();
   const themeRef = useRef(theme);
+  const redrawRef = useRef<(() => void) | null>(null);
+  const rotateRef = useRef<((angle: number) => void) | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const motionPaused = useRef(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const [fallbackActive, setFallbackActive] = useState(false);
 
   useEffect(() => {
     modeRef.current = activeMode;
+    redrawRef.current?.();
   }, [activeMode]);
 
   useEffect(() => {
     themeRef.current = theme;
+    redrawRef.current?.();
   }, [theme]);
 
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
-
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
     // Probe WebGL2 + software GL once
     let isSoftwareGl = false;
@@ -332,42 +337,35 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
     let targetRotY = -0.35;
     let currentRotX = targetRotX;
     let currentRotY = targetRotY;
-    let pointerOffsetX = 0;
-    let pointerOffsetY = 0;
-    let isDragging = false;
+    let dragPointer: number | null = null;
     let lastClientX = 0;
     let lastClientY = 0;
 
-    const onPointerDown = (e: PointerEvent) => {
-      isDragging = true;
-      lastClientX = e.clientX;
-      lastClientY = e.clientY;
+    const onPointerDown = (event: PointerEvent) => {
+      if (!event.isPrimary || event.button !== 0) return;
+      dragPointer = event.pointerId;
+      lastClientX = event.clientX;
+      lastClientY = event.clientY;
     };
 
-    const onPointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      if (rect.width > 0 && rect.height > 0) {
-        pointerOffsetX = ((e.clientX - rect.left) / rect.width - 0.5) * 0.45;
-        pointerOffsetY = ((e.clientY - rect.top) / rect.height - 0.5) * 0.35;
-      }
-      if (isDragging) {
-        const dx = e.clientX - lastClientX;
-        const dy = e.clientY - lastClientY;
-        lastClientX = e.clientX;
-        lastClientY = e.clientY;
-        targetRotY += dx * 0.008;
-        targetRotX = THREE.MathUtils.clamp(targetRotX + dy * 0.006, -0.7, 0.7);
-      }
+    const onPointerMove = (event: PointerEvent) => {
+      if (dragPointer !== event.pointerId) return;
+      targetRotY += (event.clientX - lastClientX) * 0.008;
+      targetRotX = THREE.MathUtils.clamp(targetRotX + (event.clientY - lastClientY) * 0.006, -0.7, 0.7);
+      lastClientX = event.clientX;
+      lastClientY = event.clientY;
+      redrawRef.current?.();
     };
 
-    const onPointerUp = () => {
-      isDragging = false;
+    const onPointerEnd = (event: PointerEvent) => {
+      if (dragPointer === event.pointerId) dragPointer = null;
     };
 
     const domEl = renderer.domElement;
     domEl.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointerup', onPointerEnd);
+    window.addEventListener('pointercancel', onPointerEnd);
 
     const onContextLost = (e: Event) => {
       e.preventDefault();
@@ -382,6 +380,7 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       if (w <= 0 || h <= 0) return;
       updateCameraFraming(w, h);
       renderer.setSize(w, h);
+      redrawRef.current?.();
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
@@ -393,6 +392,8 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
     }
 
     let frameId = 0;
+    let frameScheduled = false;
+    let elapsed = 0;
     let disposed = false;
     const clock = new THREE.Clock();
 
@@ -418,10 +419,12 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
     }
 
     const tick = () => {
+      frameScheduled = false;
       if (disposed) return;
 
+      const isStill = prefersReducedMotion || motionPaused.current;
       const delta = Math.min(clock.getDelta(), 0.08);
-      const elapsed = clock.getElapsedTime();
+      if (!isStill) elapsed += delta;
       const mode = modeRef.current;
       const isDark = themeRef.current === 'dark';
 
@@ -430,25 +433,25 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       coreWireMat.color.setHex(isDark ? 0xa6c3ce : 0x24536f);
       basePlinthMat.opacity = isDark ? 0.16 : 0.1;
 
-      if (!isDragging && !prefersReducedMotion) {
+      if (dragPointer === null && !isStill) {
         targetRotY += delta * 0.16;
       }
 
-      currentRotX = THREE.MathUtils.damp(currentRotX, targetRotX + pointerOffsetY, 5.5, delta);
-      currentRotY = THREE.MathUtils.damp(currentRotY, targetRotY + pointerOffsetX, 5.5, delta);
+      currentRotX = isStill ? targetRotX : THREE.MathUtils.damp(currentRotX, targetRotX, 5.5, delta);
+      currentRotY = isStill ? targetRotY : THREE.MathUtils.damp(currentRotY, targetRotY, 5.5, delta);
       rootGroup.rotation.x = currentRotX;
       rootGroup.rotation.y = currentRotY;
 
       // Mode-specific orbital gimbal kinematics
       const targetGovTilt =
         mode === 'embedded' ? 0.44 : mode === 'vision-edge' ? 1.15 : 0.12;
-      governanceRing.rotation.x = THREE.MathUtils.damp(
+      governanceRing.rotation.x = isStill ? targetGovTilt : THREE.MathUtils.damp(
         governanceRing.rotation.x,
         targetGovTilt,
         4.2,
         delta
       );
-      if (!prefersReducedMotion) {
+      if (!isStill) {
         outerGimbal.rotation.z += delta * 0.22;
         innerRing.rotation.y -= delta * 0.35;
         coreShell.rotation.y += delta * 0.4;
@@ -459,31 +462,29 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
 
       // Morph instanced compute nodes smoothly to active mode target positions
       const targetArr = TARGET_LAYOUTS[mode];
-      const dampSpeed = prefersReducedMotion ? 20 : 4.5;
+      if (isStill) currentNodePositions.set(targetArr);
       for (let i = 0; i < NODE_COUNT; i++) {
         const ix = i * 3;
         currentNodePositions[ix] = THREE.MathUtils.damp(
           currentNodePositions[ix],
           targetArr[ix],
-          dampSpeed,
+          4.5,
           delta
         );
         currentNodePositions[ix + 1] = THREE.MathUtils.damp(
           currentNodePositions[ix + 1],
           targetArr[ix + 1],
-          dampSpeed,
+          4.5,
           delta
         );
         currentNodePositions[ix + 2] = THREE.MathUtils.damp(
           currentNodePositions[ix + 2],
           targetArr[ix + 2],
-          dampSpeed,
+          4.5,
           delta
         );
 
-        const floatY = prefersReducedMotion
-          ? 0
-          : Math.sin(elapsed * 1.4 + i * 0.45) * 0.045;
+        const floatY = Math.sin(elapsed * 1.4 + i * 0.45) * 0.045;
         _vec3A.set(
           currentNodePositions[ix],
           currentNodePositions[ix + 1] + floatY,
@@ -501,7 +502,7 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       // Animate orbital signal packets
       for (let i = 0; i < PACKET_COUNT; i++) {
         const speed = 0.55 + (i % 5) * 0.14;
-        const phase = (prefersReducedMotion ? 0 : elapsed * speed) + (i / PACKET_COUNT) * Math.PI * 2;
+        const phase = elapsed * speed + (i / PACKET_COUNT) * Math.PI * 2;
         const orbitR = i % 3 === 0 ? 1.78 : i % 2 === 0 ? 2.45 : 1.18;
         const tiltAngle = i % 3 === 0 ? governanceRing.rotation.x : i % 2 === 0 ? 0.5 : -0.65;
 
@@ -519,10 +520,9 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
 
       renderer.render(scene, camera);
 
-      if (prefersReducedMotion) {
-        return; // render crisp static frame once
-      }
+      if (isStill) return;
 
+      frameScheduled = true;
       if (isSoftwareGl) {
         afterDraw(tick);
       } else {
@@ -530,9 +530,18 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       }
     };
 
+    redrawRef.current = () => {
+      if (!frameScheduled) tick();
+    };
+    rotateRef.current = (angle) => {
+      targetRotY += angle;
+      redrawRef.current?.();
+    };
     tick();
 
     return () => {
+      redrawRef.current = null;
+      rotateRef.current = null;
       disposed = true;
       cancelAnimationFrame(frameId);
       clearTimeout(frameId);
@@ -540,7 +549,8 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
       domEl.removeEventListener('pointerdown', onPointerDown);
       domEl.removeEventListener('webglcontextlost', onContextLost);
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointerup', onPointerEnd);
+      window.removeEventListener('pointercancel', onPointerEnd);
 
       scene.traverse((obj) => {
         if ((obj as THREE.Mesh).isMesh || (obj as THREE.LineSegments).isLineSegments) {
@@ -560,11 +570,11 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
         container.removeChild(domEl);
       }
     };
-  }, []);
+  }, [fallbackActive, prefersReducedMotion]);
 
   if (fallbackActive) {
     return (
-      <div className="w-full h-full flex items-center justify-center relative select-none">
+      <div aria-hidden="true" className="w-full h-full flex items-center justify-center relative select-none">
         <svg viewBox="0 0 400 400" className="w-4/5 h-4/5 max-w-[380px]">
           <circle cx="200" cy="200" r="150" fill="none" stroke="currentColor" strokeOpacity="0.2" strokeWidth="1.5" />
           <circle cx="200" cy="200" r="108" fill="none" stroke="#FF5A1F" strokeOpacity="0.8" strokeWidth="1.5" strokeDasharray="6 6" />
@@ -576,10 +586,35 @@ export function NeuralSystemsCore3D({ activeMode }: NeuralSystemsCore3DProps) {
   }
 
   return (
-    <div
-      ref={mountRef}
-      className="w-full h-full cursor-grab active:cursor-grabbing relative opacity-75 dark:opacity-80 transition-opacity"
-      aria-label="Interactive 3D topology demonstrating NHTech AI systems"
-    />
+    <>
+      <div
+        ref={mountRef}
+        aria-hidden="true"
+        className="relative h-full w-full cursor-grab touch-pan-y opacity-80 active:cursor-grabbing"
+      />
+      <div className="absolute right-0 top-0 flex gap-1.5">
+        {!prefersReducedMotion && (
+          <button
+            type="button"
+            aria-label={isPaused ? 'Resume 3D model animation' : 'Pause 3D model animation'}
+            title={isPaused ? 'Resume animation' : 'Pause animation'}
+            onClick={() => {
+              motionPaused.current = !motionPaused.current;
+              setIsPaused(motionPaused.current);
+              redrawRef.current?.();
+            }}
+            className="site-button button-secondary size-11 p-0"
+          >
+            {isPaused ? <Play aria-hidden="true" className="size-4" /> : <Pause aria-hidden="true" className="size-4" />}
+          </button>
+        )}
+        <button type="button" aria-label="Rotate 3D model left" title="Rotate left" onClick={() => rotateRef.current?.(-0.55)} className="site-button button-secondary size-11 p-0">
+          <RotateCcw aria-hidden="true" className="size-4" />
+        </button>
+        <button type="button" aria-label="Rotate 3D model right" title="Rotate right" onClick={() => rotateRef.current?.(0.55)} className="site-button button-secondary size-11 p-0">
+          <RotateCw aria-hidden="true" className="size-4" />
+        </button>
+      </div>
+    </>
   );
 }

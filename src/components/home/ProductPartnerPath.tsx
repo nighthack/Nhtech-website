@@ -64,7 +64,7 @@ export function ProductPartnerPath({ onNavigate }: ProductPartnerPathProps) {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-[#d7bdf9]/15">
           <div className="space-y-4 max-w-3xl">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-[#e0fb2e] uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#e0fb2e] motion-safe:animate-pulse" />
               THE ENGAGEMENT BLUEPRINT // ZERO FRICTION TO SCALE
             </div>
             <h2 className="text-display-massive font-display font-black text-[#f7f4ec] tracking-tight leading-[0.95]">

@@ -275,7 +275,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
+              className="button-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
             >
               <span>Map Your Workflow With Us</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

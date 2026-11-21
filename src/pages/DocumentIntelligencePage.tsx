@@ -40,7 +40,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
       title: 'Deterministic Citation Verification Gate',
       desc: 'Every extracted attribute, compliance summary, or calculated entity provides verifiable bounding-box citations linked back to the exact source paragraph.',
       metric: 'Verifiable paragraph citation trail',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-orange-text)'
     }
   ];
 
@@ -71,7 +71,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
 
       {/* 2. Interactive 4-Stage Ingestion & Verification Pipeline */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
               <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
@@ -94,8 +94,9 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
                 <button
                   key={step.num}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => setActivePipelineStep(idx)}
-                  className={`p-5 text-left font-mono transition-all cursor-pointer relative ${
+                  className={`p-5 text-left font-mono focus-visible:-outline-offset-4 transition-colors cursor-pointer relative ${
                     isSelected
                       ? 'bg-[var(--bg-surface)]'
                       : 'bg-[var(--bg-base)] hover:bg-[var(--bg-surface-subtle)]'
@@ -147,7 +148,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
 
       {/* 3. Core Document Runtimes */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase font-semibold">Technical Framework</span>
             <MaskedHeading as="h2" className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -221,7 +222,7 @@ export function DocumentIntelligencePage({ onNavigate }: DocumentIntelligencePag
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Schedule Document Architecture Assessment</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

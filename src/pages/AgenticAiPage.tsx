@@ -39,7 +39,7 @@ export function AgenticAiPage({ onNavigate }: AgenticAiPageProps) {
 
       {/* 2. Interactive DAG Agent Workflow Simulator */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 text-left">
+        <div className="site-container space-y-6 text-left">
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
               <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
@@ -60,7 +60,7 @@ export function AgenticAiPage({ onNavigate }: AgenticAiPageProps) {
 
       {/* 3. The 3 Architectural Governance Boundaries */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase font-semibold">Enterprise Governance</span>
             <MaskedHeading as="h2" className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
@@ -154,7 +154,7 @@ export function AgenticAiPage({ onNavigate }: AgenticAiPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Schedule Architecture Session</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

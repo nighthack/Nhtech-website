@@ -80,7 +80,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
       {/* 2. Direct Payment Portals Quick Action Banner */}
       <section className="py-12 border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-8 shadow-sm">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="space-y-1.5 text-left">
@@ -101,7 +101,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                   href="https://pages.razorpay.com/nighthack-labs"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all shadow-md cursor-pointer group"
+                  className="button-primary inline-flex items-center gap-2 px-5 py-3 rounded-xl font-display font-bold text-xs tracking-tight shadow-md cursor-pointer group"
                 >
                   <CreditCard className="w-4 h-4" />
                   <span>Pay Online</span>
@@ -126,7 +126,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
       {/* 3. Main Content Layout: Sidebar Table of Contents + Comprehensive Sections */}
       <section className="py-14 sm:py-20 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start text-left">
+        <div className="site-container grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start text-left">
         
         {/* Sticky Table of Contents Sidebar (Desktop) */}
         <div className="lg:col-span-4 lg:sticky lg:top-28 hidden lg:block space-y-4">
@@ -350,7 +350,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                       href="https://pages.razorpay.com/nighthack-labs"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm"
+                      className="button-primary w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
                     >
                       <span>Pay Online</span>
                       <ArrowUpRight className="w-4 h-4" />
@@ -605,7 +605,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => onNavigate('/contact')}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] text-xs font-display font-bold transition-all cursor-pointer shadow-md"
+                  className="button-primary inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-display font-bold cursor-pointer shadow-md"
                 >
                   <span>Submit Inquiry via Contact Form</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />

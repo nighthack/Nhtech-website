@@ -37,7 +37,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
       {/* 2. Proof Stats Strip with Scroll-triggered Counter */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="site-container space-y-6">
           <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
             Production Systems &amp; Delivery Track Record
           </div>
@@ -60,7 +60,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
       {/* 3. Core Philosophy & Engineering Pod Narrative */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
           <div className="border-b border-[var(--border-color)] pb-4">
             <span className="text-xs font-mono text-[var(--text-secondary)] uppercase tracking-wider">Core Operating Tenets</span>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -122,7 +122,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
       {/* 4. Verified Partnerships & Ecosystem */}
       <section className="py-14 sm:py-20 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
           <div className="border-b border-[var(--border-color)] pb-4">
             <span className="text-xs font-mono text-[var(--text-secondary)] uppercase tracking-wider">Partnership &amp; Roots</span>
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -148,9 +148,9 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                   ML Systems
                 </span>
               </div>
-              <h4 className="text-xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+              <h3 className="text-xl font-display font-bold text-[var(--text-primary)] tracking-tight">
                 {brand.partnerships.researchRoots.institution}
-              </h4>
+              </h3>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal leading-relaxed">
                 Foundational machine learning research collaboration that seeded our core architectural principles in model evaluation and stability.
               </p>
@@ -176,7 +176,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           <button
             type="button"
             onClick={() => onNavigate('/contact')}
-            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md self-start md:self-auto"
+            className="button-primary inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-md self-start md:self-auto"
           >
             <span>Get in touch with our engineering leadership</span>
             <ArrowRight className="w-4 h-4 text-[#061421]" />

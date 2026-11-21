@@ -1,3 +1,4 @@
+import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
 export type WorldMode = 
@@ -20,13 +21,15 @@ interface WorldCanvasProps {
 export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const reduceMotion = useReducedMotion();
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
     let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
     let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
 
@@ -34,6 +37,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
       if (!canvas || !canvas.parentElement) return;
       width = canvas.width = canvas.parentElement.clientWidth;
       height = canvas.height = canvas.parentElement.clientHeight;
+      if (reduceMotion) render();
     };
 
     window.addEventListener('resize', handleResize);
@@ -45,7 +49,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
       mouse.targetX = e.clientX - rect.left;
       mouse.targetY = e.clientY - rect.top;
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    if (!reduceMotion) window.addEventListener('mousemove', handleMouseMove);
 
     // Particles & Geometry state
     const particleCount = mode === 'fintech' ? 90 : mode === 'manufacturing' ? 60 : 45;
@@ -245,7 +249,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         });
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      if (!reduceMotion) animationFrameId = requestAnimationFrame(render);
     };
 
     render();
@@ -255,7 +259,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [mode]);
+  }, [mode, reduceMotion]);
 
   return (
     <canvas

@@ -16,7 +16,7 @@ interface HomePageProps {
 
 export function HomePage({ onNavigate, onSelectCaseStudy }: HomePageProps) {
   return (
-    <div id="nhtech-homepage" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] relative selection:bg-[#FF5A1F] selection:text-[#061421]">
+    <div id="nhtech-homepage" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] relative">
       <ScrollProgressRail />
       {/* 0. Ambient Subtle Ocean & Signal Light Field */}
       <IntelligenceCore3D />

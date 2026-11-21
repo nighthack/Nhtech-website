@@ -327,9 +327,10 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
                 <button
                   key={study.num}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => setActiveIdx(idx)}
                   className={`py-6 text-left transition-all cursor-pointer group relative ${
-                    isSelected ? 'opacity-100' : 'opacity-70 hover:opacity-100'
+                    isSelected ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'
                   }`}
                 >
                   <span
@@ -412,7 +413,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
                 <button
                   type="button"
                   onClick={() => onNavigate('/work')}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shrink-0 self-start sm:self-end"
+                  className="button-primary inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shrink-0 self-start sm:self-end"
                 >
                   <span>Inspect Case Studies</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />

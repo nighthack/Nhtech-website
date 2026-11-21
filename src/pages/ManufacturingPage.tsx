@@ -40,7 +40,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
       title: 'Plant Historian & ERP Sync',
       role: 'Asynchronous Persistence',
       desc: 'Bridging inspected part tallies and yield statistics asynchronously to SAP/Siemens plant databases over secure internal IPC queues.',
-      accent: '#FF5A1F'
+      accent: 'var(--accent-orange-text)'
     }
   ];
 
@@ -71,7 +71,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
 
       {/* 2. Interactive Plant Topology Stage */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
           <div className="flex flex-wrap items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
               <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
@@ -94,8 +94,10 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
                 <button
                   key={node.num}
                   type="button"
+                  aria-pressed={isSelected}
+                  aria-controls="manufacturing-topology-detail"
                   onClick={() => setActiveTopologyNode(idx)}
-                  className={`p-5 text-left font-mono transition-colors cursor-pointer relative ${
+                  className={`p-5 text-left font-mono focus-visible:-outline-offset-4 transition-colors cursor-pointer relative ${
                     isSelected
                       ? 'bg-[var(--bg-surface)]'
                       : 'bg-[var(--bg-surface-subtle)] hover:bg-[var(--bg-surface)]/80'
@@ -119,7 +121,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
           </div>
 
           {/* Selected Stage Deep Inspector */}
-          <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-10 shadow-sm space-y-6">
+          <div id="manufacturing-topology-detail" className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-10 space-y-6">
             <div className="flex items-center gap-2.5 text-xs font-mono font-semibold" style={{ color: plantNodes[activeTopologyNode].accent }}>
               <span>Topology Stage {plantNodes[activeTopologyNode].num}</span>
               <span aria-hidden="true">·</span>
@@ -136,7 +138,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
 
             <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#22A06B]" />
+                <ShieldCheck className="w-4 h-4 text-[var(--status-success-text)]" />
                 <span className="text-[var(--text-primary)] font-medium">Compliance: Air-Gapped On-Premise Factory Network</span>
               </div>
               <span className="text-[var(--text-muted)]">Compatible with Siemens, SAP &amp; Industrial IPC Fleets</span>
@@ -147,7 +149,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
 
       {/* 3. Core Manufacturing Engineering Systems */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-semibold">
               Plant Capabilities
@@ -223,7 +225,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Schedule Plant Engineering Discussion</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

@@ -151,11 +151,11 @@ export function ForwardDeployedEngineeringPage({
     <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] transition-colors">
       {/* 1. HERO: Editorial Split with Interactive Integration Blueprint */}
       <section className="pt-28 pb-16 sm:pt-32 sm:pb-20 border-b border-[var(--border-color)] relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-left">
+        <div className="site-container relative z-10 text-left">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-7 space-y-7">
               <motion.p
-                initial={{ opacity: 0, y: 10 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold"
@@ -202,7 +202,7 @@ export function ForwardDeployedEngineeringPage({
                 <button
                   type="button"
                   onClick={() => onNavigate('/contact')}
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-sm"
+                  className="button-primary inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-sm"
                 >
                   <span>Discuss a business workflow</span>
                   <ArrowRight className="w-4 h-4 text-[#061421]" />
@@ -231,7 +231,7 @@ export function ForwardDeployedEngineeringPage({
 
       {/* 3. RESPONSIBILITIES: UNBOXED TWO-COLUMN HAIRLINE SPLIT */}
       <section className="py-20 sm:py-24 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div className="site-container space-y-12 text-left">
           <div className="max-w-3xl space-y-3">
             <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
               Clear Joint Ownership
@@ -296,7 +296,7 @@ export function ForwardDeployedEngineeringPage({
 
       {/* 4. READABLE EXECUTION CADENCE WITH HAIRLINE SPINE */}
       <section className="py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div className="site-container space-y-12 text-left">
           <div className="max-w-3xl space-y-3">
             <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
               Execution Cadence
@@ -378,7 +378,7 @@ export function ForwardDeployedEngineeringPage({
 
       {/* 6. WHEN THIS MODEL IS RIGHT + WHAT YOU GET + CONFIRMED ENGAGEMENT OPTIONS */}
       <section className="py-20 sm:py-24 bg-[var(--bg-base)] border-b border-[var(--border-color)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 text-left">
+        <div className="site-container space-y-14 text-left">
           <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[var(--border-color)] border-t border-b border-[var(--border-color)]">
             {/* When this model is right */}
             <div className="py-8 lg:pr-10 space-y-4">
@@ -473,7 +473,7 @@ export function ForwardDeployedEngineeringPage({
 
       {/* 7. SIX CORE TECHNICAL PILLARS (Hairline Matrix) */}
       <section className="py-20 sm:py-24 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
+        <div className="site-container space-y-12 text-left">
           <div className="max-w-3xl space-y-3">
             <p className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-semibold">
               Technical Foundations
@@ -507,7 +507,7 @@ export function ForwardDeployedEngineeringPage({
 
       {/* 8. ENHANCED CASE STUDIES HIGHLIGHTING VERIFIED OUTCOMES */}
       <section className="py-20 sm:py-24 bg-[var(--bg-base)] border-b border-[var(--border-color)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-2">
               <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-semibold">
@@ -593,7 +593,7 @@ export function ForwardDeployedEngineeringPage({
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Discuss a business workflow</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

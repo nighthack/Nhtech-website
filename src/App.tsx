@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { MotionConfig } from 'motion/react';
 import { RoutePath, CaseStudy } from './types';
 import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/layout/Navbar';
@@ -31,22 +32,47 @@ export default function App() {
   });
 
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const focusAfterNavigation = useRef(false);
 
   // Sync browser history
   useEffect(() => {
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
+      const path = window.location.pathname || '/';
+      if (path !== currentPath) {
+        focusAfterNavigation.current = true;
+        setSelectedCaseStudy(null);
+        setCurrentPath(path);
+      }
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [currentPath]);
+
+  useLayoutEffect(() => {
+    if (!focusAfterNavigation.current) return;
+    focusAfterNavigation.current = false;
+    if (!document.querySelector('dialog:modal')) mainRef.current?.focus({ preventScroll: true });
+  }, [currentPath]);
 
   const handleNavigate = (path: RoutePath) => {
-    setCurrentPath(path);
-    if (typeof window !== 'undefined') {
-      window.history.pushState({}, '', path);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (path === currentPath) {
+      if (window.location.hash) window.history.replaceState({}, '', path);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      mainRef.current?.focus({ preventScroll: true });
+      return;
     }
+
+    focusAfterNavigation.current = true;
+    if (path !== '/work') setSelectedCaseStudy(null);
+    window.history.pushState({}, '', path);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setCurrentPath(path);
+  };
+
+  const openCaseStudy = (study: CaseStudy) => {
+    setSelectedCaseStudy(study);
+    handleNavigate('/work');
   };
 
   const renderCurrentView = () => {
@@ -55,7 +81,7 @@ export default function App() {
         return (
           <HomePage
             onNavigate={handleNavigate}
-            onSelectCaseStudy={(cs) => setSelectedCaseStudy(cs)}
+            onSelectCaseStudy={openCaseStudy}
           />
         );
       case '/fde':
@@ -107,7 +133,7 @@ export default function App() {
         return (
           <HomePage
             onNavigate={handleNavigate}
-            onSelectCaseStudy={(cs) => setSelectedCaseStudy(cs)}
+            onSelectCaseStudy={openCaseStudy}
           />
         );
     }
@@ -115,14 +141,17 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <SEOHead currentPath={currentPath} />
-      <div id="nhtech-app-root" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[#FF5A1F] selection:text-[#061421] transition-colors duration-300">
-        <Navbar currentPath={currentPath} onNavigate={handleNavigate} />
-        <main className="flex-1">
-          {renderCurrentView()}
-        </main>
-        <Footer onNavigate={handleNavigate} />
-      </div>
+      <MotionConfig reducedMotion="user">
+        <SEOHead currentPath={currentPath} />
+        <div id="nhtech-app-root" className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] flex flex-col font-sans">
+          <a href="#main-content" className="skip-link site-button button-primary">Skip to main content</a>
+          <Navbar currentPath={currentPath} onNavigate={handleNavigate} />
+          <main id="main-content" tabIndex={-1} ref={mainRef} className="flex-1 focus-visible:outline-none">
+            {renderCurrentView()}
+          </main>
+          <Footer onNavigate={handleNavigate} />
+        </div>
+      </MotionConfig>
     </ThemeProvider>
   );
 }

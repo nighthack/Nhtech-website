@@ -60,7 +60,7 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
           <button
             type="button"
             onClick={() => onNavigate('/contact')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 min-h-[48px] px-7 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] active:bg-[#E95013] text-[#061421] font-display font-bold text-sm tracking-tight active:scale-[0.98] transition-all cursor-pointer shadow-md"
+            className="button-primary w-full sm:w-auto inline-flex items-center justify-center gap-2.5 min-h-[48px] px-7 py-3.5 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
           >
             <span>Discuss a business workflow</span>
             <ArrowRight className="w-4 h-4 text-[#061421]" />

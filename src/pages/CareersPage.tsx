@@ -69,7 +69,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
 
       {/* 2. Engineering Pod Tenets */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+        <div className="site-container text-left">
           <div className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-2xl overflow-hidden grid grid-cols-1 sm:grid-cols-3 gap-px">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -79,7 +79,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
               className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-3"
             >
               <div className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">01 · AUTONOMY</div>
-              <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">Direct Technical Ownership</h3>
+              <h2 className="text-xl font-display font-bold text-[var(--text-primary)]">Direct Technical Ownership</h2>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal leading-relaxed font-sans">
                 You architect, build, and deploy systems directly. No endless bureaucracy or non-technical handoffs.
               </p>
@@ -93,7 +93,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
               className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-3"
             >
               <div className="text-xs font-mono text-[var(--accent-secondary)] font-bold tracking-wider">02 · RIGOR</div>
-              <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">Production Standards</h3>
+              <h2 className="text-xl font-display font-bold text-[var(--text-primary)]">Production Standards</h2>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal leading-relaxed font-sans">
                 We hold ourselves to mathematical evaluation, deterministic fallbacks, and high-throughput reliability.
               </p>
@@ -107,7 +107,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
               className="p-6 sm:p-8 bg-[var(--bg-surface)] space-y-3"
             >
               <div className="text-xs font-mono text-[var(--accent-secondary)] font-bold tracking-wider">03 · LABS</div>
-              <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">Continuous Incubation</h3>
+              <h2 className="text-xl font-display font-bold text-[var(--text-primary)]">Continuous Incubation</h2>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal leading-relaxed font-sans">
                 Pods spend dedicated time incubating internal technology (like Talkument, Hoot, and our Ottom8 Agent Platform).
               </p>
@@ -118,7 +118,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
 
       {/* 3. Open Pod Roles */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
           <div className="border-b border-[var(--border-color)] pb-4">
             <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">Pod Openings</span>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -206,7 +206,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
           <div className="pt-2">
             <a
               href="mailto:info@nighthack.in?subject=Engineering%20Background%20-%20General%20Application"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md no-underline"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md no-underline"
             >
               <Mail className="w-4 h-4 text-[#061421]" />
               <span>Email Your CV &amp; Profile (info@nighthack.in)</span>

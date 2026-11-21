@@ -150,11 +150,11 @@ export function AgentWorkflowSimulator() {
             type="button"
             onClick={handleRunSimulation}
             disabled={isSimulating}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] disabled:opacity-50 text-xs font-bold text-[#061421] transition-all cursor-pointer shadow-sm"
+            className="site-button button-primary"
           >
             {isSimulating ? (
               <>
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                <Loader2 className="w-3.5 h-3.5 motion-safe:animate-spin" />
                 Simulating Execution...
               </>
             ) : (
@@ -302,7 +302,7 @@ export function AgentWorkflowSimulator() {
               <span className="text-[10px] text-[#A8B8C7]">IMMUTABLE SCHEMA VALIDATION</span>
             </div>
 
-            <pre className="flex-1 overflow-x-auto text-[11px] text-[#F5F8FA] leading-relaxed p-3 bg-[#0B2031] rounded-lg border border-[#173D5B]">
+            <pre tabIndex={0} role="region" aria-label="Sample payload code" className="flex-1 overflow-x-auto text-[11px] text-[#F5F8FA] leading-relaxed p-3 bg-[#0B2031] rounded-lg border border-[#173D5B]">
               <code>{currentStep.samplePayload.code}</code>
             </pre>
 

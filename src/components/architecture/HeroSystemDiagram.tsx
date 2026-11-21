@@ -114,7 +114,7 @@ export function HeroSystemDiagram() {
       {/* Top telemetry bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-5 mb-5 border-b border-[#1b1f27] text-xs font-mono text-[#9ca3af]">
         <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 motion-safe:animate-pulse" />
           <span className="text-[#e5e7eb] font-semibold">ENTERPRISE SYSTEM ARCHITECTURE</span>
           <span className="text-[#4b5563]">/</span>
           <span className="text-emerald-400">CONTROLLED EXECUTION ENCLAVE</span>

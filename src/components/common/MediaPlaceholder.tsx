@@ -185,7 +185,7 @@ export function MediaPlaceholder({
         isLight ? 'border-[#e2e8f0] text-[#64748b]' : 'border-[#151922] text-[#4d5668]'
       }`}>
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 motion-safe:animate-pulse" />
           <span className="font-mono text-[10px] tracking-wide uppercase">Controlled System Asset</span>
         </div>
         <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">

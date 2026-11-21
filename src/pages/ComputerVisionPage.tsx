@@ -473,7 +473,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
 
       {/* 2. Lead System Visual: Connected 4-Stage Edge Pipeline Track */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
         <div className="max-w-3xl space-y-2">
           <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-orange-text)] font-semibold">
             Edge Architecture Pattern
@@ -550,7 +550,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
 
       {/* 3. Separated Use Cases with Interactive Live Edge Vision Simulator */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-5 border-b border-[var(--border-color)]">
           <div className="space-y-2 max-w-2xl">
             <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-orange-text)] font-semibold">
@@ -684,7 +684,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
 
       {/* 4. Core Vision & Edge Capabilities + Expandable Stack Specification */}
       <section className="py-14 sm:py-20 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
         <div className="max-w-3xl space-y-2">
           <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-secondary)] font-semibold">
             Engineering Scope
@@ -818,7 +818,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Discuss a Vision Workflow</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />

@@ -192,7 +192,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
       {/* 2. Composable Systems Editorial Split + Interactive Topology Visual */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left">
+        <div className="site-container grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left">
           <div className="lg:col-span-7 space-y-5">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--accent-orange-text)] font-semibold">
               <GitMerge className="w-4 h-4" />
@@ -254,7 +254,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
       {/* 3. Interactive Explorer: Two Navigation Routes */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-left">
+        <div className="site-container space-y-10 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[var(--border-color)]">
           <div>
             <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-semibold">
@@ -352,7 +352,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 <button
                   type="button"
                   onClick={() => onNavigate(activeChallenge.primaryRoute)}
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm self-start shrink-0"
+                  className="button-primary inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm self-start shrink-0"
                 >
                   <span>{activeChallenge.primaryRouteLabel}</span>
                   <ArrowRight className="w-4 h-4 text-[#061421]" />
@@ -496,7 +496,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                   <button
                     type="button"
                     onClick={() => onNavigate(activeCap.relatedRoute!)}
-                    className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E0440E] text-[#061421] font-display font-bold text-xs tracking-tight transition-all cursor-pointer shadow-sm self-start lg:self-auto shrink-0"
+                    className="button-primary inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm self-start lg:self-auto shrink-0"
                   >
                     <span>Explore Dedicated Page</span>
                     <ArrowRight className="w-4 h-4 text-[#061421]" />
@@ -584,7 +584,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
       {/* 4. Direct Links to Detailed Capability Destinations (Hairline Index) */}
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+        <div className="site-container space-y-8 text-left">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
               <div className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-semibold">
@@ -652,7 +652,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#FF5A1F] hover:bg-[#FF7A45] text-[#061421] font-display font-bold text-sm tracking-tight transition-all cursor-pointer shadow-md"
+              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Discuss a business workflow</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
