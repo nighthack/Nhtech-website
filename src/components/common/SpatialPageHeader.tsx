@@ -72,7 +72,7 @@ export function SpatialPageHeader({
           )}
         </MaskedHeading>
 
-        <ScrollText className="text-base sm:text-lg text-[var(--text-secondary)] font-normal leading-[1.65] max-w-2xl" delay={0.1}>
+        <ScrollText className="page-intro" delay={0.1}>
           {subtitle}
         </ScrollText>
 
@@ -87,7 +87,7 @@ export function SpatialPageHeader({
             ctaHref ? (
               <a
                 href={ctaHref}
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:bg-[var(--accent-primary-active)] text-[var(--accent-primary-text)] font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md no-underline whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:bg-[var(--accent-primary-active)] text-[var(--accent-primary-text)] font-bold text-sm tracking-tight transition-colors cursor-pointer no-underline whitespace-nowrap"
               >
                 <span>{ctaText}</span>
                 <ArrowRight className="w-4 h-4 text-current" />
@@ -95,7 +95,7 @@ export function SpatialPageHeader({
             ) : (
               <button
                 onClick={() => onNavigate(ctaRoute)}
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:bg-[var(--accent-primary-active)] text-[var(--accent-primary-text)] font-bold text-xs tracking-tight transition-all cursor-pointer shadow-md whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:bg-[var(--accent-primary-active)] text-[var(--accent-primary-text)] font-bold text-sm tracking-tight transition-colors cursor-pointer whitespace-nowrap"
               >
                 <span>{ctaText}</span>
                 <ArrowRight className="w-4 h-4 text-current" />
@@ -106,7 +106,7 @@ export function SpatialPageHeader({
           {secondaryCtaText && secondaryCtaRoute && (
             <button
               onClick={() => onNavigate(secondaryCtaRoute)}
-              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-3 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-primary)] font-medium text-xs transition-all cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-5 py-3 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-primary)] font-medium text-xs transition-all cursor-pointer whitespace-nowrap"
             >
               <span>{secondaryCtaText}</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[var(--text-muted)]" />

@@ -78,31 +78,16 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Left Column: Editorial Positioning & Actions */}
             <div className="relative z-10 lg:col-span-6 space-y-8 text-left">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-text)] font-semibold"
-              >
-                <span className="inline-block w-6 h-[1.5px] bg-[var(--accent-primary)]" aria-hidden="true" />
-                <span>Applied AI &amp; Production Systems Engineering</span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-5"
-              >
+              <div className="space-y-5">
                 <h1 className="text-hero-display text-[var(--text-primary)] leading-[1.12] text-balance">
                   We turn complex business operations into{' '}
                   production&#8209;ready AI systems.
                 </h1>
 
-                <p className="text-base sm:text-lg text-[var(--text-secondary)] font-normal max-w-xl leading-[1.68]">
+                <p className="page-intro">
                   Senior engineering teams embedded alongside your domain experts—building deterministic workflow automation, edge computer vision, and enterprise AI platforms deployed inside infrastructure you control.
                 </p>
-              </motion.div>
+              </div>
 
               {/* Primary & Secondary CTAs */}
               <motion.div

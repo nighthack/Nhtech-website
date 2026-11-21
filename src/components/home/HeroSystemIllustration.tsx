@@ -1,202 +1,115 @@
-import { useEffect, useId, useRef, type CSSProperties, type RefObject } from 'react';
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react';
+import { useEffect, useId, useRef, type RefObject } from 'react';
 import './HeroSystemIllustration.css';
 
 export type SpatialSystemMode = 'embedded' | 'vision-edge' | 'custom-platforms';
 
-const center = { x: 408, y: 185 };
-// Curves share a narrow waist at the nucleus and fan out towards the hero edges.
-const signalPaths = Array.from({ length: 19 }, (_, index) => {
-  const lane = index - 9;
-  return `M -40 ${225 + lane * 7}
-    C 125 ${290 + lane * 9}, 236 ${94 + lane * 6}, 408 ${185 + lane * 1.8}
-    S 598 ${210 - lane * 10}, 760 ${116 - lane * 9}`;
+const stageTwist = { embedded: 0, 'vision-edge': 0.9, 'custom-platforms': -0.72 };
+const fins = Array.from({ length: 72 }, (_, i) => {
+  const t = i / 71;
+  return { t, x: 52 + t * 540, y: 215 - t * 50 + 36 * Math.sin(t * Math.PI * 2) };
 });
 
-const fragments = [
-  'const', 'pipeline', '=', 'async', '() => {',
-  'await', 'ingest', '(input)', ';',
-  'return', 'model', '.run', '(data)', ';',
-  '}', '[]', '<>', '::',
-];
-const codePositions = [
-  [92, 107], [150, 107], [230, 107], [250, 107], [308, 107],
-  [125, 144], [184, 144], [248, 144], [315, 144],
-  [125, 181], [191, 181], [243, 181], [285, 181], [343, 181],
-  [92, 218], [138, 255], [194, 280], [247, 246],
-];
-const shapePaths = [
-  'M 0 -8 A 8 8 0 1 0 0 8 A 8 8 0 1 0 0 -8 Z',
-  'M -5 -7 H 5 Q 7 -7 7 -5 V 5 Q 7 7 5 7 H -5 Q -7 7 -7 5 V -5 Q -7 -7 -5 -7 Z',
-  'M 0 -9 Q 1 -9 2 -7 L 8 5 Q 9 7 6 7 H -6 Q -9 7 -8 5 L -2 -7 Q -1 -9 0 -9 Z',
-  'M -7 0 H 7 M 0 -7 V 7',
-];
-const tilt: Record<SpatialSystemMode, number> = {
-  embedded: -12,
-  'vision-edge': 14,
-  'custom-platforms': 36,
-};
+// Each cross-section is a slender foil. Varying its pitch reveals the whole surface.
+function profile(t: number, phase: number, pressure: number) {
+  const envelope = 0.42 + 0.58 * Math.sin(Math.PI * t);
+  const pitch = t * 5.2 - 1.3 + phase;
+  const reach = envelope * (76 + 50 * Math.cos(pitch));
+  const rise = envelope * (82 + 61 * Math.sin(pitch)) + pressure;
+  return `M ${-reach} ${rise}
+    C ${-reach * 0.5} ${rise + 14}, -22 ${-rise * 0.78}, ${reach} ${-rise}
+    C ${reach + 6} ${-rise - 1}, ${reach + 6} ${-rise + 7}, ${reach + 2} ${-rise + 9}
+    C -11 ${-rise * 0.43}, ${-reach * 0.47} ${rise + 26}, ${-reach} ${rise} Z`;
+}
 
 export function HeroSystemIllustration({ activeMode, heroRef }: {
   activeMode: SpatialSystemMode;
   heroRef: RefObject<HTMLElement | null>;
 }) {
-  const washId = useId();
-  const signalId = useId();
-  const fieldRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const driftX = useSpring(x, { stiffness: 85, damping: 24 });
-  const driftY = useSpring(y, { stiffness: 85, damping: 24 });
+  const ink = useId();
+  const svgRef = useRef<SVGSVGElement>(null);
+  const targetTwist = useRef(stageTwist[activeMode]);
 
-  const signalBend = useTransform(driftY, [-17, 17], [-4, 4]);
+  useEffect(() => { targetTwist.current = stageTwist[activeMode]; }, [activeMode]);
 
   useEffect(() => {
+    const svg = svgRef.current;
     const hero = heroRef.current;
-    const field = fieldRef.current;
-    if (!hero || !field) return;
+    if (!svg || !hero) return;
+    const paths: SVGPathElement[] = Array.from(svg.querySelectorAll('path'));
+    const preference = matchMedia('(prefers-reduced-motion: reduce)');
+    let visible = false;
+    let frame = 0;
+    let previous = 0;
+    let time = 0;
+    let twist = targetTwist.current;
+    let aim = 0.5;
+    let cursor = aim;
+    let targetPressure = 0;
+    let pressure = 0;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      field.dataset.visible = String(entry.isIntersecting);
-    });
-    observer.observe(field);
-
-    const reset = () => {
-      x.set(0);
-      y.set(0);
-    };
-    const steer = (clientX: number, clientY: number) => {
-      if (reduceMotion) return;
-      const bounds = hero.getBoundingClientRect();
-      const horizontal = Math.max(0, Math.min(1, (clientX - bounds.left) / bounds.width));
-      const vertical = Math.max(0, Math.min(1, (clientY - bounds.top) / bounds.height));
-      x.set((horizontal - 0.5) * 46);
-      y.set((vertical - 0.5) * 34);
-    };
-    const onPointerMove = (event: PointerEvent) => {
-      if (event.pointerType !== 'touch') steer(event.clientX, event.clientY);
-    };
-    const onTouch = (event: TouchEvent) => {
-      const touch = event.touches[0];
-      if (event.touches.length === 1) steer(touch.clientX, touch.clientY);
-      else reset();
-    };
-
-    hero.addEventListener('pointermove', onPointerMove, { passive: true });
-    hero.addEventListener('pointerleave', reset);
-    hero.addEventListener('touchstart', onTouch, { passive: true });
-    hero.addEventListener('touchmove', onTouch, { passive: true });
-    hero.addEventListener('touchend', reset);
-    hero.addEventListener('touchcancel', reset);
+    function draw(now: number) {
+      const dt = previous ? Math.min((now - previous) / 1000, 0.05) : 0;
+      previous = now;
+      time += dt;
+      const blend = 1 - Math.exp(-dt * 5);
+      twist += (targetTwist.current - twist) * blend;
+      cursor += (aim - cursor) * blend;
+      pressure += (targetPressure - pressure) * blend;
+      fins.forEach(({ t }, i) => {
+        const local = Math.exp(-24 * (t - cursor) ** 2);
+        const phase = twist + 0.38 * Math.sin(time * 0.46 - t * 3.6);
+        paths[i].setAttribute('d', profile(t, phase, local * pressure));
+      });
+      frame = requestAnimationFrame(draw);
+    }
+    function sync() {
+      cancelAnimationFrame(frame);
+      previous = 0;
+      if (visible && !document.hidden && !preference.matches) frame = requestAnimationFrame(draw);
+    }
+    function steer(e: PointerEvent) {
+      if (!svg || preference.matches) return;
+      const box = svg.getBoundingClientRect();
+      aim = Math.max(0, Math.min(1, (e.clientX - box.left) / box.width));
+      targetPressure = 55 * Math.max(-1, Math.min(1, 1 - 2 * (e.clientY - box.top) / box.height));
+    }
+    const release = () => { targetPressure = 0; };
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); });
+    observer.observe(svg);
+    hero.addEventListener('pointermove', steer, { passive: true });
+    hero.addEventListener('pointerdown', steer, { passive: true });
+    hero.addEventListener('pointerleave', release);
+    hero.addEventListener('pointerup', release);
+    hero.addEventListener('pointercancel', release);
+    document.addEventListener('visibilitychange', sync);
+    preference.addEventListener('change', sync);
     return () => {
+      cancelAnimationFrame(frame);
       observer.disconnect();
-      hero.removeEventListener('pointermove', onPointerMove);
-      hero.removeEventListener('pointerleave', reset);
-      hero.removeEventListener('touchstart', onTouch);
-      hero.removeEventListener('touchmove', onTouch);
-      hero.removeEventListener('touchend', reset);
-      hero.removeEventListener('touchcancel', reset);
-      reset();
+      hero.removeEventListener('pointermove', steer);
+      hero.removeEventListener('pointerdown', steer);
+      hero.removeEventListener('pointerleave', release);
+      hero.removeEventListener('pointerup', release);
+      hero.removeEventListener('pointercancel', release);
+      document.removeEventListener('visibilitychange', sync);
+      preference.removeEventListener('change', sync);
     };
-  }, [heroRef, reduceMotion, x, y]);
+  }, [heroRef]);
 
   return (
-    <div className="relative aspect-[1.72] w-full min-w-0" aria-hidden="true">
-      <div
-        ref={fieldRef}
-        style={{ '--synthesis-tilt': `${tilt[activeMode]}deg` } as CSSProperties}
-        className="hero-synthesis pointer-events-none absolute inset-y-[-12%] -inset-x-[7%] grid place-items-center lg:left-[-19%] lg:right-[-10%]"
-      >
-        <motion.svg
-          viewBox="0 0 700 370"
-          className="block w-full overflow-visible"
-          style={{ x: reduceMotion ? 0 : driftX, y: reduceMotion ? 0 : driftY }}
-          fill="none"
-        >
-          <defs>
-            <radialGradient id={washId}>
-              <stop stopColor="var(--accent-primary)" stopOpacity="0.15" />
-              <stop offset="1" stopColor="var(--accent-primary)" stopOpacity="0" />
-            </radialGradient>
-            <linearGradient id={signalId} gradientUnits="userSpaceOnUse" x1="-40" x2="760">
-              <stop stopColor="var(--accent-secondary)" stopOpacity="0" />
-              <stop offset=".23" stopColor="var(--accent-secondary)" stopOpacity=".3" />
-              <stop offset=".58" stopColor="var(--accent-primary)" stopOpacity=".65" />
-              <stop offset="1" stopColor="var(--accent-secondary)" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <ellipse cx={center.x} cy={center.y} rx="244" ry="160" fill={`url(#${washId})`} />
-          <motion.g
-            style={{ skewY: reduceMotion ? 0 : signalBend, transformOrigin: '408px 185px' }}
-            stroke={`url(#${signalId})`}
-            strokeLinecap="round"
-          >
-            {signalPaths.map((path, index) => (
-              <g key={index}>
-                <path d={path} strokeWidth=".8" opacity=".58" />
-                {index % 4 === 1 && (
-                  <path
-                    d={path}
-                    pathLength="100"
-                    className="hero-signal-pulse"
-                    strokeWidth="2"
-                    style={{ animationDelay: `-${index * 1.37}s` }}
-                  />
-                )}
-              </g>
-            ))}
-          </motion.g>
-          <g transform={`translate(${center.x} ${center.y})`}>
-            <g className="hero-synthesis-orientation">
-              <g className="hero-synthesis-atom" stroke="var(--accent-primary)">
-                {[0, 60, 120].map((angle) => (
-                  <ellipse key={angle} rx="131" ry="47" strokeWidth="1.15" transform={`rotate(${angle})`} />
-                ))}
-                <circle r="22" strokeOpacity=".35" />
-                <circle r="8" fill="var(--accent-primary)" fillOpacity=".46" />
-              </g>
-            </g>
-          </g>
-          {fragments.map((fragment, index) => {
-            const [codeX, codeY] = codePositions[index];
-            // A deterministic angle and uneven radii give the dispersal an irregular arrangement.
-            const angle = index * 2.39996;
-            const radius = 135 + ((index * 37) % 125);
-            const orbitAngle = (index % 3) * Math.PI / 3;
-            const ellipseX = Math.cos(angle) * 131;
-            const ellipseY = Math.sin(angle) * 47;
-            const orbitX = ellipseX * Math.cos(orbitAngle) - ellipseY * Math.sin(orbitAngle);
-            const orbitY = ellipseX * Math.sin(orbitAngle) + ellipseY * Math.cos(orbitAngle);
-            const shapeX = center.x + Math.cos(angle) * radius;
-            const shapeY = center.y + Math.sin(angle) * radius * 0.56;
-            const travel = {
-              '--code': `translate(${codeX}px, ${codeY}px)`,
-              '--gather': `translate(${center.x}px, ${center.y}px) rotate(var(--synthesis-tilt)) translate(${orbitX * 0.26}px, ${orbitY * 0.26}px)`,
-              '--orbit': `translate(${center.x}px, ${center.y}px) rotate(var(--synthesis-tilt)) translate(${orbitX}px, ${orbitY}px)`,
-              '--shape': `translate(${shapeX}px, ${shapeY}px) rotate(${(index * 47) % 120 - 60}deg)`,
-              '--size': 0.55 + (index % 4) * 0.21,
-            } as CSSProperties;
-
-            return (
-              <g key={index} className="hero-synthesis-fragment" style={travel}>
-                <text className="hero-synthesis-code" fill="var(--accent-secondary)" fontSize="17" fontFamily="var(--font-mono)">
-                  {fragment}
-                </text>
-                <circle className="hero-synthesis-electron" r={2 + index % 3 * 0.7} fill="var(--accent-primary)" />
-                <path
-                  className="hero-synthesis-shape"
-                  d={shapePaths[index % shapePaths.length]}
-                  stroke={index % 3 === 0 ? 'var(--accent-primary)' : 'var(--accent-secondary)'}
-                  strokeWidth="1.35"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </g>
-            );
-          })}
-        </motion.svg>
-      </div>
-    </div>
+    <svg ref={svgRef} viewBox="-65 -10 805 420" className="hero-foil" aria-hidden="true">
+      <defs>
+        <linearGradient id={ink} x1="0" y1="1" x2="1" y2="0" gradientUnits="objectBoundingBox">
+          <stop stopColor="var(--foil-shadow)" />
+          <stop offset=".32" stopColor="var(--accent-primary)" />
+          <stop offset=".48" stopColor="var(--foil-edge)" />
+          <stop offset=".62" stopColor="var(--foil-mid)" />
+          <stop offset="1" stopColor="var(--foil-shadow)" />
+        </linearGradient>
+      </defs>
+      <g fill={`url(#${ink})`} stroke="var(--foil-edge)" strokeOpacity=".5" strokeWidth=".55">
+        {fins.map(({ t, x, y }) => <path key={t} transform={`translate(${x} ${y})`} d={profile(t, 0, 0)} />)}
+      </g>
+    </svg>
   );
 }
