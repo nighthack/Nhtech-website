@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import { ArrowRight, Mail, FileSearch, ShieldCheck, Database, CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { RoutePath, CaseStudy } from '../../types';
 import { caseStudies } from '../../data/caseStudies';
-import { MaskedHeading } from '../common/ScrollMotion';
 import { ValuationPipelineDiagram } from '../visuals/WorkflowVisuals';
 
 interface FeaturedCaseStudySectionProps {
@@ -58,33 +57,30 @@ export function FeaturedCaseStudySection({
   return (
     <section
       id="featured-case-study"
-      className="py-16 sm:py-24 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative overflow-hidden"
+      className="py-12 sm:py-16 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
         {/* Top Editorial Asymmetric Showcase Header + Visual Frame */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 space-y-5 text-left">
-            <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.15em] text-[var(--accent-text)] font-semibold">
-              <span>Featured Case Study</span>
-              <span className="text-[var(--border-hover)]">/</span>
-              <span className="text-[var(--accent-secondary)]">{featured.clientAnonymousName}</span>
-            </div>
-
-            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.15]">
+            <h2 className="text-section-display text-[var(--text-primary)]">
               {featured.title}
-            </MaskedHeading>
+            </h2>
+            <p className="text-sm font-medium text-[var(--text-muted)]">
+              Featured case study · {featured.clientAnonymousName}
+            </p>
 
             <div className="pt-5 mt-1 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4 sm:gap-7 items-start">
               <div className="sm:pr-7 sm:border-r sm:border-[var(--border-color)] shrink-0">
                 <div className="text-2xl sm:text-3xl font-display font-extrabold text-[var(--accent-text)] tracking-tight tabular-nums leading-tight">
                   {featured.scaleEvidence.primaryMetric}
                 </div>
-                <div className="text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider mt-1">
+                <div className="text-data text-[var(--text-muted)] uppercase tracking-wider mt-1">
                   Production Outcome
                 </div>
               </div>
 
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg">
+              <p className="text-body text-[var(--text-secondary)] max-w-lg">
                 {featured.scaleEvidence.description}
               </p>
             </div>
@@ -129,7 +125,7 @@ export function FeaturedCaseStudySection({
             <h3 className="text-lg font-display font-bold text-[var(--text-primary)]">
               Fragmented intake &amp; manual spreadsheet re-entry
             </h3>
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+            <p className="text-body text-[var(--text-secondary)]">
               {featured.context}
             </p>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed pt-2">
@@ -145,7 +141,7 @@ export function FeaturedCaseStudySection({
             <h3 className="text-lg font-display font-bold text-[var(--text-primary)]">
               Unified orchestration with human sign-off gates
             </h3>
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+            <p className="text-body text-[var(--text-secondary)]">
               {featured.systemDesigned}
             </p>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed pt-2">
@@ -162,13 +158,13 @@ export function FeaturedCaseStudySection({
               <h3 className="text-lg font-display font-bold text-[var(--text-primary)]">
                 Verified operational acceleration with immutable traceability
               </h3>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed flex items-start gap-2">
+              <p className="text-body text-[var(--text-secondary)] flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-1" />
                 <span>{featured.operationalImpact}</span>
               </p>
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-[var(--text-muted)]">
+            <div className="pt-2 flex flex-wrap gap-x-3 gap-y-1 text-data text-[var(--text-muted)]">
               {featured.technologies.slice(0, 5).map((tech, tIdx) => (
                 <span key={tech} className="inline-flex items-center gap-2">
                   {tIdx > 0 && <span aria-hidden="true" className="text-[var(--border-hover)]">·</span>}
@@ -218,7 +214,7 @@ export function FeaturedCaseStudySection({
                         <Icon className="w-4 h-4" />
                       </div>
                       <span
-                        className={`text-[11px] font-mono uppercase tracking-wider font-bold ${
+                        className={`text-data uppercase tracking-wider font-bold ${
                           isActive ? 'text-[var(--accent-text)]' : 'text-[var(--text-muted)]'
                         }`}
                       >

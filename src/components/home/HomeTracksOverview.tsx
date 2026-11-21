@@ -1,7 +1,6 @@
-import { motion } from 'motion/react';
 import { ArrowRight, Users, Eye, Layers } from 'lucide-react';
 import { RoutePath } from '../../types';
-import { MaskedHeading, ScrollText } from '../common/ScrollMotion';
+import { RouteLink } from '../common/RouteLink';
 import { OfferingTrackVisual } from '../visuals/WorkflowVisuals';
 
 interface HomeTracksOverviewProps {
@@ -75,25 +74,20 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <p className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--accent-text)] font-semibold">
-              Core Engineering Offerings
-            </p>
-            <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+            <h2 className="text-section-display">
               Three ways we deliver production AI.
-            </MaskedHeading>
-            <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
+            </h2>
+            <p className="text-body text-[var(--text-secondary)]">
               Every engagement starts with your operational constraint—combining embedded engineering teams, edge perception, and custom enterprise architecture.
-            </ScrollText>
+            </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => onNavigate('/what-we-build')}
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-text)] hover:underline transition-colors cursor-pointer self-start sm:self-end shrink-0"
+          <RouteLink href="/what-we-build" onNavigate={onNavigate}
+            className="ui-action hero-secondary self-start sm:self-end shrink-0"
           >
             <span>Explore all capabilities</span>
             <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          </RouteLink>
         </div>
 
         {/* Alternating Asymmetric Editorial Chapters (Zero identical card walls) */}
@@ -103,12 +97,8 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
             const isEven = idx % 2 === 1;
 
             return (
-              <motion.article
+              <article
                 key={offering.id}
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 'some' }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
                 className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left"
               >
                 {/* Purposeful Live Architecture Diagram (alternates left/right on desktop) */}
@@ -149,10 +139,10 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-tight">
+                    <h3 className="text-card-display text-[var(--text-primary)]">
                       {offering.title}
                     </h3>
-                    <p className="text-base text-[var(--text-secondary)] leading-relaxed">
+                    <p className="text-body text-[var(--text-secondary)]">
                       {offering.summary}
                     </p>
                   </div>
@@ -185,7 +175,7 @@ export function HomeTracksOverview({ onNavigate }: HomeTracksOverviewProps) {
                     </button>
                   </div>
                 </div>
-              </motion.article>
+              </article>
             );
           })}
         </div>
