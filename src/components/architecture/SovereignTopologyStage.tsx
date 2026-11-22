@@ -1,3 +1,4 @@
+import { StageGroup } from '../home/StageGroup';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Server, Cloud, Cpu, Lock, Layers, Activity, CheckCircle2, Box } from 'lucide-react';
@@ -85,9 +86,9 @@ export function SovereignTopologyStage({
 
   return (
     <div className={`space-y-6 ${className}`}>
-      
+
       {/* Mode Selectors */}
-      <div className="flex flex-wrap gap-2">
+      <StageGroup label="Deployment environments" className="flex flex-wrap gap-2">
         {(Object.keys(topologies) as SovereignMode[]).map((modeKey) => {
           const topo = topologies[modeKey];
           const isSelected = activeMode === modeKey;
@@ -95,9 +96,12 @@ export function SovereignTopologyStage({
             <button
               key={modeKey}
               onClick={() => handleModeSelect(modeKey)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
+              aria-pressed={isSelected}
+              aria-controls="deployment-detail"
+              data-suggested={Object.keys(topologies).indexOf(modeKey) === (Object.keys(topologies).indexOf(activeMode) + 1) % Object.keys(topologies).length}
+              className={`stage-control px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
                 isSelected
-                  ? 'bg-[#FF5A1F] text-[#061421] font-bold shadow-sm'
+                  ? 'bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--accent-orange-text)] font-bold shadow-sm'
                   : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]'
               }`}
             >
@@ -105,33 +109,29 @@ export function SovereignTopologyStage({
             </button>
           );
         })}
-      </div>
+      </StageGroup>
 
       {/* Main Architectural Container */}
       <AnimatePresence mode="wait">
-        <motion.div
+        <motion.div id="deployment-detail" role="region" aria-label="Deployment environments detail"
           key={current.id}
-          initial={{ opacity: 0, y: 15 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -15 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6"
+          className="p-6 sm:p-8 rounded-2xl detail-panel bg-[var(--bg-surface)]/80 border border-[var(--border-color)] space-y-6"
         >
-          
+
           {/* Topology Overview Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div className="space-y-1 text-left">
-              <div className="text-[11px] font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-bold">
+              <div className="text-xs text-[var(--accent-orange-text)] uppercase tracking-wider font-bold">
                 {current.badge}
               </div>
               <div className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
                 {current.name}
               </div>
             </div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--text-primary)] px-3 py-1.5 rounded-lg bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]">
-              <Activity className="w-3.5 h-3.5 text-[var(--accent-secondary)]" />
-              <span>PRODUCTION-GRADE RUNTIME</span>
-            </div>
+
           </div>
 
           <p className="text-xs sm:text-sm text-[var(--text-secondary)] text-left font-normal leading-relaxed">
@@ -140,9 +140,6 @@ export function SovereignTopologyStage({
 
           {/* Schematic Nodes */}
           <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-3 text-left">
-            <div className="text-[11px] font-mono text-[var(--text-muted)] uppercase">
-              <span>DEPLOYMENT TOPOLOGY NODES</span>
-            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {current.nodes.map((node) => (
@@ -150,10 +147,10 @@ export function SovereignTopologyStage({
                   key={node.id}
                   className="p-3.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] space-y-1.5"
                 >
-                  <div className="flex items-center justify-between text-xs font-mono">
+                  <div className="flex items-center justify-between text-xs">
                     <span className="font-bold text-[var(--text-primary)]">{node.title}</span>
                   </div>
-                  <p className="text-[11px] text-[var(--text-secondary)] font-normal leading-relaxed">
+                  <p className="text-xs text-[var(--text-secondary)] font-normal leading-relaxed">
                     {node.desc}
                   </p>
                 </div>
@@ -171,7 +168,7 @@ export function SovereignTopologyStage({
                     key={i}
                     className="p-3.5 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-1.5"
                   >
-                    <div className="flex items-center gap-2 text-[11px] font-mono text-[var(--text-muted)]">
+                    <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
                       <Icon className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
                       <span>{spec.label}</span>
                     </div>

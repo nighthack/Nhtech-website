@@ -1,26 +1,20 @@
+import { MotionPage } from '../components/common/MotionPage';
+import { SectionBackdrop } from '../components/home/SectionBackdrop';
+import { StageGroup } from '../components/home/StageGroup';
 import { useState } from 'react';
 import { RoutePath } from '../types';
-import { WorldCanvas } from '../components/common/WorldCanvas';
 import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
 import { CustomModelPipelineStage } from '../components/architecture/CustomModelPipelineStage';
 import { SovereignTopologyStage } from '../components/architecture/SovereignTopologyStage';
 import { ModelEcosystemSpectrum } from '../components/home/ModelEcosystemSpectrum';
-import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
-import { 
-  Database, 
-  Sparkles, 
-  Lock, 
-  Cpu, 
-  Server, 
-  ShieldCheck, 
-  ArrowRight, 
-  Layers, 
-  Sliders, 
-  CheckCircle2, 
-  Zap, 
-  Scale, 
-  Gauge, 
-  Code2 
+import {
+  Database,
+  Sparkles,
+  Lock,
+  Server,
+  ArrowRight,
+  Sliders,
+  CheckCircle2
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -92,14 +86,12 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
   };
 
   return (
-    <div id="on-prem-ai-chapter" className="min-h-screen relative overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]">
-      {/* 0. Ambient Subtle Canvas */}
-      <WorldCanvas mode="matrix" opacity={0.22} />
+    <MotionPage id="on-prem-ai-chapter">
 
       {/* 1. Spatial Header - On-Prem AI & Sovereign Model Engineering */}
-      <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
+      <section className="home-section detail-hero pt-36 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
+        <SectionBackdrop mode="platforms" />
         <SpatialPageHeader
-          tag="Model Engineering · On-Prem AI & Sovereign Models"
           title="Turn your data into a"
           titleAccent="model you control."
           subtitle="RAG vs fine-tuning vs distillation based on the actual problem. We engineer domain-specialised sovereign models with LoRA, QLoRA, distillation, and quantisation—ensuring you control the data, evaluation assets, and model artifacts, deployed to private-cloud, on-prem, or edge environments where technically appropriate."
@@ -117,25 +109,20 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       </section>
 
       {/* 2. RAG vs Fine-Tuning vs Distillation Decision Matrix */}
-      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="site-container space-y-8 text-left">
+      <section className="home-section py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
+        <div className="site-container relative z-10 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
-              <Scale className="w-4 h-4 text-[var(--accent-orange-text)]" />
-              <span>Architectural Selection · Decision Matrix</span>
-            </div>
-            <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
+
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
               RAG vs. Fine-Tuning vs. Distillation
-            </MaskedHeading>
+            </h2>
           </div>
-          <span className="text-xs font-mono text-[var(--text-muted)]">
-            SELECT STRATEGY TO COMPARE TRADEOFFS
-          </span>
+
         </div>
 
         {/* Strategy Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <StageGroup label="Model strategy" className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {(['rag', 'finetuning', 'distillation'] as const).map((key) => {
             const item = tradeoffs[key];
             const isSelected = selectedTradeoff === key;
@@ -146,17 +133,18 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 aria-pressed={isSelected}
                 aria-controls="on-prem-strategy-detail"
                 onClick={() => setSelectedTradeoff(key)}
-                className={`p-5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
+                data-suggested={key === (['rag', 'finetuning', 'distillation'][(['rag', 'finetuning', 'distillation'].indexOf(selectedTradeoff) + 1) % 3])}
+                className={`stage-control p-5 rounded-2xl border text-left transition-colors cursor-pointer flex flex-col justify-between space-y-3 ${
                   isSelected
                     ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F]/60 shadow-md'
                     : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)]'
                 }`}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-xs font-mono font-bold" style={{ color: item.accent }}>
+                  <span className="text-xs font-bold" style={{ color: item.accent }}>
                     {item.badge}
                   </span>
-                  {isSelected && <span className="text-xs font-mono font-bold text-[var(--accent-orange-text)]">ACTIVE</span>}
+
                 </div>
                 <div className="font-display font-bold text-sm sm:text-base text-[var(--text-primary)]">
                   {item.title}
@@ -164,7 +152,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               </button>
             );
           })}
-        </div>
+        </StageGroup>
 
         {/* Selected Strategy Deep Breakdown */}
         {(() => {
@@ -179,7 +167,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-8"
             >
               <div className="space-y-3">
-                <div className="text-xs font-mono uppercase font-bold" style={{ color: current.accent }}>
+                <div className="text-xs uppercase font-bold" style={{ color: current.accent }}>
                   {current.badge}
                 </div>
                 <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -192,11 +180,11 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[var(--border-color)]">
                 <div className="space-y-3">
-                  <div className="text-xs font-mono text-[var(--status-success-text)] uppercase font-bold flex items-center gap-2">
+                  <div className="text-xs text-[var(--status-success-text)] uppercase font-bold flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-[var(--status-success-text)]" />
                     <span>Primary Advantages</span>
                   </div>
-                  <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-secondary)] font-mono">
+                  <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-secondary)]">
                     {current.pros.map((pro, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-[var(--status-success-text)]">✓</span>
@@ -207,11 +195,11 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="text-xs font-mono text-[var(--text-muted)] uppercase font-bold flex items-center gap-2">
+                  <div className="text-xs text-[var(--text-muted)] uppercase font-bold flex items-center gap-2">
                     <Sliders className="w-4 h-4 text-[var(--text-muted)]" />
                     <span>Constraints &amp; Tradeoffs</span>
                   </div>
-                  <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-secondary)] font-mono">
+                  <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-secondary)]">
                     {current.cons.map((con, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-[var(--text-muted)]">⚠</span>
@@ -222,8 +210,8 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-mono flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <span className="text-[var(--text-muted)] uppercase">WHEN TO SELECT:</span>
+              <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <span className="text-[var(--text-muted)] uppercase">Suitable when</span>
                 <span className="text-[var(--text-primary)] font-medium sm:text-right">{current.idealWhen}</span>
               </div>
             </motion.div>
@@ -233,20 +221,17 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       </section>
 
       {/* 3. Core Story & Visual Pipeline Stage: Data -> Eval -> Tuning -> Artifacts -> Deployment */}
-      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="site-container space-y-8 text-left">
+      <section className="home-section py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
+        <SectionBackdrop mode="platforms" />
+        <div className="site-container relative z-10 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
-              <span>Custom Model Pipeline · Step-by-Step</span>
-            </div>
-            <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
+
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
               Domain Data to Deployed ML Architecture
-            </MaskedHeading>
+            </h2>
           </div>
-          <span className="text-xs font-mono text-[var(--text-muted)]">
-            Click phases to inspect artifacts
-          </span>
+
         </div>
 
         {/* Custom Model Pipeline Interactive Stage */}
@@ -258,16 +243,16 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       <ModelEcosystemSpectrum onExploreWork={() => onNavigate('/work')} />
 
       {/* 5. Deep Technical Focus: Methodology */}
-      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="site-container space-y-12 text-left">
+      <section className="home-section py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
+        <div className="site-container relative z-10 space-y-12 text-left">
         <div className="max-w-3xl space-y-3">
-          <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase">TECHNICAL METHODOLOGY</span>
-          <MaskedHeading as="h2" className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
             How we engineer domain-specialised models.
-          </MaskedHeading>
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
+          </h2>
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
             Rather than forcing one-size-fits-all API wrappers, we evaluate whether your problem is best served by vector retrieval (RAG), LoRA/QLoRA parameter-efficient fine-tuning, model distillation, or quantization—grounded in rigorous evaluation metrics and latency constraints.
-          </ScrollText>
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -309,20 +294,18 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
             return (
               <motion.div
                 key={pillar.num}
-                initial={{ opacity: 0, y: 24 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="p-7 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-all space-y-6 shadow-sm flex flex-col justify-between"
+                className="p-5 sm:p-7 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-colors space-y-6 shadow-sm flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="p-3 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]">
                       <Icon className="w-5 h-5" style={{ color: pillar.accent }} />
                     </div>
-                    <span className="text-xs font-mono font-bold" style={{ color: pillar.accent }}>
-                      PILLAR {pillar.num}
-                    </span>
+
                   </div>
 
                   <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
@@ -336,7 +319,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
                 <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[var(--border-color)]">
                   {pillar.tech.map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-[10px] font-mono text-[var(--text-secondary)]">
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
                       {t}
                     </span>
                   ))}
@@ -349,18 +332,17 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       </section>
 
       {/* 6. Deployment Topologies Section: Managed Cloud, Containerized, Custom API */}
-      <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="site-container space-y-8 text-left">
+      <section className="home-section py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
+        <SectionBackdrop mode="platforms" />
+        <div className="site-container relative z-10 space-y-8 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <div className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-bold">
-              <span>Deployment Options</span>
-            </div>
+
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
               Production ML Deployment Environments
             </h2>
           </div>
-          <span className="text-xs font-mono text-[var(--text-muted)]">
+          <span className="text-xs text-[var(--text-muted)]">
             Cloud ML · Containers · On-Prem Clusters
           </span>
         </div>
@@ -370,28 +352,27 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       </section>
 
       {/* 7. Final Call to Action */}
-      <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
+      <section className="home-section relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
+        <SectionBackdrop mode="convergence" />
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55 }}
-          className="max-w-4xl mx-auto text-center space-y-6"
+          className="relative z-10 max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
-            Model Engineering Engagement
-          </span>
-          <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
+
+          <h2 className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
             Ready to evaluate and fine-tune a model for your business?
-          </MaskedHeading>
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl mx-auto font-normal leading-relaxed">
+          </h2>
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl mx-auto font-normal leading-relaxed">
             Our AI/ML pod works with your team on domain data readiness, benchmark harness design, open-weight fine-tuning, and production deployment.
-          </ScrollText>
+          </p>
           <div className="pt-2">
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
+              className="site-button button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Initiate Model Engineering Discovery</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
@@ -400,6 +381,6 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
         </motion.div>
       </section>
 
-    </div>
+    </MotionPage>
   );
 }

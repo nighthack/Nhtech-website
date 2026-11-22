@@ -1,6 +1,6 @@
 import { useBackdropMotion } from './useBackdropMotion';
 
-type BackdropMode = 'valuation' | 'routing' | 'vision' | 'platforms' | 'document' | 'kinematic' | 'stream' | 'meridian' | 'convergence';
+type BackdropMode = 'valuation' | 'routing' | 'vision' | 'platforms' | 'document' | 'kinematic' | 'defect' | 'physical' | 'stream' | 'meridian' | 'convergence';
 type Point = readonly [number, number];
 
 function Packet({ path, offset = 0 }: { path: string; offset?: number }) {
@@ -67,6 +67,38 @@ function Vision({ kinematic }: { kinematic: boolean }) {
           <circle key={`${x}-${y}`} cx={x} cy={y} r={index === 6 || index === 7 || index === 8 ? 4.6 : 3.2} fill="currentColor" className={index === 6 || index === 7 || index === 8 ? 'home-backdrop__accent' : undefined} />
         ))}
       </g>
+    </>
+  );
+}
+
+// The original inspection boxes and spatial reticles, scaled into the section SVG.
+function OpticalInspection() {
+  return (
+    <>
+      <path d="M45 180H515" opacity=".3" />
+      <path d="M78 50V302" className="home-backdrop__accent">
+        <animateTransform attributeName="transform" type="translate" values="0 0;404 0;0 0" dur="9s" repeatCount="indefinite" />
+      </path>
+      <rect x="134" y="158" width="92" height="68" />
+      <rect x="269" y="173" width="110" height="74" className="home-backdrop__accent" />
+      <rect x="269" y="173" width="110" height="74" fill="currentColor" opacity=".12" className="home-backdrop__accent" />
+      <rect x="381" y="130" width="84" height="60" />
+    </>
+  );
+}
+
+function SpatialReticle() {
+  return (
+    <>
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 280 180" to="360 280 180" dur="18s" repeatCount="indefinite" />
+        <circle cx="280" cy="180" r="96" strokeDasharray="422 182" />
+      </g>
+      <g className="home-backdrop__accent">
+        <animateTransform attributeName="transform" type="rotate" from="0 280 180" to="-360 280 180" dur="18s" repeatCount="indefinite" />
+        <circle cx="280" cy="180" r="58" strokeDasharray="200 165" />
+      </g>
+      <path d="M256 180H304 M280 156V204" />
     </>
   );
 }
@@ -144,6 +176,8 @@ export function SectionBackdrop({ mode, activeStage }: { mode: BackdropMode; act
     routing: <Routing />,
     vision: <Vision kinematic={false} />,
     kinematic: <Vision kinematic />,
+    defect: <OpticalInspection />,
+    physical: <SpatialReticle />,
     platforms: <Platforms />,
     document: <DocumentScan />,
     stream: <Stream />,

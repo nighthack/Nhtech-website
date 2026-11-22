@@ -66,7 +66,7 @@ export function useBackdropMotion(sectionSelector?: string) {
 
     const sync = () => {
       const inView = visible && !preference.matches && !document.hidden;
-      section.toggleAttribute('data-motion-active', inView);
+      section.toggleAttribute('data-motion-active', inView && !paused);
       const shouldAnimate = inView && !paused;
       if (shouldAnimate === active) return;
       active = shouldAnimate;

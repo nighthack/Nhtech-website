@@ -1,3 +1,5 @@
+import { SectionBackdrop } from './SectionBackdrop';
+import { StageGroup } from './StageGroup';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import {
@@ -11,7 +13,6 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { RoutePath } from '../../types';
-import { MaskedHeading, ScrollText } from '../common/ScrollMotion';
 
 interface AgenticExecutionFlowSectionProps {
   onNavigate: (path: RoutePath) => void;
@@ -92,40 +93,36 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
   return (
     <section
       id="agentic-execution-chain-section"
-      className="py-20 sm:py-28 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative"
+      className="home-section py-20 sm:py-28 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+      <SectionBackdrop mode="routing" />
+      <div className="site-container space-y-12 relative z-10">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
-              Concrete Workflow Pattern
-            </p>
 
-            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.15]">
+            <h2 className="text-section-display text-[var(--text-primary)] leading-[1.15]">
               Input → AI Processing →{' '}
               <span className="text-[var(--accent-secondary)]">
                 Human Review → System Action
               </span>
-            </MaskedHeading>
+            </h2>
           </div>
 
-          <ScrollText
+          <p
             className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left"
-            delay={0.12}
           >
             AI models never write unverified changes straight into production records. Every automated workflow routes uncertain or high-value actions through explicit human approval and audit logging.
-          </ScrollText>
+          </p>
         </div>
 
         {/* Connected 4-Stage Visual Flow Track */}
         <div className="space-y-10">
           <div className="relative">
-            <div
-              aria-hidden="true"
+            <div aria-hidden="true"
               className="hidden lg:block absolute top-5 left-0 right-0 h-[1px] bg-[var(--border-color)]"
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            <StageGroup label="Workflow stages" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
               {EXECUTION_CHAIN.map((step, idx) => {
                 const isSelected = selectedStepIndex === idx;
                 const StepIcon = step.icon;
@@ -135,12 +132,15 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                     key={step.id}
                     type="button"
                     onClick={() => setSelectedStepIndex(idx)}
-                    className="text-left transition-all cursor-pointer group space-y-3 pt-1"
+                    aria-pressed={isSelected}
+                    aria-controls="fde-workflow-detail"
+                    data-suggested={idx === (selectedStepIndex + 1) % EXECUTION_CHAIN.length}
+                    className="stage-control text-left transition-colors cursor-pointer group space-y-3 pt-1"
                   >
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2.5">
                         <div
-                          className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
+                          className={`w-9 h-9 rounded-full flex items-center justify-center border transition-colors relative z-10 ${
                             isSelected
                               ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
                               : step.requiresHuman
@@ -151,7 +151,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                           <StepIcon className="w-4 h-4" />
                         </div>
                         <span
-                          className={`text-xs font-mono font-bold tabular-nums ${
+                          className={`text-xs font-bold tabular-nums ${
                             isSelected ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
                           }`}
                         >
@@ -160,7 +160,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                       </div>
 
                       <span
-                        className={`text-[10px] font-mono uppercase tracking-wider ${
+                        className={`text-xs uppercase tracking-wider ${
                           step.requiresHuman
                             ? 'text-[var(--accent-orange-text)] font-bold'
                             : 'text-[var(--accent-secondary)]'
@@ -177,20 +177,20 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                       <p className="text-xs text-[var(--text-secondary)] leading-snug">
                         {step.subhead}
                       </p>
-                      <div className="text-[11px] font-mono text-[var(--text-muted)] truncate pt-1">
+                      <div className="text-xs text-[var(--text-muted)] truncate pt-1">
                         {step.systemsAccessed[0]}
                       </div>
                     </div>
                   </button>
                 );
               })}
-            </div>
+            </StageGroup>
           </div>
 
           {/* Unboxed Detailed Inspector Spread */}
-          <motion.div
+          <motion.div id="fde-workflow-detail" role="region" aria-label="Workflow stages detail"
             key={currentStep.id}
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
             className="border-t border-b border-[var(--border-color)] py-8 sm:py-10"
@@ -199,7 +199,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
               {/* Left Column */}
               <div className="lg:col-span-7 space-y-5 text-left lg:pr-6">
                 <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
                     <span className="px-2.5 py-1 rounded-md font-bold bg-[#FF5A1F] text-[#061421] tabular-nums">
                       Step {currentStep.stepNumber} · {currentStep.title}
                     </span>
@@ -217,10 +217,10 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                 </p>
 
                 <div className="space-y-2 pt-1">
-                  <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider block">
+                  <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider block">
                     System Components Connected
                   </span>
-                  <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-mono text-[var(--text-primary)]">
+                  <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-[var(--text-primary)]">
                     {currentStep.systemsAccessed.map((sys) => (
                       <span key={sys} className="inline-flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-secondary)]" />
@@ -234,7 +234,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
               {/* Right Column: Live Trace Console */}
               <div className="lg:col-span-5 lg:pl-8 space-y-4 text-left">
                 <div className="p-6 rounded-2xl bg-[#061421] border border-[#173D5B] text-[#F5F8FA] space-y-4 shadow-lg">
-                  <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs font-mono">
+                  <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
                     <div className="flex items-center gap-2 font-semibold">
                       <Terminal className="w-4 h-4 text-[#FF7A45]" />
                       <span>Execution Trace Example</span>
@@ -242,7 +242,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                     <span className="text-[#75A4B5] font-semibold">Audited</span>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-[#0B2030] border border-[#24536F]/50 text-xs font-mono text-[#F5F8FA] overflow-x-auto leading-relaxed">
+                  <div className="p-3.5 rounded-xl bg-[#0B2030] border border-[#24536F]/50 text-xs text-[#F5F8FA] overflow-x-auto leading-relaxed">
                     {currentStep.sampleData}
                   </div>
 
@@ -275,7 +275,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="button-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
+              className="site-button button-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
             >
               <span>Map Your Workflow With Us</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
@@ -284,14 +284,14 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
             <button
               type="button"
               onClick={() => onNavigate('/work')}
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-transparent hover:bg-[var(--bg-surface)] border border-[var(--border-hover)] text-[var(--text-primary)] text-xs font-medium transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-transparent hover:bg-[var(--bg-surface)] border border-[var(--border-hover)] text-[var(--text-primary)] text-xs font-medium transition-colors cursor-pointer"
             >
               <span>Explore Selected Production Work</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[var(--text-muted)]" />
             </button>
           </div>
 
-          <span className="text-xs font-mono text-[var(--text-muted)]">
+          <span className="text-xs text-[var(--text-muted)]">
             Input → AI Processing → Human Review → System Action
           </span>
         </div>

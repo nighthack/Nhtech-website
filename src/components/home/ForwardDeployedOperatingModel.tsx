@@ -1,3 +1,5 @@
+import { SectionBackdrop } from './SectionBackdrop';
+import { StageGroup } from './StageGroup';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import {
@@ -11,7 +13,6 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { RoutePath } from '../../types';
-import { MaskedHeading, ScrollText } from '../common/ScrollMotion';
 
 interface ForwardDeployedOperatingModelProps {
   onNavigate: (path: RoutePath) => void;
@@ -104,40 +105,31 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
   return (
     <section
       id="fde-operating-model-section"
-      className="py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative"
+      className="home-section py-20 sm:py-28 bg-[var(--bg-base)] border-b border-[var(--border-color)] relative"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+      <SectionBackdrop mode="routing" />
+      <div className="site-container space-y-12 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold">
-              Six-Stage Engagement Flow
-            </p>
 
-            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.15]">
+            <h2 className="text-section-display text-[var(--text-primary)] leading-[1.15]">
               Discover → Map Workflow → Prototype →{' '}
               <span className="text-[var(--accent-secondary)]">
                 Integrate → Deploy → Optimise
               </span>
-            </MaskedHeading>
+            </h2>
           </div>
 
-          <ScrollText
-            className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left"
-            delay={0.12}
-          >
-            Select any stage along the track to inspect what our embedded engineering pod builds, who they collaborate with on your team, and what artifact is delivered at each gate.
-          </ScrollText>
         </div>
 
         {/* Connected 6-Stage Hairline Track */}
         <div className="space-y-10">
           <div className="relative">
-            <div
-              aria-hidden="true"
+            <div aria-hidden="true"
               className="hidden lg:block absolute top-5 left-0 right-0 h-[1px] bg-[var(--border-color)]"
             />
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 relative">
+            <StageGroup label="Engagement stages" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 relative">
               {ENGAGEMENT_STEPS.map((step, idx) => {
                 const isActive = activeStepIndex === idx;
                 const Icon = step.icon;
@@ -147,11 +139,14 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
                     key={step.id}
                     type="button"
                     onClick={() => setActiveStepIndex(idx)}
-                    className="text-left transition-all relative cursor-pointer group space-y-3 pt-1"
+                    aria-pressed={isActive}
+                    aria-controls="fde-engagement-detail"
+                    data-suggested={idx === (activeStepIndex + 1) % ENGAGEMENT_STEPS.length}
+                    className="stage-control text-left transition-colors relative cursor-pointer group space-y-3 pt-1"
                   >
                     <div className="flex items-center gap-2.5">
                       <div
-                        className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
+                        className={`w-9 h-9 rounded-full flex items-center justify-center border transition-colors relative z-10 ${
                           isActive
                             ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
                             : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
@@ -160,7 +155,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
                         <Icon className="w-4 h-4" />
                       </div>
                       <span
-                        className={`text-xs font-mono font-bold tabular-nums ${
+                        className={`text-xs font-bold tabular-nums ${
                           isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
                         }`}
                       >
@@ -185,13 +180,13 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
                   </button>
                 );
               })}
-            </div>
+            </StageGroup>
           </div>
 
           {/* Unboxed Detailed Stage Editorial Spread */}
-          <motion.div
+          <motion.div id="fde-engagement-detail" role="region" aria-label="Engagement stages detail"
             key={currentStep.id}
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="border-t border-b border-[var(--border-color)] py-8 sm:py-10 text-left"
@@ -199,7 +194,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:divide-x divide-[var(--border-color)]">
               {/* Left Column */}
               <div className="lg:col-span-7 space-y-5 lg:pr-6">
-                <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
+                <div className="flex flex-wrap items-center gap-3 text-xs">
                   <span className="font-bold uppercase text-[var(--accent-orange-text)] tabular-nums">
                     Stage {currentStep.stepNumber} · {currentStep.label}
                   </span>
@@ -216,7 +211,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
                 </p>
 
                 <div className="space-y-2 pt-2">
-                  <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                  <div className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
                     Client Stakeholders Involved
                   </div>
                   <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-[var(--text-primary)]">
@@ -233,7 +228,7 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
               {/* Right Column: Theme-Aware Ocean Decision Gate Module */}
               <div className="lg:col-span-5 lg:pl-8 space-y-5">
                 <div className="p-6 sm:p-7 rounded-2xl bg-ocean-depth text-[var(--text-primary)] space-y-5 border border-[var(--border-hover)] shadow-lg">
-                  <div className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
+                  <div className="text-xs text-[var(--accent-orange-text)] uppercase font-bold flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 shrink-0" />
                     <span>Stage Output &amp; Decision Gate</span>
                   </div>
@@ -251,13 +246,13 @@ export function ForwardDeployedOperatingModel({ onNavigate }: ForwardDeployedOpe
                     <button
                       type="button"
                       onClick={() => onNavigate('/contact')}
-                      className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-orange-text)] hover:underline cursor-pointer"
+                      className="inline-flex items-center gap-2 text-xs font-bold text-[var(--accent-orange-text)] hover:underline cursor-pointer"
                     >
                       <span>Discuss an embedded engagement</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
 
-                    <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
+                    <span className="text-xs text-[var(--text-muted)] tabular-nums">
                       Stage {activeStepIndex + 1} of 6
                     </span>
                   </div>

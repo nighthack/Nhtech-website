@@ -1,7 +1,8 @@
+import { SectionBackdrop } from './SectionBackdrop';
+import { StageGroup } from './StageGroup';
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ShieldCheck, Cpu, Zap, ArrowLeftRight, Check, Layers, ChevronRight, Gauge, Lock, DollarSign, Target, Server, Database, ArrowRight } from 'lucide-react';
-import { MaskedHeading, ScrollText } from '../common/ScrollMotion';
+import { Layers, Gauge, Lock, DollarSign, Target, Server, ArrowRight } from 'lucide-react';
 
 interface ModelEcosystemSpectrumProps {
   onExploreWork?: () => void;
@@ -72,42 +73,34 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
   return (
     <section
       id="model-ecosystem-section"
-      className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative overflow-hidden z-10"
+      className="home-section py-14 sm:py-20 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)] relative overflow-hidden z-10"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 relative z-10">
+      <SectionBackdrop mode="platforms" />
+      <div className="site-container space-y-14 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
           <div className="space-y-3 max-w-2xl text-left">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 'some' }}
-              transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-[0.14em] font-semibold"
-            >
-              Model-Agnostic Positioning
-            </motion.p>
 
-            <MaskedHeading as="h2" className="text-section-display text-[var(--text-primary)] leading-[1.15]">
+            <h2 className="text-section-display text-[var(--text-primary)] leading-[1.15]">
               Models are only useful when they work{' '}
               <span className="text-[var(--accent-secondary)]">
                 inside the real operation.
               </span>
-            </MaskedHeading>
+            </h2>
           </div>
 
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left" delay={0.15}>
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal max-w-md leading-relaxed text-left">
             We are strictly model-agnostic. We evaluate frontier models, SLMs, open-weights, and fine-tuning strategies based on your operational latency, accuracy, cost, and infrastructure control requirements.
-          </ScrollText>
+          </p>
         </div>
 
         {/* Labs We Work Across */}
         <div className="space-y-4 text-left">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+            <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
               Model Ecosystems &amp; Labs We Engineer With
             </span>
-            <span className="text-[11px] font-mono text-[var(--accent-secondary)] font-semibold">
+            <span className="text-xs text-[var(--accent-secondary)] font-semibold">
               Multi-Architecture Runtime
             </span>
           </div>
@@ -116,23 +109,23 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
             {modelLabs.map((lab) => (
               <div
                 key={lab.name}
-                className={`p-3 rounded-xl border transition-all text-left space-y-1 ${
+                className={`p-3 rounded-xl border transition-colors text-left space-y-1 ${
                   lab.isPartner
                     ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F]/45 shadow-sm'
                     : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
                 }`}
               >
-                <div className="flex items-center justify-between gap-1">
+                <div className="flex flex-wrap items-center justify-between gap-1">
                   <div className="text-xs font-display font-bold text-[var(--text-primary)]">
                     {lab.name}
                   </div>
                   {lab.isPartner && (
-                    <span className="text-[9px] font-mono font-bold text-[var(--accent-orange-text)]" title="Verified Select Partner">
+                    <span className="text-xs font-bold text-[var(--accent-orange-text)]" title="Verified Select Partner">
                       Select
                     </span>
                   )}
                 </div>
-                <div className="text-[10px] text-[var(--text-muted)] font-mono truncate">
+                <div className="text-xs text-[var(--text-muted)] leading-relaxed break-words">
                   {lab.tech}
                 </div>
               </div>
@@ -142,12 +135,12 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
 
         {/* The 4-Tier Spectrum Interactive Selector */}
         <div className="space-y-6 text-left">
-          <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+          <div className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
             The Model Spectrum: Matching Architecture to Workload
           </div>
 
           {/* Stepper bar */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <StageGroup label="Model spectrum" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {spectrumTiers.map((tier) => {
               const isSelected = selectedCategory === tier.id;
               return (
@@ -155,15 +148,16 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   key={tier.id}
                   type="button"
                   onClick={() => setSelectedCategory(tier.id as any)}
-                  className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden cursor-pointer space-y-2 ${
+                  aria-pressed={isSelected}
+                  aria-controls="model-spectrum-detail"
+                  data-suggested={spectrumTiers.indexOf(tier) === (spectrumTiers.findIndex((item) => item.id === selectedCategory) + 1) % spectrumTiers.length}
+                  className={`stage-control p-5 rounded-2xl border text-left transition-colors relative overflow-hidden cursor-pointer space-y-2 ${
                     isSelected
                       ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F] shadow-md'
                       : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)]'
                   }`}
                 >
-                  <div className="text-xs font-mono font-bold" style={{ color: tier.accent }}>
-                    Spectrum Tier
-                  </div>
+
                   <div className="text-base font-display font-bold text-[var(--text-primary)]">
                     {tier.title}
                   </div>
@@ -177,30 +171,28 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                 </button>
               );
             })}
-          </div>
+          </StageGroup>
 
           {/* Detailed Selected Tier Card */}
           {(() => {
             const current = spectrumTiers.find((t) => t.id === selectedCategory)!;
             return (
-              <motion.div
+              <motion.div id="model-spectrum-detail" role="region" aria-label="Model spectrum detail"
                 key={current.id}
-                initial={{ opacity: 0, y: 10 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-sm space-y-6"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
                   <div>
-                    <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold">
-                      Tier Architecture
-                    </span>
+
                     <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mt-1">
                       {current.title} — {current.sub}
                     </h3>
                   </div>
 
-                  <span className="px-3.5 py-1.5 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-secondary)]">
+                  <span className="px-3.5 py-1.5 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
                     {current.bestFor}
                   </span>
                 </div>
@@ -209,7 +201,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   {current.desc}
                 </p>
 
-                <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] flex flex-wrap items-center justify-between gap-2">
+                <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] flex flex-wrap items-center justify-between gap-2">
                   <span className="text-[var(--text-muted)]">Representative Models:</span>
                   <span className="font-bold text-[var(--accent-secondary)]">{current.examples}</span>
                 </div>
@@ -220,7 +212,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
 
         {/* 6 Selection Criteria Grid */}
         <div className="space-y-4 text-left">
-          <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+          <div className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
             How We Choose: 6 Architectural Decision Criteria
           </div>
 
@@ -236,7 +228,7 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
                   <div className="text-xs font-display font-bold text-[var(--text-primary)]">
                     {crit.name}
                   </div>
-                  <div className="text-[11px] text-[var(--text-secondary)] leading-snug">
+                  <div className="text-xs text-[var(--text-secondary)] leading-snug">
                     {crit.desc}
                   </div>
                 </div>
@@ -250,13 +242,13 @@ export function ModelEcosystemSpectrum({ onExploreWork }: ModelEcosystemSpectrum
           <button
             type="button"
             onClick={onExploreWork}
-            className="button-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
+            className="site-button button-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
           >
             <span>Explore Production Case Studies</span>
             <ArrowRight className="w-4 h-4 text-[#061421]" />
           </button>
 
-          <span className="text-xs font-mono text-[var(--text-muted)]">
+          <span className="text-xs text-[var(--text-muted)]">
             OpenAI Select Partner · Model-Agnostic Routing · Custom Fine-Tuning
           </span>
         </div>

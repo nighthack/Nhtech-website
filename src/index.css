@@ -511,21 +511,12 @@ html.light .home-backdrop {
 
 @media (max-width: 63.99rem) {
   .hero-model-animation {
-    position: relative;
-    inset: auto;
-    aspect-ratio: 9 / 13;
-    width: min(100%, 38rem);
-    justify-self: center;
+    --backdrop-text-veil: color-mix(in srgb, var(--backdrop-cover) 88%, transparent);
+    --backdrop-art-veil: color-mix(in srgb, var(--backdrop-cover) 72%, transparent);
   }
 
   .hero-model-animation::after {
-    background: linear-gradient(90deg, var(--backdrop-art-veil), transparent 30% 84%, var(--backdrop-art-veil));
-  }
-
-  .hero-model-animation > iframe {
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    background: linear-gradient(180deg, var(--backdrop-text-veil) 15%, var(--backdrop-art-veil) 65%, var(--backdrop-text-veil));
   }
 
   .home-backdrop::after,
@@ -627,4 +618,44 @@ html.light .bg-ocean-depth,
   :root {
     --interaction-duration: 0ms;
   }
+}
+
+/* Detail pages share the landing page's background and control language. */
+.page-motion-toggle.site-button {
+  position: absolute;
+  top: calc(var(--header-height) + 1rem);
+  right: max(var(--site-gutter), calc((100% - var(--site-width)) / 2 + var(--site-gutter)));
+  z-index: 11;
+  min-height: 2.75rem;
+  padding: .5rem .75rem;
+  font-size: .75rem;
+}
+
+.detail-page .home-backdrop {
+  --backdrop-art-veil: color-mix(in srgb, var(--backdrop-cover) 68%, transparent);
+}
+
+.detail-page section[class*="bg-[var(--bg-surface-subtle)]"] > .home-backdrop {
+  --backdrop-cover: var(--bg-surface-subtle);
+}
+
+.detail-page .detail-hero > .home-backdrop {
+  --backdrop-art-veil: color-mix(in srgb, var(--backdrop-cover) 28%, transparent);
+}
+
+.detail-page .detail-panel {
+  background: color-mix(in srgb, var(--bg-surface) 94%, transparent);
+}
+
+@media (max-width: 63.99rem) {
+  .detail-page .home-backdrop::after {
+    background: color-mix(in srgb, var(--backdrop-cover) 85%, transparent);
+  }
+  .hero-system-readout {
+    background: color-mix(in srgb, var(--bg-base) 84%, transparent);
+  }
+}
+
+.detail-page .detail-hero {
+  padding-top: calc(var(--header-height) + 5.5rem);
 }

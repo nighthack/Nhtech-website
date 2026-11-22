@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { MotionPage } from '../components/common/MotionPage';
+import { SectionBackdrop } from '../components/home/SectionBackdrop';
+import { StageGroup } from '../components/home/StageGroup';
+import { useState } from 'react';
 import { RoutePath } from '../types';
-import { WorldCanvas } from '../components/common/WorldCanvas';
 import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
-import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
 import {
   Cpu,
   Activity,
@@ -25,195 +26,6 @@ interface ComputerVisionPageProps {
 }
 
 type UseCaseCategory = 'kinematics' | 'defect' | 'physical';
-
-function EdgeVisionLiveSimulator({ mode }: { mode: UseCaseCategory }) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
-    let animId = 0;
-    let time = 0;
-
-    const resize = () => {
-      const parent = canvas.parentElement;
-      if (!parent) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = parent.clientWidth * dpr;
-      canvas.height = parent.clientHeight * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    const ro = new ResizeObserver(resize);
-    if (canvas.parentElement) ro.observe(canvas.parentElement);
-
-    const draw = () => {
-      const w = canvas.clientWidth || 640;
-      const h = canvas.clientHeight || 360;
-      ctx.clearRect(0, 0, w, h);
-
-      // Calibrated optical coordinate matrix background
-      ctx.fillStyle = 'rgba(117, 164, 181, 0.2)';
-      const gridStep = 28;
-      for (let gx = gridStep / 2; gx < w; gx += gridStep) {
-        for (let gy = gridStep / 2; gy < h; gy += gridStep) {
-          ctx.fillRect(gx - 0.75, gy - 0.75, 1.5, 1.5);
-        }
-      }
-
-      // Horizontal optical baseline calibration lines
-      ctx.strokeStyle = 'rgba(71, 132, 155, 0.14)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(w * 0.08, h * 0.5);
-      ctx.lineTo(w * 0.92, h * 0.5);
-      ctx.stroke();
-
-      if (mode === 'kinematics') {
-        const cx = w * 0.5;
-        const cy = h * 0.5;
-        const sway = prefersReducedMotion ? 0.3 : Math.sin(time * 2.1);
-
-        const nodes = [
-          [cx + sway * 10, cy - 88],
-          [cx + sway * 6, cy - 60],
-          [cx - 34, cy - 50],
-          [cx + 34, cy - 50],
-          [cx - 56 - sway * 18, cy - 18],
-          [cx + 56 + sway * 18, cy - 22],
-          [cx - 46 - sway * 30, cy + 16],
-          [cx + 46 + sway * 26, cy - 56],
-          [cx, cy + 10],
-          [cx - 24 - sway * 14, cy + 54],
-          [cx + 24 + sway * 14, cy + 54],
-          [cx - 28 - sway * 18, cy + 100],
-          [cx + 28 + sway * 20, cy + 98]
-        ];
-        const links = [
-          [0, 1], [1, 2], [1, 3], [2, 4], [4, 6],
-          [3, 5], [5, 7], [1, 8], [8, 9], [9, 11],
-          [8, 10], [10, 12]
-        ];
-
-        ctx.strokeStyle = 'rgba(117, 164, 181, 0.85)';
-        ctx.lineWidth = 2.2;
-        links.forEach(([a, b]) => {
-          ctx.beginPath();
-          ctx.moveTo(nodes[a][0], nodes[a][1]);
-          ctx.lineTo(nodes[b][0], nodes[b][1]);
-          ctx.stroke();
-        });
-
-        nodes.forEach(([x, y], i) => {
-          const isKey = i === 6 || i === 7 || i === 8;
-          ctx.fillStyle = isKey ? '#FF5A1F' : '#F5F8FA';
-          ctx.beginPath();
-          ctx.arc(x, y, isKey ? 5 : 3.4, 0, Math.PI * 2);
-          ctx.fill();
-        });
-      } else if (mode === 'defect') {
-        const scanX = ((prefersReducedMotion ? 0.52 : (time * 0.22) % 1) * w * 0.72) + w * 0.14;
-        ctx.strokeStyle = 'rgba(255, 90, 31, 0.85)';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(scanX, h * 0.14);
-        ctx.lineTo(scanX, h * 0.84);
-        ctx.stroke();
-
-        // Component tolerance bounding boxes
-        const boxes = [
-          { x: w * 0.24, y: h * 0.44, bw: 92, bh: 68, flagged: false },
-          { x: w * 0.48, y: h * 0.48, bw: 110, bh: 74, flagged: true },
-          { x: w * 0.68, y: h * 0.36, bw: 84, bh: 60, flagged: false }
-        ];
-        boxes.forEach((b) => {
-          ctx.strokeStyle = b.flagged ? '#FF5A1F' : '#75A4B5';
-          ctx.lineWidth = b.flagged ? 2 : 1.4;
-          ctx.strokeRect(b.x, b.y, b.bw, b.bh);
-          if (b.flagged) {
-            ctx.fillStyle = 'rgba(255, 90, 31, 0.16)';
-            ctx.fillRect(b.x, b.y, b.bw, b.bh);
-          }
-        });
-      } else {
-        // OpenVLA spatial target reticle & safety zone arcs
-        const cx = w * 0.5;
-        const cy = h * 0.5;
-        const rot = prefersReducedMotion ? 0.4 : time * 0.55;
-
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(rot);
-        ctx.strokeStyle = 'rgba(117, 164, 181, 0.7)';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.arc(0, 0, 96, 0, Math.PI * 1.4);
-        ctx.stroke();
-        ctx.rotate(-rot * 2);
-        ctx.strokeStyle = '#FF5A1F';
-        ctx.lineWidth = 1.8;
-        ctx.beginPath();
-        ctx.arc(0, 0, 58, 0, Math.PI * 1.1);
-        ctx.stroke();
-        ctx.restore();
-
-        // Crosshair ticks
-        ctx.strokeStyle = 'rgba(245, 248, 250, 0.45)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(cx - 24, cy);
-        ctx.lineTo(cx + 24, cy);
-        ctx.moveTo(cx, cy - 24);
-        ctx.lineTo(cx, cy + 24);
-        ctx.stroke();
-      }
-
-      if (!prefersReducedMotion) {
-        time += 0.016;
-        animId = requestAnimationFrame(draw);
-      }
-    };
-
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      ro.disconnect();
-    };
-  }, [mode]);
-
-  const readoutText =
-    mode === 'kinematics'
-      ? 'LOCAL RUNTIME: Pose3D + ONNX · Real-Time Edge · Zero Cloud Egress'
-      : mode === 'defect'
-      ? 'EDGE STATION: TensorRT FP16 · Tolerance Gate Active · Sub-15ms'
-      : 'SPATIAL POLICY: OpenVLA + BLE Sensor Interlock · Safe Hold Guarded';
-
-  return (
-    <div className="relative rounded-2xl overflow-hidden border border-[#173D5B] bg-[#061421] aspect-[16/9] max-h-[380px] w-full shadow-xl">
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        className="w-full h-full block"
-      />
-      <div className="pointer-events-none absolute top-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-[#D1E0E6]">
-        <span className="px-2.5 py-1 rounded bg-[#0B2030] border border-[#47849B]/50 text-[#FF7A45] font-semibold">
-          Live Edge Pipeline View
-        </span>
-        <span className="hidden sm:inline px-2.5 py-1 rounded bg-[#0B2030] border border-white/10">
-          {readoutText}
-        </span>
-      </div>
-    </div>
-  );
-}
 
 const CORE_SYSTEM_FLOW = [
   {
@@ -449,15 +261,12 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
         };
 
   return (
-    <div
-      id="computer-vision-chapter"
-      className="min-h-screen relative overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]"
-    >
+    <MotionPage id="computer-vision-chapter">
       {/* 0. Ambient Canvas */}
-      <WorldCanvas mode="vision" opacity={0.22} />
 
       {/* 1. Clean Spatial Header */}
-      <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
+      <section className="home-section detail-hero pt-36 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
+        <SectionBackdrop mode="vision" />
         <SpatialPageHeader
           title="Computer vision and"
           titleAccent="real-time edge intelligence."
@@ -472,15 +281,13 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
       </section>
 
       {/* 2. Lead System Visual: Connected 4-Stage Edge Pipeline Track */}
-      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="site-container space-y-10 text-left">
+      <section className="home-section py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
+        <div className="site-container relative z-10 space-y-10 text-left">
         <div className="max-w-3xl space-y-2">
-          <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-orange-text)] font-semibold">
-            Edge Architecture Pattern
-          </p>
-          <MaskedHeading as="h2" className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+
+          <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
             Camera / Device → On-device Inference → Event / Measurement → Human Action
-          </MaskedHeading>
+          </h2>
           <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
             Consistent architecture across physical environments: capture locally, run inference on the device, emit deterministic measurements, and put actionable control in the operator&apos;s hands.
           </p>
@@ -507,7 +314,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                       <Icon className="w-4 h-4" />
                     </div>
                     <span
-                      className={`text-[11px] font-mono uppercase tracking-wider font-semibold ${
+                      className={`text-xs uppercase tracking-wider font-semibold ${
                         node.isSignal ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
                       }`}
                     >
@@ -548,22 +355,19 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
         </div>
       </section>
 
-      {/* 3. Separated Use Cases with Interactive Live Edge Vision Simulator */}
-      <section className="py-14 sm:py-20 border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)] relative z-10">
-        <div className="site-container space-y-10 text-left">
+      {/* Use-case diagrams live beneath the content */}
+      <section className="home-section py-14 sm:py-20 border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)] relative z-10">
+        <SectionBackdrop mode={selectedUseCase === 'kinematics' ? 'kinematic' : selectedUseCase === 'defect' ? 'defect' : 'physical'} />
+        <div className="site-container relative z-10 space-y-10 text-left">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-5 border-b border-[var(--border-color)]">
           <div className="space-y-2 max-w-2xl">
-            <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-orange-text)] font-semibold">
-              Applied Use Cases
-            </p>
+
             <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               Explore Vision &amp; Edge Systems by Use Case
             </h2>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Vision and Edge AI use cases"
+          <StageGroup label="Vision use cases"
             className="flex flex-wrap gap-2"
           >
             {(
@@ -576,23 +380,20 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
               <button
                 key={tab.id}
                 type="button"
-                role="tab"
-                aria-selected={selectedUseCase === tab.id}
+                aria-pressed={selectedUseCase === tab.id}
                 onClick={() => setSelectedUseCase(tab.id)}
-                className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
+                data-suggested={(['kinematics', 'defect', 'physical'].indexOf(selectedUseCase) + 1) % 3 === ['kinematics', 'defect', 'physical'].indexOf(tab.id)}
+                className={`stage-control min-h-11 px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
                   selectedUseCase === tab.id
-                    ? 'bg-[#FF5A1F] text-[#061421] shadow-sm'
+                    ? 'bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--accent-orange-text)] shadow-sm'
                     : 'bg-transparent border border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 {tab.label}
               </button>
             ))}
-          </div>
+          </StageGroup>
         </div>
-
-        {/* Live Interactive Optical Simulator Visual */}
-        <EdgeVisionLiveSimulator mode={selectedUseCase} />
 
         {/* Active Use Case Overview & Stage Matrix */}
         <div className="space-y-8">
@@ -605,7 +406,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                 {activeUseCaseMeta.subtitle}
               </p>
             </div>
-            <span className="text-xs font-mono text-[var(--accent-secondary)] shrink-0">
+            <span className="text-xs text-[var(--accent-secondary)] max-w-sm">
               {activeUseCaseMeta.verifiedOutcome}
             </span>
           </div>
@@ -627,7 +428,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                   className="p-6 sm:p-7 bg-[var(--bg-surface-subtle)] flex flex-col justify-between space-y-4 transition-colors"
                 >
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between gap-2 text-xs font-mono">
+                    <div className="flex items-center justify-between gap-2 text-xs">
                       <span
                         className={`font-semibold ${
                           isHumanStage ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
@@ -653,7 +454,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                       type="button"
                       aria-expanded={isExpanded}
                       onClick={() => toggleStageDetails(stageKey)}
-                      className="w-full flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer"
+                      className="min-h-11 w-full flex items-center justify-between text-xs font-semibold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer"
                     >
                       <span>{isExpanded ? 'Hide technical details' : 'View technical details'}</span>
                       <ChevronDown
@@ -683,18 +484,18 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
       </section>
 
       {/* 4. Core Vision & Edge Capabilities + Expandable Stack Specification */}
-      <section className="py-14 sm:py-20 relative z-10">
-        <div className="site-container space-y-10 text-left">
+      <section className="home-section py-14 sm:py-20 relative z-10">
+        <div className="site-container relative z-10 space-y-10 text-left">
         <div className="max-w-3xl space-y-2">
-          <p className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent-secondary)] font-semibold">
+          <p className="text-xs uppercase tracking-[0.14em] text-[var(--accent-secondary)] font-semibold">
             Engineering Scope
           </p>
-          <MaskedHeading as="h2" className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
             What every Vision &amp; Edge engagement covers
-          </MaskedHeading>
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+          </h2>
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
             Built around real hardware constraints—camera sensors, tablet thermals, offline databases, and operator ergonomics.
-          </ScrollText>
+          </p>
         </div>
 
         <div className="border border-[var(--border-color)] bg-[var(--border-color)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px">
@@ -733,7 +534,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             const Icon = item.icon;
             return (
               <div key={item.title} className="p-6 sm:p-7 bg-[var(--bg-base)] space-y-3">
-                <div className="flex items-center justify-between text-xs font-mono">
+                <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-[var(--accent-orange-text)]">0{idx + 1}</span>
                   <Icon className="w-4 h-4 text-[var(--accent-secondary)]" />
                 </div>
@@ -757,7 +558,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             className="w-full flex items-center justify-between text-left cursor-pointer"
           >
             <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-[var(--accent-secondary)] font-semibold block">
+              <span className="text-xs uppercase tracking-wider text-[var(--accent-secondary)] font-semibold block">
                 Technical Reference
               </span>
               <span className="text-lg font-display font-bold text-[var(--text-primary)]">
@@ -775,10 +576,10 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 border-t border-[var(--border-color)]">
               {VISION_TECH_STACK.map((group) => (
                 <div key={group.category} className="space-y-2.5">
-                  <div className="text-xs font-mono font-semibold text-[var(--accent-orange-text)] uppercase">
+                  <div className="text-xs font-semibold text-[var(--accent-orange-text)] uppercase">
                     {group.category}
                   </div>
-                  <div className="flex flex-wrap gap-1.5 text-xs font-mono text-[var(--text-secondary)]">
+                  <div className="flex flex-wrap gap-1.5 text-xs text-[var(--text-secondary)]">
                     {group.items.map((tech) => (
                       <span
                         key={tech}
@@ -797,28 +598,29 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
       </section>
 
       {/* 5. Bottom CTA on Ocean Depth / Light Grey */}
-      <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
+      <section className="home-section relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
+        <SectionBackdrop mode="convergence" />
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55 }}
-          className="max-w-4xl mx-auto text-center space-y-6"
+          className="relative z-10 max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
             Vision Feasibility Evaluation
           </span>
-          <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
             Ready to test a vision pipeline on your hardware?
-          </MaskedHeading>
-          <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl mx-auto font-normal leading-relaxed">
+          </h2>
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl mx-auto font-normal leading-relaxed">
             Share sample video, camera specifications, or target tablet/edge constraints. Our engineers will evaluate feasibility and outline latency and accuracy benchmarks.
-          </ScrollText>
+          </p>
           <div className="pt-2">
             <button
               type="button"
               onClick={() => onNavigate('/contact')}
-              className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
+              className="site-button button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
               <span>Discuss a Vision Workflow</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
@@ -826,6 +628,6 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
           </div>
         </motion.div>
       </section>
-    </div>
+    </MotionPage>
   );
 }
