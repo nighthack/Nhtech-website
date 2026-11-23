@@ -1,24 +1,23 @@
-import { MotionPage } from '../components/common/MotionPage';
-import { SectionBackdrop } from '../components/home/SectionBackdrop';
 import {
-  ArrowRight,
-  Terminal,
-  Layers,
-  ShieldCheck,
-  Cpu,
-  CheckCircle2,
-  Users2,
-  FileText,
-  ArrowUpRight,
-  Flag,
-  Briefcase,
-  Code2,
-  CalendarClock
+ArrowRight,
+ArrowUpRight,
+Briefcase,
+CalendarClock,
+CheckCircle2,
+Code2,
+Cpu,
+FileText,
+Flag,
+Layers,
+ShieldCheck,
+Terminal,
+Users2
 } from 'lucide-react';
-import { RoutePath } from '../types';
-import { caseStudies } from '../data/caseStudies';
-import { ForwardDeployedOperatingModel } from '../components/home/ForwardDeployedOperatingModel';
+import { MotionPage } from '../components/common/MotionPage';
 import { AgenticExecutionFlowSection } from '../components/home/AgenticExecutionFlowSection';
+import { SectionBackdrop } from '../components/home/SectionBackdrop';
+import { caseStudies } from '../data/caseStudies';
+import { RoutePath } from '../types';
 
 interface ForwardDeployedEngineeringPageProps {
   onNavigate: (path: RoutePath) => void;
@@ -40,7 +39,7 @@ export function ForwardDeployedEngineeringPage({
     {
       phase: 'Phase 01',
       days: 'Discovery',
-      title: 'Discover & Map Workflow',
+      title: 'Discover & map workflow',
       activities: [
         'Embed alongside operators and technical leads to map current manual steps, documents, and legacy rules.',
         'Identify system boundaries, edge cases, and failure modes across existing databases.'
@@ -55,7 +54,7 @@ export function ForwardDeployedEngineeringPage({
     {
       phase: 'Phase 02',
       days: 'Validation',
-      title: 'Model Selection & Working Prototype',
+      title: 'Model selection & working prototype',
       activities: [
         'Benchmark Small Language Models (SLMs) and frontier reasoning models against real domain samples.',
         'Stand up an interactive prototype on representative payloads to validate extraction and decision rules.'
@@ -70,7 +69,7 @@ export function ForwardDeployedEngineeringPage({
     {
       phase: 'Phase 03',
       days: 'Integration',
-      title: 'Integrate Into Core Systems',
+      title: 'Integrate into core systems',
       activities: [
         'Engineer deterministic state machines, citation grounding, and bidirectional ERP/CRM/SQL connectors.',
         'Build the operator triage workbench with mandatory human review gates and audit logging.'
@@ -85,7 +84,7 @@ export function ForwardDeployedEngineeringPage({
     {
       phase: 'Phase 04',
       days: 'Production',
-      title: 'Deploy, Optimise & Handover',
+      title: 'Deploy, optimise & handover',
       activities: [
         'Deploy to your Virtual Private Cloud (VPC), on-premises cluster, or edge environment with CI/CD.',
         'Monitor live telemetry, calibrate model thresholds, and train your internal engineering team.'
@@ -94,7 +93,7 @@ export function ForwardDeployedEngineeringPage({
       deliverables: [
         'Production infrastructure & CI/CD pipelines',
         'Operational runbooks & telemetry alerts',
-        '100% client-owned code & model weights'
+        'client-owned code & model weights'
       ]
     }
   ];
@@ -115,32 +114,32 @@ export function ForwardDeployedEngineeringPage({
 
   const pillars = [
     {
-      title: 'Agentic Systems & Deterministic State Machines',
+      title: 'Agentic systems & deterministic state machines',
       desc: 'We wrap AI models inside deterministic state machines with strict schema validation, human approval gates, and clear error boundaries.',
       icon: Terminal
     },
     {
-      title: 'Small Language Models to Frontier Routing',
-      desc: 'From sub-10ms quantized models hosted on private GPUs to frontier reasoning models for complex multi-step analysis.',
+      title: 'Small language models to frontier routing',
+      desc: 'From quantised models hosted on private GPUs to frontier reasoning models for complex multi-step analysis.',
       icon: Cpu
     },
     {
-      title: 'Document & Knowledge Intelligence',
+      title: 'Document & knowledge intelligence',
       desc: 'Spatial Optical Character Recognition (OCR), contract parsing, and hybrid vector/graph indexing with exact source citations.',
       icon: FileText
     },
     {
-      title: 'Human-in-the-Loop Operator Interfaces',
+      title: 'Human-in-the-loop operator interfaces',
       desc: 'Purpose-built review workbenches enabling domain specialists to verify, edit, and approve automated pipelines in seconds.',
       icon: Users2
     },
     {
-      title: 'Enterprise Stack Connectors',
+      title: 'Enterprise stack connectors',
       desc: 'Bidirectional connectors engineered for SAP, Oracle, Salesforce, PostgreSQL, Secure File Transfer Protocol (SFTP), and legacy APIs.',
       icon: Layers
     },
     {
-      title: 'Governance, Observability & Auditing',
+      title: 'Governance, observability & auditing',
       desc: 'Telemetry tracking token latency, model drift, human override rates, and immutable audit logs for compliance.',
       icon: ShieldCheck
     }
@@ -163,30 +162,8 @@ export function ForwardDeployedEngineeringPage({
               </h1>
 
               <p className="text-base sm:text-lg text-[var(--text-secondary)] font-normal max-w-2xl leading-relaxed">
-                Instead of handing over slide decks or isolated prototypes, we place senior product and AI engineers directly alongside your operational and technical teams. They map the real workflow, write production code inside your systems, and stay until the software is running reliably in production. In our practice, we call this model{' '}
-                <strong className="text-[var(--text-primary)] font-semibold">
-                  Forward Deployed Engineering (FDE)
-                </strong>
-                .
+                Instead of handing over slide decks or isolated prototypes, we place senior product and AI engineers directly alongside your operational and technical teams. They map the real workflow, write production code inside your systems, and stay until the software is running reliably in production. We call this forward-deployed engineering.
               </p>
-
-              {/* Hairline Flow Summary Strip */}
-              <div className="pt-4 border-t border-[var(--border-color)]">
-
-                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-display font-semibold text-[var(--text-primary)]">
-                  <span>Discover</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
-                  <span>Map Workflow</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
-                  <span>Prototype</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
-                  <span>Integrate</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
-                  <span>Deploy</span>
-                  <span className="text-[var(--accent-orange-text)]">→</span>
-                  <span>Optimise</span>
-                </div>
-              </div>
 
               <div className="flex flex-wrap items-center gap-4 pt-1">
                 <button
@@ -203,7 +180,7 @@ export function ForwardDeployedEngineeringPage({
                   onClick={() => onNavigate('/work')}
                   className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-transparent hover:bg-[var(--bg-surface)] border border-[var(--border-hover)] text-[var(--text-primary)] text-sm font-medium transition-colors cursor-pointer"
                 >
-                  <span>Explore selected work</span>
+                  <span>See our work</span>
                   <ArrowUpRight className="w-4 h-4 text-[var(--text-muted)]" />
                 </button>
               </div>
@@ -214,7 +191,7 @@ export function ForwardDeployedEngineeringPage({
       </section>
 
       {/* 2. SIX-STAGE ENGAGEMENT FLOW INTERACTIVE MODEL */}
-      <ForwardDeployedOperatingModel onNavigate={onNavigate} />
+
 
       {/* 3. RESPONSIBILITIES: UNBOXED TWO-COLUMN HAIRLINE SPLIT */}
       <section className="home-section py-20 sm:py-24 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)]">
@@ -285,7 +262,7 @@ export function ForwardDeployedEngineeringPage({
           <div className="max-w-3xl space-y-3">
 
             <h2 className="text-section-display text-[var(--text-primary)]">
-              The Forward Deployed Execution Cadence
+              From discovery to handover
             </h2>
             <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
               Every engagement follows explicit phases, continuous engineering collaboration, measurable decision gates, and concrete deliverables inside your repository.
@@ -300,7 +277,7 @@ export function ForwardDeployedEngineeringPage({
               >
                 {/* Phase & Timeline Anchor */}
                 <div className="lg:col-span-3 space-y-2">
-                  <div className="inline-flex items-center gap-2 text-xs font-bold uppercase text-[var(--accent-orange-text)] tabular-nums">
+                  <div className="inline-flex items-center gap-2 text-xs font-bold text-[var(--accent-orange-text)] tabular-nums">
                     <CalendarClock className="w-4 h-4" />
                     <span>{item.phase} · {item.days}</span>
                   </div>
@@ -311,7 +288,7 @@ export function ForwardDeployedEngineeringPage({
 
                 {/* Key Activities & Decision Gate */}
                 <div className="lg:col-span-5 space-y-4">
-                  <div className="text-xs uppercase tracking-wider text-[var(--text-muted)]">
+                  <div className="text-xs tracking-wider text-[var(--text-muted)]">
                     Key Activities
                   </div>
                   <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
@@ -323,7 +300,7 @@ export function ForwardDeployedEngineeringPage({
                     ))}
                   </ul>
                   <div className="pt-3 border-t border-[var(--border-color)] space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs uppercase font-semibold text-[var(--accent-orange-text)]">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--accent-orange-text)]">
                       <Flag className="w-3.5 h-3.5" />
                       <span>Decision Gate</span>
                     </div>
@@ -335,7 +312,7 @@ export function ForwardDeployedEngineeringPage({
 
                 {/* Stage Deliverables */}
                 <div className="lg:col-span-4 space-y-3 lg:pl-6 lg:border-l border-[var(--border-color)]">
-                  <div className="text-xs uppercase tracking-wider text-[var(--text-muted)]">
+                  <div className="text-xs tracking-wider text-[var(--text-muted)]">
                     Stage Deliverables
                   </div>
                   <ul className="space-y-2.5">
@@ -380,14 +357,14 @@ export function ForwardDeployedEngineeringPage({
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[var(--accent-orange-text)] shrink-0 mt-1" />
-                  <span>You want working production software owned by your organization—not slideware or vendor lock-in.</span>
+                  <span>You want working production software owned by your organization. not slideware or vendor lock-in.</span>
                 </li>
               </ul>
             </div>
 
             {/* What you get */}
             <div className="py-8 lg:pl-10 space-y-4">
-              <p className="text-xs text-[var(--accent-secondary)] uppercase font-semibold tracking-wider">
+              <p className="text-xs text-[var(--accent-secondary)] font-semibold tracking-wider">
                 Handover &amp; Ownership
               </p>
               <h2 className="text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -396,7 +373,7 @@ export function ForwardDeployedEngineeringPage({
               <ul className="space-y-3 text-sm text-[var(--text-secondary)]">
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[var(--accent-secondary)] shrink-0 mt-1" />
-                  <span>100% ownership of source code, fine-tuned model weights, evaluation harnesses, and deployment scripts.</span>
+                  <span>You own the code, model weights, tests and deployment scripts.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[var(--accent-secondary)] shrink-0 mt-1" />
@@ -413,11 +390,11 @@ export function ForwardDeployedEngineeringPage({
           {/* Confirmed Engagement Options */}
           <div className="space-y-6">
             <div className="space-y-2">
-              <p className="text-xs text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
+              <p className="text-xs text-[var(--accent-orange-text)] font-semibold tracking-wider">
                 Confirmed Engagement Tracks
               </p>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)]">
-                Two verified ways to start
+                Two ways to start
               </h2>
             </div>
 
@@ -428,10 +405,10 @@ export function ForwardDeployedEngineeringPage({
                   <span className="text-[var(--text-muted)] tabular-nums">Prototype Sprint</span>
                 </div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
-                  Focused Prototype Sprint
+                  Prototype sprint
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                  Prove core AI feasibility and model accuracy against your real data in a focused validation sprint with clear acceptance benchmarks before committing to full enterprise integration.
+                  Test a working prototype on your real data before committing to more. We agree the sprint length and acceptance criteria with you.
                 </p>
               </div>
 
@@ -441,10 +418,10 @@ export function ForwardDeployedEngineeringPage({
                   <span className="text-[var(--text-muted)] tabular-nums">Dedicated Pod</span>
                 </div>
                 <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
-                  Embedded Engineering Pod
+                  Embedded team
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                  A cross-functional engineering pod embedded directly with your team to take a critical workflow from discovery through system integration, production deployment, and full IP handover.
+                  A small senior team embedded directly with your team to take a critical workflow from discovery through system integration, production deployment, and full IP handover.
                 </p>
               </div>
             </div>
@@ -456,11 +433,11 @@ export function ForwardDeployedEngineeringPage({
       <section className="home-section py-20 sm:py-24 bg-[var(--bg-surface-subtle)] border-b border-[var(--border-color)]">
         <div className="site-container relative z-10 space-y-12 text-left">
           <div className="max-w-3xl space-y-3">
-            <p className="text-xs text-[var(--accent-secondary)] uppercase tracking-wider font-semibold">
+            <p className="text-xs text-[var(--accent-secondary)] tracking-wider font-semibold">
               Technical Foundations
             </p>
             <h2 className="text-section-display text-[var(--text-primary)]">
-              Engineered for complexity. Built for reliability.
+              What we’re good at
             </h2>
           </div>
 
@@ -486,16 +463,16 @@ export function ForwardDeployedEngineeringPage({
         </div>
       </section>
 
-      {/* 8. ENHANCED CASE STUDIES HIGHLIGHTING VERIFIED OUTCOMES */}
+      {/* 8. ENHANCED CASE STUDIES HIGHLIGHTING Results */}
       <section className="home-section py-20 sm:py-24 bg-[var(--bg-base)] border-b border-[var(--border-color)]">
         <div className="site-container relative z-10 space-y-10 text-left">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-2">
-              <p className="text-xs text-[var(--accent-orange-text)] uppercase tracking-wider font-semibold">
-                Verified Outcomes
+              <p className="text-xs text-[var(--accent-orange-text)] tracking-wider font-semibold">
+                Results
               </p>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)]">
-                Selected Embedded Engineering Deployments
+                Selected embedded engineering deployments
               </h2>
             </div>
             <button
@@ -529,14 +506,14 @@ export function ForwardDeployedEngineeringPage({
 
                   <div className="space-y-2.5 text-xs sm:text-sm">
                     <div>
-                      <span className="text-xs uppercase text-[var(--text-muted)] block">
+                      <span className="text-xs text-[var(--text-muted)] block">
                         Problem
                       </span>
                       <p className="text-[var(--text-secondary)] leading-relaxed">{cs.context}</p>
                     </div>
                     <div>
-                      <span className="text-xs uppercase text-[var(--accent-secondary)] block">
-                        Verified Outcome
+                      <span className="text-xs text-[var(--accent-secondary)] block">
+                        Result
                       </span>
                       <p className="text-[var(--text-primary)] font-medium leading-relaxed">
                         {cs.operationalImpact}
@@ -546,7 +523,7 @@ export function ForwardDeployedEngineeringPage({
                 </div>
 
                 <div className="pt-4 border-t border-[var(--border-color)] flex items-center justify-between text-xs text-[var(--text-primary)]">
-                  <span>Inspect System Architecture</span>
+                  <span>Read the case study</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[var(--accent-orange-text)] group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
@@ -559,7 +536,7 @@ export function ForwardDeployedEngineeringPage({
       <section className="home-section py-24 sm:py-28 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <SectionBackdrop mode="convergence" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-7">
-          <p className="text-xs uppercase tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold">
+          <p className="text-xs tracking-[0.16em] text-[var(--accent-orange-text)] font-semibold">
             Start a Conversation
           </p>
 

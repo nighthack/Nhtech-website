@@ -1,7 +1,7 @@
+import { ArrowRight, ArrowUpRight, CheckCircle2, Database, FileSearch, Mail, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
-import { ArrowRight, Mail, FileSearch, ShieldCheck, Database, CheckCircle2, ArrowUpRight } from 'lucide-react';
-import { RoutePath, CaseStudy } from '../../types';
 import { caseStudies } from '../../data/caseStudies';
+import { CaseStudy, RoutePath } from '../../types';
 import { SectionBackdrop } from './SectionBackdrop';
 import { StageGroup } from './StageGroup';
 
@@ -21,31 +21,31 @@ export function FeaturedCaseStudySection({
     {
       step: '01',
       label: 'Inputs',
-      title: 'Multi-Channel Intake',
+      title: 'Multi-channel intake',
       detail: 'Customer emails, PDF attachments & SFTP feeds normalized automatically on arrival.',
-      payload: 'INGEST: Exchange Mail + PDF Valuation Attachment (14 pages) -> Queue #WYZ-408',
+      payload: 'INGEST: Exchange Mail + PDF Valuation Attachment (14 pages) -> Example queue #408',
       icon: Mail
     },
     {
       step: '02',
-      label: 'AI Processing',
-      title: 'Parsing & Valuation Rules',
+      label: 'AI processing',
+      title: 'Parsing & valuation rules',
       detail: 'Spatial citation grounding paired with deterministic client pricing formulas.',
       payload: 'EXTRACT: Net Asset Sum = $14.28M (Confidence: 0.992 | Anchor: Page 4, Table B)',
       icon: FileSearch
     },
     {
       step: '03',
-      label: 'Human Review',
-      title: 'Operator Exception Gate',
+      label: 'Human review',
+      title: 'Operator exception gate',
       detail: 'Inline PDF diffing pauses low-confidence or threshold variance items for sign-off.',
       payload: 'GATE: Variance +1.8% flagged -> Specialist verified citation & approved in 14s',
       icon: ShieldCheck
     },
     {
       step: '04',
-      label: 'System Action',
-      title: 'Core ERP & Audit Write',
+      label: 'System action',
+      title: 'Core ERP & audit write',
       detail: 'Verified transaction commits to SQL/SaaS ledgers alongside an immutable audit trail.',
       payload: 'COMMIT: ERP Ledger #VL-9921 Updated | Audit Hash: 0x8a4e...c91f',
       icon: Database
@@ -65,29 +65,15 @@ export function FeaturedCaseStudySection({
           <h2 className="text-section-display">{featured.title}</h2>
           <p className="text-sm text-[var(--text-secondary)]">{featured.clientAnonymousName}</p>
 
-          <div className="pt-5 mt-1 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4 sm:gap-7 items-start">
-            <div className="sm:pr-7 sm:border-r sm:border-[var(--border-color)] shrink-0">
-              <div className="text-2xl sm:text-3xl font-display font-extrabold text-[var(--accent-orange-text)] tracking-tight tabular-nums leading-tight">
-                {featured.scaleEvidence.primaryMetric}
-              </div>
-              <div className="text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider mt-1">
-                Production Outcome
-              </div>
-            </div>
-
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg">
-              {featured.scaleEvidence.description}
-            </p>
-          </div>
+          <p className="max-w-2xl leading-relaxed text-[var(--text-secondary)]">Requests came in by email, PDF and old Excel files. Staff re-typed each one. We built one pipeline that reads them, checks the numbers and sends exceptions to a person.</p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               type="button"
-              aria-haspopup="dialog"
               onClick={() => onSelectCaseStudy(featured)}
               className="site-button button-secondary"
             >
-              <span>Inspect full case study</span>
+              <span>Read the case study</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
             </button>
 
@@ -96,7 +82,7 @@ export function FeaturedCaseStudySection({
               onClick={() => onNavigate('/work')}
               className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer"
             >
-              <span>View all 6 verified deployments</span>
+              <span>See our work</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -129,13 +115,13 @@ export function FeaturedCaseStudySection({
                         className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all relative z-10 ${
                           isActive
                             ? 'bg-[var(--accent-primary)] border-[var(--accent-primary)] text-[var(--accent-primary-text)]'
-                            : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
+                            : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF4800]'
                         }`}
                       >
                         <Icon aria-hidden="true" className="w-4 h-4" />
                       </div>
                       <span
-                        className={`text-[11px] font-mono uppercase tracking-wider font-bold ${
+                        className={`text-xs font-mono tracking-wider font-bold ${
                           isActive ? 'text-[var(--accent-orange-text)]' : 'text-[var(--text-muted)]'
                         }`}
                       >
@@ -164,7 +150,7 @@ export function FeaturedCaseStudySection({
             className="flex flex-wrap items-baseline gap-x-4 gap-y-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] px-4 py-3 text-xs"
           >
             <span className="font-semibold text-[var(--accent-orange-text)]">Sample trace</span>
-            <code className="min-w-0 wrap-anywhere text-[var(--text-secondary)]">{activeStep.payload}</code>
+            <code className="min-w-0 wrap-anywhere text-[var(--text-secondary)]"><span className="mb-2 block text-xs text-[var(--text-muted)]">Example</span>{activeStep.payload}</code>
           </div>
         </div>
 
@@ -208,7 +194,7 @@ export function FeaturedCaseStudySection({
               </p>
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-[var(--text-muted)]">
+            <div className="pt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs font-mono text-[var(--text-muted)]">
               {featured.technologies.slice(0, 5).map((tech, tIdx) => (
                 <span key={tech} className="inline-flex items-center gap-2">
                   {tIdx > 0 && <span aria-hidden="true" className="text-[var(--border-hover)]">·</span>}

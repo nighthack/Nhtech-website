@@ -10,12 +10,12 @@ export const products: ProductItem[] = [
     description: 'Document intelligence for turning complex, unstructured information into searchable, conversational knowledge.',
     liveUrl: 'https://talkument.co/',
     ctaLabel: 'Explore Talkument',
-    problemSolved: 'Enterprise knowledge workers spend hours cross-referencing multi-hundred-page documents because public LLMs hallucinate and lack verifiable paragraph-level citation trails.',
+    problemSolved: 'Hours go into searching long documents, and public chatbots cannot show where an answer came from.',
     keyCapabilities: [
       'Spatial document parsing retaining tables, charts, footnotes, and stamps',
       'Hybrid dense-sparse vector indexing paired with entity knowledge graphs',
-      'Strict deterministic guardrails requiring verifiable source citations',
-      'Air-gapped and private VPC deployment with zero external data egress'
+      'Every answer shows its source',
+      'Runs within your private cloud or on-premise network'
     ],
     status: 'Production',
     technicalPillars: [
@@ -72,7 +72,7 @@ export const products: ProductItem[] = [
     keyCapabilities: [
       'State-machine-bounded agent execution graphs preventing unbounded loops',
       'Mandatory human-in-the-loop checkpoint gates for high-risk actions',
-      'Temporal event sourcing for 100% replayable step-by-step decision telemetry',
+      'Every step can be replayed',
       'Production connectors for SQL, REST, Kafka, SFTP, and legacy mainframes'
     ],
     status: 'Production',

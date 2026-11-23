@@ -1,27 +1,24 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import { RoutePath } from '../types';
-import { brand } from '../config/brand';
-import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
-import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
-import { 
-  CreditCard, 
-  Building2, 
-  ExternalLink, 
-  ArrowUpRight, 
-  ShieldCheck, 
-  Clock, 
-  AlertCircle, 
-  CheckCircle2, 
-  HelpCircle, 
-  FileText, 
-  Mail, 
-  Scale, 
-  Globe, 
-  Lock, 
-  RotateCcw,
-  Receipt
+import {
+AlertCircle,
+ArrowUpRight,
+Building2,
+Clock,
+CreditCard,
+ExternalLink,
+FileText,
+Globe,
+HelpCircle,
+Lock,
+Mail,
+Receipt,
+RotateCcw,
+Scale,
+ShieldCheck
 } from 'lucide-react';
+import { useState } from 'react';
+import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
+import { brand } from '../config/brand';
+import { RoutePath } from '../types';
 
 interface TermsAndConditionsPageProps {
   onNavigate: (path: RoutePath) => void;
@@ -31,18 +28,18 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
   const [activeSection, setActiveSection] = useState<string>('sec-1');
 
   const sections = [
-    { id: 'sec-1', label: '1. Agreement & Entity' },
-    { id: 'sec-2', label: '2. Scope & Engagements' },
-    { id: 'sec-3', label: '3. Invoicing & Payment Terms' },
-    { id: 'sec-4', label: '4. Supported Payment Methods' },
-    { id: 'sec-5', label: '5. Online Payment Gateways' },
-    { id: 'sec-6', label: '6. Refund & Cancellation Policy' },
-    { id: 'sec-7', label: '7. Failed & Reversible Transactions' },
-    { id: 'sec-8', label: '8. Payment Disputes & Chargebacks' },
-    { id: 'sec-9', label: '9. Foreign Currency & Exchange Rates' },
-    { id: 'sec-10', label: '10. Security & PCI-DSS Compliance' },
-    { id: 'sec-11', label: '11. Governing Law & Jurisdiction' },
-    { id: 'sec-12', label: '12. Contact & Billing Queries' },
+    { id: 'sec-1', label: '1. Agreement & entity' },
+    { id: 'sec-2', label: '2. Scope & engagements' },
+    { id: 'sec-3', label: '3. Invoicing & payment terms' },
+    { id: 'sec-4', label: '4. Supported payment methods' },
+    { id: 'sec-5', label: '5. Online payment gateways' },
+    { id: 'sec-6', label: '6. Refund & cancellation policy' },
+    { id: 'sec-7', label: '7. Failed & reversible transactions' },
+    { id: 'sec-8', label: '8. Payment disputes & chargebacks' },
+    { id: 'sec-9', label: '9. Foreign currency & Exchange rates' },
+    { id: 'sec-10', label: '10. Payment security' },
+    { id: 'sec-11', label: '11. Governing law & jurisdiction' },
+    { id: 'sec-12', label: '12. Contact & billing queries' },
   ];
 
   const scrollToSection = (id: string) => {
@@ -57,24 +54,18 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
   return (
     <div id="terms-and-conditions-page" className="min-h-screen relative overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]">
-      
+
       {/* 1. Header with Breadcrumb & Operational Badges */}
       <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
         <SpatialPageHeader
-          tag="Legal, Payment Terms & Governance"
+
           title="Terms &"
           titleAccent="Conditions."
           subtitle={`Official terms of service, billing policies, online payment gateways, and refund framework for ${brand.displayName} (operated by ${brand.legalName}).`}
-          ctaText="Initiate Billing Inquiry"
-          ctaRoute="/contact"
-          secondaryCtaText="Explore Engineering Tracks"
-          secondaryCtaRoute="/fde"
+          ctaText="Billing questions"
+          ctaHref={`mailto:${brand.contact.email}?subject=Billing%20question`}
           onNavigate={onNavigate}
-          telemetryItems={[
-            { label: 'LEGAL ENTITY', value: brand.legalName.toUpperCase(), color: 'var(--accent-orange-text)' },
-            { label: 'COMPLIANCE', value: 'PCI-DSS & 256-BIT ENCRYPTION', color: 'var(--text-primary)' },
-            { label: 'SETTLEMENT', value: 'DIRECT WIRE / RAZORPAY / ZOHO', color: 'var(--accent-secondary)' },
-          ]}
+          telemetryItems={[]}
         />
       </section>
 
@@ -84,12 +75,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
           <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-8 shadow-sm">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="space-y-1.5 text-left">
-                <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] uppercase font-bold tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold tracking-wider">
                   <Receipt className="w-4 h-4" />
                   <span>Client Payment Gateways &amp; Invoice Portals</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-                  Direct Settlement &amp; Invoice Payment
+                  Direct settlement &amp; invoice payment
                 </h2>
                 <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal max-w-2xl leading-relaxed">
                   If you have received an active invoice or milestone authorization from {brand.displayName}, settle directly through our verified gateway links below or access your dedicated client portal.
@@ -127,13 +118,13 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
       {/* 3. Main Content Layout: Sidebar Table of Contents + Comprehensive Sections */}
       <section className="py-14 sm:py-20 relative z-10">
         <div className="site-container grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start text-left">
-        
+
         {/* Sticky Table of Contents Sidebar (Desktop) */}
         <div className="lg:col-span-4 lg:sticky lg:top-28 hidden lg:block space-y-4">
           <div className="p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm">
-            <div className="text-xs font-mono font-bold uppercase text-[var(--text-muted)] tracking-wider flex items-center justify-between pb-3 border-b border-[var(--border-color)]">
+            <div className="text-xs font-mono font-bold text-[var(--text-muted)] tracking-wider flex items-center justify-between pb-3 border-b border-[var(--border-color)]">
               <span>Table of Contents</span>
-              <span className="text-[10px] text-[var(--accent-orange-text)]">12 SECTIONS</span>
+              <span className="text-xs text-[var(--accent-orange-text)]">12 SECTIONS</span>
             </div>
 
             <nav className="space-y-1 text-xs font-mono">
@@ -153,7 +144,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
             </nav>
 
             <div className="pt-4 border-t border-[var(--border-color)] space-y-3">
-              <div className="text-[11px] font-mono text-[var(--text-muted)]">
+              <div className="text-xs font-mono text-[var(--text-muted)]">
                 Need customized enterprise procurement or Master Services Agreement (MSA) review?
               </div>
               <button
@@ -172,16 +163,16 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 1: Agreement & Entity */}
           <div id="sec-1" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold ">
               <Scale className="w-4 h-4" />
               <span>Section 01 · Legal Structure</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              1. Agreement to Terms &amp; Corporate Entity
+              1. Agreement to terms &amp; corporate entity
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
-                Welcome to <strong>{brand.displayName}</strong>. These Terms &amp; Conditions govern the provision of forward-deployed engineering, custom artificial intelligence systems, computer vision runtimes, document intelligence infrastructure, and related technical consulting services provided by <strong>{brand.legalName}</strong> (formerly known as <em>{brand.formerName}</em>, hereinafter referred to as <strong>"{brand.displayName}"</strong>, <strong>"Company"</strong>, <strong>"we"</strong>, <strong>"us"</strong>, or <strong>"our"</strong>).
+                Welcome to <strong>{brand.displayName}</strong>. These Terms &amp; Conditions govern the provision of forward-deployed engineering, custom artificial intelligence systems, computer vision runtimes, document intelligence infrastructure, and related technical consulting services provided by <strong>{brand.legalName}</strong> (hereinafter referred to as <strong>"{brand.displayName}"</strong>, <strong>"Company"</strong>, <strong>"we"</strong>, <strong>"us"</strong>, or <strong>"our"</strong>).
               </p>
               <p>
                 By accessing our website, commissioning an engineering pod, approving a Statement of Work (SOW), issuing a purchase order, or initiating payment through our integrated payment gateways, you (the <strong>"Client"</strong> or <strong>"Customer"</strong>) explicitly acknowledge having read, understood, and agreed to be legally bound by these terms.
@@ -198,12 +189,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 2: Scope & Engagements */}
           <div id="sec-2" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold ">
               <FileText className="w-4 h-4" />
               <span>Section 02 · Engagements</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              2. Scope of Services &amp; SOW Structure
+              2. Scope of services &amp; sow structure
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
@@ -228,12 +219,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 3: Invoicing & Payment Terms */}
           <div id="sec-3" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold ">
               <Clock className="w-4 h-4" />
               <span>Section 03 · Billing Schedule</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              3. Invoicing &amp; Payment Terms
+              3. Invoicing &amp; payment terms
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
@@ -261,12 +252,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 4: Supported Payment Methods */}
           <div id="sec-4" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold ">
               <CreditCard className="w-4 h-4" />
               <span>Section 04 · Payment Channels</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              4. Supported Payment Methods
+              4. Supported payment methods
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-4 leading-relaxed font-normal">
               <p>
@@ -275,11 +266,11 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
               <div className="space-y-3">
                 <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] flex items-start gap-3.5">
-                  <Building2 className="w-5 h-5 text-[#FF5A1F] shrink-0 mt-0.5" />
+                  <Building2 className="w-5 h-5 text-[#FF4800] shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <div className="text-xs font-bold text-[var(--text-primary)] flex items-center gap-2 flex-wrap">
                       <span>1. Direct Bank Wire / Wire Transfer (Preferred)</span>
-                      <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-[#FF5A1F]/10 text-[var(--accent-orange-text)] border border-[#FF5A1F]/25">0% Processing Fee</span>
+                      <span className="px-2 py-0.5 rounded-md text-xs font-mono bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[#FF4800]/25">0% Processing Fee</span>
                     </div>
                     <p className="text-xs text-[var(--text-secondary)]">
                       Domestic: NEFT, RTGS, IMPS. International: SWIFT wire transfers, SEPA payments, and automated ACH. Wire instructions are attached directly to each official invoice.
@@ -316,12 +307,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 5: Online Payment Gateways & External Links */}
           <div id="sec-5" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold ">
               <ExternalLink className="w-4 h-4" />
               <span>Section 05 · Gateways</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              5. Authorized Online Gateways &amp; Client Portals
+              5. Authorized online gateways &amp; client portals
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-4 leading-relaxed font-normal">
               <p>
@@ -329,16 +320,16 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                
+
                 {/* Razorpay Gateway Card */}
                 <div className="p-5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] hover:border-[var(--border-hover)] space-y-3 flex flex-col justify-between transition-all">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-[var(--accent-orange-text)]">GATEWAY LINK 01</span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Instant Checkout</span>
+                      <span className="text-xs font-mono font-bold text-[var(--text-primary)]">Payment gateway</span>
+                      <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Instant Checkout</span>
                     </div>
                     <h3 className="text-base font-display font-bold text-[var(--text-primary)]">
-                      Pay Online
+                      Pay online
                     </h3>
                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                       Instant card, international currency, and UPI checkout page secured by Razorpay's PCI-DSS Level 1 compliant gateway.
@@ -363,10 +354,10 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-mono font-bold text-[var(--accent-secondary)]">CLIENT PORTAL 02</span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Enterprise Invoices</span>
+                      <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-color)] text-[var(--text-muted)]">Enterprise Invoices</span>
                     </div>
                     <h3 className="text-base font-display font-bold text-[var(--text-primary)]">
-                      Pay from Invoice Portal
+                      Pay from invoice portal
                     </h3>
                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                       Access your organization's statement of accounts, itemized tax invoices, payment receipts, and automated payment triggers.
@@ -388,8 +379,8 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
               </div>
 
-              <div className="flex items-center gap-2 text-[11px] font-mono text-[var(--text-muted)] pt-1">
-                <Lock className="w-3.5 h-3.5 text-[#FF5A1F]" />
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)] pt-1">
+                <Lock className="w-3.5 h-3.5 text-[#FF4800]" />
                 <span>All transactions use 256-bit TLS encryption. Financial credentials are never stored on NHTech servers.</span>
               </div>
             </div>
@@ -397,16 +388,16 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 6: Refund & Cancellation Policy */}
           <div id="sec-6" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold ">
               <RotateCcw className="w-4 h-4" />
               <span>Section 06 · Refund &amp; Cancellation Policy</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              6. Refund &amp; Cancellation Policy
+              6. Refund &amp; cancellation policy
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-4 leading-relaxed font-normal">
-              <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[#FF5A1F]/40 space-y-2">
-                <div className="font-bold text-[var(--text-primary)] text-xs uppercase font-mono tracking-wide">
+              <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[#FF4800]/40 space-y-2">
+                <div className="font-bold text-[var(--text-primary)] text-xs font-mono tracking-wide">
                   Policy Summary: Non-Refundable Delivered Services
                 </div>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -415,7 +406,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
               </div>
 
               <div className="space-y-3">
-                <h3 className="text-sm font-bold text-[var(--text-primary)]">Key Guidelines:</h3>
+                <h3 className="text-sm font-bold text-[var(--text-primary)]">Key guidelines:</h3>
                 <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--text-secondary)]">
                   <li>
                     <strong className="text-[var(--text-primary)]">Milestone Review &amp; Acceptance Window:</strong> Clients are provided an explicit acceptance review window (typically 5–10 business days upon milestone delivery or sprint demo) to inspect code repositories, automated tests, and deployment outputs before invoice generation or clearance.
@@ -433,12 +424,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 7: Failed & Reversible Transactions */}
           <div id="sec-7" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold ">
               <AlertCircle className="w-4 h-4" />
               <span>Section 07 · Failed Transactions</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              7. Failed, Interrupted &amp; Reversible Transactions
+              7. Failed, interrupted &amp; reversible transactions
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
@@ -457,12 +448,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 8: Payment Disputes & Chargebacks */}
           <div id="sec-8" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold ">
               <HelpCircle className="w-4 h-4" />
               <span>Section 08 · Dispute Protocol</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              8. Payment Disputes &amp; Chargeback Protocol
+              8. Payment disputes &amp; chargeback protocol
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
@@ -484,12 +475,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 9: Foreign Currency & Exchange Rates */}
           <div id="sec-9" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold ">
               <Globe className="w-4 h-4" />
               <span>Section 09 · Currencies &amp; FX</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              9. Foreign Currency, Exchange Rates &amp; International Wires
+              9. Foreign currency, Exchange rates &amp; international wires
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
@@ -511,12 +502,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 10: Security & PCI-DSS Compliance */}
           <div id="sec-10" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold ">
               <ShieldCheck className="w-4 h-4" />
               <span>Section 10 · Security Standards</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              10. Data Protection, Security &amp; PCI-DSS Standards
+              10. Data protection and payment security
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
@@ -527,7 +518,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                   <strong className="text-[var(--text-primary)]">Zero Storage of Sensitive Cardholder Data:</strong> {brand.displayName} does not store, process, or transmit raw credit card numbers, CVVs, or bank account PINs on our internal servers.
                 </li>
                 <li>
-                  <strong className="text-[var(--text-primary)]">PCI-DSS Level 1 Gateway Infrastructure:</strong> All card processing is handled by Razorpay / Zoho Books under audited PCI-DSS Level 1 compliance with tokenization.
+                  <strong className="text-[var(--text-primary)]">PCI-DSS Level 1 Gateway Infrastructure:</strong> Payments are handled by Razorpay, which is PCI-DSS compliant. We never see your card details.
                 </li>
                 <li>
                   <strong className="text-[var(--text-primary)]">Cryptographic Transport:</strong> All digital communication, checkout pages, and client portals enforce TLS 1.3 encryption with strict HTTPS protocols.
@@ -538,12 +529,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 11: Governing Law & Jurisdiction */}
           <div id="sec-11" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-4 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-orange-text)] font-bold ">
               <Scale className="w-4 h-4" />
               <span>Section 11 · Jurisdiction</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              11. Governing Law &amp; Jurisdiction
+              11. Governing law &amp; jurisdiction
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 leading-relaxed font-normal">
               <p>
@@ -557,12 +548,12 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
           {/* Section 12: Contact & Billing Information */}
           <div id="sec-12" className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-6 shadow-sm scroll-mt-28">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold uppercase">
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-secondary)] font-bold ">
               <Mail className="w-4 h-4" />
               <span>Section 12 · Contact Information</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              12. Billing Support &amp; Grievance Redressal
+              12. Billing support &amp; grievance redressal
             </h2>
             <div className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-4 leading-relaxed font-normal">
               <p>
@@ -571,7 +562,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] space-y-2">
-                  <div className="text-xs font-mono font-bold text-[var(--text-primary)] uppercase">
+                  <div className="text-xs font-mono font-bold text-[var(--text-primary)] ">
                     Finance &amp; Accounts Desk
                   </div>
                   <div className="space-y-1 text-xs">
@@ -591,7 +582,7 @@ export function TermsAndConditionsPage({ onNavigate }: TermsAndConditionsPagePro
                 </div>
 
                 <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] space-y-2">
-                  <div className="text-xs font-mono font-bold text-[var(--text-primary)] uppercase">
+                  <div className="text-xs font-mono font-bold text-[var(--text-primary)] ">
                     Corporate Office
                   </div>
                   <div className="text-xs text-[var(--text-secondary)] space-y-0.5">

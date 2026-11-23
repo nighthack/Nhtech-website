@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
+import React, { createContext, startTransition, useContext, useEffect, useLayoutEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -11,13 +11,19 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    const stored = typeof window !== 'undefined' ? readStoredTheme() : null;
-    if (stored === 'light' || stored === 'dark') return stored;
-    return 'dark';
-  });
+  const [theme, setThemeState] = useState<Theme>('dark');
+  const [restored, setRestored] = useState(false);
+
+  useEffect(() => {
+    const stored = readStoredTheme();
+    startTransition(() => {
+    if (stored === 'light' || stored === 'dark') setThemeState(stored);
+    setRestored(true);
+    });
+  }, []);
 
   useLayoutEffect(() => {
+    if (!restored) return;
     const root = document.documentElement;
     root.classList.add('theme-changing');
     root.classList.toggle('light', theme === 'light');
@@ -39,7 +45,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       cancelAnimationFrame(restoreFrame);
       root.classList.remove('theme-changing');
     };
-  }, [theme]);
+  }, [theme, restored]);
 
   const toggleTheme = () => {
     setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));

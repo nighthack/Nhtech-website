@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { motion, useInView, useScroll, useTransform, useReducedMotion } from 'motion/react';
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const defaultEase = [0.16, 1, 0.3, 1];
 
@@ -14,32 +14,8 @@ interface MaskedHeadingProps {
   delay?: number;
 }
 
-export function MaskedHeading({
-  children,
-  as: Component = 'h2',
-  className = '',
-  delay = 0,
-}: MaskedHeadingProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 'some' });
-
-  if (shouldReduceMotion) {
-    const Tag = Component;
-    return <Tag className={className}>{children}</Tag>;
-  }
-
-  return (
-    <div ref={ref} className="overflow-visible">
-      <motion.div
-        initial={{ y: 12, opacity: 0 }}
-        animate={isInView ? { y: 0, opacity: 1 } : { y: 12, opacity: 0 }}
-        transition={{ duration: 0.55, delay, ease: defaultEase }}
-      >
-        <Component className={className}>{children}</Component>
-      </motion.div>
-    </div>
-  );
+export function MaskedHeading({ children, as: Component = 'h2', className = '' }: MaskedHeadingProps) {
+  return <Component className={className}>{children}</Component>;
 }
 
 /**
@@ -53,35 +29,8 @@ interface ScrollTextProps {
   delay?: number;
 }
 
-export function ScrollText({
-  children,
-  as: Component = 'p',
-  className = '',
-  delay = 0.08,
-}: ScrollTextProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 'some' });
-
-  if (shouldReduceMotion) {
-    const Tag = Component;
-    return <Tag className={className}>{children}</Tag>;
-  }
-
-  const MotionComponent = motion[Component as keyof typeof motion] as any;
-
-  return (
-    <div ref={ref}>
-      <MotionComponent
-        initial={{ opacity: 0, y: 12 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-        transition={{ duration: 0.5, delay, ease: defaultEase }}
-        className={className}
-      >
-        {children}
-      </MotionComponent>
-    </div>
-  );
+export function ScrollText({ children, as: Component = 'p', className = '' }: ScrollTextProps) {
+  return <Component className={className}>{children}</Component>;
 }
 
 /**
@@ -102,7 +51,7 @@ export function AnimatedMetric({
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [displayValue, setDisplayValue] = useState<string>(shouldReduceMotion ? value : '0');
+  const [displayValue, setDisplayValue] = useState<string>(value);
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -177,68 +126,12 @@ interface ScrollStaggerProps {
   staggerDelay?: number;
 }
 
-export function ScrollStagger({
-  children,
-  className = '',
-  staggerDelay = 0.08,
-}: ScrollStaggerProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.15 });
-
-  if (shouldReduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: staggerDelay,
-          },
-        },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+export function ScrollStagger({ children, className = '' }: ScrollStaggerProps) {
+  return <div className={className}>{children}</div>;
 }
 
-export function ScrollStaggerItem({
-  children,
-  className = '',
-}: {
-  children: React.ReactNode;
-  className?: string;
-  key?: React.Key;
-}) {
-  const shouldReduceMotion = useReducedMotion();
-
-  if (shouldReduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 24 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.7, ease: defaultEase },
-        },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+export function ScrollStaggerItem({ children, className = '' }: { children: React.ReactNode; className?: string; key?: React.Key }) {
+  return <div className={className}>{children}</div>;
 }
 
 /**
@@ -309,7 +202,7 @@ export function SectionSceneWrapper({
     <motion.section
       ref={ref}
       id={id}
-      initial={{ opacity: 0, y: 30 }}
+      initial={false}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.85, ease: defaultEase }}
       className={className}
@@ -324,19 +217,16 @@ export function SectionSceneWrapper({
  * Precision top scroll progress indicator tied to page scroll position.
  */
 export function ScrollProgressRail() {
-  const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
-
-  if (shouldReduceMotion) return null;
 
   return (
     <div
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 h-[2px] z-[60] pointer-events-none bg-transparent"
+      className="scroll-progress-rail fixed top-0 left-0 right-0 h-[2px] z-[60] pointer-events-none bg-transparent"
     >
       <motion.div
         style={{ scaleX: scrollYProgress, transformOrigin: '0% 50%' }}
-        className="w-full h-full bg-gradient-to-r from-[#326B86] via-[#47849B] to-[#FF5A1F]"
+        className="w-full h-full bg-gradient-to-r from-[#326B86] via-[#47849B] to-[#FF4800]"
       />
     </div>
   );

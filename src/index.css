@@ -2,22 +2,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: 'DM Sans';
-  src: url('/fonts/dm-sans.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 100 1000;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  src: url('/fonts/dm-sans-italic.woff2') format('woff2');
-  font-style: italic;
-  font-weight: 100 1000;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'Plus Jakarta Sans';
   src: url('/fonts/plus-jakarta-sans.woff2') format('woff2');
   font-style: normal;
@@ -35,7 +19,7 @@
 
 @layer base {
   :root {
-    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-editorial: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
@@ -69,7 +53,7 @@
     --orange-800: #A63A0A;
     --orange-700: #C9470D;
     --orange-600: #E95013;
-    --orange-500: #FF5A1F;
+    --orange-500: #FF4800;
     --orange-400: #FF7A45;
     --orange-300: #FF9A69;
     --orange-200: #FFC09F;
@@ -105,13 +89,13 @@
     --border-control: #6c8a9c;
 
     /* Accent Hierarchy: Signal Orange for CTAs/Highlights, Ocean for Identity */
-    --accent-primary: #FF5A1F;
+    --accent-primary: #FF4800;
     --accent-primary-hover: #FF7A45;
     --accent-primary-active: #FF6C37;
     --accent-primary-text: #061421;
     --accent-primary-edge: transparent;
-    --accent-orange-text: #FF925D;
-    --accent-secondary: #91B6C4;
+    --accent-orange-text: #FF7A45;
+    --accent-secondary: #A6C3CE;
     --accent-ocean: #78A9BD;
     --accent-glow: rgba(255, 90, 31, 0.14);
     --focus-color: #ff9a69;
@@ -134,7 +118,7 @@
     --status-error-text: #a32020;
 
     /* Light Mode Accents (WCAG AA compliant contrast on light surfaces) */
-    --accent-primary: #FF5A1F;
+    --accent-primary: #FF4800;
     --accent-primary-hover: #FF7A45;
     --accent-primary-active: #FF6C37;
     --accent-primary-text: #061421;
@@ -551,11 +535,11 @@ html.light .bg-ocean-depth,
 }
 
 .bg-industrial-heat {
-  background: linear-gradient(135deg, #A63A0A 0%, #FF5A1F 55%, #FFB05A 100%);
+  background: linear-gradient(135deg, #A63A0A 0%, #FF4800 55%, #FFB05A 100%);
 }
 
 .bg-engineered-transition {
-  background: linear-gradient(135deg, #173D5B 0%, #24536F 60%, #FF5A1F 100%);
+  background: linear-gradient(135deg, #173D5B 0%, #24536F 60%, #FF4800 100%);
 }
 
 /* Clear Typographic Scale with Generous Line-Height & No Clipping */
@@ -658,4 +642,22 @@ html.light .bg-ocean-depth,
 
 .detail-page .detail-hero {
   padding-top: calc(var(--header-height) + 5.5rem);
+}
+
+
+
+.brand-logo-light { display: none; }
+html.light .brand-logo-dark { display: none; }
+html.light .brand-logo-light { display: block; }
+
+
+
+.text-hero-display [class*="accent-secondary"], .text-section-display [class*="accent-secondary"] { color: var(--text-primary); }
+
+@media (prefers-reduced-motion: reduce) { .scroll-progress-rail { display: none; } }
+
+@media (max-width: 399px) {
+  #nav-brand-logo img { height: 1.25rem; }
+  #nav-talk-to-us-cta { gap: 0; padding-inline: .625rem; }
+  #nav-talk-to-us-cta svg { display: none; }
 }

@@ -1,14 +1,14 @@
 import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
-export type WorldMode = 
-  | 'sovereign' 
-  | 'manufacturing' 
-  | 'fintech' 
-  | 'enterprise' 
-  | 'vision' 
-  | 'document' 
-  | 'startups' 
+export type WorldMode =
+  | 'sovereign'
+  | 'manufacturing'
+  | 'fintech'
+  | 'enterprise'
+  | 'vision'
+  | 'document'
+  | 'startups'
   | 'matrix'
   | 'minimal';
 
@@ -227,7 +227,7 @@ export function WorldCanvas({ mode, opacity = 0.55, className = '' }: WorldCanva
         });
 
         animatedJoints.forEach((j, i) => {
-          ctx.fillStyle = i === 0 ? '#FF5A1F' : '#75A4B5';
+          ctx.fillStyle = i === 0 ? '#FF4800' : '#75A4B5';
           ctx.beginPath();
           ctx.arc(j.x, j.y, 3.5, 0, Math.PI * 2);
           ctx.fill();

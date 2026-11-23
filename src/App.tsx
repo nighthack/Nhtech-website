@@ -1,47 +1,58 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { MotionConfig } from 'motion/react';
-import { RoutePath, CaseStudy } from './types';
-import { ThemeProvider } from './context/ThemeContext';
-import { Navbar } from './components/layout/Navbar';
-import { Footer } from './components/layout/Footer';
+import type { ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { SEOHead } from './components/common/SEOHead';
-import { HomePage } from './pages/HomePage';
-import { ForwardDeployedEngineeringPage } from './pages/ForwardDeployedEngineeringPage';
-import { OnPremAiPage } from './pages/OnPremAiPage';
-import { WhatWeBuildPage } from './pages/WhatWeBuildPage';
-import { AgenticAiPage } from './pages/AgenticAiPage';
-import { DocumentIntelligencePage } from './pages/DocumentIntelligencePage';
-import { ComputerVisionPage } from './pages/ComputerVisionPage';
-import { IndustriesPage } from './pages/IndustriesPage';
-import { ManufacturingPage } from './pages/ManufacturingPage';
-import { IndustryDetailPage } from './pages/IndustryDetailPage';
-import { WorkPage } from './pages/WorkPage';
-import { ProductsPage } from './pages/ProductsPage';
-import { AboutPage } from './pages/AboutPage';
-import { CareersPage } from './pages/CareersPage';
-import { ContactPage } from './pages/ContactPage';
-import { TermsAndConditionsPage } from './pages/TermsAndConditionsPage';
+import { Footer } from './components/layout/Footer';
+import { Navbar } from './components/layout/Navbar';
+import { normalisePath, routeAliases } from './config/seo';
+import { ThemeProvider } from './context/ThemeContext';
+import { caseStudies } from './data/caseStudies';
+import { CaseStudy, RoutePath } from './types';
+const HomePage = lazy(() => import('./pages/HomePage').then((module) => ({ default: module.HomePage })));
+const ForwardDeployedEngineeringPage = lazy(() => import('./pages/ForwardDeployedEngineeringPage').then((module) => ({ default: module.ForwardDeployedEngineeringPage })));
+const OnPremAiPage = lazy(() => import('./pages/OnPremAiPage').then((module) => ({ default: module.OnPremAiPage })));
+const WhatWeBuildPage = lazy(() => import('./pages/WhatWeBuildPage').then((module) => ({ default: module.WhatWeBuildPage })));
+const AgenticAiPage = lazy(() => import('./pages/AgenticAiPage').then((module) => ({ default: module.AgenticAiPage })));
+const DocumentIntelligencePage = lazy(() => import('./pages/DocumentIntelligencePage').then((module) => ({ default: module.DocumentIntelligencePage })));
+const ComputerVisionPage = lazy(() => import('./pages/ComputerVisionPage').then((module) => ({ default: module.ComputerVisionPage })));
+const IndustriesPage = lazy(() => import('./pages/IndustriesPage').then((module) => ({ default: module.IndustriesPage })));
+const ManufacturingPage = lazy(() => import('./pages/ManufacturingPage').then((module) => ({ default: module.ManufacturingPage })));
+const IndustryDetailPage = lazy(() => import('./pages/IndustryDetailPage').then((module) => ({ default: module.IndustryDetailPage })));
+const WorkPage = lazy(() => import('./pages/WorkPage').then((module) => ({ default: module.WorkPage })));
+const ProductsPage = lazy(() => import('./pages/ProductsPage').then((module) => ({ default: module.ProductsPage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then((module) => ({ default: module.AboutPage })));
+const CareersPage = lazy(() => import('./pages/CareersPage').then((module) => ({ default: module.CareersPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then((module) => ({ default: module.ContactPage })));
+const TermsAndConditionsPage = lazy(() => import('./pages/TermsAndConditionsPage').then((module) => ({ default: module.TermsAndConditionsPage })));
 
-export default function App() {
+const CaseStudyPage = lazy(() => import('./pages/CaseStudyPage').then((module) => ({ default: module.CaseStudyPage })));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then((module) => ({ default: module.PrivacyPolicyPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((module) => ({ default: module.NotFoundPage })));
+
+export default function App({ initialPath, serverPage }: { initialPath?: string; serverPage?: ReactNode } = {}) {
   const [currentPath, setCurrentPath] = useState<string>(() => {
+    if (initialPath) return initialPath;
     if (typeof window !== 'undefined') {
-      const path = window.location.pathname;
+      const path = normalisePath(window.location.pathname);
       return path && path !== '' ? path : '/';
     }
     return '/';
   });
 
-  const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);
   const mainRef = useRef<HTMLElement>(null);
   const focusAfterNavigation = useRef(false);
+
+  useEffect(() => {
+    const canonical = routeAliases[currentPath];
+    if (canonical) { window.history.replaceState({}, '', canonical); setCurrentPath(canonical); }
+  }, [currentPath]);
 
   // Sync browser history
   useEffect(() => {
     const handlePopState = () => {
-      const path = window.location.pathname || '/';
+      const path = normalisePath(window.location.pathname);
       if (path !== currentPath) {
         focusAfterNavigation.current = true;
-        setSelectedCaseStudy(null);
         setCurrentPath(path);
       }
     };
@@ -64,18 +75,20 @@ export default function App() {
     }
 
     focusAfterNavigation.current = true;
-    if (path !== '/work') setSelectedCaseStudy(null);
     window.history.pushState({}, '', path);
     window.scrollTo({ top: 0, behavior: 'instant' });
     setCurrentPath(path);
   };
 
   const openCaseStudy = (study: CaseStudy) => {
-    setSelectedCaseStudy(study);
-    handleNavigate('/work');
+    handleNavigate(`/work/${study.slug}`);
   };
 
   const renderCurrentView = () => {
+    if (currentPath.startsWith('/work/')) {
+      const study = caseStudies.find((item) => item.approvedForPublicWebsite && currentPath === `/work/${item.slug}`);
+      return study ? <CaseStudyPage study={study} onNavigate={handleNavigate} /> : <NotFoundPage />;
+    }
     switch (currentPath) {
       case '/':
         return (
@@ -115,8 +128,6 @@ export default function App() {
         return (
           <WorkPage
             onNavigate={handleNavigate}
-            selectedCaseStudy={selectedCaseStudy}
-            onSelectCaseStudy={setSelectedCaseStudy}
           />
         );
       case '/products':
@@ -129,13 +140,10 @@ export default function App() {
         return <ContactPage onNavigate={handleNavigate} />;
       case '/terms-and-conditions':
         return <TermsAndConditionsPage onNavigate={handleNavigate} />;
+      case '/privacy-policy':
+        return <PrivacyPolicyPage />;
       default:
-        return (
-          <HomePage
-            onNavigate={handleNavigate}
-            onSelectCaseStudy={openCaseStudy}
-          />
-        );
+        return <NotFoundPage />;
     }
   };
 
@@ -147,7 +155,7 @@ export default function App() {
           <a href="#main-content" className="skip-link site-button button-primary">Skip to main content</a>
           <Navbar currentPath={currentPath} onNavigate={handleNavigate} />
           <main id="main-content" tabIndex={-1} ref={mainRef} className="flex-1 focus-visible:outline-none">
-            {renderCurrentView()}
+            <Suspense fallback={<div className="site-container py-36" role="status">Loading page…</div>}>{serverPage ?? renderCurrentView()}</Suspense>
           </main>
           <Footer onNavigate={handleNavigate} />
         </div>

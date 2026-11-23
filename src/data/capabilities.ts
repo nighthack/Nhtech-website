@@ -93,7 +93,7 @@ export const capabilities: Capability[] = [
     id: 'ai-first-enterprise',
     slug: 'ai-first-enterprise',
     title: 'AI-First Enterprise Applications',
-    headline: 'Ship complete operational software—not disconnected wrapper scripts.',
+    headline: 'Ship complete operational software. not disconnected wrapper scripts.',
     description:
       'When off-the-shelf SaaS tools force teams into workarounds or brittle prototypes fail in production, we engineer cohesive full-stack applications combining modern interfaces, resilient backends, and embedded AI inference with full intellectual property ownership.',
     coreConcepts: [
@@ -183,7 +183,7 @@ export const capabilities: Capability[] = [
     title: 'Model-Enabled Applications & On-Premises AI',
     headline: 'Select, adapt, and host models inside infrastructure you control.',
     description:
-      'When external API calls violate data residency rules, exceed latency targets, or inflate token costs, we benchmark Retrieval-Augmented Generation (RAG) against fine-tuning and deploy quantized Small Language Models (SLMs) inside your private cloud or on-premises clusters.',
+      'When external API calls violate data residency rules, exceed latency targets, or inflate token costs, we benchmark Retrieval-Augmented Generation (RAG) against fine-tuning and deploy quantised Small Language Models (SLMs) inside your private cloud or on-premises clusters.',
     coreConcepts: [
       {
         title: 'RAG vs Fine-Tuning vs Distillation',
@@ -196,9 +196,9 @@ export const capabilities: Capability[] = [
           'Adapting open-weight architectures (Llama, Mistral, Qwen, DeepSeek) to domain terminology and strict JSON/SQL output schemas.'
       },
       {
-        title: 'Quantized Private Hosting',
+        title: 'Quantised Private Hosting',
         description:
-          'Compressing models via 8-bit floating point (FP8) and 4-bit integer (INT4) quantization to cut graphics processing unit (GPU) memory and inference costs.'
+          'Compressing models via 8-bit floating point (FP8) and 4-bit integer (INT4) quantisation to cut graphics processing unit (GPU) memory and inference costs.'
       },
       {
         title: 'Full Model & Data Control',
@@ -224,7 +224,7 @@ export const capabilities: Capability[] = [
   {
     id: 'computer-vision-edge',
     slug: 'computer-vision',
-    title: 'Vision & Edge AI Systems',
+    title: 'Vision & edge AI',
     headline: 'Run real-time visual inspection and motion tracking directly on local devices.',
     description:
       'When factory floors, clinics, or field teams need sub-second visual analysis without cloud bandwidth delays or privacy exposure, we build computer vision pipelines running locally on commercial tablets, industrial cameras, and edge hardware.',
@@ -232,7 +232,7 @@ export const capabilities: Capability[] = [
       {
         title: 'Low-Latency Local Inference',
         description:
-          'Compiling custom Convolutional Neural Networks (CNNs) and vision models via TensorRT and Open Neural Network Exchange (ONNX) for sub-20ms frame processing.'
+          'Compiling custom Convolutional Neural Networks (CNNs) and vision models via TensorRT and ONNX for on-device frame processing.'
       },
       {
         title: 'Kinematic & Activity Tracking',

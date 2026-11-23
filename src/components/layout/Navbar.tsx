@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import type { FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { ArrowUpRight, ChevronDown, Eye, Menu, Moon, Server, Sun, Terminal, X } from 'lucide-react';
-import type { RoutePath } from '../../types';
+import type { FocusEvent, KeyboardEvent, MouseEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import type { RoutePath } from '../../types';
 import { BrandLogo } from '../common/BrandLogo';
 
 interface NavbarProps {
@@ -20,10 +20,10 @@ interface NavItem {
 }
 
 const desktopStart: NavItem[] = [
-  { label: 'What We Build', path: '/what-we-build', related: ['/agentic-ai', '/document-intelligence'] },
-  { label: 'FDE', mobileLabel: 'Forward Deployed Engineering', path: '/fde', icon: Terminal, related: ['/forward-deployed-engineering'] },
-  { label: 'Vision & Edge AI', path: '/computer-vision', icon: Eye },
-  { label: 'On-Prem AI', path: '/on-prem-ai', icon: Server, related: ['/sovereign-models', '/sovereign-ai'] },
+  { label: 'Services', path: '/what-we-build', related: ['/agentic-ai', '/document-intelligence'] },
+  { label: 'Embedded teams', mobileLabel: 'Embedded teams', path: '/fde', icon: Terminal, related: ['/forward-deployed-engineering'] },
+  { label: 'Vision & edge AI', path: '/computer-vision', icon: Eye },
+  { label: 'Private AI', path: '/on-prem-ai', icon: Server, related: ['/sovereign-models', '/sovereign-ai'] },
 ];
 
 const desktopEnd: NavItem[] = [
@@ -35,16 +35,17 @@ const industries: NavItem[] = [
   { label: 'All industries', path: '/industries' },
   { label: 'Manufacturing', path: '/industries/manufacturing', description: 'Vision, edge intelligence & industrial automation' },
   { label: 'Enterprise', path: '/industries/enterprise', description: 'Workflow intelligence & system orchestration' },
-  { label: 'FinTech & BFSI', path: '/industries/fintech', description: 'Anomaly detection, document pipelines & compliance' },
-  { label: 'Retail & Commerce', path: '/industries/retail', description: 'Forecasting, visual commerce & shelf segmentation' },
-  { label: 'Tech Startups', path: '/industries/startups', description: 'Applied AI engineering & core engine builds' },
+  { label: 'FinTech & bfsi', path: '/industries/fintech', description: 'Anomaly detection, document pipelines & compliance' },
+  { label: 'Retail & commerce', path: '/industries/retail', description: 'Forecasting, visual commerce & shelf segmentation' },
+  { label: 'Tech startups', path: '/industries/startups', description: 'Applied AI engineering & core engine builds' },
 ];
 
 const company: NavItem[] = [
   { label: 'About', path: '/about', description: 'Our team, engineering thesis and pedigree' },
   { label: 'Careers', path: '/careers', description: 'Join our forward-deployed systems pods' },
   { label: 'Contact', path: '/contact', description: 'Architecture consultation and pod feasibility' },
-  { label: 'Terms & Conditions', path: '/terms-and-conditions', description: 'Legal terms, billing policies & data privacy' },
+  { label: 'Privacy policy', path: '/privacy-policy', description: 'How we handle your data' },
+  { label: 'Terms and payments', path: '/terms-and-conditions', description: 'Legal terms, billing policies & data privacy' },
 ];
 
 const navItem = 'flex min-h-11 items-center gap-2 rounded-lg px-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface-elevated)] hover:text-[var(--text-primary)]';
@@ -72,7 +73,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
     onNavigate(path);
   };
 
-  const isActive = (item: NavItem) => currentPath === item.path || item.related?.includes(currentPath);
+  const isActive = (item: NavItem) => currentPath === item.path || (item.path === '/work' && currentPath.startsWith('/work/')) || item.related?.includes(currentPath);
 
   const renderLink = (item: NavItem, mobile = false) => {
     const Icon = item.icon;
@@ -130,7 +131,7 @@ export function Navbar({ currentPath, onNavigate }: NavbarProps) {
             {theme === 'dark' ? <Sun aria-hidden="true" className="size-4 text-[var(--accent-orange-text)]" /> : <Moon aria-hidden="true" className="size-4" />}
           </button>
 
-          <a id="nav-talk-to-us-cta" href="/contact" onClick={route('/contact')} className="site-button button-primary hidden whitespace-nowrap min-[400px]:inline-flex">
+          <a id="nav-talk-to-us-cta" href="/contact" onClick={route('/contact')} className="site-button button-primary inline-flex whitespace-nowrap px-3 text-xs sm:text-sm">
             Talk to us <ArrowUpRight aria-hidden="true" className="size-4" />
           </a>
 

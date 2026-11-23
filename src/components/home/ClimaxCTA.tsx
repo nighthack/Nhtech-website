@@ -1,4 +1,4 @@
-import { ArrowRight, ShieldCheck, Lock, Terminal, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Lock, ShieldCheck, Terminal } from 'lucide-react';
 import { RoutePath } from '../../types';
 import { SectionBackdrop } from './SectionBackdrop';
 
@@ -36,7 +36,7 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
             onClick={() => onNavigate('/contact')}
             className="site-button button-primary w-full sm:w-auto"
           >
-            <span>Discuss a business workflow</span>
+            <span>Talk to us</span>
             <ArrowRight className="w-4 h-4 text-[#061421]" />
           </button>
 
@@ -45,7 +45,7 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
             onClick={() => onNavigate('/work')}
             className="site-button button-secondary w-full sm:w-auto"
           >
-            <span>Explore selected work</span>
+            <span>See our work</span>
             <ArrowUpRight className="w-4 h-4 text-[var(--accent-secondary)]" />
           </button>
         </div>
@@ -56,15 +56,15 @@ export function ClimaxCTA({ onNavigate }: ClimaxCTAProps) {
         >
           <div className="flex items-center gap-2">
             <Lock className="w-3.5 h-3.5 text-[var(--accent-orange-text)]" />
-            <span>Mutual NDA from First Call</span>
+            <span>Mutual NDA from the first call</span>
           </div>
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-secondary)]" />
-            <span>100% Client Code &amp; Model Weights Retention</span>
+            <span>You own the code</span>
           </div>
           <div className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-[var(--accent-secondary)]" />
-            <span>Senior Systems Engineers Direct</span>
+            <span>Talk directly to senior engineers</span>
           </div>
         </div>
       </div>

@@ -1,10 +1,11 @@
-import { RoutePath } from '../types';
-import { industries } from '../data/industries';
-import { WorldCanvas } from '../components/common/WorldCanvas';
-import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
-import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
-import { Factory, Building2, Landmark, ShoppingBag, Rocket, Scale, Stethoscope, ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Building2, Factory, Landmark, Rocket, Scale, ShoppingBag, Stethoscope } from 'lucide-react';
 import { motion } from 'motion/react';
+import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
+import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
+import { WorldCanvas } from '../components/common/WorldCanvas';
+import { brand } from '../config/brand';
+import { industries } from '../data/industries';
+import { RoutePath } from '../types';
 
 interface IndustriesPageProps {
   onNavigate: (path: RoutePath) => void;
@@ -14,7 +15,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
   const getIndustryIcon = (id: string) => {
     switch (id) {
       case 'manufacturing': return Factory;
-      case 'enterprise-modernization': return Building2;
+      case 'enterprise-modernisation': return Building2;
       case 'fintech-bfsi': return Landmark;
       case 'retail-ecommerce': return ShoppingBag;
       case 'startups': return Rocket;
@@ -32,20 +33,16 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
       {/* 1. Spatial Header */}
       <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
         <SpatialPageHeader
-          tag="Enterprise Domains & Sector Architectures"
-          title="Where our engineering"
-          titleAccent="operates."
-          subtitle="We tailor agentic workflows, computer vision, and structured intelligence around the explicit operational challenges of European enterprise sectors."
-          ctaText="Discuss Sector Architecture"
+
+          title="Industries we"
+          titleAccent="work in"
+          subtitle={`We build AI for manufacturers, banks and operations teams. ${brand.regionLine}`}
+          ctaText="Talk to us"
           ctaRoute="/contact"
-          secondaryCtaText="Inspect Case Topologies"
+          secondaryCtaText="See related work"
           secondaryCtaRoute="/work"
           onNavigate={onNavigate}
-          telemetryItems={[
-            { label: 'Regions', value: 'Germany, NL, CH, N. Italy' },
-            { label: 'Domains', value: '5 Core Industrial Sectors' },
-            { label: 'Residency', value: 'Air-Gapped & EU VPC' },
-          ]}
+          telemetryItems={[{ label: 'Sectors', value: String(industries.length) }]}
         />
       </section>
 
@@ -65,11 +62,11 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                   <Factory className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">
                     Primary Industrial Focus · DACH &amp; Northern Europe
                   </span>
                   <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)]">
-                    Manufacturing &amp; Industrial Operations
+                    Manufacturing &amp; industrial operations
                   </h2>
                 </div>
               </div>
@@ -79,13 +76,13 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                 onClick={() => onNavigate('/industries/manufacturing')}
                 className="button-primary inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
               >
-                <span>Explore Dedicated Manufacturing Chapter</span>
+                <span>Learn more about manufacturing</span>
                 <ArrowRight className="w-4 h-4 text-current" />
               </button>
             </div>
 
             <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed max-w-4xl">
-              Factory floor edge vision, air-gapped on-premise inference, real-time defect inspection, and ERP inventory synchronization engineered for German, Dutch, Swiss, and Northern European industrial organizations with zero cloud leaks.
+              Factory floor edge vision, air-gapped on-premise inference, real-time defect inspection, and ERP inventory synchronization engineered for manufacturers with local processing within your network.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 font-mono text-xs text-[var(--text-secondary)]">
@@ -95,7 +92,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
               </div>
               <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
                 <span className="text-[var(--accent-orange-text)] font-bold block mb-1">02 · Air-Gapped Isolation</span>
-                Zero CAD or yield data transmitted outside factory walls.
+                CAD and yield data can stay inside the plant network.
               </div>
               <div className="p-4 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
                 <span className="text-[var(--accent-orange-text)] font-bold block mb-1">03 · Operator Gates</span>
@@ -110,7 +107,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10 text-left">
         <div className="site-container space-y-8">
           <div className="border-b border-[var(--border-color)] pb-4">
-            <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase font-semibold">Sector Architectures</span>
+            <span className="text-xs font-mono text-[var(--accent-secondary)] font-semibold">Sector Architectures</span>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
               Enterprise Domains &amp; Engineered Workflows
             </MaskedHeading>
@@ -130,10 +127,10 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="p-3 rounded-xl bg-[var(--bg-surface-elevated)] text-[#FF5A1F] border border-[var(--border-color)]">
+                      <div className="p-3 rounded-xl bg-[var(--bg-surface-elevated)] text-[#FF4800] border border-[var(--border-color)]">
                         <Icon className="w-5 h-5" />
                       </div>
-                      <span className="text-[11px] font-mono px-3 py-1 rounded-md bg-[var(--bg-surface-subtle)] text-[var(--text-secondary)] border border-[var(--border-color)]">
+                      <span className="text-xs font-mono px-3 py-1 rounded-md bg-[var(--bg-surface-subtle)] text-[var(--text-secondary)] border border-[var(--border-color)]">
                         {ind.slug.toUpperCase()}
                       </span>
                     </div>
@@ -152,13 +149,13 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                     </div>
 
                     <div className="space-y-2 pt-2">
-                      <span className="text-xs font-mono text-[var(--text-muted)] uppercase block">
+                      <span className="text-xs font-mono text-[var(--text-muted)] block">
                         Engineered Systems:
                       </span>
                       <ul className="space-y-1.5 text-xs font-mono text-[var(--text-secondary)]">
                         {ind.systems.slice(0, 3).map((sys, sIdx) => (
                           <li key={sIdx} className="flex items-start gap-2">
-                            <span className="text-[#FF5A1F]">▸</span>
+                            <span className="text-[#FF4800]">▸</span>
                             <span>{sys}</span>
                           </li>
                         ))}
@@ -172,7 +169,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                       onClick={() => onNavigate(`/industries/${ind.slug}` as RoutePath)}
                       className="text-xs font-display font-bold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] inline-flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
-                      <span>Inspect Sector Architecture</span>
+                      <span>Learn more</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                     <button
@@ -180,7 +177,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
                       onClick={() => onNavigate('/contact')}
                       className="text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] inline-flex items-center gap-1 cursor-pointer"
                     >
-                      <span>Discuss Pod Deployment</span>
+                      <span>Talk to us</span>
                       <ArrowUpRight className="w-3 h-3" />
                     </button>
                   </div>
@@ -200,7 +197,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-widest block">
             Sector Consultation
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -215,7 +212,7 @@ export function IndustriesPage({ onNavigate }: IndustriesPageProps) {
               onClick={() => onNavigate('/contact')}
               className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
-              <span>Schedule Sector Technical Session</span>
+              <span>Talk to us</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
             </button>
           </div>

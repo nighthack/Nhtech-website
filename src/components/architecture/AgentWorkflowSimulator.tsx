@@ -1,6 +1,5 @@
+import { BookOpen, BrainCircuit, CheckCircle2, Eye, History, Loader2, Lock, Play, RotateCcw, ShieldAlert, Terminal, UserCheck } from 'lucide-react';
 import { useState } from 'react';
-import { Eye, BookOpen, BrainCircuit, Terminal, UserCheck, History, ShieldAlert, CheckCircle2, Lock, Play, RotateCcw, Loader2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
 interface AgentStep {
   key: string;
@@ -133,11 +132,11 @@ export function AgentWorkflowSimulator() {
       {/* Header & Mission */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 mb-6 border-b border-[var(--border-color)]">
         <div>
-          <div className="text-xs font-mono text-[var(--accent-orange-text)] mb-2 uppercase tracking-wider font-semibold">
+          <div className="text-xs font-mono text-[var(--accent-orange-text)] mb-2 tracking-wider font-semibold">
             Architectural Operating Model
           </div>
           <h3 className="text-2xl sm:text-3xl font-display font-semibold text-[var(--text-primary)] tracking-tight">
-            AI that does the work, not just the talking.
+            A workflow with human approval
           </h3>
           <p className="text-sm text-[var(--text-secondary)] max-w-2xl mt-1.5">
             NHTech’s agents live inside actual enterprise workflows rather than sitting beside them as detached chat widgets. Every step runs with explicit permissions and human oversight.
@@ -194,7 +193,7 @@ export function AgentWorkflowSimulator() {
               onClick={() => handleStepClick(idx)}
               className={`flex flex-col items-start p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F] shadow-sm'
+                  ? 'bg-[var(--bg-surface-elevated)] border-[#FF4800] shadow-sm'
                   : isPassed
                   ? 'bg-[var(--bg-surface-subtle)] border-[var(--border-hover)] text-[var(--text-primary)]'
                   : 'bg-[var(--bg-surface-subtle)] border-[var(--border-color)] text-[var(--text-muted)] hover:border-[var(--border-hover)]'
@@ -204,16 +203,16 @@ export function AgentWorkflowSimulator() {
                 <div
                   className={`p-1.5 rounded-md ${
                     isActive
-                      ? 'bg-[#FF5A1F]/15 text-[var(--accent-orange-text)]'
+                      ? 'bg-[#FF4800]/15 text-[var(--accent-orange-text)]'
                       : 'bg-[var(--bg-surface)] text-[var(--accent-secondary)]'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
                 </div>
-                <span className="text-[10px] font-mono text-[var(--text-muted)] tabular-nums">0{idx + 1}</span>
+                <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">0{idx + 1}</span>
               </div>
               <div className="text-xs font-semibold text-[var(--text-primary)] tracking-tight">{step.label}</div>
-              <div className="text-[10px] font-mono text-[var(--text-muted)] truncate w-full mt-0.5">
+              <div className="text-xs font-mono text-[var(--text-muted)] truncate w-full mt-0.5">
                 {step.checkpointState === 'HUMAN_REVIEW_REQUIRED' ? 'Gate: Human' : 'Auto Step'}
               </div>
             </button>
@@ -231,9 +230,9 @@ export function AgentWorkflowSimulator() {
                 Current State: {currentStep.label.toUpperCase()}
               </div>
               <span
-                className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                className={`text-xs font-mono px-2 py-0.5 rounded border ${
                   currentStep.checkpointState === 'HUMAN_REVIEW_REQUIRED'
-                    ? 'bg-[#FF5A1F]/15 text-[var(--accent-orange-text)] border-[#FF5A1F]/40'
+                    ? 'bg-[#FF4800]/15 text-[var(--accent-orange-text)] border-[#FF4800]/40'
                     : 'bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] border-[var(--border-color)]'
                 }`}
               >
@@ -251,11 +250,11 @@ export function AgentWorkflowSimulator() {
           {/* Access Boundaries Matrix */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div className="p-3.5 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[var(--accent-secondary)] font-semibold mb-2">
+              <div className="flex items-center gap-1.5 text-xs font-mono text-[var(--accent-secondary)] font-semibold mb-2">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 CAN ACCESS (EXPLICIT SCOPE)
               </div>
-              <ul className="space-y-1.5 text-[11px] text-[var(--text-secondary)]">
+              <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
                 {currentStep.canAccess.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
                     <span className="text-[var(--accent-secondary)] font-bold">✓</span>
@@ -266,11 +265,11 @@ export function AgentWorkflowSimulator() {
             </div>
 
             <div className="p-3.5 rounded-xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)]">
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#DC2626] dark:text-[#EF4444] font-semibold mb-2">
+              <div className="flex items-center gap-1.5 text-xs font-mono text-[#DC2626] dark:text-[#EF4444] font-semibold mb-2">
                 <Lock className="w-3.5 h-3.5" />
                 CANNOT ACCESS (HARD BOUNDARY)
               </div>
-              <ul className="space-y-1.5 text-[11px] text-[var(--text-secondary)]">
+              <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
                 {currentStep.cannotAccess.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
                     <span className="text-[#DC2626] dark:text-[#EF4444] font-bold">✕</span>
@@ -294,19 +293,20 @@ export function AgentWorkflowSimulator() {
         {/* Right: Technical Schema & Payload View */}
         <div className="lg:col-span-6 flex flex-col">
           <div className="flex-1 rounded-xl bg-[#061421] border border-[#173D5B] p-4 flex flex-col font-mono text-xs">
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#173D5B] text-[11px] text-[#75A4B5]">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#173D5B] text-xs text-[#75A4B5]">
               <div className="flex items-center gap-2">
-                <Terminal className="w-3.5 h-3.5 text-[#FF5A1F]" />
+                <Terminal className="w-3.5 h-3.5 text-[#FF4800]" />
                 <span className="text-[#F5F8FA] font-semibold">{currentStep.samplePayload.title}</span>
               </div>
-              <span className="text-[10px] text-[#A8B8C7]">IMMUTABLE SCHEMA VALIDATION</span>
+              <span className="text-xs text-[#A8B8C7]">IMMUTABLE SCHEMA VALIDATION</span>
             </div>
 
-            <pre tabIndex={0} role="region" aria-label="Sample payload code" className="flex-1 overflow-x-auto text-[11px] text-[#F5F8FA] leading-relaxed p-3 bg-[#0B2031] rounded-lg border border-[#173D5B]">
+            <p className="mb-2 text-xs text-[#D1E0E6]">Example event</p>
+            <pre tabIndex={0} role="region" aria-label="Sample payload code" className="flex-1 overflow-x-auto text-xs text-[#F5F8FA] leading-relaxed p-3 bg-[#0B2031] rounded-lg border border-[#173D5B]">
               <code>{currentStep.samplePayload.code}</code>
             </pre>
 
-            <div className="mt-3 pt-3 border-t border-[#173D5B] flex items-center justify-between text-[10px] text-[#75A4B5]">
+            <div className="mt-3 pt-3 border-t border-[#173D5B] flex items-center justify-between text-xs text-[#75A4B5]">
               <span>STATUS: REPLAYABLE_EVENT</span>
               <span className="text-[#FF7A45]">SIGNATURE: VERIFIED_ED25519</span>
             </div>

@@ -1,7 +1,7 @@
-import { StageGroup } from '../home/StageGroup';
+import { Activity, Box, CheckCircle2, Cloud, Cpu, Layers, Lock, Server } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Server, Cloud, Cpu, Lock, Layers, Activity, CheckCircle2, Box } from 'lucide-react';
+import { StageGroup } from '../home/StageGroup';
 
 export type SovereignMode = 'cloud-ml' | 'kubernetes-docker' | 'custom-api';
 
@@ -32,16 +32,16 @@ export function SovereignTopologyStage({
       badge: 'AWS SAGEMAKER / GOOGLE AI / AZURE ML',
       description: 'Deploy fine-tuned models on enterprise cloud infrastructure using managed ML runtimes, autoscaling endpoints, and secure VPC access.',
       specs: [
-        { label: 'Platforms', value: 'AWS SageMaker, Google AI Platform, Azure ML', icon: Cloud },
-        { label: 'Model Artifacts', value: 'PyTorch / Hugging Face Checkpoints', icon: Cpu },
-        { label: 'Security & Access', value: 'Role-Based Access Control & SSL/TLS', icon: Lock },
+        { label: 'Platforms', value: 'AWS SageMaker, Vertex AI, Azure ML', icon: Cloud },
+        { label: 'Model artifacts', value: 'PyTorch / Hugging Face Checkpoints', icon: Cpu },
+        { label: 'Security & access', value: 'Role-Based Access Control & SSL/TLS', icon: Lock },
         { label: 'Monitoring', value: 'Logging, Metrics & Drift Tracking', icon: Activity }
       ],
       nodes: [
-        { id: 'registry', title: 'Model Registry', desc: 'Version-controlled fine-tuned checkpoints and evaluation metadata.' },
-        { id: 'endpoint', title: 'Managed Inference Endpoint', desc: 'Autoscaling GPU/CPU instances serving low-latency model predictions.' },
-        { id: 'vpc', title: 'Secure VPC Networking', desc: 'Private routing between internal application services and model endpoints.' },
-        { id: 'logging', title: 'Cloud Observability', desc: 'Centralized request logging, latency metrics, and error alerting.' }
+        { id: 'registry', title: 'Model registry', desc: 'Version-controlled fine-tuned checkpoints and evaluation metadata.' },
+        { id: 'endpoint', title: 'Managed inference endpoint', desc: 'Autoscaling GPU/CPU instances serving low-latency model predictions.' },
+        { id: 'vpc', title: 'Secure vpc networking', desc: 'Private routing between internal application services and model endpoints.' },
+        { id: 'logging', title: 'Cloud observability', desc: 'Centralized request logging, latency metrics, and error alerting.' }
       ]
     },
     'kubernetes-docker': {
@@ -56,10 +56,10 @@ export function SovereignTopologyStage({
         { label: 'Automation', value: 'GitHub Actions / GitLab CI / Jenkins', icon: CheckCircle2 }
       ],
       nodes: [
-        { id: 'image', title: 'Hardened Container Image', desc: 'Minimal base images bundled with Python, PyTorch, and optimized model runtimes.' },
-        { id: 'k8s', title: 'Kubernetes Cluster', desc: 'Declarative pod scaling, rolling updates, and resource allocation.' },
-        { id: 'ci', title: 'CI/CD Pipeline', desc: 'Automated test suite execution and container deployment via GitHub Actions/GitLab.' },
-        { id: 'isolation', title: 'Environment Separation', desc: 'Strict separation between development, staging, and production clusters.' }
+        { id: 'image', title: 'Hardened container image', desc: 'Minimal base images bundled with Python, PyTorch, and optimised model runtimes.' },
+        { id: 'k8s', title: 'Kubernetes cluster', desc: 'Declarative pod scaling, rolling updates, and resource allocation.' },
+        { id: 'ci', title: 'CI/CD pipeline', desc: 'Automated test suite execution and container deployment via GitHub Actions/GitLab.' },
+        { id: 'isolation', title: 'Environment separation', desc: 'Strict separation between development, staging, and production clusters.' }
       ]
     },
     'custom-api': {
@@ -68,16 +68,16 @@ export function SovereignTopologyStage({
       badge: 'FASTAPI / ASYNC QUEUES / SYSTEM INTEGRATION',
       description: 'Production-ready inference microservices integrated directly into existing databases, ERPs, CRM workflows, and operational dashboards.',
       specs: [
-        { label: 'API Framework', value: 'Python / FastAPI / Async Workers', icon: Server },
+        { label: 'API framework', value: 'Python / FastAPI / Async Workers', icon: Server },
         { label: 'Databases', value: 'PostgreSQL, Redis, Qdrant Vector DB', icon: Cloud },
         { label: 'Authentication', value: 'JWT, OAuth2, OpenID Connect', icon: Lock },
-        { label: 'Data Pipelines', value: 'ETL/ELT Workflows & Batch Ingestion', icon: Activity }
+        { label: 'Data pipelines', value: 'ETL/ELT Workflows & Batch Ingestion', icon: Activity }
       ],
       nodes: [
-        { id: 'fastapi', title: 'FastAPI Microservice', desc: 'High-throughput async endpoints handling payload validation and batching.' },
-        { id: 'queue', title: 'Redis Task Queue', desc: 'Decoupled queue workers for long-running document analysis and inference.' },
-        { id: 'storage', title: 'Database Integration', desc: 'Writing structured predictions directly to PostgreSQL, MongoDB, or Redis.' },
-        { id: 'workflow', title: 'Product UI & Handoffs', desc: 'Delivering actionable outputs to admin dashboards with human-in-the-loop controls.' }
+        { id: 'fastapi', title: 'FastAPI microservice', desc: 'High-throughput async endpoints handling payload validation and batching.' },
+        { id: 'queue', title: 'Redis task queue', desc: 'Decoupled queue workers for long-running document analysis and inference.' },
+        { id: 'storage', title: 'Database integration', desc: 'Writing structured predictions directly to PostgreSQL, MongoDB, or Redis.' },
+        { id: 'workflow', title: 'Product ui & handoffs', desc: 'Delivering actionable outputs to admin dashboards with human-in-the-loop controls.' }
       ]
     }
   };
@@ -124,7 +124,7 @@ export function SovereignTopologyStage({
           {/* Topology Overview Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div className="space-y-1 text-left">
-              <div className="text-xs text-[var(--accent-orange-text)] uppercase tracking-wider font-bold">
+              <div className="text-xs text-[var(--accent-orange-text)] tracking-wider font-bold">
                 {current.badge}
               </div>
               <div className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">

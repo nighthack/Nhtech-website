@@ -1,18 +1,16 @@
+import {
+Cpu,
+Database,
+FileInput,
+ShieldCheck,
+Terminal,
+UserCheck
+} from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState } from 'react';
+import { RoutePath } from '../../types';
 import { SectionBackdrop } from './SectionBackdrop';
 import { StageGroup } from './StageGroup';
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import {
-  ArrowRight,
-  Terminal,
-  ShieldCheck,
-  UserCheck,
-  Database,
-  Cpu,
-  FileInput,
-  ArrowUpRight
-} from 'lucide-react';
-import { RoutePath } from '../../types';
 
 interface AgenticExecutionFlowSectionProps {
   onNavigate: (path: RoutePath) => void;
@@ -48,7 +46,7 @@ const EXECUTION_CHAIN: ChainStep[] = [
   {
     id: 'ai-processing',
     stepNumber: '02',
-    title: 'AI Processing',
+    title: 'AI processing',
     subhead: 'Extraction & Rule Evaluation',
     role: 'Calibrated models extract fields with source citations and evaluate deterministic business rules.',
     systemsAccessed: ['Fine-Tuned SLM / LLM Router', 'Document Vector Index', 'Deterministic Rule Engine'],
@@ -61,7 +59,7 @@ const EXECUTION_CHAIN: ChainStep[] = [
   {
     id: 'human-review',
     stepNumber: '03',
-    title: 'Human Review',
+    title: 'Human review',
     subhead: 'Mandatory Approval Gate',
     role: 'Exceptions, low-confidence extractions, or threshold breaches pause for operator sign-off.',
     systemsAccessed: ['Operator Triage Workbench', 'Inline PDF Diff Viewer', 'Role-Based Approval Queue'],
@@ -74,7 +72,7 @@ const EXECUTION_CHAIN: ChainStep[] = [
   {
     id: 'system-action',
     stepNumber: '04',
-    title: 'System Action',
+    title: 'System action',
     subhead: 'Core ERP Write & Audit Log',
     role: 'Approved actions commit to enterprise systems of record alongside an immutable audit trail.',
     systemsAccessed: ['SAP / ERP Connector', 'PostgreSQL Ledger', 'Immutable Audit Log'],
@@ -142,10 +140,10 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                         <div
                           className={`w-9 h-9 rounded-full flex items-center justify-center border transition-colors relative z-10 ${
                             isSelected
-                              ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421] shadow-md'
+                              ? 'bg-[#FF4800] border-[#FF4800] text-[#061421] shadow-md'
                               : step.requiresHuman
-                              ? 'bg-[var(--bg-base)] border-[#FF5A1F]/60 text-[var(--accent-orange-text)]'
-                              : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF5A1F]'
+                              ? 'bg-[var(--bg-base)] border-[#FF4800]/60 text-[var(--accent-orange-text)]'
+                              : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)] group-hover:border-[#FF4800]'
                           }`}
                         >
                           <StepIcon className="w-4 h-4" />
@@ -160,7 +158,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                       </div>
 
                       <span
-                        className={`text-xs uppercase tracking-wider ${
+                        className={`text-xs tracking-wider ${
                           step.requiresHuman
                             ? 'text-[var(--accent-orange-text)] font-bold'
                             : 'text-[var(--accent-secondary)]'
@@ -200,10 +198,10 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
               <div className="lg:col-span-7 space-y-5 text-left lg:pr-6">
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <span className="px-2.5 py-1 rounded-md font-bold bg-[#FF5A1F] text-[#061421] tabular-nums">
+                    <span className="px-2.5 py-1 rounded-md font-bold bg-[#FF4800] text-[#061421] tabular-nums">
                       Step {currentStep.stepNumber} · {currentStep.title}
                     </span>
-                    <span className="text-[var(--text-muted)] uppercase">
+                    <span className="text-[var(--text-muted)] ">
                       {currentStep.subhead}
                     </span>
                   </div>
@@ -217,7 +215,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                 </p>
 
                 <div className="space-y-2 pt-1">
-                  <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider block">
+                  <span className="text-xs text-[var(--text-muted)] tracking-wider block">
                     System Components Connected
                   </span>
                   <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-[var(--text-primary)]">
@@ -237,7 +235,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                   <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
                     <div className="flex items-center gap-2 font-semibold">
                       <Terminal className="w-4 h-4 text-[#FF7A45]" />
-                      <span>Execution Trace Example</span>
+                      <span>Example</span>
                     </div>
                     <span className="text-[#75A4B5] font-semibold">Audited</span>
                   </div>
@@ -251,7 +249,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
                       <div className="flex items-start gap-2 text-[#FF7A45] font-medium">
                         <UserCheck className="w-4 h-4 shrink-0 mt-0.5" />
                         <span>
-                          Human approval is mandatory before downstream system writes execute—no unverified database mutations.
+                          Human approval is mandatory before downstream system writes execute. no unverified database mutations.
                         </span>
                       </div>
                     ) : (
@@ -269,32 +267,7 @@ export function AgenticExecutionFlowSection({ onNavigate }: AgenticExecutionFlow
           </motion.div>
         </div>
 
-        {/* Footer Actions */}
-        <div className="pt-2 flex flex-wrap items-center justify-between gap-4 text-left">
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => onNavigate('/contact')}
-              className="site-button button-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm"
-            >
-              <span>Map Your Workflow With Us</span>
-              <ArrowRight className="w-4 h-4 text-[#061421]" />
-            </button>
 
-            <button
-              type="button"
-              onClick={() => onNavigate('/work')}
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-transparent hover:bg-[var(--bg-surface)] border border-[var(--border-hover)] text-[var(--text-primary)] text-xs font-medium transition-colors cursor-pointer"
-            >
-              <span>Explore Selected Production Work</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[var(--text-muted)]" />
-            </button>
-          </div>
-
-          <span className="text-xs text-[var(--text-muted)]">
-            Input → AI Processing → Human Review → System Action
-          </span>
-        </div>
       </div>
     </section>
   );

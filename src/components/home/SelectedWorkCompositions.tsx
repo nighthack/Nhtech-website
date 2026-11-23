@@ -1,5 +1,6 @@
+import { Activity, ArrowUpRight, Eye, Layers } from 'lucide-react';
 import { useState } from 'react';
-import { ArrowUpRight, Activity, Eye, Layers } from 'lucide-react';
+import { caseStudies } from '../../data/caseStudies';
 import type { RoutePath } from '../../types';
 import { SectionBackdrop } from './SectionBackdrop';
 import { StageGroup } from './StageGroup';
@@ -14,7 +15,8 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
 
   const featuredStudies = [
     {
-      badge: 'Embedded Teams',
+      slug: 'enterprise-workflow-intelligence',
+      badge: 'Embedded teams',
       icon: Layers,
       title: 'Unifying valuation workflows into an automated production system.',
       challenge:
@@ -25,7 +27,8 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
       stackLine: 'PDF / SFTP Intake → Citation Grounding → Human Gate → ERP Writeback'
     },
     {
-      badge: 'Vision & Edge AI',
+      slug: 'computer-vision-motion',
+      badge: 'Vision & edge AI',
       icon: Eye,
       title: 'Biomechanical kinematic pose extraction running 100% on-device.',
       challenge:
@@ -36,7 +39,8 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
       stackLine: 'Tablet Camera → Pose 3D & ONNX Runtime → Local SQLite → Coach UI'
     },
     {
-      badge: 'Custom Platforms',
+      slug: 'financial-anomaly',
+      badge: 'Financial services',
       icon: Activity,
       title: 'Real-time temporal stream anomaly scoring in high-volume ledgers.',
       challenge:
@@ -49,6 +53,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
   ];
 
   const activeStudy = featuredStudies[activeIdx];
+  const record = caseStudies.find((study) => study.slug === activeStudy.slug)!;
 
   return (
     <section
@@ -59,7 +64,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
       <div className="site-container relative z-10 space-y-10">
         <div className="border-b border-[var(--border-color)] pb-6">
           <h2 className="text-section-display max-w-2xl">
-            From business bottleneck to <span className="text-[var(--accent-secondary)]">production system.</span>
+            Selected work
           </h2>
         </div>
 
@@ -82,7 +87,7 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
                     <Icon aria-hidden="true" className="stage-indicator size-4 shrink-0" />
                     {study.badge}
                   </span>
-                  <span className="mt-1.5 block text-sm font-bold leading-snug text-[var(--text-primary)]">{study.title}</span>
+                  <span className="mt-1.5 block text-sm font-bold leading-snug text-[var(--text-primary)]">{caseStudies.find((item) => item.slug === study.slug)?.title}</span>
                 </button>
               );
             })}
@@ -90,13 +95,13 @@ export function SelectedWorkCompositions({ onNavigate }: SelectedWorkComposition
 
           <div className="space-y-5 self-end border-t border-[var(--border-color)] pt-5">
             <div id="selected-work-detail" role="status" className="space-y-2">
-              <h3 className="text-card-display">{activeStudy.outcomeMetric}</h3>
-              <p className="text-sm font-semibold text-[var(--accent-secondary)]">{activeStudy.outcomeLabel}</p>
-              <p className="max-w-lg text-sm leading-relaxed text-[var(--text-secondary)]">{activeStudy.challenge}</p>
+              <h3 className="text-card-display">{record.title}</h3>
+              <p className="text-sm font-semibold text-[var(--accent-secondary)]">Result</p>
+              <p className="max-w-lg text-sm leading-relaxed text-[var(--text-secondary)]">{record.operationalImpact}</p>
               <p className="font-mono text-xs leading-relaxed text-[var(--text-muted)]">{activeStudy.stackLine}</p>
             </div>
-            <button type="button" onClick={() => onNavigate('/work')} className="site-button button-secondary">
-              Inspect case studies <ArrowUpRight aria-hidden="true" className="size-4" />
+            <button type="button" onClick={() => onNavigate(`/work/${activeStudy.slug}`)} className="site-button button-secondary">
+              Read the case study <ArrowUpRight aria-hidden="true" className="size-4" />
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
+import { ArrowUpRight, ShieldCheck } from 'lucide-react';
 import type { MouseEvent } from 'react';
-import { ShieldCheck, ArrowUpRight } from 'lucide-react';
 import { brand } from '../../config/brand';
 import { RoutePath } from '../../types';
 import { BrandLogo } from '../common/BrandLogo';
@@ -37,48 +37,48 @@ export function Footer({ onNavigate }: FooterProps) {
             </p>
 
             {/* OpenAI Partner Metadata */}
-            <div className="pt-1 flex flex-wrap items-center gap-2 text-xs text-[var(--text-secondary)]">
+            {brand.partnerships.openai.confirmed && <div className="pt-1 flex flex-wrap items-center gap-2 text-xs text-[var(--text-secondary)]">
               <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-ocean)] shrink-0" />
               <span className="font-semibold text-[var(--text-primary)]">{brand.partnerships.openai.status}</span>
               <span className="text-[var(--text-muted)]" aria-hidden="true">·</span>
               <span>{brand.partnerships.openai.specialization}</span>
-            </div>
+            </div>}
           </div>
 
           {/* Systems Column */}
           <div className="md:col-span-2 space-y-3">
-            <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
-              Engineering Tracks
+            <h2 className="text-xs font-mono font-bold tracking-wider text-[var(--text-muted)]">
+              Services
             </h2>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="/fde" onClick={handleNav('/fde')} className="text-[var(--text-primary)] font-semibold hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer text-left">
-                  Forward Deployed
+                  Embedded teams
                 </a>
               </li>
               <li>
                 <a href="/computer-vision" onClick={handleNav('/computer-vision')} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-left">
-                  Vision &amp; Edge AI
+                  Vision &amp; edge AI
                 </a>
               </li>
               <li>
                 <a href="/what-we-build" onClick={handleNav('/what-we-build')} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-left">
-                  What We Build
+                  Services
                 </a>
               </li>
               <li>
                 <a href="/agentic-ai" onClick={handleNav('/agentic-ai')} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-left">
-                  Agentic Workflows
+                  AI agents
                 </a>
               </li>
               <li>
                 <a href="/document-intelligence" onClick={handleNav('/document-intelligence')} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-left">
-                  Document Intelligence
+                  Document intelligence
                 </a>
               </li>
               <li>
                 <a href="/on-prem-ai" onClick={handleNav('/on-prem-ai')} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-left">
-                  On-Prem AI
+                  Private AI
                 </a>
               </li>
             </ul>
@@ -86,7 +86,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Industries Column */}
           <div className="md:col-span-2 space-y-3">
-            <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
+            <h2 className="text-xs font-mono font-bold tracking-wider text-[var(--text-muted)]">
               Industries
             </h2>
             <ul className="space-y-2 text-sm">
@@ -121,8 +121,8 @@ export function Footer({ onNavigate }: FooterProps) {
           {/* Legal & Inquiries Column */}
           <div className="md:col-span-3 space-y-4">
             <div className="space-y-2">
-              <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
-                Legal &amp; Compliance
+              <h2 className="text-xs font-mono font-bold tracking-wider text-[var(--text-muted)]">
+                Legal
               </h2>
               <ul className="space-y-1.5 text-xs">
                 <li>
@@ -131,23 +131,23 @@ export function Footer({ onNavigate }: FooterProps) {
                     href="/terms-and-conditions" onClick={handleNav('/terms-and-conditions')}
                     className="text-[var(--text-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer text-left"
                   >
-                    Terms &amp; Conditions
+                    Terms and payments
                   </a>
                 </li>
                 <li>
                   <a
-                    href="/terms-and-conditions" onClick={handleNav('/terms-and-conditions')}
+                    href="/privacy-policy" onClick={handleNav('/privacy-policy')}
                     className="text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors cursor-pointer text-left text-xs"
                   >
-                    Online Payments &amp; Refund Policy
+                    Privacy policy
                   </a>
                 </li>
               </ul>
             </div>
 
             <div className="space-y-2 pt-2 border-t border-[var(--border-color)]">
-              <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
-                Engineering Direct
+              <h2 className="text-xs font-mono font-bold tracking-wider text-[var(--text-muted)]">
+                Engineering direct
               </h2>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-normal">
                 Discuss technical constraints or private deployment topologies directly.
@@ -179,7 +179,7 @@ export function Footer({ onNavigate }: FooterProps) {
               About
             </a>
             <a href="/work" onClick={handleNav('/work')} className="hover:text-[var(--text-primary)] transition-colors cursor-pointer">
-              Selected Work
+              Selected work
             </a>
             <a href="/products" onClick={handleNav('/products')} className="hover:text-[var(--text-primary)] transition-colors cursor-pointer">
               Products
@@ -195,7 +195,7 @@ export function Footer({ onNavigate }: FooterProps) {
               href="/terms-and-conditions" onClick={handleNav('/terms-and-conditions')}
               className="text-[var(--text-secondary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer font-bold sm:border-l sm:border-[var(--border-color)] sm:pl-4"
             >
-              Terms &amp; Conditions
+              Terms and payments
             </a>
           </div>
         </div>

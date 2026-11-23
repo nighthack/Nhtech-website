@@ -1,23 +1,24 @@
-import { useState } from 'react';
-import { RoutePath } from '../types';
-import { capabilities } from '../data/capabilities';
-import { WorldCanvas } from '../components/common/WorldCanvas';
-import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
-import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
-import { ComposableArchitectureVisual } from '../components/visuals/WorkflowVisuals';
 import {
-  ArrowRight,
-  Layers,
-  CheckCircle2,
-  GitMerge,
-  FileText,
-  Workflow,
-  Eye,
-  Database,
-  Lock,
-  Cpu
+ArrowRight,
+CheckCircle2,
+Cpu,
+Database,
+Eye,
+FileText,
+GitMerge,
+Layers,
+Lock,
+Workflow
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useState } from 'react';
+import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
+import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
+import { WorldCanvas } from '../components/common/WorldCanvas';
+import { StageGroup } from '../components/home/StageGroup';
+import { ComposableArchitectureVisual } from '../components/visuals/WorkflowVisuals';
+import { capabilities } from '../data/capabilities';
+import { RoutePath } from '../types';
 
 interface WhatWeBuildPageProps {
   onNavigate: (path: RoutePath) => void;
@@ -45,7 +46,7 @@ const BUSINESS_CHALLENGES: BusinessChallenge[] = [
     problemSummary:
       'Operations teams spend significant manual hours extracting numbers from incoming emails and attachments, checking proprietary formulas, and re-entering records into Enterprise Resource Planning (ERP) or SQL systems.',
     expectedOutcome:
-      'Straight-through processing with mandatory human review gates for exceptions, full citation traceability, and zero manual re-entry.',
+      'Records flow through on their own. A person approves the exceptions. Nobody re-types anything.',
     combinedCapabilities: [
       { capIndex: 1, roleInSystem: 'Document parsing & bounding-box extraction' },
       { capIndex: 0, roleInSystem: 'Deterministic rule routing & human approval gates' },
@@ -87,7 +88,7 @@ const BUSINESS_CHALLENGES: BusinessChallenge[] = [
       'Reviewer verification web application'
     ],
     primaryRoute: '/document-intelligence',
-    primaryRouteLabel: 'Explore Document Intelligence'
+    primaryRouteLabel: 'Learn about document intelligence'
   },
   {
     id: 'physical-edge-vision',
@@ -106,13 +107,13 @@ const BUSINESS_CHALLENGES: BusinessChallenge[] = [
       'Bluetooth Low Energy (BLE) sensor coordination and Over-the-Air (OTA) fleet updates'
     ],
     deliverables: [
-      'Optimized edge inference runtime',
+      'Optimised edge inference runtime',
       'Real-time defect or kinematic tracking engine',
       'Field operator tablet / station UI',
       'Offline sync & OTA fleet tooling'
     ],
     primaryRoute: '/computer-vision',
-    primaryRouteLabel: 'Explore Vision & Edge AI'
+    primaryRouteLabel: 'How vision & edge AI works'
   },
   {
     id: 'high-volume-data-privacy',
@@ -123,7 +124,7 @@ const BUSINESS_CHALLENGES: BusinessChallenge[] = [
       'Real-time anomaly scoring, inventory forecasting, and self-hosted private models deployed exclusively inside your Virtual Private Cloud (VPC) or on-premises cluster.',
     combinedCapabilities: [
       { capIndex: 3, roleInSystem: 'Streaming ledger anomaly & multi-horizon forecasting pipelines' },
-      { capIndex: 4, roleInSystem: 'Self-hosted quantized models via vLLM / TensorRT-LLM' },
+      { capIndex: 4, roleInSystem: 'Self-hosted quantised models via vLLM / TensorRT-LLM' },
       { capIndex: 0, roleInSystem: 'Automated escalation queues & procurement drafts' }
     ],
     integrationExamples: [
@@ -134,10 +135,10 @@ const BUSINESS_CHALLENGES: BusinessChallenge[] = [
       'Private VPC or on-premises inference cluster',
       'Streaming anomaly or forecasting pipeline',
       'Compliance escalation & audit dashboard',
-      '100% client-owned code & model weights'
+      'client-owned code & model weights'
     ],
     primaryRoute: '/on-prem-ai',
-    primaryRouteLabel: 'Explore On-Prem & Private AI'
+    primaryRouteLabel: 'How private AI works'
   }
 ];
 
@@ -177,36 +178,49 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
       {/* 1. Spatial Header */}
       <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
         <SpatialPageHeader
-          tag="Capabilities & Custom AI Platforms"
-          title="What we engineer."
-          titleAccent="Built around your operational bottleneck."
-          subtitle="We combine workflow automation, document intelligence, full-stack enterprise applications, on-premises model hosting, and edge computer vision into unified production systems tailored to your business constraints."
+
+          title="What we build"
+          titleAccent=""
+          subtitle="Most projects combine a few of these: workflow automation, document processing, custom apps, private models and edge vision. We build them as one system."
           ctaText="Discuss a business workflow"
           ctaRoute="/contact"
-          secondaryCtaText="Explore selected work"
+          secondaryCtaText="See our work"
           secondaryCtaRoute="/work"
           onNavigate={onNavigate}
           telemetryItems={[]}
         />
       </section>
 
+      <section className="border-b border-[var(--border-color)] py-12 sm:py-16">
+        <div className="site-container grid gap-8 md:grid-cols-3">
+          {[
+            { title: 'Embedded teams', route: '/fde' as RoutePath, description: 'Senior engineers work alongside your team, from discovery to production.' },
+            { title: 'Vision & edge AI', route: '/computer-vision' as RoutePath, description: 'Computer vision and measurements running on cameras, tablets and factory hardware.' },
+            { title: 'Private AI', route: '/on-prem-ai' as RoutePath, description: 'Document search and adapted models on infrastructure you control.' },
+          ].map((service) => <article key={service.route} className="space-y-3 border-t border-[var(--border-color)] pt-5">
+            <h2 className="text-card-display">{service.title}</h2><p className="text-sm leading-relaxed text-[var(--text-secondary)]">{service.description}</p>
+            <a href={service.route} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[var(--accent-orange-text)] hover:underline" onClick={(event) => { if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onNavigate(service.route); }}>Learn more <ArrowRight aria-hidden="true" className="size-4" /></a>
+          </article>)}
+        </div>
+      </section>
+
       {/* 2. Composable Systems Editorial Split + Interactive Topology Visual */}
       <section className="py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
         <div className="site-container grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left">
           <div className="lg:col-span-7 space-y-5">
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--accent-orange-text)] font-semibold">
+            <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[var(--accent-orange-text)] font-semibold">
               <GitMerge className="w-4 h-4" />
               <span>Composable Systems Engineering</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              Multiple capabilities combine into one tailored production system.
+              One project, several capabilities
             </h2>
             <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
               Real business operations rarely fit a single technical box. A single engagement often pairs{' '}
               <strong className="text-[var(--text-primary)]">Document Intelligence</strong> with{' '}
               <strong className="text-[var(--text-primary)]">Workflow State Machines</strong>,{' '}
               <strong className="text-[var(--text-primary)]">Enterprise Resource Planning (ERP) Connectors</strong>, and{' '}
-              <strong className="text-[var(--text-primary)]">Private On-Premises Models</strong>—delivered as one cohesive platform.
+              <strong className="text-[var(--text-primary)]">Private On-Premises Models</strong>. delivered as one cohesive platform.
             </p>
 
             <div className="flex flex-wrap gap-2.5 pt-1">
@@ -215,7 +229,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 onClick={() => setBrowseMode('challenge')}
                 className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                   browseMode === 'challenge'
-                    ? 'bg-[#FF5A1F] text-[#061421] shadow-sm'
+                    ? 'bg-[#FF4800] text-[#061421] shadow-sm'
                     : 'bg-transparent border border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -226,7 +240,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 onClick={() => setBrowseMode('capability')}
                 className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                   browseMode === 'capability'
-                    ? 'bg-[#FF5A1F] text-[#061421] shadow-sm'
+                    ? 'bg-[#FF4800] text-[#061421] shadow-sm'
                     : 'bg-transparent border border-[var(--border-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -244,7 +258,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
               }
               modeLabel={
                 browseMode === 'challenge'
-                  ? `Challenge 0${activeChallengeIdx + 1}`
+                  ? activeChallenge.title
                   : activeCap.title
               }
             />
@@ -257,9 +271,9 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
         <div className="site-container space-y-10 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[var(--border-color)]">
           <div>
-            <p className="text-xs font-mono text-[var(--accent-orange-text)] uppercase tracking-wider font-semibold">
+            <p className="text-xs font-mono text-[var(--accent-orange-text)] tracking-wider font-semibold">
               {browseMode === 'challenge'
-                ? 'Route 01 · Browse by Business Challenge'
+                ? 'By business problem'
                 : 'Route 02 · Browse by Engineering Capability'}
             </p>
             <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] mt-1">
@@ -267,18 +281,14 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
             </h2>
           </div>
 
-          <span className="text-xs font-mono text-[var(--text-muted)]">
-            {browseMode === 'challenge'
-              ? 'Select a bottleneck to see combined capabilities & deliverables'
-              : 'Select an engineering domain to inspect architecture & deliverables'}
-          </span>
+
         </div>
 
         {/* MODE A: BROWSE BY BUSINESS CHALLENGE */}
         {browseMode === 'challenge' && (
           <div className="space-y-10">
             {/* Flush Hairline Challenge Selector Tabs */}
-            <div className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-2xl overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px">
+            <StageGroup label="Business problems" className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-2xl overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px">
               {BUSINESS_CHALLENGES.map((challenge, idx) => {
                 const isActive = activeChallengeIdx === idx;
                 return (
@@ -286,7 +296,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     key={challenge.id}
                     type="button"
                     onClick={() => setActiveChallengeIdx(idx)}
-                    className={`p-5 text-left transition-colors cursor-pointer flex flex-col justify-between gap-3 relative ${
+                    aria-pressed={isActive}
+                    aria-controls="service-challenge-detail"
+                    data-suggested={idx === (activeChallengeIdx + 1) % BUSINESS_CHALLENGES.length}
+                    className={`stage-control p-5 text-left transition-colors cursor-pointer flex flex-col justify-between gap-3 relative ${
                       isActive
                         ? 'bg-[var(--bg-surface)]'
                         : 'bg-[var(--bg-surface-subtle)] hover:bg-[var(--bg-surface)]/80'
@@ -295,20 +308,12 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     <span
                       aria-hidden="true"
                       className={`absolute top-0 left-0 h-[2px] transition-all duration-300 ${
-                        isActive ? 'w-full bg-[#FF5A1F]' : 'w-0'
+                        isActive ? 'w-full bg-[#FF4800]' : 'w-0'
                       }`}
                     />
                     <div className="flex items-center justify-between text-xs font-mono">
-                      <span
-                        className={`font-bold tabular-nums ${
-                          isActive
-                            ? 'text-[var(--accent-orange-text)]'
-                            : 'text-[var(--accent-secondary)]'
-                        }`}
-                      >
-                        Challenge 0{idx + 1}
-                      </span>
-                      <span className="text-[11px] text-[var(--text-muted)] tabular-nums">
+
+                      <span className="text-xs text-[var(--text-muted)] tabular-nums">
                         {challenge.combinedCapabilities.length} layers
                       </span>
                     </div>
@@ -318,21 +323,19 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                   </button>
                 );
               })}
-            </div>
+            </StageGroup>
 
             {/* Active Challenge Unboxed Editorial Dossier */}
-            <motion.div
+            <motion.div id="service-challenge-detail"
               key={activeChallenge.id}
-              initial={{ opacity: 0, y: 10 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className="space-y-10 pb-8 border-b border-[var(--border-color)]"
             >
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 pb-8 border-b border-[var(--border-color)]">
                 <div className="space-y-4 max-w-3xl">
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
-                    Operational Bottleneck 0{activeChallengeIdx + 1}
-                  </span>
+
                   <h3 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] tracking-tight">
                     {activeChallenge.title}
                   </h3>
@@ -340,7 +343,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     {activeChallenge.problemSummary}
                   </p>
                   <div className="pt-3 border-t border-[var(--border-color)] space-y-1">
-                    <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--accent-secondary)] font-semibold">
+                    <div className="text-xs font-mono tracking-wider text-[var(--accent-secondary)] font-semibold">
                       Target Business Outcome
                     </div>
                     <p className="text-sm text-[var(--text-primary)] leading-relaxed font-medium">
@@ -361,7 +364,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
               {/* Composed Architecture Layer Matrix (Unboxed hairline grid) */}
               <div className="space-y-4">
-                <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                <div className="text-xs font-mono text-[var(--text-muted)] tracking-wider">
                   Combined Capabilities in This System
                 </div>
                 <div className="border-t border-b border-[var(--border-color)] grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border-color)]">
@@ -383,8 +386,8 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                             <CapIcon className="w-4 h-4 text-[var(--accent-orange-text)]" />
                             <span>Capability 0{item.capIndex + 1}</span>
                           </span>
-                          <span className="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent-orange-text)] transition-colors">
-                            Inspect →
+                          <span className="text-xs font-mono text-[var(--text-muted)] group-hover:text-[var(--accent-orange-text)] transition-colors">
+                            Learn more
                           </span>
                         </div>
                         <div className="text-base font-display font-bold text-[var(--text-primary)]">
@@ -402,7 +405,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
               {/* Concrete Deliverables & Integration Examples */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
                 <div className="space-y-3">
-                  <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase font-semibold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-secondary)] font-semibold tracking-wider">
                     Integration Examples
                   </span>
                   <ul className="space-y-3 text-xs sm:text-sm text-[var(--text-secondary)]">
@@ -416,7 +419,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 </div>
 
                 <div className="space-y-3 md:pl-8 md:border-l border-[var(--border-color)]">
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-orange-text)] font-semibold tracking-wider">
                     Concrete Deliverables
                   </span>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -439,7 +442,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
         {/* MODE B: BROWSE BY ENGINEERING CAPABILITY */}
         {browseMode === 'capability' && (
           <div className="space-y-10">
-            <div className="border border-[var(--border-color)] bg-[var(--border-color)] grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px">
+            <StageGroup label="Engineering capabilities" className="border border-[var(--border-color)] bg-[var(--border-color)] grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px">
               {capabilities.map((cap, idx) => {
                 const isSelected = activeCapIdx === idx;
                 return (
@@ -447,7 +450,10 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     key={cap.id}
                     type="button"
                     onClick={() => setActiveCapIdx(idx)}
-                    className={`py-4 px-3.5 text-xs font-mono transition-all cursor-pointer flex flex-col justify-between text-left space-y-2 relative ${
+                    aria-pressed={isSelected}
+                    aria-controls="service-capability-detail"
+                    data-suggested={idx === (activeCapIdx + 1) % capabilities.length}
+                    className={`stage-control py-4 px-3.5 text-xs font-mono transition-all cursor-pointer flex flex-col justify-between text-left space-y-2 relative ${
                       isSelected
                         ? 'bg-[var(--bg-surface)] text-[var(--text-primary)] font-bold'
                         : 'bg-[var(--bg-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-subtle)]'
@@ -456,30 +462,28 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     <span
                       aria-hidden="true"
                       className={`absolute top-0 left-0 h-[2px] transition-all duration-300 ${
-                        isSelected ? 'w-full bg-[#FF5A1F]' : 'w-0'
+                        isSelected ? 'w-full bg-[#FF4800]' : 'w-0'
                       }`}
                     />
-                    <span className="tabular-nums text-[var(--accent-orange-text)] font-bold">
-                      0{idx + 1}
-                    </span>
+
                     <span className="line-clamp-2 leading-tight font-sans font-semibold">{cap.title}</span>
                   </button>
                 );
               })}
-            </div>
+            </StageGroup>
 
             {/* Selected Capability Editorial Panel */}
-            <motion.div
+            <motion.div id="service-capability-detail"
               key={activeCap.id}
-              initial={{ opacity: 0, y: 10 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className="space-y-10 pb-8 border-b border-[var(--border-color)]"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[var(--border-color)]">
                 <div className="space-y-2 max-w-3xl">
-                  <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider">
-                    Capability Domain 0{activeCapIdx + 1} · Business Outcome
+                  <span className="text-xs font-mono text-[var(--accent-orange-text)] font-semibold tracking-wider">
+                    Business outcome
                   </span>
                   <h3 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
                     {activeCap.title}
@@ -498,7 +502,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                     onClick={() => onNavigate(activeCap.relatedRoute!)}
                     className="button-primary inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-display font-bold text-xs tracking-tight cursor-pointer shadow-sm self-start lg:self-auto shrink-0"
                   >
-                    <span>Explore Dedicated Page</span>
+                    <span>Learn more</span>
                     <ArrowRight className="w-4 h-4 text-[#061421]" />
                   </button>
                 )}
@@ -506,7 +510,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
               {/* Core Engineering Mechanics (Hairline Columns) */}
               <div className="space-y-3">
-                <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                <div className="text-xs font-mono text-[var(--text-muted)] tracking-wider">
                   Core Engineering Mechanics
                 </div>
                 <div className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-xl overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px">
@@ -526,7 +530,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
               {/* Deliverables & Runtimes */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
                 <div className="space-y-3">
-                  <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase font-semibold tracking-wider">
+                  <span className="text-xs font-mono text-[var(--accent-secondary)] font-semibold tracking-wider">
                     Concrete Deliverables &amp; Integration Examples
                   </span>
                   <ul className="space-y-2.5 text-xs sm:text-sm text-[var(--text-secondary)]">
@@ -541,7 +545,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
                 <div className="space-y-5 md:pl-8 md:border-l border-[var(--border-color)]">
                   <div className="space-y-2">
-                    <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                    <span className="text-xs font-mono text-[var(--text-muted)] tracking-wider">
                       Production Runtimes &amp; Stack
                     </span>
                     <div className="flex flex-wrap gap-2 text-xs font-mono text-[var(--text-secondary)]">
@@ -558,7 +562,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
 
                   {activeCap.deliverables && (
                     <div className="space-y-2.5 pt-3 border-t border-[var(--border-color)]">
-                      <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-semibold tracking-wider block">
+                      <span className="text-xs font-mono text-[var(--accent-orange-text)] font-semibold tracking-wider block">
                         What You Receive
                       </span>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -587,11 +591,11 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
         <div className="site-container space-y-8 text-left">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
-              <div className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-semibold">
+              <div className="text-xs font-mono text-[var(--accent-secondary)] tracking-wider font-semibold">
                 Dedicated Capability Guides
               </div>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
-                Explore All Six Engineering Domains
+                Learn more
               </h2>
             </div>
             <span className="text-xs font-mono text-[var(--text-muted)]">
@@ -610,7 +614,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
                     <span className="tabular-nums font-bold text-[var(--accent-orange-text)]">0{idx + 1}</span>
-                    <span className="text-[var(--accent-secondary)] uppercase">Engineering Domain</span>
+                    <span className="text-[var(--accent-secondary)] ">Engineering Domain</span>
                   </div>
                   <h3 className="text-lg font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-orange-text)] transition-colors">
                     {cap.title}
@@ -621,7 +625,7 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
                 </div>
 
                 <div className="pt-3 border-t border-[var(--border-color)] flex items-center justify-between text-xs font-mono text-[var(--text-primary)]">
-                  <span>View Architecture &amp; Deliverables</span>
+                  <span>Learn more</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-[var(--accent-orange-text)]" />
                 </div>
               </button>
@@ -633,20 +637,20 @@ export function WhatWeBuildPage({ onNavigate }: WhatWeBuildPageProps) {
       {/* 5. Bottom Consultation Callout */}
       <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-widest block">
             Architecture Evaluation
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
-            Need a unified system across multiple capabilities?
+            Not sure which you need?
           </MaskedHeading>
           <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl mx-auto font-normal leading-relaxed">
-            Share your operational workflow, data residency boundaries, and existing enterprise systems. We will map the exact architecture, deliverables, and integration path.
+            Tell us about the workflow and the systems you use. We’ll suggest where to start.
           </ScrollText>
           <div className="pt-2">
             <button

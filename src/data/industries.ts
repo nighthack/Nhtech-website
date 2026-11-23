@@ -10,8 +10,8 @@ export const industries: Industry[] = [
     systems: [
       'Edge vision defect detection and kinematic assembly monitoring',
       'High-frequency sensor anomaly intelligence and predictive maintenance',
-      'Raw material demand forecasting and supply-chain buffer optimization',
-      'Air-gapped on-premise inference runtimes with zero external cloud leaks',
+      'Raw material demand forecasting and supply-chain buffer optimisation',
+      'Air-gapped on-premise inference runtimes with local processing within your network',
       'Operator dashboards and human verification stations on ruggedized tablets'
     ],
     architectureFocus: [
@@ -24,9 +24,9 @@ export const industries: Industry[] = [
     dedicatedRoute: '/industries/manufacturing'
   },
   {
-    id: 'enterprise-modernization',
+    id: 'enterprise-modernisation',
     slug: 'enterprise',
-    name: 'Enterprise & Workflow Modernization',
+    name: 'Enterprise & Workflow Modernisation',
     summary: 'Turning fragmented email queues, legacy ERPs, spreadsheets, and multi-step manual reconciliations into unified intelligent operating systems.',
     challenge: 'Enterprises struggle with institutional knowledge trapped in unstructured emails, documents, and spreadsheets, creating operational bottlenecks and high error rates during routine cross-department processing.',
     systems: [
@@ -51,7 +51,7 @@ export const industries: Industry[] = [
     summary: 'High-throughput anomaly intelligence, real-time transaction monitoring, automated compliance document parsing, and risk scoring pipelines.',
     challenge: 'Financial institutions must process massive data streams under strict latency budgets while complying with rigorous auditability, data privacy, and explainability standards.',
     systems: [
-      'Petabyte-scale transaction stream monitoring and live threat detection',
+      'High-volume transaction stream monitoring and live threat detection',
       'Automated loan, prospectus, and KYC document extraction with citation tracing',
       'Intelligent reconciliation systems across multi-currency ledgers',
       'Explainable anomaly packets and automated regulatory escalation queues'
@@ -60,7 +60,7 @@ export const industries: Industry[] = [
       'Real-time model scoring on streaming telemetry pipelines',
       'Self-hosted inference inside client-controlled VPCs or private EU zones',
       'Immutable cryptographic audit logging and deterministic decision traces',
-      'Strict segregation of client data with zero external model exposure'
+      'Strict segregation of client data with private model access'
     ],
     featured: true
   },
@@ -68,11 +68,11 @@ export const industries: Industry[] = [
     id: 'retail-ecommerce',
     slug: 'retail',
     name: 'Retail & Digital Commerce',
-    summary: 'Dynamic demand forecasting, automated catalog taxonomy extraction, campaign return-on-spend analytics, and workflow automation.',
-    challenge: 'Retailers face volatile consumer demand, complex multi-tier supply chains, and overwhelming catalog metadata maintenance across omnichannel distribution channels.',
+    summary: 'Dynamic demand forecasting, automated catalogue taxonomy extraction, campaign return-on-spend analytics, and workflow automation.',
+    challenge: 'Retailers face volatile consumer demand, complex multi-tier supply chains, and overwhelming catalogue metadata maintenance across omnichannel distribution channels.',
     systems: [
       'Multi-horizon SKU-level demand forecasting with external signal conditioning',
-      'Automated product attribute extraction and semantic catalog tagging',
+      'Automated product attribute extraction and semantic catalogue tagging',
       'Advertising performance intelligence and programmatic bid recommendations',
       'Supplier order generation with automated safety stock constraints'
     ],
@@ -98,7 +98,7 @@ export const industries: Industry[] = [
     architectureFocus: [
       'Rapid iterative validation with production-grade engineering foundations',
       'Modular microservices designed for seamless internal team handoff',
-      'Cost-optimized inference architectures preventing runaway compute bills'
+      'Cost-optimised inference architectures preventing runaway compute bills'
     ],
     featured: true
   },
@@ -107,7 +107,7 @@ export const industries: Industry[] = [
     slug: 'legal-compliance',
     name: 'Legal & Regulatory Compliance',
     summary: 'Deterministic contract intelligence, multi-jurisdiction clause comparison, policy compliance auditing, and auditable citation grounding.',
-    challenge: 'Legal teams require 100% verifiable source citations and cannot tolerate generative hallucinations or external data leaks when analyzing sensitive legal documents.',
+    challenge: 'Legal teams require checkable source citations and cannot tolerate generative hallucinations or external data leaks when analyzing sensitive legal documents.',
     systems: [
       'Multi-hundred page contract parsing with spatial layout preservation',
       'Cross-jurisdiction clause deviation detection and risk categorization',
@@ -117,7 +117,7 @@ export const industries: Industry[] = [
     architectureFocus: [
       'Hybrid semantic vector search with knowledge graph entity linking',
       'Deterministic verification layer ensuring all statements reference source texts',
-      'Complete private cloud or on-premise execution with zero external logging'
+      'Complete private cloud or on-premise execution with client-controlled logging'
     ],
     featured: false
   },
@@ -126,7 +126,7 @@ export const industries: Industry[] = [
     slug: 'healthcare',
     name: 'Healthcare & Clinical Workflows',
     summary: 'Clinical document structuring, patient telemetry anomaly recognition, and automated laboratory report processing with strict governance.',
-    challenge: 'Clinical data handling demands uncompromising data privacy, strict access governance, and zero-hallucination extraction across complex medical terminology.',
+    challenge: 'Clinical data handling demands uncompromising data privacy, strict access governance, and source-linked extraction across complex medical terminology.',
     systems: [
       'Unstructured clinical record structuring and ICD/SNOMED entity mapping',
       'Kinematic movement tracking for objective physical rehabilitation assessment',

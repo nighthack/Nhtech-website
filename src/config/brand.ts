@@ -1,31 +1,34 @@
 /**
  * GLOBAL BRAND CONFIGURATION
- * 
+ *
  * To rebrand or rename the company, update values in this file.
  * All components across the application consume these properties.
  */
 
 export const brand = {
+  siteUrl: 'https://nighthack.in',
+  bookingUrl: '',
+  regionLine: 'Based in Bengaluru. Working with customers worldwide.',
   // Brand Names
   displayName: "NHTech",
   shortName: "NHTech",
   legalName: "NightHack Technology Private Limited",
   formerName: "NightHack Labs",
-  
+
   // Core Positioning
-  heroHeadline: "We turn complex business operations into production-ready AI systems.",
+  heroHeadline: "We build AI that runs inside complex operations.",
   tagline: "Forward-deployed engineers building AI and product systems alongside your team.",
   subHeadline: "NHTech takes difficult business problems and converts them into production technology. We combine deep product engineering with AI implementation, with engineers working closely with your team from problem definition through deployment.",
   editorialKicker: "Forward Deployed Engineering. Deep Product Thinking. Production Systems.",
   strategicPositioning: "NHTech takes difficult business problems and converts them into production technology. We combine deep product engineering with AI implementation, with engineers working closely with the customer from problem definition through deployment.",
-  
+
   // Contact & Location
   contact: {
     email: "info@nighthack.in",
     displayEmailPlaceholder: "info@nighthack.in",
     inquiriesUrl: "/contact",
-    address: "Forward Deployed Engineering & AI Systems Pods",
-    primaryRegion: "Europe & Global Enterprise",
+    address: "Bengaluru, Karnataka, India",
+    primaryRegion: "Global customers, based in Bengaluru",
     linkedInUrl: "https://www.linkedin.com/company/nhtech",
     githubUrl: "https://github.com/nhtech",
   },
@@ -33,6 +36,7 @@ export const brand = {
   // Credibility & Model Ecosystem
   partnerships: {
     openai: {
+      confirmed: false,
       status: "OpenAI Select Partner",
       specialization: "Agent Building and AI Operations",
       tag: "Verified Select Partner"
@@ -41,9 +45,10 @@ export const brand = {
       partner: "OpenAI Select Partner",
       technologies: ["Google", "Anthropic", "Microsoft", "Qwen", "GLM", "DeepSeek", "Open-Source Models"],
       spectrum: "SLMs ←→ Frontier Models",
-      modelAgnosticNote: "Model-agnostic implementation: we select and optimize the exact intelligence layer appropriate for your latency, privacy, and reasoning requirements."
+      modelAgnosticNote: "Model-agnostic implementation: we select and optimise the exact intelligence layer appropriate for your latency, privacy, and reasoning requirements."
     },
     researchRoots: {
+      confirmed: false,
       institution: "Microsoft R&D India",
       description: "Our AI journey began through research projects with Microsoft R&D India, establishing our foundational rigor in machine learning systems."
     }
@@ -65,7 +70,7 @@ export const brand = {
       textPrimary: "#F5F8FA",
       textSecondary: "#D1E0E6",
       textMuted: "#A6C3CE",
-      accent: "#FF5A1F",
+      accent: "#FF4800",
       accentHover: "#FF7A45",
       accentMuted: "rgba(255, 90, 31, 0.14)",
       accentBorder: "rgba(255, 90, 31, 0.35)",

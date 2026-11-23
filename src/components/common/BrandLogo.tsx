@@ -1,61 +1,11 @@
-import { useTheme } from '../../context/ThemeContext';
+interface BrandLogoProps { variant?: 'combination' | 'monochrome' | 'icon'; className?: string; heightClass?: string; }
 
-interface BrandLogoProps {
-  variant?: 'combination' | 'monochrome' | 'icon';
-  className?: string;
-  heightClass?: string;
-}
-
-/**
- * Renders the official uploaded NHTech SVG brand assets verbatim without
- * modifying any SVG paths or colors.
- * - Dark backgrounds: Combination-logo (warm-white #FFF2EC wordmark + #FF4800 N)
- * - Light backgrounds: Dark-logo (#021422 single-colour wordmark + N)
- * - Monochrome dark: Light-logo (#FFF2EC single-colour wordmark + N)
- */
-export function BrandLogo({
-  variant = 'combination',
-  className = '',
-  heightClass = 'h-6',
-}: BrandLogoProps) {
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
-
-  if (variant === 'icon') {
-    const src = isLight
-      ? '/assets/aistudio/Dark_291c432f.svg'
-      : '/assets/aistudio/Color_ccf7e745.svg';
-    return (
-      <img
-        src={src}
-        alt="NHTech"
-        className={`${heightClass} w-auto object-contain shrink-0 select-none ${className}`}
-      />
-    );
-  }
-
-  if (variant === 'monochrome') {
-    const src = isLight
-      ? '/assets/aistudio/Dark-logo_920ad84f.svg'
-      : '/assets/aistudio/Light-logo_17c03ddc.svg';
-    return (
-      <img
-        src={src}
-        alt="NHTech"
-        className={`${heightClass} w-auto object-contain shrink-0 select-none ${className}`}
-      />
-    );
-  }
-
-  const src = isLight
-    ? '/assets/aistudio/Combination-logo-dark_c081fc70.svg'
-    : '/assets/aistudio/Combination-logo_a73c3654.svg';
-
-  return (
-    <img
-      src={src}
-      alt="NHTech"
-      className={`${heightClass} w-auto object-contain shrink-0 select-none ${className}`}
-    />
-  );
+// Both official assets are present from the first paint; CSS selects the theme.
+export function BrandLogo({ variant = 'combination', className = '', heightClass = 'h-6' }: BrandLogoProps) {
+  const dark = variant === 'icon' ? 'Color_ccf7e745.svg' : variant === 'monochrome' ? 'Light-logo_17c03ddc.svg' : 'Combination-logo_a73c3654.svg';
+  const light = variant === 'icon' ? 'Dark_291c432f.svg' : 'Dark-logo_920ad84f.svg';
+  return <span role="img" aria-label="NHTech" className={`inline-flex shrink-0 select-none ${className}`}>
+    <img aria-hidden="true" alt="" src={`/assets/aistudio/${dark}`} className={`brand-logo-dark ${heightClass} w-auto object-contain`} />
+    <img aria-hidden="true" alt="" src={`/assets/aistudio/${light}`} className={`brand-logo-light ${heightClass} w-auto object-contain`} />
+  </span>;
 }

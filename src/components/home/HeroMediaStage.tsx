@@ -1,14 +1,14 @@
-import { useState } from 'react';
 import {
-  ArrowUpRight,
-  ArrowRight,
-  Users,
-  Eye,
-  Layers
+ArrowRight,
+ArrowUpRight,
+Eye,
+Layers,
+Users
 } from 'lucide-react';
+import { useState } from 'react';
 import { RoutePath } from '../../types';
-import { HeroModelAnimation } from './HeroModelAnimation';
 import type { EngineeringTrack } from './HeroModelAnimation';
+import { HeroModelAnimation } from './HeroModelAnimation';
 import { StageGroup } from './StageGroup';
 
 interface HeroMediaStageProps {
@@ -29,32 +29,32 @@ interface OfferingStage {
 const STAGES: OfferingStage[] = [
   {
     id: 'embedded',
-    tabLabel: 'Embedded Teams',
-    offeringTitle: 'Embedded Engineering Teams',
+    tabLabel: 'Embedded teams',
+    offeringTitle: 'Embedded teams',
     targetRoute: '/fde',
-    routeLabel: 'Explore Forward Deployed Engineering',
+    routeLabel: 'How embedded teams work',
     architectureLine: 'Intake → State Machine → Human Gate → ERP Write',
     proofDetail: 'Senior product & AI engineers shipping directly inside your stack',
     icon: Users
   },
   {
     id: 'vision-edge',
-    tabLabel: 'Vision & Edge AI',
-    offeringTitle: 'Vision & Edge AI Systems',
+    tabLabel: 'Vision & edge AI',
+    offeringTitle: 'Vision & edge AI',
     targetRoute: '/computer-vision',
-    routeLabel: 'Explore Vision & Edge AI',
+    routeLabel: 'How vision & edge AI works',
     architectureLine: 'Camera → ONNX / TensorRT → Kinematics → Operator UI',
-    proofDetail: 'Zero-cloud-latency kinematics & defect inspection on edge hardware',
+    proofDetail: 'Kinematics and defect inspection running on edge hardware',
     icon: Eye
   },
   {
     id: 'custom-platforms',
-    tabLabel: 'Custom AI Systems',
-    offeringTitle: 'Custom AI Platforms & Workflows',
-    targetRoute: '/what-we-build',
-    routeLabel: 'Explore What We Build',
+    tabLabel: 'Private AI',
+    offeringTitle: 'Private AI',
+    targetRoute: '/on-prem-ai',
+    routeLabel: 'How private AI works',
     architectureLine: 'Streams & Docs → Tuned SLMs → Citations → Private VPC',
-    proofDetail: 'Sovereign enterprise workflows, anomaly scoring & 100% client IP',
+    proofDetail: 'Document search and models running on your infrastructure',
     icon: Layers
   }
 ];
@@ -72,20 +72,20 @@ export function HeroMediaStage({ onNavigate }: HeroMediaStageProps) {
     >
       <div className="site-container hero-model-grid">
         <div className="hero-model-copy relative z-10 min-w-0">
+          <p className="mb-4 text-sm font-medium text-[var(--text-secondary)]">Applied AI engineering</p>
           <h1 className="text-hero-display text-[var(--text-primary)]">
-            We turn complex business operations into{' '}
-            <span className="text-[var(--accent-secondary)]">production&#8209;ready AI systems.</span>
+            We build AI that runs inside complex operations.
           </h1>
           <p className="site-lead mt-5 max-w-[56ch]">
-            Senior engineering teams embedded alongside your domain experts—building deterministic workflow automation, edge computer vision, and enterprise AI platforms deployed inside infrastructure you control.
+            Senior engineers work with your domain experts to build workflow automation, edge computer vision and custom AI platforms. Everything runs on infrastructure you control.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
             <button type="button" onClick={() => onNavigate('/contact')} className="site-button button-primary">
-              Discuss a business workflow <ArrowRight aria-hidden="true" className="size-4" />
+              Talk to us <ArrowRight aria-hidden="true" className="size-4" />
             </button>
             <button type="button" onClick={() => onNavigate('/work')} className="site-button button-secondary">
-              Explore selected work <ArrowUpRight aria-hidden="true" className="size-4" />
+              See our work <ArrowUpRight aria-hidden="true" className="size-4" />
             </button>
           </div>
 

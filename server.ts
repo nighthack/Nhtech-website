@@ -1,12 +1,14 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
-import path from 'path';
+import * as fs from 'node:fs/promises';
 import nodemailer from 'nodemailer';
+import path from 'path';
 import { createServer as createViteServer } from 'vite';
+import { brand } from './src/config/brand';
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // Middlewares
   app.use(express.json({ limit: '1mb' }));
@@ -46,7 +48,8 @@ async function startServer() {
         ipSubmissionMap.set(clientIp, { count: 1, firstTimestamp: now });
       }
 
-      const { name, email, company, role, problemStatement, constraints, projectStage, schedulingDate, schedulingTime } = req.body;
+      if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) return res.status(400).json({ success: false, error: 'Please send a valid enquiry.' });
+      const { name, email, company, role, problemStatement, constraints, projectStage } = req.body;
 
       // Basic Validation
       if (!name || typeof name !== 'string' || name.trim().length === 0) {
@@ -65,15 +68,14 @@ async function startServer() {
         });
       }
 
-      if (!schedulingDate || typeof schedulingDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(schedulingDate)) {
-        return res.status(400).json({ success: false, error: 'Please choose a valid scheduling date.' });
+      for (const [field, limit] of [['name', 150], ['email', 254], ['company', 200], ['role', 150], ['problemStatement', 10000], ['constraints', 5000], ['projectStage', 100]] as const) {
+        const value = req.body[field];
+        if (value !== undefined && (typeof value !== 'string' || value.length > limit)) {
+          return res.status(400).json({ success: false, error: `Please check the ${field} field.` });
+        }
       }
 
-      if (!schedulingTime || typeof schedulingTime !== 'string' || !/^(09|1\d|20|21):(00|15|30|45)$/.test(schedulingTime)) {
-        return res.status(400).json({ success: false, error: 'Please choose a valid scheduling time.' });
-      }
-
-      const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || 'info@nighthack.in';
+      const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || brand.contact.email;
       const cleanName = name.trim();
       const cleanEmail = email.trim();
       const cleanCompany = (company || 'Not Specified').trim();
@@ -81,14 +83,10 @@ async function startServer() {
       const cleanStage = (projectStage || 'Not Specified').trim();
       const cleanConstraints = (constraints || 'None specified').trim();
       const cleanProblem = problemStatement.trim();
-      const cleanSchedulingDate = schedulingDate.trim();
-      const cleanSchedulingTime = schedulingTime.trim();
 
       // Send the same intake dossier to the Ottom8 technical-intake agent.
       // The API key stays server-side and is supplied through environment variables.
       let agentProcessed = false;
-      let agentResponse: unknown = null;
-      let agentError: string | null = null;
 
       if (process.env.OTTOM8_API_KEY) {
         try {
@@ -103,9 +101,7 @@ async function startServer() {
             role: cleanRole,
             engineering_track: cleanStage,
             problem_statement: cleanProblem,
-            constraints: cleanConstraints,
-            schedulingDate: cleanSchedulingDate,
-            schedulingTime: cleanSchedulingTime
+            constraints: cleanConstraints
           });
 
           try {
@@ -127,12 +123,7 @@ async function startServer() {
               }
             );
 
-            const responseText = await agentRes.text();
-            try {
-              agentResponse = responseText ? JSON.parse(responseText) : null;
-            } catch {
-              agentResponse = responseText;
-            }
+            await agentRes.text();
 
             if (!agentRes.ok) {
               throw new Error(`Ottom8 returned HTTP ${agentRes.status}`);
@@ -144,16 +135,14 @@ async function startServer() {
             clearTimeout(agentTimeout);
           }
         } catch (err: any) {
-          agentError = err?.name === 'AbortError' ? 'Ottom8 request timed out' : 'Ottom8 request failed';
           console.error('[Contact API] Ottom8 agent error:', err);
         }
       } else {
-        agentError = 'OTTOM8_API_KEY is not configured';
         console.warn('[Contact API] Ottom8 agent skipped: OTTOM8_API_KEY is not configured');
       }
 
       const emailSubject = `[NHTech Intake] New Technical Problem Dossier — ${cleanCompany} (${cleanName})`;
-      
+
       const emailText = [
         `NEW TECHNICAL PROBLEM INTAKE DOSSIER`,
         `==================================================`,
@@ -293,22 +282,18 @@ async function startServer() {
         }
       }
 
-      // If neither or both failed, log clearly to stdout and ledger
-      if (!emailDispatched) {
-        console.log(`\n======================================================`);
-        console.log(`[NHTech Intake API] INCOMING SUBMISSION FOR: ${recipientEmail}`);
-        console.log(emailText);
-        console.log(`======================================================\n`);
+      if (!emailDispatched && !agentProcessed) {
+        console.error('[Contact API] No enquiry delivery channel is available');
+        return res.status(503).json({ success: false, error: `We could not deliver your enquiry. Please try again or email ${brand.contact.email}.` });
       }
 
       return res.status(200).json({
         success: true,
-        message: 'Your technical intake has been successfully received and dispatched to our engineering leads at info@nighthack.in.',
+        message: 'Your enquiry has been received.',
         recipient: recipientEmail,
-        dispatchMethod: emailDispatched ? dispatchMethod : 'queued-for-dispatch',
+        dispatchMethod: emailDispatched ? dispatchMethod : 'workflow',
         agentProcessed,
-        ...(agentResponse !== null ? { agentResponse } : {}),
-        ...(agentError ? { agentError } : {})
+
       });
 
     } catch (error: any) {
@@ -339,9 +324,16 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (_req: Request, res: Response) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+    app.use(express.static(distPath, { redirect: false }));
+    app.get('*', async (req: Request, res: Response) => {
+      const route = req.path.replace(/\/+$/, '') || '/';
+      const aliases: Record<string, string> = { '/forward-deployed-engineering': '/fde', '/sovereign-models': '/on-prem-ai', '/sovereign-ai': '/on-prem-ai' };
+      if (aliases[route]) return res.redirect(301, aliases[route]);
+      if (req.path !== route && route !== '/') return res.redirect(301, route);
+      const candidate = path.resolve(distPath, `.${route}`, 'index.html');
+      if (!candidate.startsWith(distPath + path.sep)) return res.status(404).sendFile(path.join(distPath, '404.html'));
+      try { await fs.access(candidate); return res.sendFile(candidate); }
+      catch { return res.status(404).sendFile(path.join(distPath, '404.html')); }
     });
   }
 

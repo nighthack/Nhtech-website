@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 interface ProductVideoPlayerProps {
   src: string;
@@ -49,7 +49,7 @@ export function ProductVideoPlayer({
           loop
           controls={hasStarted}
           tabIndex={hasStarted ? 0 : -1}
-          preload="metadata"
+          preload="none"
           aria-label={`${title} demonstration video`}
           onPlay={() => setHasStarted(true)}
           onError={() => setPlaybackError(true)}

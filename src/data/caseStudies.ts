@@ -5,12 +5,12 @@ export const caseStudies: CaseStudy[] = [
     id: 'enterprise-workflow-intelligence',
     slug: 'enterprise-workflow-intelligence',
     track: 'fde',
-    clientAnonymousName: 'Enterprise Valuation & Operations Workflow Pattern',
-    title: 'Unifying fragmented valuation and backoffice operations into an intelligent production system',
+    clientAnonymousName: 'Enterprise operations',
+    title: 'One pipeline for valuation intake, review and ERP entry',
     eyebrow: 'Track 1: Forward Deployed Engineering · Agentic Workflows',
-    context: 'High-stakes enterprise appraisal, asset valuation, and backoffice intake burdened by fragmented incoming customer emails, unstructured PDF attachments, legacy Excel models, and disconnected portals.',
-    difficulty: 'Translating complex proprietary domain formulas, inconsistent document structures, and multi-step human review policies into a unified, high-reliability production pipeline without operational downtime.',
-    systemDesigned: 'Forward-deployed engineers embedded with the client operations team to architect an intelligent orchestration layer that ingests multi-channel inputs, parses fields with citation grounding, evaluates business rules, and writes back into core enterprise databases.',
+    context: 'Requests came in by email, PDF and old Excel files. Staff re-typed each one.',
+    difficulty: 'Manual entry and disconnected systems made valuation review difficult to track.',
+    systemDesigned: 'We built one pipeline that reads the requests, checks the numbers and sends exceptions to a person.',
     architecture: [
       'Universal intake gateway (Email IMAP/Exchange, Webhooks, SFTP, REST)',
       'Document parsing & entity mapping with spatial bounding-box verification',
@@ -22,11 +22,10 @@ export const caseStudies: CaseStudy[] = [
     humanCheckpoints: 'Straight-through processing executes only when all syntactic, arithmetic, and confidence gates clear; exceptions automatically escalate with context-rich review packets.',
     technologies: ['FastAPI', 'React', 'PostgreSQL', 'Redis Queue', 'Docker', 'Open-Weight LLMs'],
     scaleEvidence: {
-      primaryMetric: 'Automated Hub',
-      metricLabel: 'Operations Hub',
-      description: 'Replaced manual spreadsheet re-entry with a unified production pipeline processing thousands of valuations monthly.'
+      metricLabel: 'Result',
+      description: 'Replaced manual re-entry with a pipeline linking each valuation record to its source and review history.'
     },
-    operationalImpact: 'Eliminated manual copy-pasting and spreadsheet re-entry, providing complete traceability from raw email intake to final enterprise valuation record.',
+    operationalImpact: 'Replaced manual re-entry with a pipeline linking each valuation record to its source and review history.',
     relatedCapabilities: ['Agentic Workflow Systems', 'Document Intelligence', 'AI-Native Product Engineering'],
     confidential: false,
     approvedForPublicWebsite: true
@@ -35,12 +34,12 @@ export const caseStudies: CaseStudy[] = [
     id: 'document-intelligence',
     slug: 'document-intelligence',
     track: 'fde',
-    clientAnonymousName: 'Legal & Regulatory Document Intelligence Pattern',
-    title: 'Making multi-hundred page regulatory and legal documents computable',
+    clientAnonymousName: 'Legal and regulatory documents',
+    title: 'Searchable legal documents with source citations',
     eyebrow: 'Track 1: Forward Deployed Engineering · Domain Models & RAG',
-    context: 'Enterprise document processing across multi-jurisdiction property covenants, commercial legal contracts, and specialized compliance filings where generic OCR and simple keyword searches failed on nested clauses.',
-    difficulty: 'Extracting relational dependencies and spatial hierarchies across dense multi-hundred page documents with conflicting domain terminology, while maintaining deterministic tracebacks to original source paragraphs.',
-    systemDesigned: 'Engineered an end-to-end document intelligence engine pairing fine-tuned Small Language Models (SLMs) for sub-second classification with frontier reasoning models for complex hierarchical contract extraction.',
+    context: 'Legal teams needed to search long contracts and regulatory filings and check where each answer came from.',
+    difficulty: 'Nested clauses, scanned tables and conflicting terminology made keyword search unreliable.',
+    systemDesigned: 'We combined layout-aware document parsing, search and private language models with a source-checking workbench.',
     architecture: [
       'Multi-modal layout parsing with bounding-box spatial retention',
       'Specialized Small Language Models (SLMs) fine-tuned for domain taxonomy',
@@ -52,11 +51,10 @@ export const caseStudies: CaseStudy[] = [
     humanCheckpoints: 'Ambiguous cross-references and confidence scores below threshold route directly to legal subject-matter experts with highlighted source paragraphs for rapid one-click verification.',
     technologies: ['Fine-tuned Llama-family', 'Qdrant Vector DB', 'Knowledge Graphs', 'FastAPI', 'PyTorch'],
     scaleEvidence: {
-      primaryMetric: 'Sub-Second',
-      metricLabel: 'Retrieval & Citation',
-      description: 'Multi-layer semantic graph indexing with sub-second retrieval across deeply nested legal and clinical document corpuses.'
+      metricLabel: 'Result',
+      description: 'Teams can search the document archive and review the original paragraphs alongside extracted answers.'
     },
-    operationalImpact: 'Transformed static PDF and scan archives into searchable, computable structured entity databases that enterprise search and automated validation workflows query directly.',
+    operationalImpact: 'Teams can search the document archive and review the original paragraphs alongside extracted answers.',
     relatedCapabilities: ['Document Intelligence', 'Agentic Workflow Systems', 'AI-Native Product Engineering'],
     confidential: false,
     approvedForPublicWebsite: true
@@ -65,12 +63,12 @@ export const caseStudies: CaseStudy[] = [
     id: 'computer-vision-motion',
     slug: 'computer-vision-motion',
     track: 'vision-edge',
-    clientAnonymousName: 'Real-Time Exercise & Kinematic Analytics Pattern',
-    title: 'Translating human movement into real-time biomechanical telemetry on edge devices',
-    eyebrow: 'Track 2: Vision & Edge AI · On-Device Kinematic Analysis',
-    context: 'Physical performance analytics and biomechanical movement assessment requiring frame-by-frame telemetry without specialized optical mocap suits, cloud roundtrips, or facility bandwidth reliance.',
-    difficulty: 'Running high-frequency pose landmark extraction and temporal phase classification locally on low-power edge hardware and commercial mobile tablets under uncontrolled lighting and varying camera angles.',
-    systemDesigned: 'Developed an on-device computer vision engine that tracks anatomical keypoints in real time, classifies movement phases, and computes instant kinetic metrics for live operator dashboards.',
+    clientAnonymousName: 'Movement and rehabilitation',
+    title: 'Rep counting and form tracking on a tablet',
+    eyebrow: 'Track 2: Vision & edge AI · On-Device Kinematic Analysis',
+    context: 'Coaches and clinicians needed movement measurements using standard tablets.',
+    difficulty: 'Video needed to be processed locally under changing lighting and camera positions.',
+    systemDesigned: 'We built on-device pose tracking, movement-phase classification and live measurements with a local session store.',
     architecture: [
       'Custom lightweight pose estimation backbone running on-device',
       'Temporal movement phase state machine (eccentric, isometric, concentric transitions)',
@@ -82,12 +80,11 @@ export const caseStudies: CaseStudy[] = [
     humanCheckpoints: 'System outputs prescriptive metrics and flags movement deviations, leaving qualitative feedback and athletic adjustments in the hands of the supervising human coach or clinician.',
     technologies: ['Computer Vision Pipelines', 'PyTorch', 'React Native', 'SQLite', 'FastAPI', 'BLE Coordination'],
     scaleEvidence: {
-      primaryMetric: 'On-Device Edge',
-      metricLabel: 'On-Device Tracking',
-      description: 'Zero-cloud-dependency inference executing locally on commercial tablets with real-time kinematic tracking.'
+      metricLabel: 'Result',
+      description: 'Coaches can review repetitions, tempo and movement flags on the device without a cloud round-trip.'
     },
-    operationalImpact: 'Enabled automated, objective athletic and physical therapy assessment directly on the gym floor and clinical room without bulky lab hardware.',
-    relatedCapabilities: ['Computer Vision & Edge AI', 'AI-Native Product Engineering'],
+    operationalImpact: 'Coaches can review repetitions, tempo and movement flags on the device without a cloud round-trip.',
+    relatedCapabilities: ['Computer Vision & edge AI', 'AI-Native Product Engineering'],
     confidential: false,
     approvedForPublicWebsite: true
   },
@@ -95,12 +92,12 @@ export const caseStudies: CaseStudy[] = [
     id: 'vision-robotic-inspection',
     slug: 'vision-robotic-inspection',
     track: 'vision-edge',
-    clientAnonymousName: 'Manufacturing Quality Assurance & Defect Inspection Pattern',
-    title: 'Real-time surface anomaly detection and quality inspection using computer vision pipelines',
-    eyebrow: 'Track 2: Vision & Edge AI · Defect & Quality Inspection',
-    context: 'Industrial manufacturing environment where component defects, surface anomalies, and assembly alignment tolerances require visual inspection without stopping production workflows.',
-    difficulty: 'Resolving subtle surface defects, micro-scratches, and irregular component positioning under factory floor lighting variations with low latency requirements.',
-    systemDesigned: 'Engineered an edge computer vision pipeline integrating object detection and surface segmentation with local camera streams, outputting real-time inspection telemetry to operator stations.',
+    clientAnonymousName: 'Manufacturing',
+    title: 'Surface inspection with operator review',
+    eyebrow: 'Track 2: Vision & edge AI · Defect & Quality Inspection',
+    context: 'Factory operators needed to inspect parts for surface defects and alignment issues.',
+    difficulty: 'Lighting varied and inspection needed to fit the production line.',
+    systemDesigned: 'We connected local cameras to detection and segmentation models, tolerance checks and an operator review screen.',
     architecture: [
       'High-resolution optical camera intake feeding local edge compute',
       'Object detection and surface anomaly classification models',
@@ -111,12 +108,11 @@ export const caseStudies: CaseStudy[] = [
     humanCheckpoints: 'Station operators calibrate tolerance thresholds per batch and receive instant video clip replays whenever a defect flag is raised.',
     technologies: ['PyTorch', 'TensorFlow', 'Computer Vision Pipelines', 'FastAPI', 'React', 'Edge Deployment'],
     scaleEvidence: {
-      primaryMetric: 'Real-Time',
-      metricLabel: 'Defect Detection',
-      description: 'Edge inference evaluating optical streams against verified tolerance benchmarks with operator review interfaces.'
+      metricLabel: 'Result',
+      description: 'Operators can review flagged parts, adjust tolerance thresholds and inspect the history of defects.'
     },
-    operationalImpact: 'Automated line quality inspection while providing operator oversight and historical defect logging for continuous QA improvement.',
-    relatedCapabilities: ['Computer Vision & Edge AI', 'Production AI Infrastructure'],
+    operationalImpact: 'Operators can review flagged parts, adjust tolerance thresholds and inspect the history of defects.',
+    relatedCapabilities: ['Computer Vision & edge AI', 'Production AI Infrastructure'],
     confidential: false,
     approvedForPublicWebsite: true
   },
@@ -124,16 +120,16 @@ export const caseStudies: CaseStudy[] = [
     id: 'financial-anomaly',
     slug: 'financial-anomaly',
     track: 'complex-business',
-    clientAnonymousName: 'High-Volume Financial Operations & Anomaly Detection Pattern',
-    title: 'Building intelligence and anomaly detection into high-volume financial ledgers',
+    clientAnonymousName: 'Financial services',
+    title: 'Anomaly detection for transaction streams',
     eyebrow: 'Track 3: Complex Business Solutions · Payments & Stream Anomaly',
-    context: 'Cross-border transaction ledger infrastructure and multi-asset financial workflows requiring instantaneous pattern recognition and fraud prevention across continuous streaming telemetry.',
-    difficulty: 'Evaluating complex multi-hop transaction topologies in real-time streaming windows without false-positive cascades that block legitimate high-volume payment flows, under strict data-isolation constraints.',
-    systemDesigned: 'Engineered a real-time streaming anomaly detection pipeline utilizing custom deep neural network (DNN) architectures running parallelized inference over distributed Kafka pipelines deployed within client infrastructure.',
+    context: 'Financial operations teams needed to monitor continuous transaction streams.',
+    difficulty: 'Distributed ledgers needed timely scoring and explainable alerts.',
+    systemDesigned: 'We connected streaming ingestion, anomaly models and a review queue with an audit trail.',
     architecture: [
       'Distributed Kafka ingestion layer processing cross-region telemetry streams',
       'Custom Deep Neural Network (DNN) trained on temporal transaction patterns',
-      'PyTorch inference runtime optimized for low latency',
+      'PyTorch inference runtime optimised for low latency',
       'AWS SageMaker distributed model management with continuous drift monitoring',
       'FastAPI async routing with circuit-breaker failover protection',
       'Immutable transaction tracing and topological risk graph visualization'
@@ -141,11 +137,10 @@ export const caseStudies: CaseStudy[] = [
     humanCheckpoints: 'Automated policy blocks apply strictly to unambiguous fraud patterns, while high-entropy or anomalous velocity spikes trigger real-time compliance queue escalations with automated evidence packets.',
     technologies: ['PyTorch', 'Custom DNN', 'AWS SageMaker', 'FastAPI', 'Kafka', 'PostgreSQL'],
     scaleEvidence: {
-      primaryMetric: 'Real-Time Scale',
-      metricLabel: 'Stream Capacity',
-      description: 'Distributed streaming architecture evaluated for live pattern detection and transaction anomaly intelligence.'
+      metricLabel: 'Result',
+      description: 'Reviewers receive transaction context and anomaly signals together, with a record of decisions.'
     },
-    operationalImpact: 'Delivered continuous threat scoring across continuous stream batches without degrading core settlement processing speeds or egressing private financial data.',
+    operationalImpact: 'Reviewers receive transaction context and anomaly signals together, with a record of decisions.',
     relatedCapabilities: ['Predictive & Anomaly Intelligence', 'Production AI Infrastructure', 'Agentic Workflow Systems'],
     confidential: false,
     approvedForPublicWebsite: true
@@ -154,27 +149,26 @@ export const caseStudies: CaseStudy[] = [
     id: 'demand-forecasting',
     slug: 'demand-forecasting',
     track: 'complex-business',
-    clientAnonymousName: 'Multi-Tier ERP & Supply Chain Modernization Pattern',
-    title: 'Translating complex supply chain business logic into automated ERP forecasting systems',
-    eyebrow: 'Track 3: Complex Business Solutions · ERP & Workflow Modernization',
-    context: 'Multi-echelon supply chains spanning raw material sourcing in manufacturing and regional distribution under volatile consumption swings and legacy ERP constraints.',
-    difficulty: 'Integrating external macro signals (lead times, regional spikes, supplier delays) with sparse historical SKU records while translating model outputs into actionable ERP purchasing orders.',
-    systemDesigned: 'Built multi-horizon forecasting pipelines that connect raw predictive signals directly into procurement and operational allocation workflows with risk-bounded recommendation policies.',
+    clientAnonymousName: 'Retail and supply chain',
+    title: 'Demand forecasts connected to procurement',
+    eyebrow: 'Track 3: Complex Business Solutions · ERP & Workflow Modernisation',
+    context: 'Retail teams needed to plan stock across many products and locations.',
+    difficulty: 'Forecasts had to account for changing demand and fit existing ordering rules.',
+    systemDesigned: 'We built forecasting pipelines linked to inventory, safety-stock rules and procurement systems.',
     architecture: [
       'Hierarchical probabilistic time-series models with exogenous variable conditioning',
       'Automated feature store reconciling ERP sales logs, lead times, and inventory levels',
-      'Dynamic procurement and stock allocation optimization engines',
+      'Dynamic procurement and stock allocation optimisation engines',
       'Automated purchase order draft generation with safety stock constraints',
       'Model performance monitoring and retraining triggers'
     ],
     humanCheckpoints: 'Forecasts generate categorized order suggestions; procurement officers review automated purchase drafts above designated financial thresholds with explainable sensitivity breakdowns.',
     technologies: ['Scikit-learn', 'PyTorch TimeSeries', 'ARIMA Models', 'FastAPI', 'PostgreSQL'],
     scaleEvidence: {
-      primaryMetric: 'Tens of Thousands',
-      metricLabel: 'SKU Combinations',
-      description: 'Integrated multi-tier inventory forecasting covering tens of thousands of SKU-location combinations with automated ERP synchronization.'
+      metricLabel: 'Result',
+      description: 'Forecasts support ordering decisions across tens of thousands of SKU-location combinations.'
     },
-    operationalImpact: 'Shifted procurement teams from reactive spreadsheet calculations to verified predictive ordering recommendations linked directly into supplier workflows.',
+    operationalImpact: 'Forecasts support ordering decisions across tens of thousands of SKU-location combinations.',
     relatedCapabilities: ['Predictive & Anomaly Intelligence', 'Agentic Workflow Systems', 'AI-Native Product Engineering'],
     confidential: false,
     approvedForPublicWebsite: true

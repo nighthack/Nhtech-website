@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
 import { Pause, Play } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { HomeMotionContext } from '../home/HomeMotionContext';
 
 export function MotionPage({ children, id }: { children: ReactNode; id: string }) {
   const [paused, setPaused] = useState(false);
-  const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReduced(query.matches);
+    update();
     query.addEventListener('change', update);
     return () => query.removeEventListener('change', update);
   }, []);

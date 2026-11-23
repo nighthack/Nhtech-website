@@ -1,10 +1,11 @@
-import { RoutePath } from '../types';
-import { industries } from '../data/industries';
-import { WorldCanvas, WorldMode } from '../components/common/WorldCanvas';
-import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
-import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
-import { ArrowRight, ArrowUpRight, CheckCircle2, ChevronRight, Layers, Factory, Building2, Landmark, ShoppingBag, Rocket, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import { RelatedWork } from '../components/common/RelatedWork';
+import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
+import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
+import { WorldCanvas, WorldMode } from '../components/common/WorldCanvas';
+import { industries } from '../data/industries';
+import { RoutePath } from '../types';
 
 interface IndustryDetailPageProps {
   slug: string;
@@ -35,20 +36,15 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
       {/* 1. Spatial Header */}
       <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
         <SpatialPageHeader
-          tag={`Sector Architecture · ${industry.slug}`}
-          title={industry.name.split('&')[0].trim()}
-          titleAccent={industry.name.split('&')[1] ? `& ${industry.name.split('&')[1].trim()}` : 'Engineering'}
+
+          title={({ enterprise: 'AI for enterprise operations', fintech: 'AI for banking and fintech', retail: 'AI for retail', startups: 'AI engineering for startups' }[slug] || industry.name)}
           subtitle={industry.summary}
-          ctaText={`Initiate ${industry.name.split('&')[0].trim()} Assessment`}
+          ctaText="Talk to us"
           ctaRoute="/contact"
-          secondaryCtaText="Inspect Live Topologies"
+          secondaryCtaText="See related work"
           secondaryCtaRoute="/work"
           onNavigate={onNavigate}
-          telemetryItems={[
-            { label: 'SOVEREIGNTY', value: 'AIR-GAPPED & VPC' },
-            { label: 'SECTOR', value: industry.slug.toUpperCase() },
-            { label: 'RETENTION', value: '100% CLIENT IP' },
-          ]}
+          telemetryItems={[{ label: 'Deployment', value: 'Runs on your infrastructure' }, { label: 'Ownership', value: 'You own the code' }]}
         />
       </section>
 
@@ -57,11 +53,11 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
         <div className="site-container text-left">
           <div className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] p-6 sm:p-10 shadow-sm space-y-8">
             <div className="space-y-3 pb-6 border-b border-[var(--border-color)]">
-              <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+              <span className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">
                 Operational Friction Point
               </span>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)]">
-                The Core Technical Bottleneck
+                The core technical bottleneck
               </h2>
               <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed max-w-4xl">
                 {industry.challenge}
@@ -69,7 +65,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
             </div>
 
             <div className="space-y-4">
-              <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+              <div className="text-xs font-mono text-[var(--text-muted)] tracking-wider">
                 Engineered Workflow Systems Deployed
               </div>
               <div className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-px font-mono text-xs">
@@ -89,9 +85,9 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
         <div className="site-container space-y-8 text-left">
           <div className="border-b border-[var(--border-color)] pb-4">
-            <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">System Constraints</span>
+            <span className="text-xs font-mono text-[var(--text-muted)] tracking-wider">System Constraints</span>
             <MaskedHeading as="h2" className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
-              Architectural Principles &amp; Guarantees
+              Engineering priorities
             </MaskedHeading>
           </div>
 
@@ -99,7 +95,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
             {industry.architectureFocus.map((focus, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 'some' }}
                 transition={{ duration: 0.45, delay: idx * 0.08 }}
@@ -111,25 +107,25 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
                     {focus}
                   </div>
                 </div>
-                <div className="text-[11px] text-[var(--text-muted)] pt-2 border-t border-[var(--border-color)]">
-                  ✓ Validated in production
-                </div>
+
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      <RelatedWork slugs={({ enterprise: ['enterprise-workflow-intelligence'], fintech: ['financial-anomaly'], retail: ['demand-forecasting'], startups: [] }[slug] || [])} onNavigate={onNavigate} />
+
       {/* 4. Bottom CTA */}
       <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-widest block">
             Sector Engagement
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -144,7 +140,7 @@ export function IndustryDetailPage({ slug, onNavigate }: IndustryDetailPageProps
               onClick={() => onNavigate('/contact')}
               className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
-              <span>Initiate Sector Discussion</span>
+              <span>Talk to us</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
             </button>
           </div>

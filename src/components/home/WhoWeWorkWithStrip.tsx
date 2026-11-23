@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Factory, Building2, Landmark, ShoppingBag, Rocket } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Building2, Factory, Landmark, Rocket, ShoppingBag } from 'lucide-react';
 import { RoutePath } from '../../types';
 
 interface WhoWeWorkWithStripProps {
@@ -8,31 +8,31 @@ interface WhoWeWorkWithStripProps {
 export function WhoWeWorkWithStrip({ onNavigate }: WhoWeWorkWithStripProps) {
   const clientTypes = [
     {
-      label: 'Manufacturing & Industrial Operations',
+      label: 'Manufacturing & industrial operations',
       detail: 'Defect inspection, edge inference & plant telemetry',
       icon: Factory,
       route: '/industries/manufacturing' as RoutePath
     },
     {
-      label: 'Enterprise & Workflow Operations',
-      detail: 'Legacy ERP modernization & document pipelines',
+      label: 'Enterprise & workflow operations',
+      detail: 'Legacy ERP modernisation & document pipelines',
       icon: Building2,
       route: '/industries/enterprise' as RoutePath
     },
     {
-      label: 'FinTech, Banking & BFSI',
+      label: 'FinTech, banking & bfsi',
       detail: 'Streaming anomaly detection & KYC compliance',
       icon: Landmark,
       route: '/industries/fintech' as RoutePath
     },
     {
-      label: 'Retail & Digital Commerce',
+      label: 'Retail & digital commerce',
       detail: 'SKU forecasting & automated procurement',
       icon: ShoppingBag,
       route: '/industries/retail' as RoutePath
     },
     {
-      label: 'Technically Complex Startups',
+      label: 'Technically complex startups',
       detail: 'Rapid prototype sprints & AI-native builds',
       icon: Rocket,
       route: '/industries/startups' as RoutePath
@@ -49,7 +49,7 @@ export function WhoWeWorkWithStrip({ onNavigate }: WhoWeWorkWithStripProps) {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-1.5 text-left max-w-2xl">
             <h2 className="text-lg sm:text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              Built for engineering-heavy operations across regulated and physical-world industries.
+              Industries where operations are regulated, physical, or both.
             </h2>
           </div>
 
@@ -58,7 +58,7 @@ export function WhoWeWorkWithStrip({ onNavigate }: WhoWeWorkWithStripProps) {
             onClick={() => onNavigate('/industries')}
             className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-orange-text)] hover:underline cursor-pointer self-start sm:self-end shrink-0"
           >
-            <span>Explore all industries</span>
+            <span>See industries</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

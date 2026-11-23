@@ -1,22 +1,18 @@
-import { MotionPage } from '../components/common/MotionPage';
-import { SectionBackdrop } from '../components/home/SectionBackdrop';
-import { StageGroup } from '../components/home/StageGroup';
-import { useState } from 'react';
-import { RoutePath } from '../types';
-import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
-import { CustomModelPipelineStage } from '../components/architecture/CustomModelPipelineStage';
-import { SovereignTopologyStage } from '../components/architecture/SovereignTopologyStage';
-import { ModelEcosystemSpectrum } from '../components/home/ModelEcosystemSpectrum';
 import {
-  Database,
-  Sparkles,
-  Lock,
-  Server,
-  ArrowRight,
-  Sliders,
-  CheckCircle2
+ArrowRight,
+CheckCircle2,
+Sliders
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useState } from 'react';
+import { CustomModelPipelineStage } from '../components/architecture/CustomModelPipelineStage';
+import { SovereignTopologyStage } from '../components/architecture/SovereignTopologyStage';
+import { MotionPage } from '../components/common/MotionPage';
+import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
+import { ModelEcosystemSpectrum } from '../components/home/ModelEcosystemSpectrum';
+import { SectionBackdrop } from '../components/home/SectionBackdrop';
+import { StageGroup } from '../components/home/StageGroup';
+import { RoutePath } from '../types';
 
 interface OnPremAiPageProps {
   onNavigate: (path: RoutePath) => void;
@@ -28,12 +24,12 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
   const tradeoffs = {
     rag: {
       id: 'rag',
-      title: 'Retrieval-Augmented Generation (RAG)',
+      title: 'Retrieval-augmented generation (RAG)',
       badge: 'DYNAMIC KNOWLEDGE RETRIEVAL',
       accent: 'var(--accent-secondary)',
       summary: 'Best for continuously changing knowledge, policy manuals, regulatory docs, and search where deterministic citation back to the original source text is mandatory.',
       pros: [
-        'Zero training compute or weight modification required',
+        'No model training needed',
         'Instant updates as enterprise databases change',
         'Exact source attribution with bounding box coordinates',
         'Direct access control and document-level permissions'
@@ -47,7 +43,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
     },
     finetuning: {
       id: 'finetuning',
-      title: 'LoRA & QLoRA Parameter-Efficient Fine-Tuning',
+      title: 'LoRA & QLoRA parameter-efficient fine-tuning',
       badge: 'STYLE, SYNTAX & DOMAIN ADAPTATION',
       accent: 'var(--accent-orange-text)',
       summary: 'Best for teaching specialized domain vocabularies, strict output schemas (JSON/SQL), clinical/legal taxonomy, and tone alignment on proprietary datasets.',
@@ -66,20 +62,20 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
     },
     distillation: {
       id: 'distillation',
-      title: 'Model Distillation & Quantisation',
+      title: 'Model distillation & quantisation',
       badge: 'HIGH-THROUGHPUT COMPACT RUNTIMES',
       accent: 'var(--accent-ocean)',
-      summary: 'Transfer knowledge from large frontier models into compact 1B-8B parameter models quantized for FP8 or INT4 inference on commodity hardware or edge nodes.',
+      summary: 'Transfer knowledge from large frontier models into compact 1B-8B parameter models quantised for FP8 or INT4 inference on commodity hardware or edge nodes.',
       pros: [
-        'Dramatic reduction in inference latency (sub-20ms)',
-        'Up to 80% reduction in GPU hosting and hardware costs',
+        'Lower inference latency, measured against your workload',
+        'Lower running costs once deployed on your own hardware',
         'Deployable to edge devices, local servers, or smaller cloud instances',
-        'Self-contained artifact with zero external network dependencies'
+        'Can operate without external network access'
       ],
       cons: [
         'Requires frontier model supervision during training dataset synthesis',
         'Narrower reasoning scope than massive general-purpose models',
-        'Requires quantization loss calibration benchmarks'
+        'Requires quantisation loss calibration benchmarks'
       ],
       idealWhen: 'High-volume queries require low latency, low hardware cost, and high repeatability on a well-bounded business problem.'
     }
@@ -88,16 +84,16 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
   return (
     <MotionPage id="on-prem-ai-chapter">
 
-      {/* 1. Spatial Header - On-Prem AI & Sovereign Model Engineering */}
+      {/* 1. Spatial Header - Private AI & Sovereign Model Engineering */}
       <section className="home-section detail-hero pt-36 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
         <SectionBackdrop mode="platforms" />
         <SpatialPageHeader
           title="Turn your data into a"
           titleAccent="model you control."
-          subtitle="RAG vs fine-tuning vs distillation based on the actual problem. We engineer domain-specialised sovereign models with LoRA, QLoRA, distillation, and quantisation—ensuring you control the data, evaluation assets, and model artifacts, deployed to private-cloud, on-prem, or edge environments where technically appropriate."
-          ctaText="Discuss Model Engineering"
+          subtitle="We work out whether you need search over your documents, a fine-tuned model or a smaller, faster one. Then we build it and run it on your servers or private cloud. You keep the data, the tests and the model."
+          ctaText="Talk about a private model"
           ctaRoute="/contact"
-          secondaryCtaText="Explore Case Studies"
+          secondaryCtaText="See our work"
           secondaryCtaRoute="/work"
           onNavigate={onNavigate}
           telemetryItems={[
@@ -115,7 +111,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
           <div>
 
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
-              RAG vs. Fine-Tuning vs. Distillation
+              RAG vs. fine-tuning vs. distillation
             </h2>
           </div>
 
@@ -136,7 +132,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 data-suggested={key === (['rag', 'finetuning', 'distillation'][(['rag', 'finetuning', 'distillation'].indexOf(selectedTradeoff) + 1) % 3])}
                 className={`stage-control p-5 rounded-2xl border text-left transition-colors cursor-pointer flex flex-col justify-between space-y-3 ${
                   isSelected
-                    ? 'bg-[var(--bg-surface-elevated)] border-[#FF5A1F]/60 shadow-md'
+                    ? 'bg-[var(--bg-surface-elevated)] border-[#FF4800]/60 shadow-md'
                     : 'bg-[var(--bg-surface)] border-[var(--border-color)] hover:border-[var(--border-hover)] text-[var(--text-secondary)]'
                 }`}
               >
@@ -167,7 +163,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               className="p-6 sm:p-8 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-8"
             >
               <div className="space-y-3">
-                <div className="text-xs uppercase font-bold" style={{ color: current.accent }}>
+                <div className="text-xs font-bold" style={{ color: current.accent }}>
                   {current.badge}
                 </div>
                 <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -180,7 +176,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[var(--border-color)]">
                 <div className="space-y-3">
-                  <div className="text-xs text-[var(--status-success-text)] uppercase font-bold flex items-center gap-2">
+                  <div className="text-xs text-[var(--status-success-text)] font-bold flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-[var(--status-success-text)]" />
                     <span>Primary Advantages</span>
                   </div>
@@ -195,7 +191,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="text-xs text-[var(--text-muted)] uppercase font-bold flex items-center gap-2">
+                  <div className="text-xs text-[var(--text-muted)] font-bold flex items-center gap-2">
                     <Sliders className="w-4 h-4 text-[var(--text-muted)]" />
                     <span>Constraints &amp; Tradeoffs</span>
                   </div>
@@ -211,7 +207,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               </div>
 
               <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)] text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <span className="text-[var(--text-muted)] uppercase">Suitable when</span>
+                <span className="text-[var(--text-muted)] ">Suitable when</span>
                 <span className="text-[var(--text-primary)] font-medium sm:text-right">{current.idealWhen}</span>
               </div>
             </motion.div>
@@ -228,7 +224,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
           <div>
 
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
-              Domain Data to Deployed ML Architecture
+              Domain data to deployed ML architecture
             </h2>
           </div>
 
@@ -242,95 +238,6 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
       {/* 4. Model Spectrum: The Right Model for the Problem (owns its own section & max-w-7xl) */}
       <ModelEcosystemSpectrum onExploreWork={() => onNavigate('/work')} />
 
-      {/* 5. Deep Technical Focus: Methodology */}
-      <section className="home-section py-14 sm:py-20 border-b border-[var(--border-color)] relative z-10">
-        <div className="site-container relative z-10 space-y-12 text-left">
-        <div className="max-w-3xl space-y-3">
-
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-            How we engineer domain-specialised models.
-          </h2>
-          <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
-            Rather than forcing one-size-fits-all API wrappers, we evaluate whether your problem is best served by vector retrieval (RAG), LoRA/QLoRA parameter-efficient fine-tuning, model distillation, or quantization—grounded in rigorous evaluation metrics and latency constraints.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            {
-              icon: Database,
-              num: '01',
-              title: 'RAG vs Fine-Tuning vs Distillation',
-              desc: 'We benchmark whether your workload is best solved via semantic vector retrieval, adapter fine-tuning, or compact distilled models based on latency, domain specificity, and operational economics.',
-              tech: ['Decision Matrix', 'Evaluation Benchmark Harness', 'Human-Labeled Ground Truth', 'Latency & Cost Profiling'],
-              accent: 'var(--accent-secondary)'
-            },
-            {
-              icon: Sparkles,
-              num: '02',
-              title: 'LoRA, QLoRA, Distillation & Quantisation',
-              desc: 'We adapt open-weight architectures (Llama, Mistral, Qwen, DeepSeek) using parameter-efficient fine-tuning, knowledge distillation, and FP8/INT4 quantization tailored to your domain vocabulary.',
-              tech: ['LoRA & QLoRA Adapters', 'Model Distillation', 'Quantization (FP8/INT4)', 'PyTorch & Hugging Face'],
-              accent: 'var(--accent-orange-text)'
-            },
-            {
-              icon: Lock,
-              num: '03',
-              title: 'Client-Controlled Data & Model Artifacts',
-              desc: 'Your business receives all training datasets, benchmark suites, adapter weights, and inference code. You maintain complete intellectual property control without recurring token taxes or vendor lock-in.',
-              tech: ['Exportable Model Checkpoints', 'Evaluation Benchmarks', '100% Client IP Ownership', 'Zero Vendor Lock-In'],
-              accent: 'var(--status-success-text)'
-            },
-            {
-              icon: Server,
-              num: '04',
-              title: 'Edge, On-Prem & Private-Cloud Deployment',
-              desc: 'We deploy models onto AWS SageMaker, Google AI Platform, Azure ML, containerized Kubernetes clusters, or on-premise hardware where data residency and operational control are strictly mandated.',
-              tech: ['Private VPC / SageMaker / GCP', 'Docker & Kubernetes', 'FastAPI Microservice Endpoints', 'On-Prem / Edge Inference'],
-              accent: 'var(--accent-ocean)'
-            }
-          ].map((pillar, idx) => {
-            const Icon = pillar.icon;
-            return (
-              <motion.div
-                key={pillar.num}
-                initial={false}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="p-5 sm:p-7 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--border-hover)] transition-colors space-y-6 shadow-sm flex flex-col justify-between"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="p-3 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-color)]">
-                      <Icon className="w-5 h-5" style={{ color: pillar.accent }} />
-                    </div>
-
-                  </div>
-
-                  <h3 className="text-xl font-display font-bold text-[var(--text-primary)]">
-                    {pillar.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-normal leading-relaxed">
-                    {pillar.desc}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[var(--border-color)]">
-                  {pillar.tech.map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-        </div>
-      </section>
-
       {/* 6. Deployment Topologies Section: Managed Cloud, Containerized, Custom API */}
       <section className="home-section py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
         <SectionBackdrop mode="platforms" />
@@ -339,7 +246,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
           <div>
 
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
-              Production ML Deployment Environments
+              Production ML deployment environments
             </h2>
           </div>
           <span className="text-xs text-[var(--text-muted)]">
@@ -374,7 +281,7 @@ export function OnPremAiPage({ onNavigate }: OnPremAiPageProps) {
               onClick={() => onNavigate('/contact')}
               className="site-button button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
-              <span>Initiate Model Engineering Discovery</span>
+              <span>Talk about a private model</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
             </button>
           </div>

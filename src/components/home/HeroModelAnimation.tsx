@@ -1,7 +1,7 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Pause, Play } from 'lucide-react';
-import { HomeMotionContext } from './HomeMotionContext';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { HomeMotionContext } from './HomeMotionContext';
 
 export type EngineeringTrack = 'embedded' | 'vision-edge' | 'custom-platforms';
 
@@ -11,7 +11,7 @@ export function HeroModelAnimation() {
   const { theme } = useTheme();
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const initialTheme = useRef(theme);
 
   const send = useCallback((message: Record<string, unknown>) => {
@@ -27,6 +27,7 @@ export function HeroModelAnimation() {
     window.addEventListener('message', onReady);
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReducedMotion(preference.matches);
+    update();
     preference.addEventListener('change', update);
     return () => {
       window.removeEventListener('message', onReady);

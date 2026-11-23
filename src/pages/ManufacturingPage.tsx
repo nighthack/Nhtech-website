@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { RoutePath } from '../types';
-import { WorldCanvas } from '../components/common/WorldCanvas';
-import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
-import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
-import { Factory, Eye, Cpu, ShieldCheck, ArrowRight, ArrowUpRight, Zap, Server, Activity, Wrench, Crosshair, HardHat } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useState } from 'react';
+import { RelatedWork } from '../components/common/RelatedWork';
+import { MaskedHeading, ScrollText } from '../components/common/ScrollMotion';
+import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
+import { WorldCanvas } from '../components/common/WorldCanvas';
+import { RoutePath } from '../types';
 
 interface ManufacturingPageProps {
   onNavigate: (path: RoutePath) => void;
@@ -16,28 +17,28 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
   const plantNodes = [
     {
       num: '01',
-      title: 'Shop-Floor Optical Feeds',
+      title: 'Shop-floor optical feeds',
       role: 'High-Speed Optics',
       desc: 'Interfacing directly with GigE industrial cameras and optical sensors over local Ethernet buses with deterministic frame capture.',
       accent: 'var(--accent-orange-text)'
     },
     {
       num: '02',
-      title: 'Local Edge IPC Inference',
+      title: 'Local edge IPC inference',
       role: 'TensorRT Acceleration',
-      desc: 'Executing quantized visual classification models on on-premise industrial PCs and NVIDIA Jetson nodes with zero external internet dependencies.',
+      desc: 'Executing quantised visual classification models on on-premise industrial PCs and NVIDIA Jetson nodes with local processing within your network.',
       accent: 'var(--accent-secondary)'
     },
     {
       num: '03',
-      title: 'Operator Verification Station',
+      title: 'Operator verification station',
       role: 'Human Sign-off Gate',
       desc: 'Ruggedized tablet consoles for factory floor engineers to review flagged anomalies, inspect bounding-box diffs, and authorize production line overrides.',
       accent: 'var(--accent-ocean)'
     },
     {
       num: '04',
-      title: 'Plant Historian & ERP Sync',
+      title: 'Plant historian & ERP sync',
       role: 'Asynchronous Persistence',
       desc: 'Bridging inspected part tallies and yield statistics asynchronously to SAP/Siemens plant databases over secure internal IPC queues.',
       accent: 'var(--accent-orange-text)'
@@ -52,20 +53,16 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
       {/* 1. Spatial Header */}
       <section className="pt-28 sm:pt-32 pb-14 sm:pb-16 border-b border-[var(--border-color)] relative z-10">
         <SpatialPageHeader
-          tag="Industrial AI Engineering · Germany, Netherlands, Switzerland & Northern Europe"
+
           title="AI engineered for the"
           titleAccent="physical plant."
           subtitle="NHTech combines high-speed computer vision, edge AI runtimes, sensor telemetry engineering, and deterministic factory software to build dependable intelligence for industrial manufacturing operations."
-          ctaText="Discuss Industrial Deployment"
+          ctaText="Talk to us"
           ctaRoute="/contact"
-          secondaryCtaText="Inspect Physical Work"
+          secondaryCtaText="See related work"
           secondaryCtaRoute="/work"
           onNavigate={onNavigate}
-          telemetryItems={[
-            { label: 'SOVEREIGNTY', value: '100% AIR-GAPPED IPC' },
-            { label: 'HARDWARE', value: 'NVIDIA JETSON / IPC' },
-            { label: 'SECURITY', value: 'ZERO CAD / YIELD LEAKS' },
-          ]}
+          telemetryItems={[{ label: 'Processing', value: 'Can run offline, inside your plant network' }]}
         />
       </section>
 
@@ -74,16 +71,14 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
         <div className="site-container space-y-8 text-left">
           <div className="flex flex-wrap items-end justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div>
-              <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-wider">
+              <span className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-wider">
                 Plant Topology · Air-Gapped Runtime
               </span>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
-                End-to-End Shop Floor Architecture
+                End-to-end shop floor architecture
               </h2>
             </div>
-            <div className="text-xs font-mono text-[var(--text-muted)]">
-              Click pipeline stages to inspect isolation controls
-            </div>
+
           </div>
 
           {/* 4 Pipeline Stages (Flush hairline matrix) */}
@@ -106,7 +101,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
                   <span
                     aria-hidden="true"
                     className={`absolute top-0 left-0 h-[2px] transition-all duration-300 ${
-                      isSelected ? 'w-full bg-[#FF5A1F]' : 'w-0'
+                      isSelected ? 'w-full bg-[#FF4800]' : 'w-0'
                     }`}
                   />
                   <div className="text-xs font-bold" style={{ color: node.accent }}>
@@ -151,38 +146,38 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
       <section className="py-14 sm:py-20 bg-[var(--bg-surface-subtle)] relative z-10">
         <div className="site-container space-y-10 text-left">
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-mono text-[var(--accent-secondary)] uppercase tracking-wider font-semibold">
+            <span className="text-xs font-mono text-[var(--accent-secondary)] tracking-wider font-semibold">
               Plant Capabilities
             </span>
             <MaskedHeading as="h2" className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
               Industrial systems we engineer in practice.
             </MaskedHeading>
             <ScrollText className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
-              Engineering capabilities designed for deterministic factory floors, low latency budgets, and zero cloud leaks.
+              Engineering capabilities designed for deterministic factory floors, low latency budgets, and local processing within your network.
             </ScrollText>
           </div>
 
           <div className="border border-[var(--border-color)] bg-[var(--border-color)] rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-3 gap-px">
             {[
               {
-                title: 'Edge Computer Vision & Defect Inspection',
-                desc: 'Deploying optimized neural networks (TensorRT / ONNX) on local industrial PCs and cameras to classify part anomalies with zero cloud roundtrips.',
+                title: 'Edge computer vision & defect inspection',
+                desc: 'Deploying optimised neural networks (TensorRT / ONNX) on local industrial PCs and cameras to classify part anomalies with local processing.',
                 tag: 'ON-DEVICE VISION'
               },
               {
-                title: 'Sensor Telemetry & Temporal Anomaly Detection',
+                title: 'Sensor telemetry & temporal anomaly detection',
                 desc: 'Streaming high-frequency vibrational, thermal, and acoustic sensor logs into deep neural models to detect machine degradation early.',
                 tag: 'TELEMETRY INTELLIGENCE'
               },
               {
-                title: 'Operator Verification Tablet Consoles',
+                title: 'Operator verification tablet consoles',
                 desc: 'Intuitive tablet workbenches for floor engineers to inspect flagged parts, annotate edge cases, and calibrate model thresholds.',
                 tag: 'HUMAN GATES'
               }
             ].map((item, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 16 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 'some' }}
                 transition={{ duration: 0.45, delay: idx * 0.08 }}
@@ -203,16 +198,18 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
         </div>
       </section>
 
+      <RelatedWork slugs={["vision-robotic-inspection"]} onNavigate={onNavigate} />
+
       {/* 4. Bottom CTA */}
       <section className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-ocean-depth text-[var(--text-primary)] border-t border-[var(--border-color)]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs font-mono text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs font-mono text-[var(--accent-orange-text)] font-bold tracking-widest block">
             Plant Prototype Sprint
           </span>
           <MaskedHeading as="h2" className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -227,7 +224,7 @@ export function ManufacturingPage({ onNavigate }: ManufacturingPageProps) {
               onClick={() => onNavigate('/contact')}
               className="button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
-              <span>Schedule Plant Engineering Discussion</span>
+              <span>Talk to us</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
             </button>
           </div>

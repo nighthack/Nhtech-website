@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { RoutePath, CaseStudy } from '../types';
 import { ScrollProgressRail } from '../components/common/ScrollMotion';
-import { HeroMediaStage } from '../components/home/HeroMediaStage';
-import { WhoWeWorkWithStrip } from '../components/home/WhoWeWorkWithStrip';
-import { FeaturedCaseStudySection } from '../components/home/FeaturedCaseStudySection';
-import { HomeTracksOverview } from '../components/home/HomeTracksOverview';
-import { EditorialProofStrip } from '../components/home/EditorialProofStrip';
-import { SelectedWorkCompositions } from '../components/home/SelectedWorkCompositions';
 import { ClimaxCTA } from '../components/home/ClimaxCTA';
+import { EditorialProofStrip } from '../components/home/EditorialProofStrip';
+import { FeaturedCaseStudySection } from '../components/home/FeaturedCaseStudySection';
+import { HeroMediaStage } from '../components/home/HeroMediaStage';
 import { HomeMotionContext } from '../components/home/HomeMotionContext';
+import { HomeTracksOverview } from '../components/home/HomeTracksOverview';
+import { SelectedWorkCompositions } from '../components/home/SelectedWorkCompositions';
+import { WhoWeWorkWithStrip } from '../components/home/WhoWeWorkWithStrip';
+import { CaseStudy, RoutePath } from '../types';
 
 interface HomePageProps {
   onNavigate: (path: RoutePath) => void;
@@ -40,14 +40,14 @@ export function HomePage({ onNavigate, onSelectCaseStudy }: HomePageProps) {
           />
         </div>
 
-        {/* 4. THREE CORE OFFERINGS: Embedded Engineering Teams, Vision & Edge AI, Custom AI Platforms */}
+        {/* 4. THREE CORE OFFERINGS: Embedded teams, Vision & edge AI, Custom AI Platforms */}
         <div className="relative z-10">
           <HomeTracksOverview onNavigate={onNavigate} />
         </div>
 
         {/* 5. DEFENSIBLE PRODUCTION PROOF */}
         <div className="relative z-10">
-          <EditorialProofStrip />
+          <EditorialProofStrip onNavigate={onNavigate} />
         </div>
 
         {/* 6. SELECTED WORK ACROSS ALL THREE TRACKS */}

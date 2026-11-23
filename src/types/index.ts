@@ -16,12 +16,13 @@ export type RoutePath =
   | '/industries/retail'
   | '/industries/startups'
   | '/work'
-  | '/work/:slug'
+  | `/work/${string}`
   | '/products'
   | '/about'
   | '/careers'
   | '/contact'
-  | '/terms-and-conditions';
+  | '/terms-and-conditions'
+  | '/privacy-policy';
 
 export type EngineeringTrack = 'fde' | 'vision-edge' | 'complex-business';
 
@@ -141,6 +142,4 @@ export interface ContactInquiry {
   problemStatement: string;
   constraints: string;
   projectStage: string;
-  schedulingDate: string;
-  schedulingTime: string;
 }

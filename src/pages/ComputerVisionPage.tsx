@@ -1,57 +1,57 @@
-import { MotionPage } from '../components/common/MotionPage';
-import { SectionBackdrop } from '../components/home/SectionBackdrop';
-import { StageGroup } from '../components/home/StageGroup';
-import { useState } from 'react';
-import { RoutePath } from '../types';
-import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
 import {
-  Cpu,
-  Activity,
-  ArrowRight,
-  ShieldCheck,
-  Camera,
-  Gauge,
-  Tablet,
-  Radio,
-  Scan,
-  ChevronDown,
-  Smartphone,
-  UserCheck,
-  Monitor
+Activity,
+ArrowRight,
+Camera,
+ChevronDown,
+Cpu,
+Gauge,
+Monitor,
+Radio,
+Scan,
+ShieldCheck,
+Smartphone,
+Tablet,
+UserCheck
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useState } from 'react';
+import { MotionPage } from '../components/common/MotionPage';
+import { SpatialPageHeader } from '../components/common/SpatialPageHeader';
+import { SectionBackdrop } from '../components/home/SectionBackdrop';
+import { StageGroup } from '../components/home/StageGroup';
+import { RoutePath } from '../types';
 
 interface ComputerVisionPageProps {
   onNavigate: (path: RoutePath) => void;
 }
 
-type UseCaseCategory = 'kinematics' | 'defect' | 'physical';
+type UseCaseCategory = 'kinematics' | 'defect';
 
 const CORE_SYSTEM_FLOW = [
   {
-    title: 'Camera / Device',
-    roleLabel: 'Input & Device',
+    title: 'Camera / device',
+    roleLabel: 'Input & device',
     summary: 'Optical streams ingested directly from tablet cameras, line-scan sensors, or edge devices.',
     icon: Camera,
     isSignal: false
   },
   {
-    title: 'On-device Inference',
-    roleLabel: 'AI Processing',
+    title: 'On-device inference',
+    roleLabel: 'AI processing',
     summary: 'Compiled ONNX and TensorRT vision models running locally without cloud roundtrips.',
     icon: Cpu,
     isSignal: false
   },
   {
-    title: 'Event / Measurement',
+    title: 'Event / measurement',
     roleLabel: 'Telemetry',
     summary: 'Deterministic landmarks, movement phases, surface tolerance scores, or spatial events.',
     icon: Activity,
     isSignal: false
   },
   {
-    title: 'Human Action',
-    roleLabel: 'Human Review & Dashboard',
+    title: 'Human action',
+    roleLabel: 'Human review & dashboard',
     summary: 'Instant operator alerts, video clip replays, or trainer dashboards for immediate decisions.',
     icon: UserCheck,
     isSignal: true
@@ -60,27 +60,27 @@ const CORE_SYSTEM_FLOW = [
 
 const KINEMATICS_STAGES = [
   {
-    title: 'Optical Frame Capture',
+    title: 'Optical frame capture',
     role: 'Inputs & Devices',
     summary: 'Captures live video feeds directly from standard mobile or tablet cameras under varying room lighting.',
     technicalDetails: [
       'Low-overhead camera buffer management across iOS and Android tablets',
       'Adaptive exposure normalization for studio, gym, and clinical rooms',
-      'Zero external video streaming required during active coaching sessions'
+      'Video processing stays on the device during active coaching sessions'
     ]
   },
   {
-    title: 'Anatomical Landmark Tracking',
+    title: 'Anatomical landmark tracking',
     role: 'AI Processing',
     summary: 'Extracts frame-by-frame skeletal joint coordinates locally using lightweight vision backbones.',
     technicalDetails: [
       'Real-time keypoint localization across full-body anatomical joints',
       'Perspective normalization across changing camera placements',
-      'Open Neural Network Exchange (ONNX) & TensorRT runtime optimization'
+      'Open Neural Network Exchange (ONNX) & TensorRT runtime optimisation'
     ]
   },
   {
-    title: 'Temporal Phase Classification',
+    title: 'Temporal phase classification',
     role: 'AI Processing',
     summary: 'Segments continuous human movement into discrete repetition phases (eccentric, isometric, concentric).',
     technicalDetails: [
@@ -90,7 +90,7 @@ const KINEMATICS_STAGES = [
     ]
   },
   {
-    title: 'Biomechanics & Cadence Metrics',
+    title: 'Biomechanics & cadence metrics',
     role: 'Measurements',
     summary: 'Computes repetitions, bar velocity, range-of-motion angles, and form deviation thresholds in real time.',
     technicalDetails: [
@@ -100,17 +100,17 @@ const KINEMATICS_STAGES = [
     ]
   },
   {
-    title: 'Local Tablet & Sensor Coordination',
+    title: 'Local tablet & sensor coordination',
     role: 'Inputs & Devices',
     summary: 'Executes locally in real time while coordinating paired Bluetooth Low Energy (BLE) sensors.',
     technicalDetails: [
-      'Sub-20ms frame inference loop tuned for tablet thermal and battery limits',
+      'frame inference loop tuned for tablet thermal and battery limits',
       'BLE peripheral onboarding and synchronized hardware telemetry',
       'Asynchronous encrypted upload when facility Wi-Fi becomes available'
     ]
   },
   {
-    title: 'Coach & Clinician Dashboard',
+    title: 'Coach & clinician dashboard',
     role: 'Human Review & Dashboard',
     summary: 'Displays live form guidance and session replays while keeping qualitative coaching decisions with humans.',
     technicalDetails: [
@@ -123,7 +123,7 @@ const KINEMATICS_STAGES = [
 
 const DEFECT_STAGES = [
   {
-    title: 'High-Resolution Line & Station Capture',
+    title: 'High-resolution line & station capture',
     role: 'Inputs & Devices',
     summary: 'Optical inspection cameras capture components or surfaces along active manufacturing stations.',
     technicalDetails: [
@@ -133,17 +133,17 @@ const DEFECT_STAGES = [
     ]
   },
   {
-    title: 'Surface Anomaly & Part Segmentation',
+    title: 'Surface anomaly & part segmentation',
     role: 'AI Processing',
     summary: 'Vision models isolate component boundaries and flag micro-scratches, misalignments, or missing fasteners.',
     technicalDetails: [
       'Custom Convolutional Neural Networks (CNNs) and segmentation backbones',
       'Edge inference executing locally on industrial PCs (IPCs) or NVIDIA Jetson nodes',
-      'Zero production-line stalls from external cloud latency'
+      'Local inference avoids dependence on cloud latency'
     ]
   },
   {
-    title: 'Tolerance Evaluation Engine',
+    title: 'Tolerance evaluation engine',
     role: 'Measurements',
     summary: 'Evaluates detected visual features against client-defined quality tolerances and ground-truth benchmarks.',
     technicalDetails: [
@@ -153,56 +153,13 @@ const DEFECT_STAGES = [
     ]
   },
   {
-    title: 'Operator Verification Station',
+    title: 'Operator verification station',
     role: 'Human Review & Dashboard',
     summary: 'Surfaces flagged parts with instant frame replays so line operators confirm rejects and tune thresholds.',
     technicalDetails: [
       'Side-by-side reference vs flagged component inspection viewer',
       'Human sign-off captures labeled edge cases for continuous retraining',
       'Over-the-Air (OTA) model updates deployed safely across plant stations'
-    ]
-  }
-];
-
-const PHYSICAL_INTERACTION_STAGES = [
-  {
-    title: 'Multimodal Scene Perception',
-    role: 'Inputs & Devices',
-    summary: 'Combines live optical camera feeds, depth cues, and physical sensor telemetry into a single local scene state.',
-    technicalDetails: [
-      'Synchronized camera, spatial depth, and IoT sensor ingestion',
-      'WebRTC low-latency local video transport where remote oversight is required',
-      'Resilient buffering when operating in bandwidth-constrained physical sites'
-    ]
-  },
-  {
-    title: 'OpenVLA & Spatial Action Modeling',
-    role: 'AI Processing',
-    summary: 'Uses Vision-Language-Action (OpenVLA) and object-tracking pipelines to map visual context to physical states.',
-    technicalDetails: [
-      'Open-weight Vision-Language-Action (OpenVLA) policy evaluation',
-      '3D object and tool tracking across dynamic workspaces',
-      'Strict safety bounding checks before emitting downstream commands'
-    ]
-  },
-  {
-    title: 'Hardware Safety & Interlock Gates',
-    role: 'Measurements',
-    summary: 'Applies deterministic boundary rules and confidence checks before any physical actuation or alert.',
-    technicalDetails: [
-      'Deterministic spatial envelope and velocity checks around human operators',
-      'Immediate fallback to safe hold state if sensor confidence drops',
-      'Immutable telemetry logs recording every visual input and action output'
-    ]
-  },
-  {
-    title: 'Supervisor Control Dashboard',
-    role: 'Human Review & Dashboard',
-    summary: 'Gives operators clear oversight of spatial state, sensor health, and manual override controls.',
-    technicalDetails: [
-      'Real-time camera overlay showing tracked entities and safety zones',
-      'One-click operator pause, override, and calibration tools',
-      'Central fleet diagnostics across distributed field devices'
     ]
   }
 ];
@@ -229,7 +186,7 @@ const VISION_TECH_STACK = [
 export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
   const [selectedUseCase, setSelectedUseCase] = useState<UseCaseCategory>('kinematics');
   const [expandedStageMap, setExpandedStageMap] = useState<Record<string, boolean>>({});
-  const [showFullStack, setShowFullStack] = useState(false);
+  const [showFullStack, setShowFullStack] = useState(true);
 
   const toggleStageDetails = (key: string) => {
     setExpandedStageMap((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -238,27 +195,20 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
   const activeUseCaseMeta =
     selectedUseCase === 'kinematics'
       ? {
-          title: 'Movement & Kinematics',
+          title: 'Movement & kinematics',
           subtitle:
             'Real-time human motion tracking, repetition counting, and biomechanical telemetry running locally on commercial tablets.',
           stages: KINEMATICS_STAGES,
-          verifiedOutcome: 'Verified pattern: Real-time on-device kinematic tracking with zero cloud dependency.'
+          verifiedOutcome: 'Example: rep counting and form tracking on a gym tablet'
         }
-      : selectedUseCase === 'defect'
-      ? {
-          title: 'Industrial Defect Inspection',
+      : {
+          title: 'Industrial defect inspection',
           subtitle:
             'Automated surface anomaly detection, component alignment checks, and tolerance evaluation running locally on factory floor hardware.',
           stages: DEFECT_STAGES,
-          verifiedOutcome: 'Verified pattern: Real-time optical defect detection with operator replay stations.'
+          verifiedOutcome: 'Example: surface inspection with operator review'
         }
-      : {
-          title: 'Physical-World Interaction',
-          subtitle:
-            'Object tracking, sensor coordination, and Vision-Language-Action (OpenVLA) spatial pipelines bridging cameras, hardware sensors, and operator control.',
-          stages: PHYSICAL_INTERACTION_STAGES,
-          verifiedOutcome: 'Verified pattern: Deterministic safety gates and local hardware/BLE coordination.'
-        };
+;
 
   return (
     <MotionPage id="computer-vision-chapter">
@@ -269,11 +219,11 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
         <SectionBackdrop mode="vision" />
         <SpatialPageHeader
           title="Computer vision and"
-          titleAccent="real-time edge intelligence."
-          subtitle="We design and deploy vision systems that run reliably on cameras, commercial tablets, and industrial edge hardware—delivering low-latency measurements and clear operator interfaces without cloud roundtrips."
+          titleAccent="real-time on the device."
+          subtitle="We build vision systems for cameras, tablets and factory hardware. They measure what matters on the spot, with no round-trip to the cloud."
           ctaText="Discuss a vision system"
           ctaRoute="/contact"
-          secondaryCtaText="Explore selected work"
+          secondaryCtaText="See our work"
           secondaryCtaRoute="/work"
           onNavigate={onNavigate}
           telemetryItems={[]}
@@ -286,7 +236,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
         <div className="max-w-3xl space-y-2">
 
           <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-            Camera / Device → On-device Inference → Event / Measurement → Human Action
+            How it works
           </h2>
           <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
             Consistent architecture across physical environments: capture locally, run inference on the device, emit deterministic measurements, and put actionable control in the operator&apos;s hands.
@@ -307,14 +257,14 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                     <div
                       className={`w-9 h-9 rounded-full flex items-center justify-center border relative z-10 ${
                         node.isSignal
-                          ? 'bg-[#FF5A1F] border-[#FF5A1F] text-[#061421]'
+                          ? 'bg-[#FF4800] border-[#FF4800] text-[#061421]'
                           : 'bg-[var(--bg-base)] border-[var(--border-hover)] text-[var(--accent-secondary)]'
                       }`}
                     >
                       <Icon className="w-4 h-4" />
                     </div>
                     <span
-                      className={`text-xs uppercase tracking-wider font-semibold ${
+                      className={`text-xs tracking-wider font-semibold ${
                         node.isSignal ? 'text-[var(--accent-orange-text)]' : 'text-[var(--accent-secondary)]'
                       }`}
                     >
@@ -357,13 +307,13 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
 
       {/* Use-case diagrams live beneath the content */}
       <section className="home-section py-14 sm:py-20 border-b border-[var(--border-color)] bg-[var(--bg-surface-subtle)] relative z-10">
-        <SectionBackdrop mode={selectedUseCase === 'kinematics' ? 'kinematic' : selectedUseCase === 'defect' ? 'defect' : 'physical'} />
+        <SectionBackdrop mode={selectedUseCase === 'kinematics' ? 'kinematic' : 'defect'} />
         <div className="site-container relative z-10 space-y-10 text-left">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-5 border-b border-[var(--border-color)]">
           <div className="space-y-2 max-w-2xl">
 
             <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-              Explore Vision &amp; Edge Systems by Use Case
+              Explore vision &amp; edge systems by use case
             </h2>
           </div>
 
@@ -372,9 +322,8 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
           >
             {(
               [
-                { id: 'kinematics', label: 'Movement & Kinematics' },
-                { id: 'defect', label: 'Industrial Defect Inspection' },
-                { id: 'physical', label: 'Physical-World Interaction' }
+                { id: 'kinematics', label: 'Movement & kinematics' },
+                { id: 'defect', label: 'Industrial defect inspection' }
               ] as const
             ).map((tab) => (
               <button
@@ -382,7 +331,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                 type="button"
                 aria-pressed={selectedUseCase === tab.id}
                 onClick={() => setSelectedUseCase(tab.id)}
-                data-suggested={(['kinematics', 'defect', 'physical'].indexOf(selectedUseCase) + 1) % 3 === ['kinematics', 'defect', 'physical'].indexOf(tab.id)}
+                data-suggested={(['kinematics', 'defect'].indexOf(selectedUseCase) + 1) % 2 === ['kinematics', 'defect'].indexOf(tab.id)}
                 className={`stage-control min-h-11 px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
                   selectedUseCase === tab.id
                     ? 'bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--accent-orange-text)] shadow-sm'
@@ -456,7 +405,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
                       onClick={() => toggleStageDetails(stageKey)}
                       className="min-h-11 w-full flex items-center justify-between text-xs font-semibold text-[var(--text-primary)] hover:text-[var(--accent-orange-text)] transition-colors cursor-pointer"
                     >
-                      <span>{isExpanded ? 'Hide technical details' : 'View technical details'}</span>
+                      <span>{isExpanded ? 'Hide details' : 'Details'}</span>
                       <ChevronDown
                         className={`w-4 h-4 transition-transform duration-200 ${
                           isExpanded ? 'rotate-180 text-[var(--accent-orange-text)]' : ''
@@ -487,46 +436,46 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
       <section className="home-section py-14 sm:py-20 relative z-10">
         <div className="site-container relative z-10 space-y-10 text-left">
         <div className="max-w-3xl space-y-2">
-          <p className="text-xs uppercase tracking-[0.14em] text-[var(--accent-secondary)] font-semibold">
+          <p className="text-xs tracking-[0.14em] text-[var(--accent-secondary)] font-semibold">
             Engineering Scope
           </p>
           <h2 className="text-2xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
-            What every Vision &amp; Edge engagement covers
+            What every vision &amp; edge engagement covers
           </h2>
           <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
-            Built around real hardware constraints—camera sensors, tablet thermals, offline databases, and operator ergonomics.
+            Built around real hardware constraints. camera sensors, tablet thermals, offline databases, and operator ergonomics.
           </p>
         </div>
 
         <div className="border border-[var(--border-color)] bg-[var(--border-color)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px">
           {[
             {
-              title: 'Model Evaluation & Latency Optimization',
+              title: 'Model evaluation & latency optimisation',
               desc: 'Benchmarking precision against human-labeled ground truth and profiling inference speed so frames process within strict hardware budgets.',
               icon: Gauge
             },
             {
-              title: 'On-Device Packaging & Local Storage',
+              title: 'On-device packaging & local storage',
               desc: 'Compiling TensorRT and ONNX models into iOS, Android, and industrial station apps backed by local SQLite persistence.',
               icon: Tablet
             },
             {
-              title: 'Hardware & Sensor Coordination',
+              title: 'Hardware & sensor coordination',
               desc: 'Integrating Bluetooth Low Energy (BLE) peripherals, optical line cameras, and IoT sensors into a cohesive operator experience.',
               icon: Radio
             },
             {
-              title: 'Object Detection & Tracking',
+              title: 'Object detection & tracking',
               desc: 'Locating components, tools, and anatomical landmarks across continuous streams with bounding-box and spatial verification.',
               icon: Scan
             },
             {
-              title: 'Field Tablet & Station Interfaces',
+              title: 'Field tablet & station interfaces',
               desc: 'Touch-friendly operator screens designed for factory floors, gyms, and clinics where workflows cannot pause for connectivity.',
               icon: Smartphone
             },
             {
-              title: 'Quality & Acceptance Gates',
+              title: 'Quality & acceptance gates',
               desc: 'Configurable tolerance thresholds with instant clip replays so human supervisors retain final sign-off on flagged events.',
               icon: ShieldCheck
             }
@@ -558,7 +507,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             className="w-full flex items-center justify-between text-left cursor-pointer"
           >
             <div>
-              <span className="text-xs uppercase tracking-wider text-[var(--accent-secondary)] font-semibold block">
+              <span className="text-xs tracking-wider text-[var(--accent-secondary)] font-semibold block">
                 Technical Reference
               </span>
               <span className="text-lg font-display font-bold text-[var(--text-primary)]">
@@ -576,7 +525,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 border-t border-[var(--border-color)]">
               {VISION_TECH_STACK.map((group) => (
                 <div key={group.category} className="space-y-2.5">
-                  <div className="text-xs font-semibold text-[var(--accent-orange-text)] uppercase">
+                  <div className="text-xs font-semibold text-[var(--accent-orange-text)] ">
                     {group.category}
                   </div>
                   <div className="flex flex-wrap gap-1.5 text-xs text-[var(--text-secondary)]">
@@ -607,7 +556,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
           transition={{ duration: 0.55 }}
           className="relative z-10 max-w-4xl mx-auto text-center space-y-6"
         >
-          <span className="text-xs text-[var(--accent-orange-text)] uppercase font-bold tracking-widest block">
+          <span className="text-xs text-[var(--accent-orange-text)] font-bold tracking-widest block">
             Vision Feasibility Evaluation
           </span>
           <h2 className="text-3xl sm:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight max-w-3xl mx-auto">
@@ -622,7 +571,7 @@ export function ComputerVisionPage({ onNavigate }: ComputerVisionPageProps) {
               onClick={() => onNavigate('/contact')}
               className="site-button button-primary inline-flex items-center gap-3 px-8 py-4 rounded-xl font-display font-bold text-sm tracking-tight cursor-pointer shadow-md"
             >
-              <span>Discuss a Vision Workflow</span>
+              <span>Talk about a vision project</span>
               <ArrowRight className="w-4 h-4 text-[#061421]" />
             </button>
           </div>

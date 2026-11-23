@@ -1,7 +1,7 @@
-import { StageGroup } from '../home/StageGroup';
+import { BrainCircuit, Database, Lock, Server, Sparkles } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Database, BrainCircuit, Sparkles, Lock, Server } from 'lucide-react';
+import { StageGroup } from '../home/StageGroup';
 
 export function CustomModelPipelineStage() {
   const [activeStep, setActiveStep] = useState<number>(2); // Default on fine-tuning
@@ -9,76 +9,76 @@ export function CustomModelPipelineStage() {
   const steps = [
     {
       id: 0,
-      title: 'Domain Data Ingestion & Sanitization',
-      shortTitle: 'Data Ingestion',
+      title: 'Domain data ingestion & sanitization',
+      shortTitle: 'Data ingestion',
       tagline: 'Your Proprietary Business Data',
       icon: Database,
       accent: '#47849B',
       desc: 'Ingest and sanitize proprietary schemas, transaction logs, unstructured domain documents, and business records through structured data engineering pipelines.',
       metrics: [
-        { label: 'Data Sources', value: 'Databases, PDFs, Spreadsheets, APIs' },
-        { label: 'Quality Controls', value: 'Data Quality Checks & Filtering' },
+        { label: 'Data sources', value: 'Databases, PDFs, Spreadsheets, APIs' },
+        { label: 'Quality controls', value: 'Data Quality Checks & Filtering' },
         { label: 'Custody', value: 'Direct Enterprise Integration' }
       ],
       nodes: ['Operational Databases (PostgreSQL / MySQL)', 'Domain Documents & Contracts', 'Historical Decision Records', 'ETL/ELT Pipeline Sanitization']
     },
     {
       id: 1,
-      title: 'Model Evaluation & Benchmark Harness',
-      shortTitle: 'Evaluation Harness',
+      title: 'Model evaluation & benchmark harness',
+      shortTitle: 'Evaluation harness',
       tagline: 'Grounded Metrics Before Training',
       icon: BrainCircuit,
       accent: '#75A4B5',
       desc: 'Establish rigorous evaluation metrics, ground-truth test sets, and latency constraints to benchmark model options against your actual business requirements.',
       metrics: [
-        { label: 'Metrics Framework', value: 'Accuracy, F1, Latency, Cost' },
-        { label: 'Evaluation Sets', value: 'Human-Labeled Domain Ground Truth' },
-        { label: 'Model Selection', value: 'Open-Weights vs Frontier APIs' }
+        { label: 'Metrics framework', value: 'Accuracy, F1, Latency, Cost' },
+        { label: 'Evaluation sets', value: 'Human-Labeled Domain Ground Truth' },
+        { label: 'Model selection', value: 'Open-Weights vs Frontier APIs' }
       ],
       nodes: ['Benchmark Test Suites', 'Latency & Memory Profiling', 'Domain-Specific Edge Case Testing', 'Human Acceptance Gates']
     },
     {
       id: 2,
-      title: 'Model Fine-Tuning & Adaptation',
-      shortTitle: 'Fine-Tuning',
+      title: 'Model fine-tuning & adaptation',
+      shortTitle: 'Fine-tuning',
       tagline: 'Llama & Mistral Family Adaptation',
       icon: Sparkles,
-      accent: '#FF5A1F',
+      accent: '#FF4800',
       desc: 'Fine-tune open-weight foundations (Llama-family, Mistral/Mixtral-family) and custom ML models using PyTorch, Hugging Face Transformers, and parameter-efficient techniques tailored to your domain vocabulary.',
       metrics: [
-        { label: 'Supported Families', value: 'Llama-family & Mistral-family' },
+        { label: 'Supported families', value: 'Llama-family & Mistral-family' },
         { label: 'Frameworks', value: 'PyTorch / Hugging Face Transformers' },
-        { label: 'Techniques', value: 'LoRA, Task Adaptation, Quantization' }
+        { label: 'Techniques', value: 'LoRA, Task Adaptation, Quantisation' }
       ],
-      nodes: ['PyTorch Training Pipelines', 'Hugging Face Model Adaptation', 'Domain Vocabulary Alignment', 'Resource & Precision Optimization']
+      nodes: ['PyTorch Training Pipelines', 'Hugging Face Model Adaptation', 'Domain Vocabulary Alignment', 'Resource & Precision Optimisation']
     },
     {
       id: 3,
-      title: 'Client-Owned Artifacts & Weights',
-      shortTitle: 'Owned Artifacts',
+      title: 'Client-owned artifacts & weights',
+      shortTitle: 'Owned artifacts',
       tagline: 'Your Intellectual Property',
       icon: Lock,
       accent: '#47849B',
-      desc: 'You retain full ownership of the trained model checkpoints, adapter weights, and inference pipelines. No recurring token tolls, no vendor lock-in, and full operational control.',
+      desc: 'You retain full ownership of the trained model checkpoints, adapter weights, and inference pipelines. You control the model and code, with running costs tied to your own infrastructure.',
       metrics: [
-        { label: 'Ownership', value: '100% Client-Owned Weights' },
-        { label: 'Artifact Formats', value: 'Standard PyTorch / Transformers' },
-        { label: 'Vendor Lock-in', value: 'Zero Proprietary Lock-In' }
+        { label: 'Ownership', value: 'Client-owned weights' },
+        { label: 'Artifact formats', value: 'Standard PyTorch / Transformers' },
+        { label: 'Vendor lock-in', value: 'Exportable models and code' }
       ],
       nodes: ['Exportable Model Checkpoints', 'Tuned Adapter Weights', 'Reproducible Training Recipes', 'Custom Inference Code']
     },
     {
       id: 4,
-      title: 'Production Deployment & Inference APIs',
-      shortTitle: 'ML Deployment',
+      title: 'Production deployment & inference APIs',
+      shortTitle: 'ML deployment',
       tagline: 'Cloud ML, Docker, & Kubernetes',
       icon: Server,
-      accent: '#FF5A1F',
-      desc: 'Deploy fine-tuned models to your target environment—AWS SageMaker, Google AI Platform, Azure ML, or containerized via Docker and Kubernetes—with high-throughput FastAPI inference endpoints.',
+      accent: '#FF4800',
+      desc: 'Deploy fine-tuned models to your target environment. AWS SageMaker, Vertex AI, Azure ML, or containerized via Docker and Kubernetes. with high-throughput FastAPI inference endpoints.',
       metrics: [
-        { label: 'Target Platforms', value: 'AWS SageMaker, GCP, Azure ML' },
+        { label: 'Target platforms', value: 'AWS SageMaker, GCP, Azure ML' },
         { label: 'Containerization', value: 'Docker & Kubernetes Pods' },
-        { label: 'API Layer', value: 'FastAPI / Async REST Endpoints' }
+        { label: 'API layer', value: 'FastAPI / Async REST Endpoints' }
       ],
       nodes: ['Managed Cloud Endpoints', 'Containerized Kubernetes Pods', 'FastAPI Microservice Runtimes', 'Workflow & Dashboard Integration']
     }
@@ -105,7 +105,7 @@ export function CustomModelPipelineStage() {
               data-suggested={idx === (activeStep + 1) % steps.length}
               className={`stage-control p-3.5 rounded-2xl border text-left transition-colors duration-200 cursor-pointer flex flex-col justify-between gap-2 relative overflow-hidden ${
                 isCurrent
-                  ? 'bg-[var(--bg-surface)] border-[#FF5A1F] shadow-md'
+                  ? 'bg-[var(--bg-surface)] border-[#FF4800] shadow-md'
                   : isPassed
                   ? 'bg-[var(--bg-surface-elevated)] border-[var(--border-color)] text-[var(--text-secondary)]'
                   : 'bg-[var(--bg-surface-subtle)] border-[var(--border-color)] text-[var(--text-muted)]'
@@ -121,7 +121,7 @@ export function CustomModelPipelineStage() {
                 {step.shortTitle}
               </span>
               {isCurrent && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5A1F]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF4800]" />
               )}
             </button>
           );
@@ -140,7 +140,7 @@ export function CustomModelPipelineStage() {
           {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
             <div className="space-y-1">
-              <span className="text-xs uppercase tracking-wider font-bold text-[var(--accent-orange-text)]">
+              <span className="text-xs tracking-wider font-bold text-[var(--accent-orange-text)]">
                 {current.tagline}
               </span>
               <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
@@ -156,7 +156,7 @@ export function CustomModelPipelineStage() {
 
           {/* Architecture Nodes */}
           <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] space-y-3">
-            <span className="text-xs text-[var(--text-muted)] uppercase">
+            <span className="text-xs text-[var(--text-muted)] ">
               Engineering Artifacts &amp; Data Flow
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
