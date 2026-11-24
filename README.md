@@ -29,11 +29,10 @@ The frontend currently calls `fetch('/api/contact')`, so the preferred productio
 
 Before deploying, an operator must have:
 
-1. An AWS account with permission to create/configure Amplify Hosting, API Gateway, Lambda, IAM roles, CloudWatch logs, and (if used) SES or another mail provider.
+1. An AWS account with permission to create/configure Amplify Hosting, API Gateway, Lambda, IAM roles, and CloudWatch logs.
 2. A Git repository containing this project and an AWS region selected for API resources.
-3. Verified email/domain identities for the chosen email provider. SMTP or Resend credentials are not included here.
-4. An Ottom8 API key if the technical-intake agent integration is required.
-5. Node.js 20+ and npm for local development and checks.
+3. An Ottom8 API key for the technical-intake agent integration.
+4. Node.js 20+ and npm for local development and checks.
 
 No AWS infrastructure, domain, DNS records, IAM role, API Gateway, Lambda function, email identity, or credentials are assumed to exist.
 
@@ -53,24 +52,20 @@ Never commit `.env`. Server secrets are read only by the Express/API runtime and
 
 ### API runtime variables
 
-Configure these in Lambda (or the container service), not in Amplify Hosting:
+Configure these in Lambda (or the container service), not in Amplify Hosting. The API validates the form and securely forwards the intake to Ottom8; the Ottom8 agent handles downstream email delivery through Composio MCP.
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `CONTACT_RECIPIENT_EMAIL` | No | Intake recipient; defaults to `info@nighthack.in`. |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | No | SMTP delivery; host/user/pass are needed for SMTP to be attempted. |
-| `SMTP_FROM` | No | SMTP sender address. |
-| `RESEND_API_KEY` | No | Fallback email delivery through Resend. |
-| `OTTOM8_API_KEY` | No | Enables forwarding the intake to the Ottom8 agent. |
-| `OTTOM8_AGENT_URL` | No | Optional compatible Ottom8 endpoint override. |
+| `OTTOM8_API_KEY` | Yes | Secret API key sent in the `x-api-key` header for agent invocation. |
+| `OTTOM8_AGENT_URL` | No | Optional compatible endpoint override; defaults to the NHTech technical-intake agent endpoint. |
 
-If no mail provider is configured, the API logs the submission instead of delivering email. Treat that as development/failure mode, not a production success criterion.
+The API does not send email directly and does not require SMTP, Resend, SES, or any other email-provider credentials.
 
 `GEMINI_API_KEY` and `APP_URL` remain in `.env.example` for the existing application context, but the current source does not read either value. Do not add a secret to the frontend build unless it is intentionally public.
 
 ### Amplify Hosting variables
 
-The current frontend has no required client-side environment variables. If it is later changed to call a separate API hostname, add a non-secret `VITE_API_BASE_URL` in Amplify and use it in the request URL. Never put SMTP, Resend, Ottom8, or other private credentials in frontend variables: Vite-bundled values are public.
+The current frontend has no required client-side environment variables. If it is later changed to call a separate API hostname, add a non-secret `VITE_API_BASE_URL` in Amplify and use it in the request URL. Never put `OTTOM8_API_KEY` in frontend variables: Vite-bundled values are public.
 
 ## Deploy the frontend to AWS Amplify
 
@@ -94,10 +89,10 @@ The current frontend has no required client-side environment variables. If it is
 ### Lambda + API Gateway (recommended)
 
 1. Create a dedicated Lambda function in the selected region with a least-privilege execution role and CloudWatch logging.
-2. Package the contact API and dependencies. Adapt the existing Express routes to Lambda with a maintained Express-to-Lambda adapter, or move `submitContact` into a Lambda handler that maps API Gateway requests to the existing validation and delivery logic.
+2. Package the contact API and dependencies. Adapt the existing Express routes to Lambda with a maintained Express-to-Lambda adapter, or move `submitContact` into a Lambda handler that maps API Gateway requests to the existing validation and Ottom8 invocation logic.
 3. Configure API Gateway routes: `GET /api/health` and `POST /api/contact` -> Lambda.
 4. Configure Lambda variables from the API table. Store secrets in AWS Secrets Manager or encrypted Lambda environment variables; do not commit them.
-5. Set timeout/memory high enough for the Ottom8 (15-second client timeout) and email-provider calls. Add CloudWatch alarms for errors and throttles.
+5. Set timeout/memory high enough for the Ottom8 request (the API aborts after 15 seconds). Add CloudWatch alarms for errors and throttles.
 6. Deploy a stable API stage and preferably a custom API hostname such as `api.example.com` with an ACM certificate and DNS record.
 7. Test before connecting Amplify:
 
@@ -108,7 +103,7 @@ The current frontend has no required client-side environment variables. If it is
      --data '{"name":"Production Test","email":"test@example.com","problemStatement":"This is a production smoke test.","schedulingDate":"2030-01-02","schedulingTime":"09:00"}'
    ```
 
-   Use an approved test address and remove test submissions from downstream systems as appropriate.
+   Verify the response includes `success: true` and `agentProcessed: true`, and confirm the Ottom8 execution completed successfully. Downstream email delivery is owned by the agent.
 
 ### Alternative: ECS/Fargate
 
@@ -129,10 +124,10 @@ If Amplify cannot proxy the selected API Gateway configuration, use the API host
 1. Run `npm ci`, `npm run lint`, and `npm run build` in CI.
 2. Open every primary SPA route directly and refresh it; routes must return the React app rather than a 404.
 3. Confirm `GET /api/health` returns HTTP 200 through the public API path.
-4. Submit the contact form with a controlled test address and verify validation errors, agent processing (if enabled), and email delivery.
+4. Submit the contact form with a controlled test payload and verify validation errors, a successful Ottom8 execution, and `agentProcessed: true` in the API response.
 5. Confirm browser tools show no CORS, mixed-content, or failed `/api/contact` requests.
 6. Check CloudWatch/API Gateway logs and alarms, including an invalid request and a controlled provider failure path.
-7. Verify secrets are present only in the API runtime and absent from built JavaScript and Amplify build logs.
+7. Verify `OTTOM8_API_KEY` is present only in the API runtime and absent from built JavaScript and Amplify build logs.
 
 ## Validation commands
 
