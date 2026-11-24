@@ -74,6 +74,11 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         body: JSON.stringify(formData)
       });
 
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        throw new Error('The contact service is unavailable. Please try again later or email us directly at info@nighthack.in.');
+      }
+
       const result = await res.json();
       if (!res.ok || !result.success) {
         throw new Error(result.error || 'Unable to submit technical intake. Please try again.');
