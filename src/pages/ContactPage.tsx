@@ -20,6 +20,10 @@ export function ContactPage({ onNavigate }: { onNavigate: (path: RoutePath) => v
     event.preventDefault(); if (sending) return; setSending(true); setError(null);
     try {
       const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        throw new Error(`The contact service is unavailable. Please try again later or email ${brand.contact.email}.`);
+      }
       const result = await response.json().catch(() => null);
       if (!response.ok || !result?.success) throw new Error(result?.error || 'Your enquiry could not be sent. Please try again.');
       setSubmitted(true);

@@ -13,4 +13,4 @@ try {
   await bundle({ entryPoints: ['scripts/prerender.tsx'], outfile: cache, bundle: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', define: { 'import.meta.env.VITE_NOINDEX': JSON.stringify(process.env.VITE_NOINDEX || '') } });
   await import(pathToFileURL(cache).href);
 } finally { await rm(cache, { force: true }); }
-await bundle({ entryPoints: ['server.ts'], outfile: 'dist/server.cjs', bundle: true, platform: 'node', format: 'cjs', packages: 'external', sourcemap: true });
+if (!process.argv.includes('--frontend-only')) await bundle({ entryPoints: ['server.ts'], outfile: 'dist/server.cjs', bundle: true, platform: 'node', format: 'cjs', packages: 'external', sourcemap: true });

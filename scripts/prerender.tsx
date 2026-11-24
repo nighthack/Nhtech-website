@@ -66,7 +66,6 @@ for (const [source, target] of Object.entries(routeAliases)) {
 }
 rewrites.push({ source: '/<*>', target: '/404.html', status: '404' });
 await writeFile(path.join(dist, 'amplify-rewrites.json'), JSON.stringify(rewrites, null, 2));
-await writeFile(path.join(dist, '_redirects'), rewrites.map(({ source, target, status }) => `${source.replace('/<*>', '/*')} ${target} ${status}`).join('\n') + '\n');
 await writeFile(path.join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${Object.keys(views).map((route) => `<url><loc>${brand.siteUrl}${route === '/' ? '/' : route}</loc></url>`).join('')}</urlset>`);
 await writeFile(path.join(dist, 'robots.txt'), noindex ? 'User-agent: *\nDisallow: /\n' : `User-agent: *\nAllow: /\nSitemap: ${brand.siteUrl}/sitemap.xml\n`);
 console.log(`Pre-rendered ${Object.keys(views).length} pages with content, metadata and structured data${noindex ? ' (noindex build)' : ''}.`);

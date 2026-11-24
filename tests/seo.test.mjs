@@ -39,7 +39,7 @@ test('route chunks replace the previous single large page bundle', async () => {
 });
 
 test('production direct links, aliases, 404s and three-field contact validation', async (context) => {
-  const child = spawn(process.execPath, ['dist/server.cjs'], { env: { ...process.env, NODE_ENV: 'production', PORT: '4191', SMTP_HOST: '', SMTP_USER: '', SMTP_PASS: '', RESEND_API_KEY: '', OTTOM8_API_KEY: '' }, stdio: 'ignore' });
+  const child = spawn(process.execPath, ['dist/server.cjs'], { env: { ...process.env, NODE_ENV: 'production', PORT: '4191', OTTOM8_API_KEY: '' }, stdio: 'ignore' });
   context.after(() => child.kill());
   const base = 'http://127.0.0.1:4191';
   let ready = false;
@@ -58,4 +58,48 @@ test('production direct links, aliases, 404s and three-field contact validation'
   const valid = await post({ name: 'Test', email: 'test@example.com', problemStatement: 'Checking validation without sending any message' });
   assert.equal(valid.status, 503, 'three required fields reach delivery without needing scheduling or company');
   assert.equal((await valid.json()).success, false, 'unavailable delivery is reported honestly');
+});
+
+test('the extracted contact handler forwards the short enquiry to Ottom8 and reports provider failure', async (context) => {
+  const { createServer } = await import('node:http');
+  const payloads = [];
+  let failProvider = false;
+  const provider = createServer(async (req, res) => {
+    let body = '';
+    for await (const chunk of req) body += chunk;
+    payloads.push({ key: req.headers['x-api-key'], payload: JSON.parse(body) });
+    res.writeHead(failProvider ? 502 : 200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(failProvider ? { error: 'Test failure' } : { result: 'accepted' }));
+  });
+  await new Promise((resolve) => provider.listen(0, '127.0.0.1', resolve));
+  const providerPort = provider.address().port;
+  const child = spawn(process.execPath, ['dist/server.cjs'], {
+    env: { ...process.env, NODE_ENV: 'production', PORT: '4195', OTTOM8_API_KEY: 'local-test-key', OTTOM8_AGENT_URL: `http://127.0.0.1:${providerPort}/agent` },
+    stdio: 'ignore',
+  });
+  context.after(() => { child.kill(); provider.closeAllConnections(); provider.close(); });
+  let ready = false;
+  for (let n = 0; n < 100; n++) {
+    try { if ((await fetch('http://127.0.0.1:4195/api/health')).ok) { ready = true; break; } } catch {}
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  assert.ok(ready, 'production server started');
+  const post = (data) => fetch('http://127.0.0.1:4195/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+  const enquiry = { name: 'Test', email: 'test@example.com', problemStatement: 'A local-only integration test enquiry' };
+  const accepted = await post(enquiry);
+  assert.equal(accepted.status, 200);
+  assert.equal((await accepted.json()).agentProcessed, true);
+  assert.equal(payloads[0].key, 'local-test-key');
+  const forwarded = JSON.parse(payloads[0].payload.input_value);
+  assert.equal(forwarded.name, enquiry.name);
+  assert.equal(forwarded.problem_statement, enquiry.problemStatement);
+  assert.equal(forwarded.company, 'Not Specified');
+  assert.ok(!('schedulingDate' in forwarded));
+  assert.ok(!('schedulingTime' in forwarded));
+  failProvider = true;
+  const failed = await post(enquiry);
+  assert.equal(failed.status, 503);
+  assert.equal((await failed.json()).success, false);
+  assert.equal((await post({ ...enquiry, role: {} })).status, 400);
+  assert.equal(payloads.length, 2, 'invalid input does not reach the provider');
 });

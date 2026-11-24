@@ -16,11 +16,11 @@ The source is the supplied “NHTech website: page-by-page changes” review. Co
 
 ## Hosting configuration
 
-`npm run build` writes `dist/<route>/index.html`, `dist/404.html`, `dist/sitemap.xml`, `dist/robots.txt`, `dist/_redirects` and `dist/amplify-rewrites.json`.
+`npm run build:frontend` writes `dist/<route>/index.html`, `dist/404.html`, `dist/sitemap.xml`, `dist/robots.txt`, `dist/amplify-rewrites.json`.
 
 For AWS Amplify, build with the included `amplify.yml`, then import the ordered rules in **dist/amplify-rewrites.json** into Hosting → Rewrites and redirects. The explicit page rules must precede the final 404 rule. Do not retain the old blanket 200 rewrite to `/index.html`: it would serve the homepage metadata for inner pages. These console-level rules are not automatically applied by `amplify.yml`.
 
-The repository contains no Amplify application identifier or console connection, so hosting-console changes have not been applied by this commit. The bundled Express server serves the same generated pages and sends a real HTTP 404 for unknown routes. Static Amplify hosting does not execute `server.cjs`: retain or configure the existing `/api/contact` backend/proxy separately, ahead of the final 404 rule. This update does not deploy a new email service or API endpoint. Netlify can use the generated `_redirects` file.
+The repository contains no Amplify application identifier or console connection, so hosting-console changes have not been applied by this commit. The bundled Express server serves the same generated pages and sends a real HTTP 404 for unknown routes. Static Amplify hosting does not execute `server.cjs`: retain or configure the existing `/api/contact` backend/proxy separately, ahead of the final 404 rule. The extracted `src/server/contact.ts` handler forwards enquiries to Ottom8, which handles downstream email delivery. Direct SMTP/Resend delivery is intentionally removed. This update does not deploy a new API endpoint. Netlify configuration is intentionally removed, matching the AWS deployment setup.
 
 Preview builds with an `AWS_BRANCH` other than `main` automatically receive noindex, nofollow and a disallow-all robots.txt. Other staging hosts must set `VITE_NOINDEX=true` at build time. Client-side navigation also sets noindex whenever the current host differs from the configured public hostname. Canonical URLs always use `brand.siteUrl`.
 

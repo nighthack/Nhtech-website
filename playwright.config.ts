@@ -5,7 +5,7 @@ const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (exist
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: 'hero-interaction.spec.ts',
+  testMatch: ['hero-interaction.spec.ts', 'contact-submission.spec.ts'],
   outputDir: 'test-results',
   workers: 1,
   timeout: 25_000,
